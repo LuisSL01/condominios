@@ -16,9 +16,7 @@ export class AvisosPage implements OnInit {
   }
 
   buscar( event ){
-    console.log('aviso.buscar()');
-    
-
+    console.log('aviso.buscar()');    
     this.textoBuscar = event.detail.value;
   }
 

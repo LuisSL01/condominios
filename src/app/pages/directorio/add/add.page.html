@@ -20,36 +20,28 @@
             </ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="floating">Privada</ion-label>
+            <ion-label position="floating">Manzana/Privada</ion-label>
             <ion-input name="privada" [(ngModel)]="directorio.privada">
             </ion-input>
-          </ion-item>
+          </ion-item>                    
           <ion-item>
-            <ion-label >Dirección</ion-label>      
-          </ion-item>
+            <ion-label position="floating" >Calle</ion-label>
+            <ion-input name="calle" [(ngModel)]="directorio.direccion.calle">
+            </ion-input>
+          </ion-item>          
+          <ion-item>
+            <ion-label position="floating">Numero Interior/Exterior</ion-label>
+            <ion-input name="numInterior" [(ngModel)]="directorio.direccion.numInterior">
+            </ion-input>
+          </ion-item>   
+          <ion-item>
+            <ion-label position="floating">Colonia</ion-label>
+            <ion-input name="colonia" [(ngModel)]="directorio.direccion.colonia">
+            </ion-input>
+          </ion-item>       
           <ion-item>
             <ion-label position="floating">Código Postal</ion-label>
             <ion-input name="codigoPostal" type="number" [(ngModel)]="directorio.direccion.cp">
-            </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">Calle</ion-label>
-            <ion-input name="calle" [(ngModel)]="directorio.direccion.calle">
-            </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">Referencia</ion-label>
-            <ion-input name="referencia" [(ngModel)]="directorio.direccion.referencia">
-            </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">Numero Interior</ion-label>
-            <ion-input name="numInterior" [(ngModel)]="directorio.direccion.numInterior">
-            </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">Numero Exterior</ion-label>
-            <ion-input name="numExterior" [(ngModel)]="directorio.direccion.numExterior">
             </ion-input>
           </ion-item>
           <ion-item>

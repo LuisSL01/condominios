@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { DataLocalService } from 'src/app/services/data-local.service';
-import { DataLocalDirectorioService } from '../../../services/data-local-directorio.service';
+import { Component, OnInit, Input } from '@angular/core';
+import { Directorio } from '../../../models/directorio.model';
 
 @Component({
   selector: 'app-list',
@@ -9,7 +8,11 @@ import { DataLocalDirectorioService } from '../../../services/data-local-directo
 })
 export class ListPage implements OnInit {
 
-  constructor(public dataLocalDirectorioService:DataLocalDirectorioService) { }
+  @Input() directorio:Directorio;
+
+  
+
+  constructor() { }
 
   ngOnInit() {
   }

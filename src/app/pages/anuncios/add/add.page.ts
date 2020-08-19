@@ -2,7 +2,7 @@ import { Component, OnInit, LOCALE_ID } from '@angular/core';
 import { Anuncio } from '../../../models/anuncio.model';
 import { DataLocalAnuncioService } from '../../../services/data-local-anuncio.service';
 
-import * as moment from 'moment-timezone';
+/* import * as moment from 'moment-timezone'; */
 
 
 
@@ -15,21 +15,11 @@ export class AddPage implements OnInit {
 
   anuncio: Anuncio = new Anuncio();
   idanuncio: number;
-  momentjs: any = moment;
+  /* momentjs: any = moment; */
   
 
   constructor(private dataLocalAnuncioService: DataLocalAnuncioService) { 
-    this.momentjs().tz('America/Mexico_City');
-    console.log('agregando el moment para el formato de las fechas');
-    
-
-    console.log('Modificando el appp page de anuncios');
-    
-
-    
-
-
-    
+    /* this.momentjs().tz('America/Mexico_City');   */
   }
 
   ngOnInit() {
@@ -39,24 +29,14 @@ export class AddPage implements OnInit {
     // More info about moment timezone: http://momentjs.com/timezone/docs
     /* this.momentjs.tz.setDefault('UTC');
     this.momentjs.locale('es'); */
-
     // Current datetime according to the default timezone (UTC as determined above)
-    console.log('dave()');
-    
-    let now = this.momentjs;
-    console.log(now);
-
-    let currentDateTime = this.momentjs().format('YYYY-MM-DD HH:mm:ss ZZ');
+    /* let currentDateTime = this.momentjs().format('YYYY-MM-DD HH:mm:ss ZZ');
     console.log(currentDateTime); 
-
     // A specific datetime according to a specific timezone ('Africa/Cairo' in this example) other than the default one (UTC as determined above)
     let dateTimeAccordingToAnotherTimezone = this.momentjs().format('MMMM Do YYYY, h:mm:ss a');
     console.log(dateTimeAccordingToAnotherTimezone);
-
-
-
     console.log('save new anuncio');
-    console.log(this.momentjs);
+    console.log(this.momentjs); */
 
 
 
@@ -65,8 +45,8 @@ export class AddPage implements OnInit {
   }
   cambioFechaVence(event) {
     console.log('cambio fecha vence: ', event);
-    /* this.anuncio.fechaVence = new Date(event.detail.value);
-    this.anuncio.fechaVence = new moment(event.detail.value); */
+    /* this.anuncio.fechaVence = this.momentjs()(event.detail.value);  */      
+   this.anuncio.fechaVence = new Date(event.detail.value);
   }
 
 }

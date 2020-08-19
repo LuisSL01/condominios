@@ -1,11 +1,34 @@
-<app-header titulo ="Directorios"></app-header>
-<ion-content>  
+<app-header titulo="Directorios"></app-header>
+<ion-content>
 
-  <app-list></app-list>
 
-  <ion-fab vertical ="bottom" horizontal ="end" slot="fixed">
-    <ion-fab-button routerLink="/directorio/add" >
-      <ion-icon name ="add"></ion-icon>
+  <ion-slides class="emptyData" *ngIf="dataLocalDirectorioService.directorios.length === 0">
+    <ion-slide class="emptyData">
+      <ion-label>No hay directorios</ion-label>
+    </ion-slide>
+  </ion-slides>
+
+
+
+  <ion-grid fixed *ngIf="dataLocalDirectorioService.directorios.length > 0">
+    <ion-searchbar animated (ionChange)="buscar($event)"></ion-searchbar>
+
+    <ion-row>
+      <ion-col size="12" size-lg="3" size-md="4" size-sm="6" size-xs="12"
+        *ngFor="let directorio of dataLocalDirectorioService.directorios">
+
+        <app-list [directorio]="directorio"> </app-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/directorio/add">
+      <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
+
+
 </ion-content>

@@ -1,7 +1,8 @@
 export class Direccion{
     public calle:string;    
     public cp:string;
-    public referencia:string;
+    public colonia:string;
+    
     public numInterior:string;
     public numExterior:string;
     public celular:string;

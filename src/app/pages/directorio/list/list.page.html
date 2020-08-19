@@ -1,35 +1,21 @@
-<ion-slides class="emptyData" *ngIf="dataLocalDirectorioService.directorios.length === 0">
-  <ion-slide class="emptyData">
-    <ion-label>No hay directorios</ion-label>
-  </ion-slide>
-</ion-slides>
+<ion-card lines="none">
+  <ion-card-header>
+    <ion-card-title>{{directorio.nombre}} {{directorio.apellidoP}} {{directorio.apellidoM}}</ion-card-title>
+  </ion-card-header>
 
-<ion-grid fixed *ngIf="dataLocalDirectorioService.directorios.length > 0">
-  <ion-row>
-    <ion-col size="12" size-lg="3" size-md="4" size-sm="6" size-xs="12"
-      *ngFor="let directorio of dataLocalDirectorioService.directorios">
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title>{{directorio.nombre}} {{directorio.apellidoP}} {{directorio.apellidoM}}</ion-card-title>
-        </ion-card-header>
+  <ion-card-content>
+    <ion-label>{{directorio.nombrePrivada}}</ion-label>
 
+    <ion-label>{{directorio.direccion.cp}}
+      {{directorio.direccion.calle}}
+      {{directorio.direccion.numInterior}}
+      {{directorio.direccion.numExteerior}}
+      {{directorio.direccion.referencia}}
+    </ion-label>
 
-        <ion-card-content>
-          <ion-label>{{directorio.nombrePrivada}}</ion-label>
+    <ion-label>Cel.: {{directorio.direccion.celular}} </ion-label>
+    <ion-label>Tel.1: {{directorio.direccion.telefono1}}</ion-label>
+    <ion-label>Tel.2: {{directorio.direccion.telefono2}}</ion-label>
 
-          <ion-label>{{directorio.direccion.cp}}
-            {{directorio.direccion.calle}}
-            {{directorio.direccion.numInterior}}
-            {{directorio.direccion.numExteerior}}
-            {{directorio.direccion.referencia}}
-          </ion-label>
-
-          <ion-label>Cel.: {{directorio.direccion.celular}} </ion-label>
-          <ion-label>Tel.1: {{directorio.direccion.telefono1}}</ion-label>
-          <ion-label>Tel.2: {{directorio.direccion.telefono2}}</ion-label>
-
-        </ion-card-content>
-      </ion-card>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+  </ion-card-content>
+</ion-card>

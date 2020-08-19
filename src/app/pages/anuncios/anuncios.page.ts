@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataLocalAnuncioService } from 'src/app/services/data-local-anuncio.service';
 
 @Component({
   selector: 'app-anuncios',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./anuncios.page.scss'],
 })
 export class AnunciosPage implements OnInit {
-
-  constructor() { }
+  textoBuscar ='';
+  constructor(public dataLocalAnuncioService: DataLocalAnuncioService) { }
 
   ngOnInit() {
+  }
+
+  buscar( event ){
+    console.log('anuncio.buscar()');    
+    this.textoBuscar = event.detail.value;
   }
 
 }

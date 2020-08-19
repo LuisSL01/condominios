@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DataLocalAnuncioService } from '../../../services/data-local-anuncio.service';
+import { Anuncio } from '../../../models/anuncio.model';
 
 @Component({
   selector: 'app-list',
@@ -7,6 +8,9 @@ import { DataLocalAnuncioService } from '../../../services/data-local-anuncio.se
   styleUrls: ['./list.page.scss'],
 })
 export class ListPage implements OnInit {
+
+  @Input() anuncio :Anuncio;
+  
 
   constructor(public dataLocalAnuncioService: DataLocalAnuncioService) { }
 
