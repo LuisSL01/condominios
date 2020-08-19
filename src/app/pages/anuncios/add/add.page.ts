@@ -20,7 +20,12 @@ export class AddPage implements OnInit {
 
   constructor(private dataLocalAnuncioService: DataLocalAnuncioService) { 
     this.momentjs().tz('America/Mexico_City');
+    console.log('agregando el moment para el formato de las fechas');
+    
+
     console.log('Modificando el appp page de anuncios');
+    
+
     
 
 
