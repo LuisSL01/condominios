@@ -20,6 +20,10 @@ export class AddPage implements OnInit {
 
   constructor(private dataLocalAnuncioService: DataLocalAnuncioService) { 
     this.momentjs().tz('America/Mexico_City');
+    console.log('Modificando el appp page de anuncios');
+    
+
+
     
   }
 
