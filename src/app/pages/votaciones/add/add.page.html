@@ -1,0 +1,68 @@
+<app-header titulo="Nueva votación"></app-header>
+<ion-content>
+    <form #formulario="ngForm" (ngSubmit)="save()">
+        <ion-list>
+          <ion-item>
+            <ion-label position="floating">Titulo: </ion-label>                      
+            <ion-input name="titulo" [(ngModel)]="votacion.titulo" type="text" placeholder="titulo"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Mensaje: </ion-label>                      
+            <ion-input name="mensaje" [(ngModel)]="votacion.mensaje" type="text" placeholder="Mensaje"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>Fecha Termina</ion-label>
+            <ion-datetime name="fechaTermina"
+              display-format ="YYYY MMMM DD"
+              cancelText="Descartar"
+              [ngModel] ="votacion.fechaTermina.toISOString()"
+              (ionChange)="cambioFecha($event)" >
+              </ion-datetime>
+
+          </ion-item>
+          <ion-item>
+            <ion-label>Hora Termina</ion-label>
+            <ion-datetime name="horaTermina"
+              displayFormat="HH:mm"
+              cancelText="Descartar"
+              [ngModel] ="votacion.horaTermina.toISOString()"
+              (ionChange)="cambioHora($event)" >
+              </ion-datetime>
+
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Pregunta 1: </ion-label>                      
+            <ion-input name="p1" [(ngModel)]="votacionPregunta.pregunta" 
+            type="text" placeholder="pregunta"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label slot="start">Opcion 1: </ion-label>                      
+            <ion-input name="o1" [(ngModel)]="votacionPreguntaOpcion.opcion" 
+            type="text" placeholder="opcion"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label slot="start">Opcion 2: </ion-label>                      
+            <ion-input name="o2" [(ngModel)]="votacionPreguntaOpcion.opcion" 
+            type="text" placeholder="opcion"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-button expand="full" shape="round">
+              <ion-icon slot="start" name="help-outline"></ion-icon>
+              Añadir pregunta
+            </ion-button>
+    
+            <ion-button expand="full" shape="round">
+              <ion-icon slot="start" name="add-outline"></ion-icon>
+              Añadir opcion a pregunta
+            </ion-button>
+          </ion-item>
+
+
+        </ion-list>
+        <ion-button expand="full" type="submit" [disabled]="formulario.invalid">
+          Guardar
+        </ion-button>
+    
+      </form>
+</ion-content>

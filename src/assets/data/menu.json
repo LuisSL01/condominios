@@ -1,0 +1,55 @@
+[
+    {
+      "icon": "alert-circle-outline",
+      "name": "Avisos",
+      "redirectTo": "/avisos"
+    },
+    {
+      "icon": "book-outline",
+      "name": "Directorios",
+      "redirectTo": "/directorio"
+    },
+    {
+      "icon": "megaphone-outline",
+      "name": "Anuncios",
+      "redirectTo": "/anuncios"
+    },
+    {
+      "icon": "cash-outline",
+      "name": "Pagos Comprobantes",
+      "redirectTo": "/pagos-comprobantes"
+    }
+    ,
+    {
+      "icon": "wallet-outline",
+      "name": "Estados de cuenta",
+      "redirectTo": "/estados-cuenta"
+    },
+    {
+      "icon": "pricetags-outline",
+      "name": "Gastos",
+      "redirectTo": "/gastos"
+    },
+    {
+      "icon": "options-outline",
+      "name": "Votaciones",
+      "redirectTo": "/votaciones"
+    },
+    {
+      "icon": "call-outline",
+      "name": "Contactos de emergencia",
+      "redirectTo": "/contactos-emergencia"
+    },
+    {
+      "icon": "people-outline",
+      "name": "Visitas",
+      "redirectTo": "/visitas"
+    },
+    {
+      "icon": "leaf-outline",
+      "name": "Areás comunes",
+      "redirectTo": "/areas-comunes"
+    }
+   
+  ]
+  

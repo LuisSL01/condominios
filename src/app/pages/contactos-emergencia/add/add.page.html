@@ -1,0 +1,31 @@
+<app-header titulo="Nuevo contactoEmergencia"></app-header>
+<ion-content>
+    <form #formulario="ngForm" (ngSubmit)="save()">
+        <ion-list>
+          <ion-item>
+            <ion-label position="floating">Titulo: </ion-label>                      
+            <ion-input name="titulo" [(ngModel)]="contactoEmergencia.titulo" type="text" placeholder="titulo"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Nombre: </ion-label>                      
+            <ion-input name="nombre" [(ngModel)]="contactoEmergencia.nombre" type="text" placeholder="nombre"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Celular: </ion-label>                      
+            <ion-input name="celular" [(ngModel)]="contactoEmergencia.celular" type="text" placeholder="celular"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Telefono 1: </ion-label>                      
+            <ion-input name="telefono1" [(ngModel)]="contactoEmergencia.telefono1" type="text" placeholder="telefono1"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Telefono 2: </ion-label>                      
+            <ion-input name="telefono2" [(ngModel)]="contactoEmergencia.telefono2" type="text" placeholder="telefono2"></ion-input>
+          </ion-item>
+        </ion-list>
+        <ion-button expand="full" type="submit" [disabled]="formulario.invalid">
+          Guardar
+        </ion-button>
+    
+      </form>
+</ion-content>

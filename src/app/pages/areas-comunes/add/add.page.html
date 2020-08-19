@@ -1,0 +1,72 @@
+<app-header titulo="Nueva área"></app-header>
+
+<ion-content>
+  <form #formulario="ngForm" (ngSubmit)="save()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input name="nombre" [(ngModel)]="areaComun.nombre" required>
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Descripción</ion-label>
+        <ion-textarea name="descripcion" [(ngModel)]="areaComun.descripcion" required></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label >Costo</ion-label>
+        <ion-input type="number" name="costo" [(ngModel)]="areaComun.costo" required>
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Color:</ion-label>
+        <ion-select name="color" [(ngModel)]="areaComun.color" value="areaComun.color" okText="Okay"
+          cancelText="Dismiss">
+          <ion-select-option value="rojo">Rojo</ion-select-option>
+          <ion-select-option value="verde">Verde</ion-select-option>
+          <ion-select-option value="azul">Azul</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Disponibilidad</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>¿Culquier día?</ion-label>
+        <ion-toggle slot="end" name="todosLosDias" [(ngModel)]="areaComun.todosLosDias"></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label>¿Culquier hora?</ion-label>
+        <ion-toggle slot="end" name="todasLasHoras" [(ngModel)]="areaComun.todasLasHoras"></ion-toggle>
+      </ion-item>
+      
+        <ion-item>
+          <ion-label>De</ion-label>
+          <ion-datetime name="horaInicia" displayFormat="HH:mm" cancelText="Descartar"
+            [ngModel]="areaComun.horaInicia.toISOString()" (ionChange)="cambioHoraInicia($event)">
+          </ion-datetime>          
+        </ion-item>  
+        <ion-item>          
+          <ion-label>Hasta</ion-label>
+          <ion-datetime name="horaTermina" displayFormat="HH:mm" cancelText="Descartar"
+            [ngModel]="areaComun.horaTermina.toISOString()" (ionChange)="cambioHoraTermina($event)">
+          </ion-datetime>
+        </ion-item>  
+        
+        <ion-item>
+          <ion-button expand="full" shape="round">
+            <ion-icon slot="start" name="camera"></ion-icon>
+            Cámara
+          </ion-button>
+  
+          <ion-button expand="full" shape="round">
+            <ion-icon slot="start" name="images"></ion-icon>
+            Galería
+          </ion-button>
+        </ion-item>
+     
+      
+    </ion-list>
+    <ion-button expand="full" type="submit" [disabled]="formulario.invalid">
+      Guardar
+    </ion-button>
+  </form>
+</ion-content>

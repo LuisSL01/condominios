@@ -1,0 +1,79 @@
+<app-header titulo="Nuevo directorio"></app-header>
+
+<ion-content>
+    <form #formulario1="ngForm" (ngSubmit)="save()">
+
+        <ion-list>  
+          <ion-item>
+            <ion-label position="floating">Nombre</ion-label>
+            <ion-input name="nombre" [(ngModel)]="directorio.nombre" required>
+            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Apellido Paterno</ion-label>
+            <ion-input name="apellidoP" [(ngModel)]="directorio.apellidoP" required>
+            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Apellido Materno</ion-label>
+            <ion-input name="apellidoM" [(ngModel)]="directorio.apellidoM">
+            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Privada</ion-label>
+            <ion-input name="privada" [(ngModel)]="directorio.privada">
+            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label >Dirección</ion-label>      
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Código Postal</ion-label>
+            <ion-input name="codigoPostal" type="number" [(ngModel)]="directorio.direccion.cp">
+            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Calle</ion-label>
+            <ion-input name="calle" [(ngModel)]="directorio.direccion.calle">
+            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Referencia</ion-label>
+            <ion-input name="referencia" [(ngModel)]="directorio.direccion.referencia">
+            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Numero Interior</ion-label>
+            <ion-input name="numInterior" [(ngModel)]="directorio.direccion.numInterior">
+            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Numero Exterior</ion-label>
+            <ion-input name="numExterior" [(ngModel)]="directorio.direccion.numExterior">
+            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Celular</ion-label>
+            <ion-input name="celular" [(ngModel)]="directorio.direccion.celular">
+            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Telefono 1</ion-label>
+            <ion-input name="telefono1" [(ngModel)]="directorio.direccion.telefono1">
+            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Telefono 2</ion-label>
+            <ion-input name="telefono2" [(ngModel)]="directorio.direccion.telefono2">
+            </ion-input>
+          </ion-item>
+        
+    
+    
+        </ion-list>
+        <ion-button expand="full" type="submit" [disabled]="formulario1.invalid">
+          Guardar
+        </ion-button>
+    
+      </form>
+</ion-content>

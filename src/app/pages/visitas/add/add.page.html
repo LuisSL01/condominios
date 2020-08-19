@@ -1,0 +1,64 @@
+<app-header titulo="Nueva visita"></app-header>
+<ion-content>
+      <form #formulario="ngForm" (ngSubmit)="save()">
+        <ion-list>          
+          <ion-item>
+            <ion-label position="floating">Nombre</ion-label>
+            <ion-input name="nombre" [(ngModel)]="visita.nombre" required>
+            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label >Tipo de visita:</ion-label>
+            <ion-select name="tipoVisita" [(ngModel)]="visita.tipoVisita" 
+              value="visita.tipoVisita" okText="Okay" cancelText="Dismiss">
+              <ion-select-option value="reunion">Reunion</ion-select-option>
+              <ion-select-option value="visita">Visita</ion-select-option>
+              <ion-select-option value="trabajador">Trabajador</ion-select-option>              
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label >Duración:</ion-label>
+            <ion-select name="duracion" [(ngModel)]="visita.duracion" 
+              value="visita.duracion" okText="Okay" cancelText="Dismiss">
+              <ion-select-option value="solo hoy">Solo hoy</ion-select-option>
+              <ion-select-option value="indefinido">Indefinido</ion-select-option>
+              <ion-select-option value="rango de fechas">Rango de fechas</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>        
+            <ion-label>Fecha visita</ion-label>
+            <ion-datetime name="fechaInicio" placeholder="Fecha visita"                      
+                      display-format ="YYYY MMMM DD"
+                      cancelText="Descartar"
+                      [ngModel] ="visita.fechaInicio.toISOString()"
+                      (ionChange)="cambioFechaIniciaVisita( $event )" >
+          </ion-datetime>   
+          </ion-item>
+          <ion-item>                    
+            <ion-label>Fecha termina</ion-label>
+            <ion-datetime name="fechaTermina" placeholder="Fecha termina"
+                      display-format ="YYYY MMMM DD"
+                      cancelText="Descartar"
+                      [ngModel] ="visita.fechaTermina.toISOString()"
+                      (ionChange)="cambioFechaTerminaVisita( $event )" >
+          </ion-datetime>   
+          </ion-item>
+          <ion-item>
+            <ion-label>¿Con acompañantes?</ion-label>
+            <ion-toggle slot="end" name="conAcompaniantes" [(ngModel)]="visita.conAcompaniantes"></ion-toggle>
+          </ion-item>
+          <ion-item>
+            <ion-label>¿Todos los dias?</ion-label>
+            <ion-toggle slot="end" name="visitaDiaria" [(ngModel)]="visita.visitaDiaria"></ion-toggle>
+          </ion-item>
+        </ion-list>
+        <ion-button expand="full" type="submit" [disabled]="formulario.invalid">
+          Guardar
+        </ion-button>
+        </form>
+       
+    
+    
+      
+</ion-content>

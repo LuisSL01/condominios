@@ -1,0 +1,62 @@
+<app-header titulo="Nuevo aviso"></app-header>
+
+<ion-content>
+  <form #formulario1="ngForm" (ngSubmit)="save()">
+
+    <ion-list>
+      <ion-item>
+        <ion-label>Destinatario</ion-label>
+        <ion-select name="destinatario" [(ngModel)]="aviso.destinatario" 
+        value="aviso.destinatario" okText="Aceptar"
+          cancelText="Cancelar">
+          <ion-select-option value="todos">Todos</ion-select-option>
+          <ion-select-option value="m1">Manzana 1</ion-select-option>
+          <ion-select-option value="m2">Manzana 2</ion-select-option>
+          <ion-select-option value="m3">Manzana 3</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Titulo</ion-label>
+        <ion-input name="titulo" [(ngModel)]="aviso.titulo" required>
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Mensaje</ion-label>
+        <ion-textarea placeholder="Escriba su mensaje aquí" name="mensaje" [(ngModel)]="aviso.mensaje" required>
+        </ion-textarea>
+      </ion-item>
+
+
+
+      <ion-item>
+        <ion-button expand="full" shape="round" (click)="camara()">
+          <ion-icon slot="start" name="camera"></ion-icon>
+          Cámara
+        </ion-button>
+
+        <ion-button expand="full" shape="round" (click)="libreria()">
+          <ion-icon slot="start" name="images"></ion-icon>
+          Galería
+        </ion-button>
+      </ion-item>
+      <ion-item>
+        <ion-col size="3" *ngFor="let image of aviso.imgs">
+          <ion-card>
+            <img [src]="image | imageSanitizer">
+          </ion-card>
+        </ion-col>
+      </ion-item>
+
+
+    </ion-list>
+    <ion-button expand="full" type="submit" [disabled]="formulario1.invalid">
+      Guardar
+    </ion-button>
+
+  </form>
+  <ion-list>
+
+  </ion-list>
+
+
+</ion-content>

@@ -1,0 +1,124 @@
+<app-header titulo="Nuevo anuncio"></app-header>
+
+<ion-content>
+    <!-- <form #formulario="ngForm" (ngSubmit)="save()">
+
+        <ion-list>
+          <ion-list-header>
+            <ion-label>Por favor llene todos los campos</ion-label>
+          </ion-list-header>
+          <ion-item>
+            <ion-label position="floating">Titulo</ion-label>
+            <ion-input name="titulo" [(ngModel)]="anuncio.titulo" required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Descripcion</ion-label>
+            <ion-textarea name="descripcion"[(ngModel)]="anuncio.descripcion" required></ion-textarea>            
+            
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Precio</ion-label>          
+            <ion-input name="precio" type="number" [(ngModel)]="anuncio.precio" required>
+            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Telefono</ion-label>
+            <ion-input name="telefono" [(ngModel)]="anuncio.telefono">
+            </ion-input>
+          </ion-item>
+          <ion-item>        
+            <ion-label>Fecha vencimiento</ion-label>
+            <ion-datetime name="fechaVence" 
+              placeholder ="Fecha vence"
+              value="{{anuncio.fechaVence | date:'yyyy-MM-dd'}}" 
+              display-format="YYYY MMMM DD" cancelText="Descartar"
+              [(ngModel)]="anuncio.fechaVence">
+            </ion-datetime>
+   
+          </ion-item>         
+          <ion-item>
+            <ion-label>Estatus</ion-label>
+            <ion-toggle slot="end" name="estatus" [(ngModel)]="anuncio.estatus"></ion-toggle>
+          </ion-item>
+
+       
+        </ion-list>
+        <ion-button expand="full" type="submit" [disabled]="formulario.invalid">
+          Guardar
+        </ion-button>
+    
+      </form> -->
+
+      
+      <form #formulario="ngForm" (ngSubmit)="save()">
+        <ion-list>
+          <ion-item>
+            <ion-label position="floating">Titulo</ion-label>
+            <ion-input name="titulo" [(ngModel)]="anuncio.titulo" required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Descripcion</ion-label>
+            <ion-textarea name="descripcion"[(ngModel)]="anuncio.descripcion" required></ion-textarea>            
+            
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Precio</ion-label>          
+            <ion-input name="precio" type="number" [(ngModel)]="anuncio.precio" required>
+            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Telefono</ion-label>
+            <ion-input name="telefono" [(ngModel)]="anuncio.telefono">
+            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>Fecha vencimiento</ion-label>
+            <!-- <ion-datetime name="fechaVence" 
+              placeholder ="Fecha vence"
+              value="{{anuncio.fechaVence | date:'yyyy-MM-dd'}}" 
+              display-format="YYYY MMMM DD" cancelText="Descartar"
+              [(ngModel)]="anuncio.fechaVence">
+            </ion-datetime> -->
+
+            <ion-datetime name="fechaVence" placeholder="Fecha vence"                      
+                      display-format ="DD MMMM YYYY "
+                      cancelText="Descartar"
+                      doneText="Aceptar"
+                      [ngModel] ="anuncio.fechaVence.toISOString()"
+                      (ionChange)="cambioFechaVence( $event )" 
+                      >
+          </ion-datetime>
+   
+          </ion-item>         
+          <ion-item>
+            <ion-label>Estatus</ion-label>
+            <ion-toggle slot="end" name="estatus" [(ngModel)]="anuncio.estatus"></ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-button expand="full" shape="round">
+              <ion-icon slot="start" name="camera"></ion-icon>
+              Cámara
+            </ion-button>
+    
+            <ion-button expand="full" shape="round">
+              <ion-icon slot="start" name="images"></ion-icon>
+              Galería
+            </ion-button>
+          </ion-item>
+
+       
+        </ion-list>
+        <ion-button expand="full" type="submit" [disabled]="formulario.invalid">
+          Guardar
+        </ion-button>
+        </form>
+       
+    
+    
+      
+</ion-content>

@@ -1,0 +1,48 @@
+<app-header titulo="Pagos"></app-header>
+
+<ion-content>
+
+  <form #formulario1="ngForm" (ngSubmit)="save()">
+
+    <ion-list>
+
+      <ion-item>
+        <ion-label>Mes</ion-label>
+        <ion-select name="mesPago" [(ngModel)]="pago.mesPago" value="pago.mesPago" okText="Okay" cancelText="Dismiss">          
+          <ion-select-option value="Febrero 2020">Febrero 2020</ion-select-option>
+          <ion-select-option value="Marzo 2020">Marzo 2020</ion-select-option>
+          <ion-select-option value="Abril 2020">Abril 2020</ion-select-option>
+        </ion-select>
+      </ion-item>
+ 
+      <ion-item>
+        <ion-label>Forma de pago</ion-label>
+        <ion-select name="formaPago" [(ngModel)]="pago.formaPago" value="pago.formaPago" okText="Okay" cancelText="Dismiss">
+          
+          <ion-select-option value="efectivo">Efectivo</ion-select-option>
+          <ion-select-option value="cheque">Cheque</ion-select-option>
+          <ion-select-option value="transferencia">Transferencia</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-button expand="full" shape="round">
+          <ion-icon slot="start" name="camera"></ion-icon>
+          Cámara
+        </ion-button>
+
+        <ion-button expand="full" shape="round">
+          <ion-icon slot="start" name="images"></ion-icon>
+          Galería
+        </ion-button>
+      </ion-item>
+      
+    </ion-list>
+    <ion-button expand="full" type="submit" [disabled]="formulario1.invalid">
+      Guardar
+    </ion-button>
+
+  </form>
+
+
+</ion-content>

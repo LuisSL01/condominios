@@ -1,0 +1,64 @@
+<app-header titulo="Nuevo gasto"></app-header>
+
+<ion-content>
+    <form #formulario="ngForm" (ngSubmit)="save()">
+        <ion-list>
+
+          <ion-item>
+            <ion-label>Fecha</ion-label>
+            <ion-datetime name="fechaGasto"
+              display-format ="YYYY MMMM DD"
+              cancelText="Descartar"
+              [ngModel] ="gasto.fechaGasto.toISOString()"
+              (ionChange)="cambioFecha($event )" >
+              </ion-datetime>
+
+          </ion-item>
+          <ion-item>
+            <ion-label >Tipo de registro:</ion-label>
+            <ion-select name="tipoGasto" [(ngModel)]="gasto.tipoGasto" 
+              value="gasto.tipoGasto" okText="Okay" cancelText="Dismiss">              
+              <ion-select-option value="Gasto general">Gasto general</ion-select-option>
+              <ion-select-option value="Vigilancia">Vigilancia</ion-select-option>
+              <ion-select-option value="Jardineria">Jardineria</ion-select-option>
+              <ion-select-option value="Limpieza">Limpieza</ion-select-option>
+              <ion-select-option value="Mantenimiento general">Mantenimiento general</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">cantidad</ion-label>
+            <ion-input name="cantidad" type="number" [(ngModel)]="gasto.cantidad">
+            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Descripcion</ion-label>          
+            <ion-textarea name="descripcion" [(ngModel)]="gasto.descripcion"></ion-textarea>
+          </ion-item>
+          <ion-item>
+            <ion-label >Forma de pago</ion-label>
+            <ion-select name="formaPago" [(ngModel)]="gasto.formaPago" 
+              value="gasto.formaPago" okText="Okay" cancelText="Dismiss">              
+              <ion-select-option value="Efectivo">Efectivo</ion-select-option>
+              <ion-select-option value="Transferencia">Transferencia</ion-select-option>
+              <ion-select-option value="Otro">Otro</ion-select-option>              
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-button expand="full" shape="round">
+              <ion-icon slot="start" name="camera"></ion-icon>
+              Cámara
+            </ion-button>
+    
+            <ion-button expand="full" shape="round">
+              <ion-icon slot="start" name="images"></ion-icon>
+              Galería
+            </ion-button>
+          </ion-item>
+        </ion-list>
+        <ion-button expand="full" type="submit" [disabled]="formulario.invalid">
+          Guardar
+        </ion-button>
+    
+      </form>
+</ion-content>

@@ -1,0 +1,33 @@
+<app-header titulo="Avisos"></app-header>
+<ion-content fullscreen>
+
+
+  <ion-slides class="emptyData" *ngIf="dataLocalAvisoService.avisos.length === 0">
+    <ion-slide class="emptyData">
+      <ion-label>No hay avisos</ion-label>
+    </ion-slide>
+  </ion-slides>
+
+  <ion-grid fixed *ngIf="dataLocalAvisoService.avisos.length > 0">    
+     <ion-searchbar 
+                  animated
+                  (ionChange)="buscar($event)" 
+                  ></ion-searchbar> 
+    <ion-row>
+      <ion-col size="12" size-lg="3" size-md="4" size-sm="6" size-xs="12"
+        *ngFor="let aviso of dataLocalAvisoService.avisos">
+
+        <app-list-avisos  [aviso]="aviso" ></app-list-avisos>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/avisos/add-avisos">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
