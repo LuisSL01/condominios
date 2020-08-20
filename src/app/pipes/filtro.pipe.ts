@@ -9,6 +9,8 @@ export class FiltroPipe implements PipeTransform {
 
     if (texto === '') {
       return arreglo;
+
+      
     }
     
     
