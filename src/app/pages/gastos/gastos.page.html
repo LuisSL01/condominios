@@ -1,7 +1,26 @@
 <app-header titulo ="Gastos"></app-header>
 <ion-content>  
 
-  <app-list></app-list>
+  
+  <ion-slides class="emptyData" *ngIf="dataLocalGastoService.gastos.length === 0">
+    <ion-slide class="emptyData">
+      <ion-label>No hay gastos</ion-label>
+    </ion-slide>
+  </ion-slides>
+  
+  <ion-grid fixed *ngIf="dataLocalGastoService.gastos.length > 0 ">
+    <ion-searchbar animated (ionChange)="buscar($event)"></ion-searchbar>
+    <ion-row>
+     <ion-col  size="12" size-lg="3" size-md="4" size-sm="6" size-xs="12"
+         *ngFor="let gasto of dataLocalGastoService.gastos">
+
+        <app-list [gasto]="gasto" ></app-list>
+
+     </ion-col>
+   </ion-row>
+  </ion-grid>
+
+
 
   <ion-fab vertical ="bottom" horizontal ="end" slot="fixed">
     <ion-fab-button routerLink="/gastos/add" >

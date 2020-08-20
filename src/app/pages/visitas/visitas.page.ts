@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataLocalVisitaService } from '../../services/data-local-visita.service';
 
 @Component({
   selector: 'app-visitas',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./visitas.page.scss'],
 })
 export class VisitasPage implements OnInit {
-
-  constructor() { }
+  textoBuscar='';
+  
+  constructor(public dataLocalVisitaService: DataLocalVisitaService) { }
 
   ngOnInit() {
+  }
+  buscar(event){
+    console.log('visitas.buscar()');    
+    this.textoBuscar = event.detail.value;
   }
 
 }

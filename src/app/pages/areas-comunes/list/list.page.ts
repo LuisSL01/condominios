@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DataLocalAreaComunService } from '../../../services/data-local-area-comun.service';
+import { AreaComun } from '../../../models/area-comun.model';
 
 @Component({
   selector: 'app-list',
@@ -8,6 +9,8 @@ import { DataLocalAreaComunService } from '../../../services/data-local-area-com
 })
 export class ListPage implements OnInit {
 
+  @Input() areaComun:AreaComun;
+  
   constructor(public dataLocalAreaComunService: DataLocalAreaComunService) { }
 
   ngOnInit() {

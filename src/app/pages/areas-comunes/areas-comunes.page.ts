@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataLocalAreaComunService } from '../../services/data-local-area-comun.service';
 
 @Component({
   selector: 'app-areas-comunes',
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AreasComunesPage implements OnInit {
 
-  constructor() { }
+  textoBuscar='';
+
+  constructor(public dataLocalAreaComunService: DataLocalAreaComunService) { }
 
   ngOnInit() {
+  }
+
+  buscar(event){
+    
+    console.log('areacomun.buscar()');
+
+    this.textoBuscar = event.detail.value;
+
+
   }
 
 }

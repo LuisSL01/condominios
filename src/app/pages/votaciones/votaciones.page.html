@@ -1,7 +1,32 @@
 <app-header titulo ="Votaciones"></app-header>
 <ion-content>  
 
-  <app-list></app-list>
+  <ion-slides class="emptyData" *ngIf="dataLocalVotacionesService.votaciones.length === 0">
+    <ion-slide class="emptyData">
+      <ion-label>No hay encuestas</ion-label>
+    </ion-slide>
+  </ion-slides>
+  
+  <ion-list *ngIf="dataLocalVotacionesService.votaciones.length > 0">
+
+    <ion-searchbar animated (ionChange)="buscar($event)"></ion-searchbar>
+
+    <ion-item *ngFor="let votacion of dataLocalVotacionesService.votaciones">
+      
+      <app-list [votacion] = "votacion" ></app-list>
+
+   <!--    <ion-label>
+        {{votacion.titulo}}
+      </ion-label>
+      <ion-label>
+        {{votacion.mensaje}}
+      </ion-label> -->
+
+
+    </ion-item>
+  </ion-list>
+  
+
 
   <ion-fab vertical ="bottom" horizontal ="end" slot="fixed">
     <ion-fab-button routerLink="/votaciones/add" >

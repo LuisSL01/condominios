@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataLocalPagosComprobantesService } from 'src/app/services/data-local-pagos-comprobantes.service';
 
 @Component({
   selector: 'app-pagos-comprobantes',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PagosComprobantesPage implements OnInit {
 
-  constructor() { }
+  textoBuscar ='';
+
+  constructor(public dataLocalPagosComprobantesService: DataLocalPagosComprobantesService) { }
 
   ngOnInit() {
+  }
+  buscar( event ){
+    console.log('pagos comprobantes.buscar()');
+    this.textoBuscar = event.detail.value;
   }
 
 }

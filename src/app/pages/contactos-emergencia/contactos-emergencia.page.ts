@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataLocalContactosEmergenciaService } from '../../services/data-local-contactos-emergencia.service';
 
 @Component({
   selector: 'app-contactos-emergencia',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./contactos-emergencia.page.scss'],
 })
 export class ContactosEmergenciaPage implements OnInit {
-
-  constructor() { }
+  textoBuscar ='';
+  constructor( public dataLocalContactosEmergenciaService : DataLocalContactosEmergenciaService ) { }
 
   ngOnInit() {
+  }
+
+  buscar( event ){
+    console.log('contactoEmergencia.buscar()');    
+    this.textoBuscar = event.detail.value;
   }
 
 }

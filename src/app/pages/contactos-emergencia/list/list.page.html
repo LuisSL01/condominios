@@ -1,23 +1,9 @@
-<ion-slides class="emptyData" *ngIf="dataLocalContactosEmergenciaService.contactosEmergencia.length === 0">
-  <ion-slide class="emptyData">
-    <ion-label>No hay contactos</ion-label>
-  </ion-slide>
-</ion-slides>
-
-<ion-grid fixed *ngIf="dataLocalContactosEmergenciaService.contactosEmergencia.length > 0">
-  <ion-row>
-   <ion-col  size="12" size-lg="3" size-md="4" size-sm="6" size-xs="12"
-       *ngFor="let contacto of dataLocalContactosEmergenciaService.contactosEmergencia">
-       <ion-card>         
-           <ion-card-header>                
-             <ion-card-title>{{contacto.titulo}}</ion-card-title>
-             <ion-card-subtitle>{{contacto.nombre}}</ion-card-subtitle>
-           </ion-card-header>
-           <ion-card-content>
-             <ion-label>{{contacto.celular}}</ion-label>             
-           </ion-card-content>
-       </ion-card>
-
-   </ion-col>
- </ion-row>
-</ion-grid>
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>{{contacto.titulo}}</ion-card-title>
+    <ion-card-subtitle>{{contacto.nombre}}</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-label>{{contacto.celular}}</ion-label>
+  </ion-card-content>
+</ion-card>

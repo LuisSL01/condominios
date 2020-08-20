@@ -1,33 +1,11 @@
-<ion-slides class="emptyData" *ngIf="dataLocalVotacionesService.votaciones.length === 0">
-  <ion-slide class="emptyData">
-    <ion-label>No hay visitas</ion-label>
-  </ion-slide>
-</ion-slides>
+<ion-item>
+    
+  <ion-label>
+    {{votacion.titulo}}
+  </ion-label>
+  <ion-label>
+    {{votacion.mensaje}}
+  </ion-label>  
+  
+</ion-item>
 
-<ion-list *ngIf="dataLocalVotacionesService.votaciones.length > 0">
-  <ion-item *ngFor="let votacion of dataLocalVotacionesService.votaciones">
-    <ion-label>
-      {{votacion.titulo}}
-    </ion-label>
-    <ion-label>
-      {{votacion.mensaje}}
-    </ion-label>
-  </ion-item>
-</ion-list>
-
-<!-- <ion-grid fixed >
-  <ion-row>
-   <ion-col  size="12" size-lg="3" size-md="4" size-sm="6" size-xs="12"
-       *ngFor="">
-       <ion-card>
-           <ion-card-header>                
-             <ion-card-title>{{votacion.title}}</ion-card-title>
-           </ion-card-header>
-           <ion-card-content>
-             {{votacion.mensaje}}
-           </ion-card-content>           
-       </ion-card>
-
-   </ion-col>
- </ion-row>
-</ion-grid> -->

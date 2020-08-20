@@ -15,7 +15,7 @@
 
     <ion-row>
       <ion-col size="12" size-lg="3" size-md="4" size-sm="6" size-xs="12"
-        *ngFor="let directorio of dataLocalDirectorioService.directorios">
+        *ngFor="let directorio of dataLocalDirectorioService.directorios | filtro: textoBuscar:'nombre'">
 
         <app-list [directorio]="directorio"> </app-list>
       </ion-col>

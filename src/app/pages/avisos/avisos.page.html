@@ -15,7 +15,7 @@
                   ></ion-searchbar> 
     <ion-row>
       <ion-col size="12" size-lg="3" size-md="4" size-sm="6" size-xs="12"
-        *ngFor="let aviso of dataLocalAvisoService.avisos">
+        *ngFor="let aviso of dataLocalAvisoService.avisos | filtro: textoBuscar:'titulo'">
 
         <app-list-avisos  [aviso]="aviso" ></app-list-avisos>
 

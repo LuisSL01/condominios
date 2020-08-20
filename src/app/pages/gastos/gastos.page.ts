@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataLocalGastoService } from '../../services/data-local-gasto.service';
 
 @Component({
   selector: 'app-gastos',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GastosPage implements OnInit {
 
-  constructor() { }
+  textoBuscar ='';
+
+  constructor(public dataLocalGastoService:DataLocalGastoService) { }
 
   ngOnInit() {
+  }
+
+  buscar( event ){
+    console.log('gasto.buscar()');    
+    this.textoBuscar = event.detail.value;
   }
 
 }

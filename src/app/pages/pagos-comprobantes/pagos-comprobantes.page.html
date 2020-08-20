@@ -1,12 +1,32 @@
-<app-header titulo ="Pagos / Comprobantes"></app-header>
+<app-header titulo="Pagos / Comprobantes"></app-header>
 
 <ion-content>
-    <app-list></app-list>
 
 
-    <ion-fab vertical ="bottom" horizontal ="end" slot="fixed">
-       <ion-fab-button routerLink="/pagos-comprobantes/add" >
-         <ion-icon name ="add"></ion-icon>
-       </ion-fab-button>
-     </ion-fab>
+
+  <ion-slides class="emptyData" *ngIf="dataLocalPagosComprobantesService.pagosComprobantes.length === 0">
+    <ion-slide class="emptyData">
+      <ion-label>No hay comprobantes</ion-label>
+    </ion-slide>
+  </ion-slides>
+
+  <ion-grid fixed *ngIf="dataLocalPagosComprobantesService.pagosComprobantes.length > 0">
+    <ion-searchbar animated (ionChange)="buscar($event)"></ion-searchbar>
+    <ion-row>
+      <ion-col size="12" size-lg="3" size-md="4" size-sm="6" size-xs="12"
+        *ngFor="let pagoComprobante of dataLocalPagosComprobantesService.pagosComprobantes">
+
+        <app-list [pagoComprobante]="pagoComprobante"></app-list>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/pagos-comprobantes/add">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

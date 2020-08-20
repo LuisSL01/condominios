@@ -1,48 +1,14 @@
-<ion-slides class="emptyData" *ngIf="dataLocalVisitaService.visitas.length === 0">
-  <ion-slide class="emptyData">
-    <ion-label>No hay visitas</ion-label>
-  </ion-slide>
-</ion-slides>
 
-
-
-<ion-list *ngIf="dataLocalVisitaService.visitas.length > 0">
-  <ion-item *ngFor="let visita of dataLocalVisitaService.visitas">
-    <ion-label>
-      {{visita.nombre}}
-    </ion-label>
   <ion-label>
-      {{visita.fechaCreacion | date:'dd/MM/yyyy'}}
-    </ion-label>
-    <ion-label>
-      {{visita.tipoVisita}}
-    </ion-label>
-    <ion-label>
-      {{visita.duracion}}
-    </ion-label> 
-  </ion-item>
-</ion-list>
+    {{visita.nombre}}
+  </ion-label>
+  <ion-label>
+    {{visita.fechaCreacion | date:'dd/MM/yyyy'}}
+  </ion-label>
+  <ion-label>
+    {{visita.tipoVisita}}
+  </ion-label>
+  <ion-label>
+    {{visita.duracion}}
+  </ion-label>
 
-<!-- <ion-grid fixed>
-  <ion-row>
-   <ion-col  size="12" size-lg="3" size-md="4" size-sm="6" size-xs="12"
-       *ngFor="let visita of dataLocalVisitaService.visitas">
-       <ion-card>         
-           <ion-card-header>                
-             <ion-card-title> {{visita.nombre}}  {{visita.fechaCreacion | date:'dd/MM/yyyy'}}</ion-card-title>
-             <ion-card-subtitle>
-              {{visita.duracion}}
-            </ion-card-subtitle>          
-           </ion-card-header>
-           <ion-card-content>    
-             
-            
-            {{visita.tipoVisita}}
-
-
-           </ion-card-content>                      
-       </ion-card>
-
-   </ion-col>
- </ion-row>
-</ion-grid> -->

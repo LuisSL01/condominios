@@ -1,24 +1,10 @@
-<ion-slides class="emptyData" *ngIf="dataLocalAreaComunService.areasComunes.length === 0">
-  <ion-slide class="emptyData">
-    <ion-label>No hay áreas</ion-label>
-  </ion-slide>
-</ion-slides>
-
-<ion-grid fixed *ngIf="dataLocalAreaComunService.areasComunes.length > 0">
-  <ion-row>
-   <ion-col  size="12" size-lg="3" size-md="4" size-sm="6" size-xs="12"
-       *ngFor="let areaComun of dataLocalAreaComunService.areasComunes">
-       <ion-card>         
-           <ion-card-header>                
-             <ion-card-title>{{areaComun.nombre}}</ion-card-title>
-             <ion-card-subtitle>$ {{areaComun.costo}}</ion-card-subtitle>
-           </ion-card-header>
-           <ion-card-content>
-             {{areaComun.descripcion}}
-           </ion-card-content>           
-           <ion-img src="/assets/shapes.svg"> </ion-img>
-       </ion-card>
-
-   </ion-col>
- </ion-row>
-</ion-grid>
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>{{areaComun.nombre}}</ion-card-title>
+    <ion-card-subtitle>$ {{areaComun.costo}}</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    {{areaComun.descripcion}}
+  </ion-card-content>
+  <ion-img src="/assets/shapes.svg"> </ion-img>
+</ion-card>

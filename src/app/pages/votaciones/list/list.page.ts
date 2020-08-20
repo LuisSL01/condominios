@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DataLocalVotacionesService } from '../../../services/data-local-votaciones.service';
+import { Votacion } from '../../../models/votaciones.model';
 
 @Component({
   selector: 'app-list',
@@ -7,6 +8,8 @@ import { DataLocalVotacionesService } from '../../../services/data-local-votacio
   styleUrls: ['./list.page.scss'],
 })
 export class ListPage implements OnInit {
+
+  @Input() votacion:Votacion;
 
   constructor(public dataLocalVotacionesService: DataLocalVotacionesService) { }
 

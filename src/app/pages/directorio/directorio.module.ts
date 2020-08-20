@@ -9,6 +9,7 @@ import { DirectorioPageRoutingModule } from './directorio-routing.module';
 import { DirectorioPage } from './directorio.page';
 import { ComponentsModule } from '../../components/components.module';
 import { ListPage } from './list/list.page';
+import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { ListPage } from './list/list.page';
     FormsModule,
     IonicModule,
     DirectorioPageRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    PipesModule
   ],
   declarations: [DirectorioPage, ListPage]
 })

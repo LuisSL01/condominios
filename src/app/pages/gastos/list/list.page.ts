@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DataLocalGastoService } from '../../../services/data-local-gasto.service';
+import { Gasto } from '../../../models/gasto.model';
 
 @Component({
   selector: 'app-list',
@@ -7,6 +8,8 @@ import { DataLocalGastoService } from '../../../services/data-local-gasto.servic
   styleUrls: ['./list.page.scss'],
 })
 export class ListPage implements OnInit {
+
+  @Input() gasto:Gasto;
 
   constructor(public dataLocalGastoService:DataLocalGastoService) { }
 

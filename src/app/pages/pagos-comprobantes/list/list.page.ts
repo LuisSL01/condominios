@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DataLocalPagosComprobantesService } from '../../../services/data-local-pagos-comprobantes.service';
+import { PagosComprobantes } from '../../../models/pagos-comprobantes.model';
 
 @Component({
   selector: 'app-list',
@@ -7,6 +8,8 @@ import { DataLocalPagosComprobantesService } from '../../../services/data-local-
   styleUrls: ['./list.page.scss'],
 })
 export class ListPage implements OnInit {
+
+  @Input() pagoComprobante:PagosComprobantes;
 
   constructor(public dataLocalPagosComprobantesService: DataLocalPagosComprobantesService) { }
 

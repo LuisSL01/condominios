@@ -21,7 +21,8 @@ import { PipesModule } from '../../pipes/pipes.module';
     IonicModule,
     AvisosPageRoutingModule,
     
-    ComponentsModule
+    ComponentsModule,
+    PipesModule
   ],
   /* declarations: [AvisosPage, AddAvisosPage] */
   declarations: [AvisosPage, ListAvisosPage]

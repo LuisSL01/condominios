@@ -1,6 +1,25 @@
 <app-header titulo ="Areás comunes"></app-header>
 <ion-content>  
-    <app-list></app-list>
+
+  <ion-slides class="emptyData" *ngIf="dataLocalAreaComunService.areasComunes.length === 0">
+  <ion-slide class="emptyData">
+    <ion-label>No hay áreas</ion-label>
+  </ion-slide>
+</ion-slides>
+
+<ion-grid fixed *ngIf="dataLocalAreaComunService.areasComunes.length > 0">
+  <ion-searchbar animated (ionChange)="buscar($event)"></ion-searchbar>
+  <ion-row>
+   <ion-col  size="12" size-lg="3" size-md="4" size-sm="6" size-xs="12"
+       *ngFor="let areaComun of dataLocalAreaComunService.areasComunes">
+
+       <app-list [areaComun] ="areaComun" ></app-list>
+
+   </ion-col>
+ </ion-row>
+</ion-grid>
+
+
     <ion-fab vertical ="bottom" horizontal ="end" slot="fixed">
       <ion-fab-button routerLink="/areas-comunes/add" >
         <ion-icon name ="add"></ion-icon>

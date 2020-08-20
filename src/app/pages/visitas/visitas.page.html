@@ -1,11 +1,24 @@
-<app-header titulo ="Visitas"></app-header>
-<ion-content>  
+<app-header titulo="Visitas"></app-header>
+<ion-content>
 
-  <app-list></app-list>
+  <ion-slides class="emptyData" *ngIf="dataLocalVisitaService.visitas.length === 0">
+    <ion-slide class="emptyData">
+      <ion-label>No hay visitas</ion-label>
+    </ion-slide>
+  </ion-slides>
 
-  <ion-fab vertical ="bottom" horizontal ="end" slot="fixed">
-    <ion-fab-button routerLink="/visitas/add" >
-      <ion-icon name ="add"></ion-icon>
+
+
+  <ion-list *ngIf="dataLocalVisitaService.visitas.length > 0">
+    <ion-searchbar animated (ionChange)="buscar($event)"></ion-searchbar>
+    <ion-item *ngFor="let visita of dataLocalVisitaService.visitas">
+      <app-list [visita]="visita"></app-list>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/visitas/add">
+      <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-content>
