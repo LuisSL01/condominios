@@ -17,6 +17,7 @@ import { ListPage } from './list/list.page';
     IonicModule,
     AnunciosPageRoutingModule,
     ComponentsModule
+    
   ],
   
   declarations: [AnunciosPage, ListPage]

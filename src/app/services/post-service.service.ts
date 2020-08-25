@@ -11,8 +11,8 @@ declare var window: any;
 export class PostServiceService {
   filePath:string='';
 
-  constructor(private fileTransfer: FileTransfer,
-    private camera: Camera ) { }
+  constructor(private fileTransfer: FileTransfer
+    ) { }
 
   subirImagen( img: string ) {
     console.log('subirImagen()');
@@ -34,7 +34,7 @@ export class PostServiceService {
 
   }
 
-  async camara() {
+  /* async camara() {
     this.filePath ='';
 
     const options: CameraOptions = {
@@ -51,8 +51,8 @@ export class PostServiceService {
     return this.filePath;
 
   }
-  
-  async libreria() {
+   */
+  /* async libreria() {
     this.filePath ='';
     console.log('I am in lireria service..');
 
@@ -75,11 +75,12 @@ export class PostServiceService {
 
     return this.filePath;
 
-  }
+  } */
 
-  async procesarImagen(options: CameraOptions) {
-    console.log('procesarImagen()');
-    this.camera.getPicture(options).then((imageData) => {
+  procesarImagen(camera: Camera ,options: CameraOptions) {
+    console.log('post service. procesarImagen()');
+    this.filePath ='';
+    camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
 
@@ -87,7 +88,7 @@ export class PostServiceService {
       console.log(img); */
       this.filePath = window.Ionic.WebView.convertFileSrc(imageData);
       
-      console.log('this.filePath', this.filePath);
+      console.log('procesarImagen.this.filePath', this.filePath);
       
       
 

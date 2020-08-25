@@ -9,13 +9,17 @@ export class AreaComun{
     public todasLasHoras:Boolean;
     public horaInicia:Date;
     public horaTermina:Date;
+    public imgs:string[];
 
     constructor(){
+        console.log('im in constructor new area comun');
         
+
         this.todosLosDias = true;
         this.todasLasHoras = true;
         this.horaInicia = new Date();
         this.horaTermina = new Date();
+        this.imgs = Array();
         
         
     }

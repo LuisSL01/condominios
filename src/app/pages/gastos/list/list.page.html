@@ -8,5 +8,16 @@
   <ion-card-content>
     {{gasto.descripcion}}
   </ion-card-content>
-  <ion-img src="/assets/shapes.svg"> </ion-img>
+  <ion-item>    
+    <ion-slides pager="true" *ngIf="gasto.imgs.length > 1">
+      <ion-slide *ngFor="let img of gasto.imgs" class="image-slide">
+        <img [src]="img | imageSanitizer">
+      </ion-slide>
+    </ion-slides>
+    <ion-slides *ngIf="gasto.imgs.length === 1" [options]="slideSoloOpts">
+      <ion-slide *ngFor="let img of gasto.imgs" class="image-slide">
+        <img [src]="img | imageSanitizer">
+      </ion-slide>
+    </ion-slides>
+  </ion-item>
 </ion-card>

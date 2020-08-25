@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataLocalAvisoService } from 'src/app/services/data-local-aviso.service';
+import { Aviso } from 'src/app/models/aviso.model';
+
 
 @Component({
   selector: 'app-avisos',
@@ -10,9 +12,17 @@ export class AvisosPage implements OnInit {
 /*   numero: number = 1;
   fecha: Date = new Date(); */
   textoBuscar = '';
+
+  public avisosList: Aviso[];
+
   constructor(public dataLocalAvisoService:DataLocalAvisoService) { }
 
   ngOnInit() {
+
+
+    this.avisosList = this.dataLocalAvisoService.avisos;
+    
+
   }
 
   buscar( event ){

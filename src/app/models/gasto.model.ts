@@ -6,10 +6,11 @@ export class Gasto{
     public formaPago:string;
     public fechaGasto:Date;
     public idagenteCrea:number;
+    public imgs:string[];
 
     constructor(){
         console.log('In the constructor of gasto');
         this.fechaGasto = new Date();
-        
+        this.imgs = Array();
     }
 }

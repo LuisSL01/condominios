@@ -8,6 +8,7 @@ import { AddPageRoutingModule } from './add-routing.module';
 
 import { AddPage } from './add.page';
 import { ComponentsModule } from '../../../components/components.module';
+import { PipesModule } from '../../../pipes/pipes.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { ComponentsModule } from '../../../components/components.module';
     FormsModule,
     IonicModule,
     AddPageRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    PipesModule
   ],
   declarations: [AddPage]
 })

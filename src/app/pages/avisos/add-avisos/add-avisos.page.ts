@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Aviso } from '../../../models/aviso.model';
 import { DataLocalAvisoService } from '../../../services/data-local-aviso.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { PostServiceService } from '../../../services/post-service.service';
 
 declare var window: any;
 @Component({
@@ -14,85 +13,51 @@ export class AddAvisosPage implements OnInit {
 
 
   aviso: Aviso = new Aviso();
+  enCamara: boolean;
 
 
   //Inyectamos el servicio de data local.
 
   constructor(private dataLocalAvisoService: DataLocalAvisoService,
-    private postServiceService: PostServiceService,
-    private camera: Camera) { }
+    private camera: Camera) {
+  }
 
   ngOnInit() {
   }
 
-  camara() {
-    /*     const path = this.postServiceService.camara();     
-        console.log('path', path);    
-        if(path){
-          console.log('agregando el path en el camara');      
-          this.aviso.imgs.push(path);
-        } */
+  getCameraOptions(): any {
 
-      const options: CameraOptions = {
-        quality: 60,
-        destinationType: this.camera.DestinationType.FILE_URI,
-        encodingType: this.camera.EncodingType.JPEG,
-        mediaType: this.camera.MediaType.PICTURE,
-        correctOrientation: true,
-        sourceType: this.camera.PictureSourceType.CAMERA
-      };
-  
-      this.procesarImagen(options);
-
+    let sourceTypeSelected;
+    if (this.enCamara) {
+      sourceTypeSelected = this.camera.PictureSourceType.CAMERA;
+    } else {
+      sourceTypeSelected = this.camera.PictureSourceType.PHOTOLIBRARY;
+    }
+    const options: CameraOptions = {
+      quality: 60,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
+      sourceType: sourceTypeSelected
+    };
+    return options;
   }
 
-
+  camara() {
+    this.enCamara = true;
+    this.procesarImagen(this.getCameraOptions());
+  }
 
   libreria() {
-
-    console.log('avisos page libreria()');
-/* 
-    await this.postServiceService.libreria().then( data => {
-      console.log(data);
-    }).catch( err => {
-      console.log('error en carga', err);
-    });
-    
-    const path = this.postServiceService.filePath;
-    console.log('path');
-    console.log(path);
-    console.log('agregando el path en libreria');
-    this.aviso.imgs.push(path); */
-
-
-
-    
-        const options: CameraOptions = {
-          quality: 60,
-          destinationType: this.camera.DestinationType.FILE_URI,
-          encodingType: this.camera.EncodingType.JPEG,
-          mediaType: this.camera.MediaType.PICTURE,
-          correctOrientation: true,
-          sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
-        };
-    
-        this.procesarImagen(options);
-
+    this.enCamara = false;
+    this.procesarImagen(this.getCameraOptions());
   }
 
   procesarImagen(options: CameraOptions) {
-    console.log('procesarImagen()');
     this.camera.getPicture(options).then((imageData) => {
-      // imageData is either a base64 encoded string or a file URI
-      // If it's base64 (DATA_URL):
-
       const img = window.Ionic.WebView.convertFileSrc(imageData);
-      console.log(img);
-
-      /* this.postServiceService.subirImagen( imageData ); */
-
       this.aviso.imgs.push(img);
-
     }, (err) => {
       // Handle error
     });

@@ -13,7 +13,7 @@
           <ion-item>
             <ion-label>Fecha Termina</ion-label>
             <ion-datetime name="fechaTermina"
-              display-format ="YYYY MMMM DD"
+              display-format ="DD MMMM YYYY"
               cancelText="Descartar"
               [ngModel] ="votacion.fechaTermina.toISOString()"
               (ionChange)="cambioFecha($event)" >
@@ -54,7 +54,7 @@
     
             <ion-button expand="full" shape="round">
               <ion-icon slot="start" name="add-outline"></ion-icon>
-              Añadir opcion a pregunta
+              Añadir opción
             </ion-button>
           </ion-item>
 

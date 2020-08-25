@@ -11,12 +11,14 @@ export class PagosComprobantes{
     public montoOriginal:number;
     public montoPagado:number;
     public recargos:number;
+    public imgs:string[];
 
 
     
     constructor(){
         console.log('In the constructor ot Pagos comprobantes');
         this.fechaCreacion = new Date();
+        this.imgs = Array();
     }
 
 

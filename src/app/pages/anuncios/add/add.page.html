@@ -100,15 +100,22 @@
           </ion-item>
 
           <ion-item>
-            <ion-button expand="full" shape="round">
+            <ion-button expand="full" shape="round" (click)="camara()">
               <ion-icon slot="start" name="camera"></ion-icon>
               Cámara
             </ion-button>
     
-            <ion-button expand="full" shape="round">
+            <ion-button expand="full" shape="round" (click)="libreria()">
               <ion-icon slot="start" name="images"></ion-icon>
               Galería
             </ion-button>
+          </ion-item>
+          <ion-item>
+            <ion-col size="3" *ngFor="let image of anuncio.imgs">
+              <ion-card>
+                <img [src]="image | imageSanitizer">
+              </ion-card>
+            </ion-col>
           </ion-item>
 
        

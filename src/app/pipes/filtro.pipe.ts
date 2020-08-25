@@ -5,51 +5,65 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FiltroPipe implements PipeTransform {
 
-  transform(arreglo: any[], texto: string, columna: string): any[] {
-
+  transform(arreglo: any[], texto: string, columna1: string, columna2: string): any[] {
     if (texto === '') {
       return arreglo;
-
-      
     }
-    
-    
-
-
- /*    var num = [7, 8, 9];
-    num.forEach(function (value) {
-      console.log(value);
-    });
-
- */
-
-
     texto = texto.toLowerCase();
-/* 
-    let miarray: any[];
-
-    
-      
-      let busqueda1 = arreglo.filter(item => {
-        return item[value].toLowerCase()
-          .includes(texto);
-      });
-      console.log('Push al new arr[]');
-      console.log(value);
-      console.log(busqueda1);          
-      miarray.push(busqueda1); */
-     
-    
-
-
-
     return arreglo.filter(item => {
-      return item[columna].toLowerCase()
-        .includes(texto);
+      return (item[columna1].toLowerCase().includes(texto) 
+              || item[columna2].toLowerCase().includes(texto)  );
     }
 
     );
+
+
+    
+
+    /*  columnas.forEach(function (value) {
+       console.log('dentro del foreach');
+       console.log(value);
+       miBusqueda = this.devuelveArr(arreglo,texto, value);
+       miarray.push(miBusqueda);
+     }); */
+
+/* 
+
+    let miBusqueda = arreglo.filter(item => {
+      return item[columna1].toLowerCase()
+        .includes(texto);
+    }
+    );
+
+    let miBusqueda2 = arreglo.filter(item => {
+      return item[columna2].toLowerCase()
+        .includes(texto);
+    }
+    );
+    console.log('mis busquedas...');
+    
+
+    console.log(miBusqueda);
+    console.log(miBusqueda2);
+    
+    
+
+    miBusqueda.push(miBusqueda2);
+
+    return miBusqueda; */
+
+
     /* return miarray; */
+  }
+
+  devuelveArr(arreglo: any[], texto: string, columna: string): any[] {
+    //esto no dio el resultado esperado
+    //ver de que manera implementarlo
+    console.log('devuelveArr', columna);
+    return arreglo.filter(item => {
+      return item[columna].toLowerCase()
+        .includes(texto);
+    });
   }
 
 }

@@ -19,7 +19,7 @@
           <ion-item>
             <ion-label >Duración:</ion-label>
             <ion-select name="duracion" [(ngModel)]="visita.duracion" 
-              value="visita.duracion" okText="Okay" cancelText="Dismiss">
+              value="visita.duracion" okText="Aceptar" cancelText="Cancelar">
               <ion-select-option value="solo hoy">Solo hoy</ion-select-option>
               <ion-select-option value="indefinido">Indefinido</ion-select-option>
               <ion-select-option value="rango de fechas">Rango de fechas</ion-select-option>
@@ -29,7 +29,7 @@
           <ion-item>        
             <ion-label>Fecha visita</ion-label>
             <ion-datetime name="fechaInicio" placeholder="Fecha visita"                      
-                      display-format ="YYYY MMMM DD"
+                      display-format ="DD MMMM YYYY "
                       cancelText="Descartar"
                       [ngModel] ="visita.fechaInicio.toISOString()"
                       (ionChange)="cambioFechaIniciaVisita( $event )" >
@@ -38,7 +38,7 @@
           <ion-item>                    
             <ion-label>Fecha termina</ion-label>
             <ion-datetime name="fechaTermina" placeholder="Fecha termina"
-                      display-format ="YYYY MMMM DD"
+                      display-format ="DD MMMM YYYY "
                       cancelText="Descartar"
                       [ngModel] ="visita.fechaTermina.toISOString()"
                       (ionChange)="cambioFechaTerminaVisita( $event )" >
