@@ -9,6 +9,7 @@
             <ion-datetime name="fechaGasto"
               display-format ="DD MMMM YYYY "
               cancelText="Descartar"
+              doneText="Aceptar"
               [ngModel] ="gasto.fechaGasto.toISOString()"
               (ionChange)="cambioFecha($event )" >
               </ion-datetime>
@@ -17,7 +18,7 @@
           <ion-item>
             <ion-label >Tipo de registro:</ion-label>
             <ion-select name="tipoGasto" [(ngModel)]="gasto.tipoGasto" 
-              value="gasto.tipoGasto" okText="Okay" cancelText="Dismiss">              
+              value="gasto.tipoGasto" okText="Aceptar" cancelText="Cancelar">
               <ion-select-option value="Gasto general">Gasto general</ion-select-option>
               <ion-select-option value="Vigilancia">Vigilancia</ion-select-option>
               <ion-select-option value="Jardineria">Jardineria</ion-select-option>
@@ -37,7 +38,7 @@
           <ion-item>
             <ion-label >Forma de pago</ion-label>
             <ion-select name="formaPago" [(ngModel)]="gasto.formaPago" 
-              value="gasto.formaPago" okText="Okay" cancelText="Dismiss">              
+              value="gasto.formaPago" okText="Aceptar" cancelText="Cancelar">
               <ion-select-option value="Efectivo">Efectivo</ion-select-option>
               <ion-select-option value="Transferencia">Transferencia</ion-select-option>
               <ion-select-option value="Otro">Otro</ion-select-option>              

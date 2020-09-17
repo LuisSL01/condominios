@@ -16,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { Camera } from '@ionic-native/camera/ngx';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { FileTransfer } from '@ionic-native/file-transfer/ngx';
     SplashScreen,
     Camera,
     FileTransfer,
+    OneSignal,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

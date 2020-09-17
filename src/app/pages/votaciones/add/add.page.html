@@ -14,7 +14,8 @@
             <ion-label>Fecha Termina</ion-label>
             <ion-datetime name="fechaTermina"
               display-format ="DD MMMM YYYY"
-              cancelText="Descartar"
+              doneText="Aceptar"
+              cancelText="Cancelar"
               [ngModel] ="votacion.fechaTermina.toISOString()"
               (ionChange)="cambioFecha($event)" >
               </ion-datetime>
@@ -24,7 +25,8 @@
             <ion-label>Hora Termina</ion-label>
             <ion-datetime name="horaTermina"
               displayFormat="HH:mm"
-              cancelText="Descartar"
+              doneText="Aceptar"
+              cancelText="Cancelar"
               [ngModel] ="votacion.horaTermina.toISOString()"
               (ionChange)="cambioHora($event)" >
               </ion-datetime>

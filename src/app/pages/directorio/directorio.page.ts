@@ -19,6 +19,8 @@ export class DirectorioPage implements OnInit {
   buscar( event ){
     console.log('directorio.buscar()');    
     this.textoBuscar = event.detail.value;
+    console.log(this.textoBuscar);
+    
   }
 
 }

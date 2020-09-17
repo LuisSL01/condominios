@@ -9,33 +9,41 @@ import { Aviso } from 'src/app/models/aviso.model';
   styleUrls: ['./avisos.page.scss'],
 })
 export class AvisosPage implements OnInit {
-/*   numero: number = 1;
-  fecha: Date = new Date(); */
+  /*   numero: number = 1;
+    fecha: Date = new Date(); */
   textoBuscar = '';
 
   public avisosList: Aviso[];
 
-  constructor(public dataLocalAvisoService:DataLocalAvisoService) { }
+  constructor(public dataLocalAvisoService: DataLocalAvisoService) { 
+    this.avisosList = this.dataLocalAvisoService.avisos;
+  }
 
   ngOnInit() {
-
-
-    this.avisosList = this.dataLocalAvisoService.avisos;
-    
-
   }
 
-  buscar( event ){
-    console.log('aviso.buscar()');    
+  buscar(event) {
+    console.log('aviso.buscar()');
     this.textoBuscar = event.detail.value;
+    
+    this.avisosList = this.dataLocalAvisoService.avisos;
+    if (this.textoBuscar === '') {
+      return;
+    }else{
+      console.log('this.textoBuscar', this.textoBuscar);
+      this.textoBuscar = this.textoBuscar.toLowerCase();
+      this.avisosList = this.avisosList.filter(item => {
+        /* console.log(item.titulo.toLowerCase());
+        console.log(this.textoBuscar);
+        console.log(item.titulo.toLowerCase().includes(this.textoBuscar)); */
+        return (item.titulo.toLowerCase().includes(this.textoBuscar)
+         || item.mensaje.toLowerCase().includes(this.textoBuscar)
+          );
+      }
+
+      );
+    }
+
+
   }
-
-
-
-/*   cambioFecha(event){    
-    console.log(this.numero, 'cambioFecha', event);      
-    this.numero++;
-    this.fecha = new Date(event.detail.value);
-    console.log('cambio fecha',new Date(event.detail.value));
-  } */
 }

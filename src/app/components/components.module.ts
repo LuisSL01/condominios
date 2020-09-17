@@ -4,16 +4,18 @@ import { HeaderComponent } from './header/header.component';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { PipesModule } from '../pipes/pipes.module';
+import { MenuComponent } from './menu/menu.component';
 
 
 
 @NgModule({
   declarations: [    
-    HeaderComponent
+    HeaderComponent,
+    MenuComponent
   ],
-  exports:[
-    
-    HeaderComponent
+  exports:[    
+    HeaderComponent,
+    MenuComponent
   ],
   imports: [
     RouterModule,

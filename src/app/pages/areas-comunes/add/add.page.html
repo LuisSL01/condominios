@@ -19,8 +19,9 @@
       </ion-item>
       <ion-item>
         <ion-label>Color:</ion-label>
-        <ion-select name="color" [(ngModel)]="areaComun.color" value="areaComun.color" okText="Okay"
-          cancelText="Dismiss">
+        <ion-select name="color" [(ngModel)]="areaComun.color" value="areaComun.color" 
+          okText="Aceptar"
+          cancelText="Cancelar">
           <ion-select-option value="rojo">Rojo</ion-select-option>
           <ion-select-option value="verde">Verde</ion-select-option>
           <ion-select-option value="azul">Azul</ion-select-option>
@@ -41,12 +42,14 @@
       <ion-item>
         <ion-label>De</ion-label>
         <ion-datetime name="horaInicia" displayFormat="HH:mm" cancelText="Descartar"
+          doneText="Aceptar" 
           [ngModel]="areaComun.horaInicia.toISOString()" (ionChange)="cambioHoraInicia($event)">
         </ion-datetime>
       </ion-item>
       <ion-item>
         <ion-label>Hasta</ion-label>
         <ion-datetime name="horaTermina" displayFormat="HH:mm" cancelText="Descartar"
+          doneText="Aceptar" 
           [ngModel]="areaComun.horaTermina.toISOString()" (ionChange)="cambioHoraTermina($event)">
         </ion-datetime>
       </ion-item>

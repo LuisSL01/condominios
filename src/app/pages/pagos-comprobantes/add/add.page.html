@@ -8,7 +8,8 @@
 
       <ion-item>
         <ion-label>Mes</ion-label>
-        <ion-select name="mesPago" [(ngModel)]="pago.mesPago" value="pago.mesPago" okText="Okay" cancelText="Dismiss">          
+        <ion-select name="mesPago" [(ngModel)]="pago.mesPago" 
+        value="pago.mesPago" okText="Aceptar" cancelText="Cancelar">
           <ion-select-option value="Febrero 2020">Febrero 2020</ion-select-option>
           <ion-select-option value="Marzo 2020">Marzo 2020</ion-select-option>
           <ion-select-option value="Abril 2020">Abril 2020</ion-select-option>
@@ -17,8 +18,8 @@
  
       <ion-item>
         <ion-label>Forma de pago</ion-label>
-        <ion-select name="formaPago" [(ngModel)]="pago.formaPago" value="pago.formaPago" okText="Okay" cancelText="Dismiss">
-          
+        <ion-select name="formaPago" [(ngModel)]="pago.formaPago" 
+        value="pago.formaPago" okText="Aceptar" cancelText="Cancelar">          
           <ion-select-option value="efectivo">Efectivo</ion-select-option>
           <ion-select-option value="cheque">Cheque</ion-select-option>
           <ion-select-option value="transferencia">Transferencia</ion-select-option>

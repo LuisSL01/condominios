@@ -31,9 +31,7 @@ export class DataLocalAvisoService {
   }
 
   borrarAviso(aviso: Aviso) {
-    //Nota en lugar de estar filtrando por titulo deberia ser por ID.
-    //Bueno hace falta ver cual seria la manera mas optima 
-    //debido a que es multiempresa
+    //Nota en lugar de estar filtrando por titulo deberia ser por ID.    
     this.avisos = this.avisos.filter(avso => avso.idaviso !== aviso.idaviso)
     this.storage.set('avisos', this.avisos);
     this.dataLocalService.presentToast('Aviso borrado');

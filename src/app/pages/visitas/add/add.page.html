@@ -10,7 +10,7 @@
           <ion-item>
             <ion-label >Tipo de visita:</ion-label>
             <ion-select name="tipoVisita" [(ngModel)]="visita.tipoVisita" 
-              value="visita.tipoVisita" okText="Okay" cancelText="Dismiss">
+              value="visita.tipoVisita" okText="Aceptar" cancelText="Cancelar">
               <ion-select-option value="reunion">Reunion</ion-select-option>
               <ion-select-option value="visita">Visita</ion-select-option>
               <ion-select-option value="trabajador">Trabajador</ion-select-option>              
@@ -30,7 +30,8 @@
             <ion-label>Fecha visita</ion-label>
             <ion-datetime name="fechaInicio" placeholder="Fecha visita"                      
                       display-format ="DD MMMM YYYY "
-                      cancelText="Descartar"
+                      doneText="Aceptar"
+                      cancelText="Cancelar"
                       [ngModel] ="visita.fechaInicio.toISOString()"
                       (ionChange)="cambioFechaIniciaVisita( $event )" >
           </ion-datetime>   
@@ -39,7 +40,8 @@
             <ion-label>Fecha termina</ion-label>
             <ion-datetime name="fechaTermina" placeholder="Fecha termina"
                       display-format ="DD MMMM YYYY "
-                      cancelText="Descartar"
+                      doneText="Aceptar"
+                      cancelText="Cancelar"
                       [ngModel] ="visita.fechaTermina.toISOString()"
                       (ionChange)="cambioFechaTerminaVisita( $event )" >
           </ion-datetime>   
@@ -56,9 +58,5 @@
         <ion-button expand="full" type="submit" [disabled]="formulario.invalid">
           Guardar
         </ion-button>
-        </form>
-       
-    
-    
-      
+        </form>  
 </ion-content>
