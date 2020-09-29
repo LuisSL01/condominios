@@ -1,6 +1,7 @@
-<app-header titulo="Avisos"></app-header>
+<app-header titulo="Avisos Title"></app-header>
 <ion-content fullscreen>
 
+  
   <ion-searchbar animated (ionChange)="buscar($event)"></ion-searchbar>
 
   <ion-slides class="emptyData" *ngIf="avisosList.length === 0">
