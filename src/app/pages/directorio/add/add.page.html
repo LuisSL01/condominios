@@ -1,3 +1,5 @@
+
+
 <app-header titulo="Nuevo directorio"></app-header>
 
 <ion-content>
@@ -5,67 +7,79 @@
 
         <ion-list>  
           <ion-item>
-            <ion-label position="floating">Nombre</ion-label>
-            <ion-input name="nombre" [(ngModel)]="directorio.nombre" required>
+            <ion-label position="floating"><ion-icon name="person-outline"style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;
+          "></ion-icon>&nbsp;Nombre</ion-label>
+            <ion-input name="nombre" color="primary" [(ngModel)]="directorio.nombre" required>
             </ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="floating">Apellido Paterno</ion-label>
+            <ion-label position="floating" style="margin-left: 23px;">&nbsp;Apellido Paterno</ion-label>
             <ion-input name="apellidoP" [(ngModel)]="directorio.apellidoP" required>
             </ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="floating">Apellido Materno</ion-label>
+            <ion-label position="floating" style="margin-left: 23px;">&nbsp;Apellido Materno</ion-label>
             <ion-input name="apellidoM" [(ngModel)]="directorio.apellidoM">
             </ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="floating">Manzana/Privada</ion-label>
+            <ion-label position="floating"><ion-icon name="home-outline"style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;
+          "></ion-icon>&nbsp;Dirección</ion-label>
             <ion-input name="privada" [(ngModel)]="directorio.privada">
             </ion-input>
           </ion-item>                    
+                  
           <ion-item>
-            <ion-label position="floating" >Calle</ion-label>
-            <ion-input name="calle" [(ngModel)]="directorio.direccion.calle">
-            </ion-input>
-          </ion-item>          
-          <ion-item>
-            <ion-label position="floating">Numero Interior/Exterior</ion-label>
+            <ion-label position="floating" style="margin-left: 23px;">&nbsp;Número Interior/Exterior</ion-label>
             <ion-input name="numInterior" [(ngModel)]="directorio.direccion.numInterior">
             </ion-input>
           </ion-item>   
           <ion-item>
-            <ion-label position="floating">Colonia</ion-label>
+            <ion-label position="floating" style="margin-left: 23px;">&nbsp;Colonia</ion-label>
             <ion-input name="colonia" [(ngModel)]="directorio.direccion.colonia">
             </ion-input>
           </ion-item>       
           <ion-item>
-            <ion-label position="floating">Código Postal</ion-label>
+            <ion-label position="floating" style="margin-left: 23px;">&nbsp;Código Postal</ion-label>
             <ion-input name="codigoPostal" type="number" [(ngModel)]="directorio.direccion.cp">
             </ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="floating">Celular</ion-label>
+            <ion-label position="floating"><ion-icon name="call-outline"style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;
+          ">></ion-icon>&nbsp;Celular</ion-label>
             <ion-input name="celular" [(ngModel)]="directorio.direccion.celular">
             </ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="floating">Telefono 1</ion-label>
+            <ion-label position="floating" style="margin-left: 23px;">&nbsp;Teléfono 1</ion-label>
             <ion-input name="telefono1" [(ngModel)]="directorio.direccion.telefono1">
             </ion-input>
           </ion-item>
-          <ion-item>
-            <ion-label position="floating">Telefono 2</ion-label>
-            <ion-input name="telefono2" [(ngModel)]="directorio.direccion.telefono2">
-            </ion-input>
-          </ion-item>
         
-    
-    
         </ion-list>
-        <ion-button expand="full" type="submit" [disabled]="formulario1.invalid">
-          Guardar
-        </ion-button>
-    
+        
+       
+
+                <ion-footer>
+                  <ion-toolbar  color="light">
+                    <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
+
+                      <ion-button fill="clear" size="small"  type="submit" [disabled]="formulario1.invalid" style="text-transform: none; margin-left: 140px; margin-top: -40px;">Guardar
+                        <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #00DDFF;" ></ion-icon>
+                      </ion-button>
+                    
+                    
+                      <ion-button  fill="clear" size="small"  style="text-transform: none; margin-top: -40px; " routerLink={this.appdirectorios}>Cancelar
+                            <ion-icon  slot="start" name="close-circle-outline" style="font-size:23px; color: #00DDFF;" ></ion-icon>
+                              </ion-button>
+                  </ion-toolbar>
+                </ion-footer>
+
+
+             
+               
       </form>
 </ion-content>

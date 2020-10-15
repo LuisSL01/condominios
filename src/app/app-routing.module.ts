@@ -51,6 +51,8 @@ const routes: Routes = [
     path: 'areas-comunes',
     loadChildren: () => import('./pages/areas-comunes/areas-comunes.module').then( m => m.AreasComunesPageModule)
   },
+ 
+
 ];
 
 @NgModule({
