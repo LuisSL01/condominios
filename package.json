@@ -36,7 +36,6 @@
     "cordova-sqlite-storage": "^5.0.1",
     "moment": "^2.27.0",
     "moment-timezone": "^0.5.31",
-    "onesignal-cordova-plugin": "^2.9.1",
     "rxjs": "~6.5.1",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
@@ -75,7 +74,9 @@
     "plugins": {
       "cordova-sqlite-storage": {},
       "cordova-plugin-file-transfer": {},
-      "cordova-plugin-camera": {},
+      "cordova-plugin-camera": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      },
       "cordova-plugin-whitelist": {},
       "cordova-plugin-statusbar": {},
       "cordova-plugin-device": {},
@@ -84,7 +85,6 @@
         "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
       },
       "cordova-plugin-ionic-keyboard": {},
-      "onesignal-cordova-plugin": {},
       "cordova-plugin-headercolor": {}
     },
     "platforms": [
