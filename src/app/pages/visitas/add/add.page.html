@@ -3,21 +3,24 @@
       <form #formulario="ngForm" (ngSubmit)="save()">
         <ion-list>          
           <ion-item>
-            <ion-label position="floating">Nombre</ion-label>
+            <ion-label position="floating"><ion-icon name="person-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;Nombre</ion-label>
             <ion-input name="nombre" [(ngModel)]="visita.nombre" required>
             </ion-input>
           </ion-item>
           <ion-item>
-            <ion-label >Tipo de visita:</ion-label>
+            <ion-label><ion-icon name="create-outline"style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;Tipo de visita</ion-label>
             <ion-select name="tipoVisita" [(ngModel)]="visita.tipoVisita" 
               value="visita.tipoVisita" okText="Aceptar" cancelText="Cancelar">
-              <ion-select-option value="reunion">Reunion</ion-select-option>
+              <ion-select-option value="reunion">Reunión</ion-select-option>
               <ion-select-option value="visita">Visita</ion-select-option>
               <ion-select-option value="trabajador">Trabajador</ion-select-option>              
             </ion-select>
           </ion-item>
           <ion-item>
-            <ion-label >Duración:</ion-label>
+            <ion-label><ion-icon name="flash-outline"style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;Duración</ion-label>
             <ion-select name="duracion" [(ngModel)]="visita.duracion" 
               value="visita.duracion" okText="Aceptar" cancelText="Cancelar">
               <ion-select-option value="solo hoy">Solo hoy</ion-select-option>
@@ -26,10 +29,12 @@
             </ion-select>
           </ion-item>
 
-          <ion-item>        
-            <ion-label>Fecha visita</ion-label>
-            <ion-datetime name="fechaInicio" placeholder="Fecha visita"                      
-                      display-format ="DD MMMM YYYY "
+          <ion-item>      
+            <ion-label><ion-icon name="hourglass-outline"style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;Fecha de visita</ion-label>    
+            <ion-datetime  style="margin-bottom: -8px;" name="fechaInicio" placeholder="Fecha visita"                      
+                      displayFormat="DD / MMM / YYYY"
+                      monthShortNames="Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre"
                       doneText="Aceptar"
                       cancelText="Cancelar"
                       [ngModel] ="visita.fechaInicio.toISOString()"
@@ -37,9 +42,11 @@
           </ion-datetime>   
           </ion-item>
           <ion-item>                    
-            <ion-label>Fecha termina</ion-label>
-            <ion-datetime name="fechaTermina" placeholder="Fecha termina"
-                      display-format ="DD MMMM YYYY "
+            <ion-label><ion-icon name="alarm-outline"style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;Fecha de término</ion-label>  
+            <ion-datetime  style="margin-bottom: -8px;" name="fechaTermina" placeholder="Fecha termina"
+                      displayFormat="DD / MMM / YYYY"
+                      monthShortNames="Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre"
                       doneText="Aceptar"
                       cancelText="Cancelar"
                       [ngModel] ="visita.fechaTermina.toISOString()"
@@ -47,16 +54,31 @@
           </ion-datetime>   
           </ion-item>
           <ion-item>
-            <ion-label>¿Con acompañantes?</ion-label>
+            <ion-label><ion-icon name="people-outline"style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;¿Viene con acompañantes?</ion-label> 
             <ion-toggle slot="end" name="conAcompaniantes" [(ngModel)]="visita.conAcompaniantes"></ion-toggle>
           </ion-item>
           <ion-item>
-            <ion-label>¿Todos los dias?</ion-label>
+            <ion-label><ion-icon name="person-add-outline"style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;¿Usted viene todos los días?</ion-label> 
             <ion-toggle slot="end" name="visitaDiaria" [(ngModel)]="visita.visitaDiaria"></ion-toggle>
           </ion-item>
         </ion-list>
-        <ion-button expand="full" type="submit" [disabled]="formulario.invalid">
-          Guardar
-        </ion-button>
+        <ion-footer>
+          <ion-toolbar  color="light">
+            <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
+
+              <ion-button fill="clear" size="small"  type="submit"  [disabled]="formulario.invalid" style="text-transform: none; margin-left: 140px; margin-top: -40px;">Guardar
+                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #00DDFF;" ></ion-icon>
+              </ion-button>
+            
+            
+              <ion-button  fill="clear" size="small"  style="text-transform: none; margin-top: -40px; " routerLink={this.appdirectorios}>Cancelar
+                    <ion-icon  slot="start" name="close-circle-outline" style="font-size:23px; color: #00DDFF;" ></ion-icon>
+                      </ion-button>
+          </ion-toolbar>
+        </ion-footer>
+
+       
         </form>  
 </ion-content>

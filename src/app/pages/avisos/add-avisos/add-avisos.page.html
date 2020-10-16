@@ -5,7 +5,8 @@
 
     <ion-list>
       <ion-item>
-        <ion-label>Destinatario</ion-label>
+        <ion-label><ion-icon name="mail-open-outline"style="font-size:23px; color: #00DDFF; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;Destinatario</ion-label>  
         <ion-select name="destinatario" [(ngModel)]="aviso.destinatario" 
         value="aviso.destinatario" okText="Aceptar"
           cancelText="Cancelar">
@@ -15,25 +16,28 @@
           <ion-select-option value="m3">Manzana 3</ion-select-option>
         </ion-select>
       </ion-item>
+      
       <ion-item>
-        <ion-label position="floating">Titulo</ion-label>
+        <ion-label><ion-icon name="megaphone-outline"style="font-size:23px; color: #00DDFF; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;Título</ion-label>  
         <ion-input name="titulo" [(ngModel)]="aviso.titulo" required>
         </ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Mensaje</ion-label>
-        <ion-textarea placeholder="Escriba su mensaje aquí" name="mensaje" [(ngModel)]="aviso.mensaje" required>
+        <ion-label><ion-icon name="create-outline"style="font-size:23px; color: #00DDFF; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;Mensaje</ion-label> 
+        <ion-textarea style="margin-bottom: -11px; font-size: 14px;" placeholder="Aquí escriba su mensaje" name="mensaje" [(ngModel)]="aviso.mensaje" required>
         </ion-textarea>
       </ion-item>
       <ion-item>
-        <ion-button expand="full" shape="round" (click)="camara()">
-          <ion-icon slot="start" name="camera"></ion-icon>
-          Cámara
+        <ion-button fill="clear" size="small" (click)="camara()">
+          <ion-icon slot="start" name="camera-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+        
         </ion-button>
 
-        <ion-button expand="full" shape="round" (click)="libreria()">
-          <ion-icon slot="start" name="images"></ion-icon>
-          Galería
+        <ion-button fill="clear" size="small" (click)="libreria()">
+          <ion-icon slot="start" name="image-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+         
         </ion-button>
       </ion-item>
       <ion-item>
@@ -43,17 +47,22 @@
           </ion-card>
         </ion-col>
       </ion-item>
-
-
     </ion-list>
-    <ion-button expand="full" type="submit" [disabled]="formulario1.invalid">
-      Guardar
-    </ion-button>
+
+    <ion-footer>
+      <ion-toolbar  color="light">
+        <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
+
+          <ion-button fill="clear" size="small" type="submit" [disabled]="formulario1.invalid" style="text-transform: none; margin-left: 140px; margin-top: -40px;">Guardar
+            <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #00DDFF;" ></ion-icon>
+          </ion-button>
+        
+        
+          <ion-button  fill="clear" size="small"  style="text-transform: none; margin-top: -40px; " routerLink={this.appdirectorios}>Cancelar
+                <ion-icon  slot="start" name="close-circle-outline" style="font-size:23px; color: #00DDFF;" ></ion-icon>
+                  </ion-button>
+      </ion-toolbar>
+    </ion-footer>
 
   </form>
-  <ion-list>
-
-  </ion-list>
-
-
 </ion-content>
