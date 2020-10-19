@@ -7,7 +7,9 @@
     <ion-list>
 
       <ion-item>
-        <ion-label>Mes</ion-label>
+        
+        <ion-label><ion-icon name="calendar-outline" style="font-size:23px; color: #00DDFF; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;Mes</ion-label>
         <ion-select name="mesPago" [(ngModel)]="pago.mesPago" 
         value="pago.mesPago" okText="Aceptar" cancelText="Cancelar">
           <ion-select-option value="Febrero 2020">Febrero 2020</ion-select-option>
@@ -17,7 +19,8 @@
       </ion-item>
  
       <ion-item>
-        <ion-label>Forma de pago</ion-label>
+        <ion-label><ion-icon name="cash-outline" style="font-size:23px; color: #00DDFF; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;Forma de pago</ion-label>  
         <ion-select name="formaPago" [(ngModel)]="pago.formaPago" 
         value="pago.formaPago" okText="Aceptar" cancelText="Cancelar">          
           <ion-select-option value="efectivo">Efectivo</ion-select-option>
@@ -27,14 +30,12 @@
       </ion-item>
 
       <ion-item>
-        <ion-button expand="full" shape="round" (click)="camara()">
-          <ion-icon slot="start" name="camera"></ion-icon>
-          Cámara
+        <ion-button fill="clear" size="small" (click)="camara()">
+          <ion-icon slot="start"name="camera-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
         </ion-button>
 
-        <ion-button expand="full" shape="round" (click)="libreria()">
-          <ion-icon slot="start" name="images"></ion-icon>
-          Galería
+        <ion-button fill="clear" size="small" (click)="libreria()">
+          <ion-icon slot="start" name="image-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
         </ion-button>
       </ion-item>
       <ion-item>
@@ -47,12 +48,22 @@
       </ion-item>
       
     </ion-list>
-    <ion-button expand="full" type="submit" [disabled]="formulario1.invalid">
-      Guardar
-    </ion-button>
+    
 
+    <ion-footer>
+    <ion-toolbar  color="light">
+      <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
+
+        <ion-button fill="clear" size="small" type="submit"  [disabled]="formulario1.invalid" style="text-transform: none; margin-left: 140px; margin-top: -40px;">Guardar
+          <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #00DDFF;" ></ion-icon>
+        </ion-button>
+      
+      
+        <ion-button  fill="clear" size="small"  style="text-transform: none; margin-top: -40px; " routerLink={this.appdirectorios}>Cancelar
+              <ion-icon  slot="start" name="close-circle-outline" style="font-size:23px; color: #00DDFF;" ></ion-icon>
+                </ion-button>
+    </ion-toolbar>
+  </ion-footer>
 
   </form>
-
-
 </ion-content>
