@@ -2,7 +2,7 @@
   <ion-header>
     <ion-toolbar color="primary">
       <!--<ion-title>hola</ion-title>-->
-      <ion-img src="assets/g.JPG" style="height:50px;"></ion-img>
+      
     </ion-toolbar>
   </ion-header>
   <ion-content>
@@ -10,7 +10,7 @@
       <ion-menu-toggle *ngFor="let c of componentes | async">
 
         <ion-item [routerLink]="c.redirectTo" detail>
-          <ion-icon slot="start" [name]="c.icon" color="primary"> </ion-icon>
+          <ion-icon slot="start" [name]="c.icon" color="medium"> </ion-icon>
           <ion-label>
             {{c.name}}
           </ion-label>

@@ -1,4 +1,16 @@
-<app-header titulo="Nuevo contactoEmergencia"></app-header>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start" >
+   
+        <ion-menu-button color="light" menu="primerMenu"></ion-menu-button>      
+
+    </ion-buttons>
+    <ion-title></ion-title>
+    <ion-img src="assets/g.JPG"  style="margin-right: 155px; height:40px;"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<app-header titulo="Contacto de emergencia"></app-header>
 <ion-content>
     <form #formulario="ngForm" (ngSubmit)="save()">
         <ion-list>

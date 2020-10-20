@@ -1,16 +1,14 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start" >
-      <!-- <ion-button (click)="toogleMenu()">
-        <ion-icon slot="icon-only" name="menu"></ion-icon>        
-      </ion-button> -->
-      <!--Con ambas formas funciona-->
-        <ion-menu-button color="primary" menu="primerMenu"></ion-menu-button>      
+   
+        <ion-menu-button color="light" menu="primerMenu"></ion-menu-button>      
 
     </ion-buttons>
 
 
-    <ion-title color="primary" >Menú</ion-title>
+    <ion-title color="medium"></ion-title>
+    <ion-img src="assets/g.JPG"  style="margin-right: 155px; height:40px;"></ion-img>
   </ion-toolbar>
 </ion-header>
 
@@ -20,10 +18,15 @@
     [routerLink]="c.redirectTo" detail>
   <ion-icon  slot="start" 
              [name] = "c.icon"
-             color="primary" > </ion-icon>
+             color="medium" > </ion-icon>
   <ion-label>
    {{c.name}}
   </ion-label>
  </ion-item> 
   </ion-list>
 </ion-content>
+<ion-footer>
+  <ion-toolbar  color="light">
+    <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
+  </ion-toolbar>
+</ion-footer>

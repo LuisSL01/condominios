@@ -1,3 +1,15 @@
+
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start" >
+   
+        <ion-menu-button color="light" menu="primerMenu"></ion-menu-button>      
+
+    </ion-buttons>
+    <ion-title></ion-title>
+    <ion-img src="assets/g.JPG"  style="margin-right: 155px; height:40px;"></ion-img>
+  </ion-toolbar>
+</ion-header>
 <app-header titulo="Nuevo aviso"></app-header>
 
 <ion-content>
@@ -50,7 +62,7 @@
     </ion-list>
 
     <ion-footer>
-      <ion-toolbar  color="light">
+      <ion-toolbar  color="light" style="position: fixed; bottom: 0px;">
         <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
 
           <ion-button fill="clear" size="small" type="submit" [disabled]="formulario1.invalid" style="text-transform: none; margin-left: 140px; margin-top: -40px;">Guardar

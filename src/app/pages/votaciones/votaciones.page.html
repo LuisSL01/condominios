@@ -1,3 +1,15 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start" >
+   
+        <ion-menu-button color="light" menu="primerMenu"></ion-menu-button>      
+
+    </ion-buttons>
+    <ion-title></ion-title>
+    <ion-img src="assets/g.JPG"  style="margin-right: 155px; height:40px;"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
 <app-header titulo ="Votaciones"></app-header>
 <ion-content>  
 
@@ -9,7 +21,7 @@
   
   <ion-list *ngIf="dataLocalVotacionesService.votaciones.length > 0">
 
-    <ion-searchbar animated (ionChange)="buscar($event)"></ion-searchbar>
+    <ion-searchbar  placeholder="Buscar" animated (ionChange)="buscar($event)"></ion-searchbar>
 
     <ion-item *ngFor="let votacion of dataLocalVotacionesService.votaciones">
       
