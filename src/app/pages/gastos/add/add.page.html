@@ -10,16 +10,22 @@
   </ion-toolbar>
 </ion-header>
 
-<app-header titulo="Nuevo gasto"></app-header>
+<app-header   titulo="Nuevo gasto"></app-header>
 
+<!--style="
+color: #00DDFF;
+margin-left: -20px;
+" -->
 <ion-content>
     <form #formulario="ngForm" (ngSubmit)="save()">
         <ion-list>
 
           <ion-item>
-            <ion-label>Fecha</ion-label>
-            <ion-datetime name="fechaGasto"
-              display-format ="DD MMMM YYYY "
+            <ion-label><ion-icon name="alarm-outline"style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Fecha</ion-label> 
+            <ion-datetime  style="margin-bottom: -8px;" name="fechaGasto"
+            displayFormat="DD / MMM / YYYY"
+            monthShortNames="Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre"
               cancelText="Descartar"
               doneText="Aceptar"
               [ngModel] ="gasto.fechaGasto.toISOString()"
@@ -28,27 +34,31 @@
 
           </ion-item>
           <ion-item>
-            <ion-label >Tipo de registro:</ion-label>
+            <ion-label><ion-icon name="receipt-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Tipo de registro</ion-label>  
             <ion-select name="tipoGasto" [(ngModel)]="gasto.tipoGasto" 
               value="gasto.tipoGasto" okText="Aceptar" cancelText="Cancelar">
               <ion-select-option value="Gasto general">Gasto general</ion-select-option>
               <ion-select-option value="Vigilancia">Vigilancia</ion-select-option>
-              <ion-select-option value="Jardineria">Jardineria</ion-select-option>
+              <ion-select-option value="Jardineria">Jardinería</ion-select-option>
               <ion-select-option value="Limpieza">Limpieza</ion-select-option>
               <ion-select-option value="Mantenimiento general">Mantenimiento general</ion-select-option>
             </ion-select>
           </ion-item>
           <ion-item>
-            <ion-label position="floating">cantidad</ion-label>
+            <ion-label><ion-icon name= "calculator-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Cantidad</ion-label> 
             <ion-input name="cantidad" type="number" [(ngModel)]="gasto.cantidad">
             </ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="floating">Descripcion</ion-label>          
+            <ion-label><ion-icon name="pencil-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Descripción</ion-label>      
             <ion-textarea name="descripcion" [(ngModel)]="gasto.descripcion"></ion-textarea>
           </ion-item>
           <ion-item>
-            <ion-label >Forma de pago</ion-label>
+            <ion-label><ion-icon name="cash-outline"style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Forma de pago</ion-label> 
             <ion-select name="formaPago" [(ngModel)]="gasto.formaPago" 
               value="gasto.formaPago" okText="Aceptar" cancelText="Cancelar">
               <ion-select-option value="Efectivo">Efectivo</ion-select-option>
@@ -58,15 +68,11 @@
           </ion-item>
 
           <ion-item>
-            <ion-button expand="full" shape="round" (click)="camara()">
-              <ion-icon slot="start" name="camera"></ion-icon>
-              Cámara
-            </ion-button>
+            <ion-button fill="clear" size="small" (click)="camara()">
+              <ion-icon slot="start" name="camera-outline" style="font-size:23px; color: #00DDFF;"></ion-icon></ion-button>
     
-            <ion-button expand="full" shape="round" (click)="libreria()">
-              <ion-icon slot="start" name="images"></ion-icon>
-              Galería
-            </ion-button>
+            <ion-button fill="clear" size="small" (click)="libreria()">
+              <ion-icon slot="start"name="image-outline" style="font-size:23px; color: #00DDFF;"></ion-icon></ion-button>
           </ion-item>
           <ion-item>
 
