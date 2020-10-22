@@ -6,7 +6,7 @@
 
     </ion-buttons>
     <ion-title></ion-title>
-    <ion-img src="assets/g.JPG"  style="margin-right: 155px; height:40px;"></ion-img>
+    <ion-img src="assets/g.png"  style="margin-right: 155px; height:50px;"></ion-img>
   </ion-toolbar>
 </ion-header>
 
@@ -15,17 +15,25 @@
     <form #formulario="ngForm" (ngSubmit)="save()">
         <ion-list>
           <ion-item>
-            <ion-label position="floating">Titulo: </ion-label>                      
-            <ion-input name="titulo" [(ngModel)]="votacion.titulo" type="text" placeholder="titulo"></ion-input>
+           
+            <ion-label><ion-icon  name="pencil-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Título </ion-label>
+            <ion-input name="titulo" [(ngModel)]="votacion.titulo" type="text"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="floating">Mensaje: </ion-label>                      
-            <ion-input name="mensaje" [(ngModel)]="votacion.mensaje" type="text" placeholder="Mensaje"></ion-input>
+              
+            
+            <ion-label><ion-icon name="chatbubble-ellipses-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Mensaje</ion-label>
+            <ion-input name="mensaje" [(ngModel)]="votacion.mensaje" type="text"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label>Fecha Termina</ion-label>
-            <ion-datetime name="fechaTermina"
-              display-format ="DD MMMM YYYY"
+           
+            <ion-label><ion-icon name="calendar-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Fecha Término</ion-label> 
+            <ion-datetime name="fechaTermina"  style="margin-bottom: -8px;"
+            displayFormat="DD / MMM / YYYY"
+            monthShortNames="Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre"
               doneText="Aceptar"
               cancelText="Cancelar"
               [ngModel] ="votacion.fechaTermina.toISOString()"
@@ -34,9 +42,11 @@
 
           </ion-item>
           <ion-item>
-            <ion-label>Hora Termina</ion-label>
+            <ion-label><ion-icon name="alarm-outline"style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Hora Término</ion-label> 
             <ion-datetime name="horaTermina"
-              displayFormat="HH:mm"
+              displayFormat="HH:mm A"
+           
               doneText="Aceptar"
               cancelText="Cancelar"
               [ngModel] ="votacion.horaTermina.toISOString()"
@@ -45,38 +55,56 @@
 
           </ion-item>
           <ion-item>
-            <ion-label position="floating">Pregunta 1: </ion-label>                      
+              
+            <ion-label><ion-icon  name="help-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Pregunta </ion-label>                  
             <ion-input name="p1" [(ngModel)]="votacionPregunta.pregunta" 
-            type="text" placeholder="pregunta"></ion-input>
+            type="text"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label slot="start">Opcion 1: </ion-label>                      
+                   
+            <ion-label><ion-icon name="hand-left-outline" style="font-size:19px; color: #00DDFF; 
+              margin-bottom: -2px;"></ion-icon>&nbsp;&nbsp;Opción 1 </ion-label>              
             <ion-input name="o1" [(ngModel)]="votacionPreguntaOpcion.opcion" 
-            type="text" placeholder="opcion"></ion-input>
+            type="text" placeholder="Agregue su opción" style="margin-bottom: -5px;"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label slot="start">Opcion 2: </ion-label>                      
+            <ion-label><ion-icon name="hand-right-outline" style="font-size:19px; color: #00DDFF; 
+              margin-bottom: -2px;"></ion-icon>&nbsp;&nbsp;Opción 2 </ion-label>                 
             <ion-input name="o2" [(ngModel)]="votacionPreguntaOpcion.opcion" 
-            type="text" placeholder="opcion"></ion-input>
+            type="text" placeholder="Agregue su opción" style="margin-bottom: -5px;"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-button expand="full" shape="round">
-              <ion-icon slot="start" name="help-outline"></ion-icon>
+            <ion-button fill="clear" size="small" style="text-transform: none; font-size:15px; margin-left: -4px;">
+              <ion-icon slot="start"   name="help-circle-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
               Añadir pregunta
             </ion-button>
     
-            <ion-button expand="full" shape="round">
-              <ion-icon slot="start" name="add-outline"></ion-icon>
+            <ion-button fill="clear" size="small" style="text-transform: none;font-size:15px; " >
+              <ion-icon slot="start" name="add-circle-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
               Añadir opción
             </ion-button>
           </ion-item>
 
 
         </ion-list>
-        <ion-button expand="full" type="submit" [disabled]="formulario.invalid">
-          Guardar
-        </ion-button>
+
     
+
+        <ion-footer>
+          <ion-toolbar  color="light" style="position: fixed; bottom: 0px;">
+            <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
+
+              <ion-button fill="clear" size="small"  type="submit"  [disabled]="formulario.invalid" style="text-transform: none; margin-left: 140px; margin-top: -40px;">Guardar
+                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #00DDFF;" ></ion-icon>
+              </ion-button>
+            
+            
+              <ion-button  fill="clear" size="small"  style="text-transform: none; margin-top: -40px; " routerLink={this.appdirectorios}>Cancelar
+                    <ion-icon  slot="start" name="close-circle-outline" style="font-size:23px; color: #00DDFF;" ></ion-icon>
+                      </ion-button>
+          </ion-toolbar>
+        </ion-footer>
       </form>
 </ion-content>
