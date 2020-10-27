@@ -1,7 +1,0 @@
-{
-  "name": "googleFonts",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "angular"
-}

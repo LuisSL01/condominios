@@ -74,6 +74,8 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade:#F7F7F7;
   --ion-color-light-tint: #F7F7F7;
+  --ion-font-family: 'Ridley Grotesk';
+  
 }
 
 @media (prefers-color-scheme: dark) {
@@ -228,5 +230,21 @@
     --ion-tab-bar-background: #1f1f1f;
 
     --ion-card-background: #1e1e1e;
+    
   }
 }
+
+@font-face {
+  font-family: 'Ridley Grotesk';
+  font-style: normal;
+  src: url('../assets/fonts/RidleyGrotesk-Regular.otf');
+}
+
+/*@font-face {
+  font-family: 'ParalucentW00-DemiBold';
+  font-style: normal;
+  src: url('../assets/fonts/ParalucentDb.ttf');
+}
+
+--ion-font-family: 'ParalucentW00-DemiBold';
+*/

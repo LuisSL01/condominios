@@ -15,29 +15,47 @@
     <form #formulario="ngForm" (ngSubmit)="save()">
         <ion-list>
           <ion-item>
-            <ion-label position="floating">Titulo: </ion-label>                      
-            <ion-input name="titulo" [(ngModel)]="contactoEmergencia.titulo" type="text" placeholder="titulo"></ion-input>
+             
+            <ion-label><ion-icon name="pencil-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;Título</ion-label>                   
+            <ion-input name="titulo" [(ngModel)]="contactoEmergencia.titulo" type="text"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="floating">Nombre: </ion-label>                      
-            <ion-input name="nombre" [(ngModel)]="contactoEmergencia.nombre" type="text" placeholder="nombre"></ion-input>
+           
+            <ion-label><ion-icon name="person-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;Nombre </ion-label>                     
+            <ion-input name="nombre" [(ngModel)]="contactoEmergencia.nombre" type="text"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="floating">Celular: </ion-label>                      
-            <ion-input name="celular" [(ngModel)]="contactoEmergencia.celular" type="text" placeholder="celular"></ion-input>
+            <ion-label><ion-icon name="phone-portrait-outline"style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;Celular</ion-label>                      
+            <ion-input name="celular" [(ngModel)]="contactoEmergencia.celular" type="text"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="floating">Telefono 1: </ion-label>                      
-            <ion-input name="telefono1" [(ngModel)]="contactoEmergencia.telefono1" type="text" placeholder="telefono1"></ion-input>
+            <ion-label><ion-icon name="call-outline"style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;Teléfono 1</ion-label>                      
+            <ion-input name="telefono1" [(ngModel)]="contactoEmergencia.telefono1" type="text"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="floating">Telefono 2: </ion-label>                      
-            <ion-input name="telefono2" [(ngModel)]="contactoEmergencia.telefono2" type="text" placeholder="telefono2"></ion-input>
+            <ion-label><ion-icon name="call-outline"style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;Teléfono 2</ion-label>
+            <ion-input name="telefono2" [(ngModel)]="contactoEmergencia.telefono2" type="text"></ion-input>
           </ion-item>
         </ion-list>
-        <ion-button expand="full" type="submit" [disabled]="formulario.invalid">
-          Guardar
-        </ion-button>
+        <ion-footer>
+          <ion-toolbar  color="light" style="position: fixed; bottom: 0px;">
+            <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
+
+              <ion-button fill="clear" size="small"  type="submit" [disabled]="formulario.invalid" style="text-transform: none;margin-left: 120px; margin-top: -40px;">Guardar
+                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #00DDFF;" ></ion-icon>
+              </ion-button>
+            
+            
+              <ion-button  fill="clear" size="small"  style="text-transform: none;margin-top: -80px;  margin-left: 220px; " routerLink={this.appdirectorios}>Cancelar
+                    <ion-icon  slot="start" name="close-circle-outline" style="font-size:23px; color: #00DDFF;" ></ion-icon>
+                      </ion-button>
+          </ion-toolbar>
+        </ion-footer>
     
       </form>
 </ion-content>

@@ -1,4 +1,5 @@
 <ion-header>
+  
   <ion-toolbar color="primary">
     <ion-buttons slot="start" >
    
@@ -11,7 +12,10 @@
 </ion-header>
 
 <app-header titulo="Nueva votación"></app-header>
+
+
 <ion-content>
+
     <form #formulario="ngForm" (ngSubmit)="save()">
         <ion-list>
           <ion-item>
@@ -76,12 +80,13 @@
           </ion-item>
 
           <ion-item>
-            <ion-button fill="clear" size="small" style="text-transform: none; font-size:15px; margin-left: -4px;">
+            <ion-button fill="clear" size="small" style="text-transform: none; font-size:16px; margin-left: -4px;">
               <ion-icon slot="start"   name="help-circle-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
               Añadir pregunta
             </ion-button>
-    
-            <ion-button fill="clear" size="small" style="text-transform: none;font-size:15px; " >
+          </ion-item>
+          <ion-item>
+            <ion-button fill="clear" size="small" style="text-transform: none;font-size:16px;margin-left: -4px; " >
               <ion-icon slot="start" name="add-circle-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
               Añadir opción
             </ion-button>
@@ -96,15 +101,16 @@
           <ion-toolbar  color="light" style="position: fixed; bottom: 0px;">
             <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
 
-              <ion-button fill="clear" size="small"  type="submit"  [disabled]="formulario.invalid" style="text-transform: none; margin-left: 140px; margin-top: -40px;">Guardar
+              <ion-button fill="clear" size="small"  type="submit"  [disabled]="formulario.invalid" style="text-transform: none; margin-left: 120px; margin-top: -40px;">Guardar
                 <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #00DDFF;" ></ion-icon>
               </ion-button>
             
             
-              <ion-button  fill="clear" size="small"  style="text-transform: none; margin-top: -40px; " routerLink={this.appdirectorios}>Cancelar
+              <ion-button  fill="clear" size="small"  style="text-transform: none; margin-top: -80px;  margin-left: 220px;" routerLink={this.appdirectorios}>Cancelar
                     <ion-icon  slot="start" name="close-circle-outline" style="font-size:23px; color: #00DDFF;" ></ion-icon>
                       </ion-button>
           </ion-toolbar>
         </ion-footer>
       </form>
+  
 </ion-content>
