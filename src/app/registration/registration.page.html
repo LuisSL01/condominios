@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Crear cuenta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form>
+    <ion-item lines="full">
+      <ion-label position="floating"><ion-icon name="person-outline" style="font-size:23px; color: #00DDFF; 
+        margin-bottom: -5px;
+    "></ion-icon>&nbsp;Nombre</ion-label>
+      <ion-input type="text" required></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating"><ion-icon name="pencil-outline" style="font-size:23px; color: #00DDFF; 
+        margin-bottom: -5px;
+    "></ion-icon>&nbsp;Apellidos</ion-label>
+      <ion-input type="text" required></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating"><ion-icon name="at-outline" style="font-size:23px; color: #00DDFF; 
+        margin-bottom: -5px;
+    "></ion-icon>&nbsp;Cuenta de correo</ion-label>
+      <ion-input type="text" required></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating"><ion-icon name="lock-closed-outline" style="font-size:23px; color: #00DDFF; 
+        margin-bottom: -5px;
+    "></ion-icon>&nbsp;Contraseña</ion-label>
+      <ion-input type="password" required></ion-input>
+    </ion-item>
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="secondary" expand="block">¡Regístrate!</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+
+  
+  
+
+  <ion-footer>
+    <ion-toolbar  color="light" style="position: fixed; bottom: 0px;">
+      <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
+    </ion-toolbar>
+  </ion-footer>
+
+</ion-content>

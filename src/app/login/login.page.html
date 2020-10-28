@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Iniciar sesión</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form>
+    <ion-item lines="full">
+      <ion-label position="floating">Cuenta de correo</ion-label>
+      <ion-input type="text" required></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input type="password" required></ion-input>
+    </ion-item>
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="secondary" expand="block">¡Entra a tú cuenta!</ion-button>
+        <a [routerLink]="['/forgot-password']" class="small-text">¿Olvidaste tu contraseña?</a>
+      </ion-col>
+    </ion-row>
+
+  </form>
+
+
+  <ion-footer>
+    <ion-toolbar  color="light" style="position: fixed; bottom: 0px;">
+      <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
+    </ion-toolbar>
+  </ion-footer>
+
+</ion-content>

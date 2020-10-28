@@ -1,0 +1,44 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Ionic 4 Form
+    </ion-title>
+  </ion-toolbar>
+</ion-header>-->
+
+<ion-img src="assets/login.PNG" style="height:210px; width: 200;"></ion-img>
+<ion-label> ¡HOLA!</ion-label> 
+  <ion-label> Inicia sesión con tu cuenta</ion-label>
+<ion-content class="auth-form">
+  <ion-grid>
+    <ion-row>
+      <ion-col align-self-center>
+        <ion-button [routerLink]="['/registration']" expand="block" color="primary">Nueva cuenta</ion-button>
+
+        <span class="divider line one-line">ó</span>
+
+        <span class="already">¿Ya tiene una cuenta?</span>
+
+        <ion-button [routerLink]="['/login']" expand="block" color="secondary">Iniciar sesión</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  
+  <ion-button fill="clear" size="small" href="https://www.facebook.com/ERPVORTEX/">
+    <ion-icon slot="start" name="logo-facebook" style="font-size:23px; color: #00DDFF;"  ></ion-icon>
+  </ion-button>
+  <ion-button fill="clear" size="small" href="https://www.instagram.com/erp_vortex/?hl=es-la">
+    <ion-icon slot="start" name="logo-instagram" style="font-size:23px; color: #00DDFF;"  ></ion-icon>
+  </ion-button>
+  <ion-button fill="clear" size="small" href="https://mx.linkedin.com/company/erp-vortex-s.a.p.i.-de-c.v.">
+    <ion-icon slot="start" name="logo-linkedin" style="font-size:23px; color: #00DDFF;"  ></ion-icon>
+  </ion-button>
+
+<ion-label>¿Quieres saber más?</ion-label>
+<ion-label>contact@corbee.com</ion-label>
+  <ion-footer>
+    <ion-toolbar  color="secondary" style="position: fixed; bottom: 0px;">
+    </ion-toolbar>
+  </ion-footer>
+</ion-content>
