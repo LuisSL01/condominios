@@ -17,6 +17,6 @@ import { PipesModule } from '../../../pipes/pipes.module';
     ListPageRoutingModule,
     PipesModule
   ],
-  declarations: [ListPage]
+  declarations: []
 })
 export class ListPageModule {}
