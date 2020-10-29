@@ -13,7 +13,7 @@
         <img [src]="img | imageSanitizer">
       </ion-slide>
     </ion-slides>
-    <ion-slides *ngIf="areaComun.imgs.length === 1" [options]="slideSoloOpts">
+    <ion-slides *ngIf="areaComun.imgs.length === 1" >
       <ion-slide *ngFor="let img of areaComun.imgs" class="image-slide">
         <img [src]="img | imageSanitizer">
       </ion-slide>
