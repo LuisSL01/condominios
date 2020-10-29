@@ -20,6 +20,6 @@ import { PipesModule } from '../../../pipes/pipes.module';
 
     PipesModule
   ],
-  declarations: [ListAvisosPage]
+  declarations: []
 })
 export class ListAvisosPageModule {}

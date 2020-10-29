@@ -15,6 +15,6 @@ import { ListPage } from './list.page';
     IonicModule,
     ListPageRoutingModule
   ],
-  declarations: [ListPage]
+  declarations: []
 })
 export class ListPageModule {}
