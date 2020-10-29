@@ -9,6 +9,7 @@ import { PagosComprobantesPageRoutingModule } from './pagos-comprobantes-routing
 import { PagosComprobantesPage } from './pagos-comprobantes.page';
 import { ComponentsModule } from '../../components/components.module';
 import { ListPage } from './list/list.page';
+import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { ListPage } from './list/list.page';
     FormsModule,
     IonicModule,
     PagosComprobantesPageRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    PipesModule
   ],
   declarations: [PagosComprobantesPage, ListPage]
 })

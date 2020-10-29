@@ -22,11 +22,14 @@ export class AddPage implements OnInit {
     this.dataLocalVisitaService.guardarVisita(this.visita);
     
   }
-  cambioFechaIniciaVisita(){
-
+  cambioFechaIniciaVisita(event){
+    console.log('cambioFechaIniciaVisita', event);
+    
   }
 
-  cambioFechaTerminaVisita(){
+  cambioFechaTerminaVisita(event){
+    console.log('cambioFechaTerminaVisita', event);
+    
 
   }
 

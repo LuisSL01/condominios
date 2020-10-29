@@ -9,6 +9,7 @@ import { GastosPageRoutingModule } from './gastos-routing.module';
 import { GastosPage } from './gastos.page';
 import { ComponentsModule } from '../../components/components.module';
 import { ListPage } from './list/list.page';
+import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { ListPage } from './list/list.page';
     FormsModule,
     IonicModule,
     GastosPageRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    PipesModule
   ],
   declarations: [GastosPage, ListPage]
 })
