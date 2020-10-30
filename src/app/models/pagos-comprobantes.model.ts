@@ -1,5 +1,5 @@
 export class PagosComprobantes{
-
+    public idpagocomprobante:number;
     public idempresa:number;
     public idagenteCreo:number;
     public idstatus:number;//aqui el estatus podra ser cambiaodo por el usuario que autorize los pagos

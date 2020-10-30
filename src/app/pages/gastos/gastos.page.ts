@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataLocalGastoService } from '../../services/data-local-gasto.service';
+import { Gasto } from '../../models/gasto.model';
 
 @Component({
   selector: 'app-gastos',
@@ -9,8 +10,10 @@ import { DataLocalGastoService } from '../../services/data-local-gasto.service';
 export class GastosPage implements OnInit {
 
   textoBuscar ='';
-
-  constructor(public dataLocalGastoService:DataLocalGastoService) { }
+  public gastoList: Gasto[];
+  constructor(public dataLocalGastoService:DataLocalGastoService) {
+    this.gastoList = this.dataLocalGastoService.gastos;
+   }
 
   ngOnInit() {
   }
@@ -18,6 +21,25 @@ export class GastosPage implements OnInit {
   buscar( event ){
     console.log('gasto.buscar()');    
     this.textoBuscar = event.detail.value;
+    this.gastoList = this.dataLocalGastoService.gastos;
+
+    if(this.textoBuscar === ''){
+      return ;
+    }else{
+      this.textoBuscar = this.textoBuscar.toLowerCase();  
+      this.gastoList = this.gastoList.filter(item => {
+        return (
+          (item.tipoGasto.toLowerCase().includes(this.textoBuscar))
+         || ((item.cantidad+"").toLowerCase().includes(this.textoBuscar))
+         || (item.descripcion.toLowerCase().includes(this.textoBuscar))
+         || (item.formaPago.toLowerCase().includes(this.textoBuscar))
+          );
+      }    
+      );
+      console.log('despues de terminar el filter');
+    }
+
+
   }
 
 }

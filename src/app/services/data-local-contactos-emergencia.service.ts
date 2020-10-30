@@ -18,9 +18,20 @@ export class DataLocalContactosEmergenciaService {
 
 
   guardarContactoEmergencia(contactoEmergencia: ContactosEmergencia) {
-    this.contactosEmergencia.unshift(contactoEmergencia);
+    const existe = this.contactosEmergencia.find( con => con.idcontacoEmergencia === contactoEmergencia.idcontacoEmergencia );
+    if(! existe ){
+      contactoEmergencia.idcontacoEmergencia = this.dataLocalService.getNumeroNegativo() * -1;
+      this.contactosEmergencia.unshift(contactoEmergencia);
+      this.storage.set('contactosemergencia', this.contactosEmergencia);
+      this.dataLocalService.presentToast('Contacto agregado.')
+
+    }
+  }
+
+  borrarContactoEmergencia(contactoEmergencia: ContactosEmergencia){
+    this.contactosEmergencia = this.contactosEmergencia.filter(con => con.idcontacoEmergencia !== contactoEmergencia.idcontacoEmergencia);
     this.storage.set('contactosemergencia', this.contactosEmergencia);
-    this.dataLocalService.presentToast('Contacto de emergencia agregaado.')
+    this.dataLocalService.presentToast('Contacto borrado');
   }
 
   async cargarContactosEmergencia() {

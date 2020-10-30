@@ -15,10 +15,21 @@ export class DataLocalVotacionesService {
    }
 
    guardarVotacion( votacion : Votacion ){
+    const existe = this.votaciones.find( vot => vot.idvotacion === votacion.idvotacion );
+    if( ! existe){
+      votacion.idvotacion = this.dataLocalService.getNumeroNegativo() *-1;
       this.votaciones.unshift(votacion);
       this.storage.set('votaciones', this.votaciones);
       this.dataLocalService.presentToast('Votación agregado');
+    }
    }
+
+
+   borrarVotacion(votacion: Votacion) {
+    this.votaciones = this.votaciones.filter(vot => vot.idvotacion !== votacion.idvotacion)
+    this.storage.set('votaciones', this.votaciones);
+    this.dataLocalService.presentToast('Votación borrada');
+  }
 
    async cargarVotaciones(){
       const vot = await this.storage.get('votaciones');

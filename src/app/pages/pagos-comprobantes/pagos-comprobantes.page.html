@@ -12,21 +12,22 @@
 
 <app-header titulo="Pagos / Comprobantes"></app-header>
 
-<ion-content>
+<ion-content fullscreen>
 
 
+  <ion-searchbar animated (ionChange)="buscar($event)" placeholder="Buscar"></ion-searchbar>
 
-  <ion-slides class="emptyData" *ngIf="dataLocalPagosComprobantesService.pagosComprobantes.length === 0">
+  <ion-slides class="emptyData" *ngIf="pagoComprobanteList.length === 0">
     <ion-slide class="emptyData">
       <ion-label>No hay comprobantes</ion-label>
     </ion-slide>
   </ion-slides>
 
-  <ion-grid fixed *ngIf="dataLocalPagosComprobantesService.pagosComprobantes.length > 0">
-    <ion-searchbar animated (ionChange)="buscar($event)" placeholder="Buscar"></ion-searchbar>
+  <ion-grid fixed *ngIf="pagoComprobanteList.length > 0">
+    
     <ion-row>
       <ion-col size="12" size-lg="3" size-md="4" size-sm="6" size-xs="12"
-        *ngFor="let pagoComprobante of dataLocalPagosComprobantesService.pagosComprobantes">
+        *ngFor="let pagoComprobante of pagoComprobanteList">
 
         <app-list [pagoComprobante]="pagoComprobante"></app-list>
 

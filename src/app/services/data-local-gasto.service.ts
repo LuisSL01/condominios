@@ -17,10 +17,21 @@ export class DataLocalGastoService {
       this.cargarGastos();
     }
 
-    guardarGasto( gasto: Gasto){
-      this.gastos.unshift(gasto);
+    guardarGasto(gasto: Gasto){
+      const existe = this.gastos.find( gas => gas.idgasto === gasto.idgasto);
+      if(! existe ){
+        gasto.idgasto = this.dataLocalService.getNumeroNegativo()*-1;
+        this.gastos.unshift(gasto);
+        this.storage.set('gastos',this.gastos);
+        this.dataLocalService.presentToast('Gasto agregado');
+      }
+
+    }
+    borrarGasto(gasto: Gasto){
+      this.gastos = this.gastos.filter(gas => gas.idgasto !== gasto.idgasto)
       this.storage.set('gastos',this.gastos);
-      this.dataLocalService.presentToast('Gasto agregado');
+      this.dataLocalService.presentToast('Gasto borrado');
+
     }
     async cargarGastos(){
       const gastos = await this.storage.get('gastos') 

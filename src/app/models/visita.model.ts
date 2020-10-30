@@ -1,4 +1,5 @@
 export class Visita{
+    public idvisita:number;
     public idempresa:number;
     public nombre:string;
     public idagenteCreo:number;

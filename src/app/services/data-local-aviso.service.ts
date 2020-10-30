@@ -17,9 +17,6 @@ export class DataLocalAvisoService {
   guardarAviso(aviso: Aviso) {
     //se inserta la noticia que se recibe en el arr    
     const existe = this.avisos.find( avi => avi.idaviso === aviso.idaviso );
-    console.log('El aviso ya existe...');
-    console.log(existe);
-      
     if(! existe ){
       aviso.idaviso = this.dataLocalService.getNumeroNegativo()*-1;
       this.avisos.unshift(aviso);

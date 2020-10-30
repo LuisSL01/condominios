@@ -1,5 +1,5 @@
 export class ContactosEmergencia{
-
+    public idcontacoEmergencia:number;    
     public idempresa:number;
     public titulo:string;
     public nombre:string;
@@ -8,8 +8,7 @@ export class ContactosEmergencia{
     public telefono2:string;
 
     constructor(){
-        console.log('I am in constructor of Contactos emergencia');
-        
+        console.log('I am in constructor of Contactos emergencia');        
     }
 
 

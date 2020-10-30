@@ -1,9 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-buttons slot="start" >
-   
+    <ion-buttons slot="start" >   
         <ion-menu-button color="light" menu="primerMenu"></ion-menu-button>      
-
     </ion-buttons>
     <ion-title></ion-title>
     <ion-img src="assets/g.png"  style="margin-right: 155px; height:50px;"></ion-img>
@@ -11,34 +9,26 @@
 </ion-header>
 
 <app-header titulo ="Votaciones"></app-header>
-<ion-content>  
-
-  <ion-slides class="emptyData" *ngIf="dataLocalVotacionesService.votaciones.length === 0">
+<ion-content fullscreen>  
+  <ion-searchbar  placeholder="Buscar" animated (ionChange)="buscar($event)"></ion-searchbar>
+  <ion-slides class="emptyData" *ngIf="votacionesList.length === 0">
     <ion-slide class="emptyData">
-      <ion-label>No hay encuestas</ion-label>
+      <ion-label>No hay votaciones</ion-label>
     </ion-slide>
-  </ion-slides>
-  
-  <ion-list *ngIf="dataLocalVotacionesService.votaciones.length > 0">
-
-    <ion-searchbar  placeholder="Buscar" animated (ionChange)="buscar($event)"></ion-searchbar>
-
-    <ion-item *ngFor="let votacion of dataLocalVotacionesService.votaciones">
-      
-      <app-list [votacion] = "votacion" ></app-list>
-
-   <!--    <ion-label>
-        {{votacion.titulo}}
-      </ion-label>
-      <ion-label>
-        {{votacion.mensaje}}
-      </ion-label> -->
+  </ion-slides>  
 
 
-    </ion-item>
-  </ion-list>
-  
 
+  <ion-grid fixed *ngIf="votacionesList.length > 0">    
+    <ion-row>
+     <ion-col  size="12" size-lg="3" size-md="4" size-sm="6" size-xs="12"
+         *ngFor="let votacion of votacionesList">
+
+         <app-list [votacion] = "votacion" ></app-list>
+
+     </ion-col>
+   </ion-row>
+  </ion-grid>
 
   <ion-fab vertical ="bottom" horizontal ="end" slot="fixed">
     <ion-fab-button routerLink="/votaciones/add" >

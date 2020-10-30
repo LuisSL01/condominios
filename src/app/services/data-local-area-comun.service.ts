@@ -16,10 +16,20 @@ export class DataLocalAreaComunService {
 
    }
    guardarAreaComun(areaComun : AreaComun){
-     this.areasComunes.unshift(areaComun);
-     this.storage.set('areascomunes',this.areasComunes);
-     this.dataLocalService.presentToast('Areá agregada');     
+    const existe = this.areasComunes.find( are => are.idareaComun === areaComun.idareaComun );
+    if(! existe ){
+      areaComun.idareaComun = this.dataLocalService.getNumeroNegativo() * -1;
+      this.areasComunes.unshift(areaComun);
+      this.storage.set('areascomunes',this.areasComunes);
+      this.dataLocalService.presentToast('Área agregada');
+    }
    }
+
+  borrarAreaComun(areaComun : AreaComun) {
+    this.areasComunes = this.areasComunes.filter(are => are.idareaComun !== areaComun.idareaComun)
+    this.storage.set('areascomunes',this.areasComunes);
+    this.dataLocalService.presentToast('Área borrada');
+  }
 
    async cargarAreasComunes(){
      const areas = await this.storage.get('areascomunes');

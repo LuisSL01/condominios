@@ -1,4 +1,5 @@
 export class Gasto{
+    public idgasto:number;
     public idempresa:number;
     public tipoGasto:string;
     public cantidad:number;

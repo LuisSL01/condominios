@@ -13,7 +13,7 @@ export class AnunciosPage implements OnInit {
 
 
   constructor(public dataLocalAnuncioService: DataLocalAnuncioService) { 
-    this.anunciosList = dataLocalAnuncioService.anuncios;    
+    this.anunciosList = this.dataLocalAnuncioService.anuncios;    
   }
 
   ngOnInit() {

@@ -1,7 +1,5 @@
-
-
 export class Votacion{
-
+    public idvotacion:number;
     public idempresa:number;
     public idagenteCreo:number;
     public fechaCreacion:Date;
@@ -16,7 +14,7 @@ export class Votacion{
 
     constructor(){
         console.log('Iam in the constrictor of votaciones');
-        
+        this.fechaCreacion = new Date();
         this.aplicaOpcionesSI_NO = true;
         this.fechaTermina = new Date();
         this.horaTermina = new Date();   

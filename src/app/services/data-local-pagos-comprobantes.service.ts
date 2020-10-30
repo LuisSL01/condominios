@@ -15,9 +15,19 @@ export class DataLocalPagosComprobantesService {
     this.cargarPagosComprobantes();
   }
   guardarPagoComprobante(pagoComprobante: PagosComprobantes) {
-    this.pagosComprobantes.unshift(pagoComprobante);
+    const existe = this.pagosComprobantes.find( pag => pag.idpagocomprobante === pagoComprobante.idpagocomprobante );
+    if(! existe ){
+      pagoComprobante.idpagocomprobante = this.dataLocalService.getNumeroNegativo()*-1;      
+      this.pagosComprobantes.unshift(pagoComprobante);
+      this.storage.set('pagoscomprobantes', this.pagosComprobantes);
+      this.dataLocalService.presentToast('Pago comprobante agregado');
+    }
+  }
+
+  borrarPagoComprobante(pagoComprobante: PagosComprobantes){
+    this.pagosComprobantes = this.pagosComprobantes.filter(pag => pag.idpagocomprobante !== pagoComprobante.idpagocomprobante);
     this.storage.set('pagoscomprobantes', this.pagosComprobantes);
-    this.dataLocalService.presentToast('Pago comprobante agregado');
+    this.dataLocalService.presentToast('Pago comprobante borrado');
   }
 
   async cargarPagosComprobantes() {

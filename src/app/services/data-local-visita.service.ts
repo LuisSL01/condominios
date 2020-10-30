@@ -17,10 +17,19 @@ export class DataLocalVisitaService {
 
                }
   guardarVisita(visita: Visita){
-    this.visitas.unshift(visita);
+    const existe = this.visitas.find( vis => vis.idvisita === visita.idvisita );
+    if(! existe ){
+      visita.idvisita = this.dataLocalService.getNumeroNegativo() * -1;
+      this.visitas.unshift(visita);
+      this.storage.set('visitas', this.visitas);
+      this.dataLocalService.presentToast('Visita agregada');
+    }  
+  }
+
+  borrarVisita(visita: Visita){
+    this.visitas = this.visitas.filter(vis => vis.idvisita !== visita.idvisita)
     this.storage.set('visitas', this.visitas);
-    this.dataLocalService.presentToast('Visita agregada');
-  
+    this.dataLocalService.presentToast('Visita borrada');
   }
 
   async cargarVisitas(){

@@ -1,4 +1,4 @@
-
+<!-- 
   <ion-label>
     {{visita.nombre}}
   </ion-label>
@@ -10,5 +10,23 @@
   </ion-label>
   <ion-label>
     {{visita.duracion}}
-  </ion-label>
+  </ion-label> -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>  {{visita.nombre}} -  {{visita.fechaCreacion | date:'dd/MM/yyyy'}}</ion-card-title>
+      <ion-card-subtitle>
+        <span class="text-primary">   {{visita.tipoVisita}}</span>
+        <div class="card-more">
+          <ion-button fill="clear" (click)="lanzarMenu()">
+            <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      {{visita.duracion}}
+    </ion-card-content>
+  </ion-card>
+  
+  
 
