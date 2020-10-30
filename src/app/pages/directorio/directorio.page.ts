@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataLocalDirectorioService } from 'src/app/services/data-local-directorio.service';
+import { Directorio } from '../../models/directorio.model';
 
 @Component({
   selector: 'app-directorio',
@@ -11,7 +12,10 @@ export class DirectorioPage implements OnInit {
 
   textoBuscar ='';
 
-  constructor(public dataLocalDirectorioService:DataLocalDirectorioService) { }
+  public directorioList: Directorio[]; 
+  constructor(public dataLocalDirectorioService:DataLocalDirectorioService) { 
+    this.directorioList = this.dataLocalDirectorioService.directorios;
+  }
 
   ngOnInit() {
   }
@@ -20,6 +24,34 @@ export class DirectorioPage implements OnInit {
     console.log('directorio.buscar()');    
     this.textoBuscar = event.detail.value;
     console.log(this.textoBuscar);
+
+    /* this.dataLocalDirectorioService.buscar(this.textoBuscar); */
+
+
+
+    this.directorioList = this.dataLocalDirectorioService.directorios;
+
+    if(this.textoBuscar === ''){
+      return ;
+    }else{
+      console.log('this.tectoBuscar: '+ this.textoBuscar);
+      
+      this.textoBuscar = this.textoBuscar.toLowerCase();
+
+      console.log('antes de entrar al filter');
+      
+      this.directorioList = this.directorioList.filter(item => {
+        return (
+          (item.nombre.toLowerCase().includes(this.textoBuscar))
+         || (item.apellidoP.toLowerCase().includes(this.textoBuscar))
+         || (item.apellidoM.toLowerCase().includes(this.textoBuscar))
+          );
+      }
+      
+      
+      );
+      console.log('despues de terminar el filter');
+    }
     
   }
 

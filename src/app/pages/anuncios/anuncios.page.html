@@ -10,27 +10,25 @@
   </ion-toolbar>
 </ion-header>
 <app-header titulo="Anuncios"></app-header>
+<ion-content fullscreen>
 
+  <ion-searchbar  placeholder="Buscar" animated (ionChange)="buscar($event)"></ion-searchbar>
 
-<ion-content>
-
-  <ion-slides class="emptyData" *ngIf="dataLocalAnuncioService.anuncios.length === 0">
+  <ion-slides class="emptyData" *ngIf="anunciosList.length === 0">
     <ion-slide class="emptyData">
       <ion-label>No hay anuncios</ion-label>
     </ion-slide>
   </ion-slides>
 
-  <ion-grid fixed *ngIf="dataLocalAnuncioService.anuncios.length > 0">
-    <ion-searchbar  placeholder="Buscar" animated (ionChange)="buscar($event)"></ion-searchbar>
+  <ion-grid fixed *ngIf="anunciosList.length > 0">
+    
     <ion-row>
       <ion-col size="12" size-lg="3" size-md="4" size-sm="6" size-xs="12"
-        *ngFor="let anuncio of dataLocalAnuncioService.anuncios">
+        *ngFor="let anuncio of anunciosList">
         <app-list [anuncio]="anuncio"></app-list>
       </ion-col>
     </ion-row>
   </ion-grid>
-
-
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button routerLink="/anuncios/add">

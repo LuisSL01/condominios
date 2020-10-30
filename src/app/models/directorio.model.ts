@@ -1,5 +1,6 @@
 import { Direccion } from './direccion.model';
 export class Directorio{
+    public iddirectorio:number;
     public idempresa: number;
     public nombre:string;
     public apellidoP:string;

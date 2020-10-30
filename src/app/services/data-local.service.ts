@@ -9,7 +9,9 @@ declare var window: any;
 export class DataLocalService {
 
   //Actualmense se utilizara para lanzar los toast de la aplicacion.
-  numeroNegativo = -1;
+
+
+  numeroNegativo = -1;//Numero negativo para tener un numero consucitivo de los registros que se vayan creando
   
 
   constructor(public toastController: ToastController) {

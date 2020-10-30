@@ -1,4 +1,5 @@
 export class Anuncio{
+    public idanuncio:number;
     public idempresa:number;
     public idagenteCreo:number;
     public titulo:string;

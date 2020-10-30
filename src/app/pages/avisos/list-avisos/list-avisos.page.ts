@@ -25,11 +25,10 @@ export class ListAvisosPage implements OnInit {
   ngOnInit() {
   }
 
+
   async lanzarMenu() {
 
     let guardarBorrarBtn;
-
-  
 
       guardarBorrarBtn = {
         text: 'Borrar aviso',

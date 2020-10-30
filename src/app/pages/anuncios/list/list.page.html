@@ -1,10 +1,19 @@
 
 
-<ion-card>
+<ion-card lines="none">
   <ion-card-header>
     <ion-card-title>{{anuncio.titulo}}</ion-card-title>
-    <ion-card-subtitle>{{anuncio.precio}}</ion-card-subtitle>
-    <ion-label>{{anuncio.telefono}}</ion-label>
+
+    <ion-card-subtitle>
+      <span class="text-primary"> ${{anuncio.precio}} - Tel.: {{anuncio.telefono}} </span>
+      <div class="card-more">
+        <ion-button fill="clear" (click)="lanzarMenu()">
+          <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
+        </ion-button>
+      </div>
+
+    </ion-card-subtitle>
+
   </ion-card-header>
   <ion-card-content>
     {{anuncio.descripcion}}

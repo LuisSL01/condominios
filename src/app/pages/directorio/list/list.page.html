@@ -1,6 +1,17 @@
 <ion-card lines="none">
   <ion-card-header>
-    <ion-card-title>{{directorio.nombre}} {{directorio.apellidoP}} {{directorio.apellidoM}}</ion-card-title>
+    <ion-card-title>{{directorio.nombre}}</ion-card-title>
+    
+    <ion-card-subtitle>
+      <span class="text-primary">  {{directorio.apellidoP}} {{directorio.apellidoM}} </span>
+      <div class="card-more">
+        <ion-button fill="clear" (click)="lanzarMenu()">
+          <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
+        </ion-button>
+      </div>
+
+    </ion-card-subtitle>
+
   </ion-card-header>
 
   <ion-card-content>

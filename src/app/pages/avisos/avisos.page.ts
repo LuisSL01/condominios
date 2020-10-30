@@ -30,8 +30,11 @@ export class AvisosPage implements OnInit {
     if (this.textoBuscar === '') {
       return;
     }else{
+
       console.log('this.textoBuscar', this.textoBuscar);
       this.textoBuscar = this.textoBuscar.toLowerCase();
+      console.log('antes de entrar al filter');
+      
       this.avisosList = this.avisosList.filter(item => {
         /* console.log(item.titulo.toLowerCase());
         console.log(this.textoBuscar);
@@ -42,6 +45,9 @@ export class AvisosPage implements OnInit {
       }
 
       );
+
+      console.log('despues de terminar el filter');
+      
     }
 
 
