@@ -1,4 +1,4 @@
-<ion-menu side="start" menuId="primerMenu" contentId="principal">
+<ion-menu side="start" menuId="SegundoMenu" contentId="segundo">
   <ion-header>
     <ion-toolbar color="primary">
       <!--<ion-title>hola</ion-title>-->
@@ -10,14 +10,13 @@
     <ion-list>
       <ion-menu-toggle *ngFor="let c of componentes | async">
 
-        <ion-item [routerLink]="c.redirectTo" detail>
-          <ion-icon slot="start" [name]="c.icon" color="medium"> </ion-icon>
-          <ion-label>
-            {{c.name}}
-          </ion-label>
+        <ion-item color="primary" *ngIf="showBtnLogin">
+          <ion-icon slot="start" name="log-out" color="light"></ion-icon>
+          <ion-label color="light" (click)="logout()"> Cerrar sesión</ion-label>
         </ion-item>
 
       </ion-menu-toggle>
     </ion-list>
   </ion-content>
 </ion-menu>
+
