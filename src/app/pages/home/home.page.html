@@ -1,44 +1,53 @@
-<!-- <ion-header>
-  <ion-toolbar>
-    <ion-title>
-      
-    </ion-title>
-  </ion-toolbar>
-</ion-header>-->
+<ion-header>
+  <ion-img  src="assets/login.PNG"></ion-img>
+</ion-header>
 
-<ion-img src="assets/login.PNG" style="height:210px; width: 200;"></ion-img>
-<ion-label> ¡HOLA!</ion-label> 
-  <ion-label> Inicia sesión con tu cuenta</ion-label>
+
+<ion-label color="light"> ¡HOLA!</ion-label> 
+
+  <ion-label color="light" style="padding-bottom:10px;"> Inicia sesión con tu cuenta</ion-label>
+
 <ion-content class="auth-form">
   <ion-grid>
     <ion-row>
       <ion-col align-self-center>
-        <ion-button [routerLink]="['/registration']" expand="block" color="primary">Nueva cuenta</ion-button>
+        <ion-button [routerLink]="['/registration']" expand="block" color="secondary">Nueva cuenta</ion-button>
 
         <span class="divider line one-line">ó</span>
 
         <span class="already">¿Ya tiene una cuenta?</span>
 
-        <ion-button [routerLink]="['/login']" expand="block" color="secondary">Iniciar sesión</ion-button>
-        <ion-button expand="block" color="light" >Iniciar con Google</ion-button>
-        <ion-button expand="block" color="light" >Iniciar con Facebook</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+        <ion-button [routerLink]="['/login']" expand="block" color="secondary" >Iniciar sesión</ion-button>
 
-  
-  <ion-button fill="clear" size="small" href="https://www.facebook.com/ERPVORTEX/">
+
+        <ion-button expand="block" color="light" >Continuar con Facebook
+          <ion-icon slot="start" name="logo-facebook" style="font-size:23px; color: #01143f; margin-right: 10px;"></ion-icon>
+        </ion-button>
+        
+        <ion-button expand="block" color="light">Continuar con Google
+        <ion-icon slot="start" name="logo-google" style="font-size:22px; color: #01143f; margin-right: 35px;"></ion-icon></ion-button>
+
+       
+        <span class="uno">
+  <ion-button  fill="clear" size="small" href="https://www.facebook.com/ERPVORTEX/">
     <ion-icon slot="start" name="logo-facebook" style="font-size:23px; color: #00DDFF;"  ></ion-icon>
-  </ion-button>
+  </ion-button></span>
+  <span class="dos">
   <ion-button fill="clear" size="small" href="https://www.instagram.com/erp_vortex/?hl=es-la">
     <ion-icon slot="start" name="logo-instagram" style="font-size:23px; color: #00DDFF;"  ></ion-icon>
-  </ion-button>
-  <ion-button fill="clear" size="small" href="https://mx.linkedin.com/company/erp-vortex-s.a.p.i.-de-c.v.">
+  </ion-button></span>
+  
+  <span class="tres">
+ <ion-button fill="clear" size="small" href="https://mx.linkedin.com/company/erp-vortex-s.a.p.i.-de-c.v.">
     <ion-icon slot="start" name="logo-linkedin" style="font-size:23px; color: #00DDFF;"  ></ion-icon>
-  </ion-button>
+  </ion-button></span>
+  
+  <span class="already">¿Quieres saber más?</span>
 
-<ion-label>¿Quieres saber más?</ion-label>
-<ion-label>contact@corbee.com</ion-label>
+  <span class="already">contact@corbee.com</span>
+</ion-col>
+</ion-row>
+</ion-grid>
   <ion-footer>
     <ion-toolbar  color="secondary" style="position: fixed; bottom: 0px;">
     </ion-toolbar>
