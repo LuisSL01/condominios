@@ -81,6 +81,9 @@
         </ion-list>
         <ion-footer>
           <ion-toolbar  color="light"  style="position: fixed; bottom: 0px;">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" offset-md="4" offset-sm="4">
             <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
 
               <ion-button fill="clear" size="small"  type="submit"  [disabled]="formulario.invalid" style="text-transform: none;margin-left: 120px; margin-top: -40px;">Guardar
@@ -91,6 +94,9 @@
               <ion-button  fill="clear" size="small"  style="text-transform: none; margin-top: -80px;  margin-left: 220px; " routerLink={this.appdirectorios}>Cancelar
                     <ion-icon  slot="start" name="close-circle-outline" style="font-size:23px; color: #00DDFF;" ></ion-icon>
                       </ion-button>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
           </ion-toolbar>
         </ion-footer>
 
