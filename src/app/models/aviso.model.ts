@@ -3,12 +3,14 @@ export class Aviso{
     public idempresa:number;
     public idagenteCreo:number;
     public idagenteDestino:number;
-    public idAvisoOriginal:Aviso;
+    public idAvisoOriginal:number;//guardar solo id
     public destinatario: string;
     public titulo: string
     public mensaje: string;    
     public fechaCreacion: Date;
     public imgs:string[];
+
+    public avisosRespuesta:Aviso[];
 
     constructor(){
 
@@ -16,6 +18,8 @@ export class Aviso{
         
 
         this.fechaCreacion = new Date();
-        this.imgs = new Array();        
+        this.imgs = new Array();
+        this.avisosRespuesta = new Array();
+
     }
 }
