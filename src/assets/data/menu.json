@@ -1,9 +1,5 @@
 [
-  {
-    "icon": "log-out-outline",
-    "name": "Cerrar Sesión",
-    "redirectTo": "/avisos"
-  },
+
     {
       "icon": "alert-circle-outline",
       "name": "Avisos",
