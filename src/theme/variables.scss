@@ -76,6 +76,7 @@
   --ion-color-light-tint: #F7F7F7;
   
   --ion-font-family: 'Ridley Grotesk';
+
   
 }
 
@@ -240,12 +241,13 @@
   font-style: normal;
   src: url('../assets/fonts/RidleyGrotesk-Regular.otf');
 }
-
-/*@font-face {
+/*
+@font-face {
   font-family: 'ParalucentW00-DemiBold';
   font-style: normal;
-  src: url('../assets/fonts/ParalucentDb.ttf');
+  src: url('../assets/fonts/ParalucentDb.otf');
 }
 
 --ion-font-family: 'ParalucentW00-DemiBold';
 */
+
