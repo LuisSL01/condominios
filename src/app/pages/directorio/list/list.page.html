@@ -6,7 +6,7 @@
       <span class="text-primary">  {{directorio.apellidoP}} {{directorio.apellidoM}} </span>
       <div class="card-more">
         <ion-button fill="clear" (click)="lanzarMenu()">
-          <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
+          <ion-icon slot="icon-only" color="primary" name="ellipsis-vertical-outline"></ion-icon>
         </ion-button>
       </div>
 
@@ -15,6 +15,7 @@
   </ion-card-header>
 
   <ion-card-content>
+  
     <ion-label>{{directorio.nombrePrivada}}</ion-label>
 
     <ion-label>{{directorio.direccion.cp}}
