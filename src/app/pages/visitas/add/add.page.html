@@ -1,105 +1,117 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-buttons slot="start" >
-   
-        <ion-menu-button color="light" menu="primerMenu"></ion-menu-button>      
+    <ion-buttons slot="start">
+
+      <ion-menu-button color="light" menu="primerMenu"></ion-menu-button>
 
     </ion-buttons>
     <ion-title></ion-title>
-    <ion-img src="assets/g.png"  style="margin-right: 155px; height:50px;"></ion-img>
+    <ion-img src="assets/g.png" style="margin-right: 155px; height:50px;"></ion-img>
   </ion-toolbar>
 </ion-header>
 
 <app-header titulo="Nueva visita"></app-header>
 <ion-content>
-      <form #formulario="ngForm" (ngSubmit)="save()">
-        <ion-list>          
-          <ion-item>
-            <ion-label position="floating"><ion-icon name="person-outline" style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;Nombre</ion-label>
-            <ion-input name="nombre" [(ngModel)]="visita.nombre" required>
-            </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label><ion-icon name="create-outline"style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;Tipo de visita</ion-label>
-            <ion-select name="tipoVisita" [(ngModel)]="visita.tipoVisita" 
-              value="visita.tipoVisita" okText="Aceptar" cancelText="Cancelar">
-              <ion-select-option value="reunion">Reunión</ion-select-option>
-              <ion-select-option value="visita">Visita</ion-select-option>
-              <ion-select-option value="trabajador">Trabajador</ion-select-option>              
-            </ion-select>
-          </ion-item>
-          <ion-item>
-            <ion-label><ion-icon name="flash-outline"style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;Duración</ion-label>
-            <ion-select name="duracion" [(ngModel)]="visita.duracion" 
-              value="visita.duracion" okText="Aceptar" cancelText="Cancelar">
-              <ion-select-option value="solo hoy">Solo hoy</ion-select-option>
-              <ion-select-option value="indefinido">Indefinido</ion-select-option>
-              <ion-select-option value="rango de fechas">Rango de fechas</ion-select-option>
-            </ion-select>
-          </ion-item>
+  <form #formulario="ngForm" (ngSubmit)="save()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">
+          <ion-icon name="person-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;Nombre
+        </ion-label>
+        <ion-input name="nombre" [(ngModel)]="visita.nombre" required>
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="create-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;Tipo de visita
+        </ion-label>
+        <ion-select name="tipoVisita" [(ngModel)]="visita.tipoVisita" value="visita.tipoVisita" okText="Aceptar"
+          cancelText="Cancelar">
+          <ion-select-option value="reunion">Reunión</ion-select-option>
+          <ion-select-option value="visita">Visita</ion-select-option>
+          <ion-select-option value="trabajador">Trabajador</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="flash-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;Duración
+        </ion-label>
+        <ion-select name="duracion" [(ngModel)]="visita.duracion" value="visita.duracion" okText="Aceptar"
+          cancelText="Cancelar">
+          <ion-select-option value="solo hoy">Solo hoy</ion-select-option>
+          <ion-select-option value="indefinido">Indefinido</ion-select-option>
+          <ion-select-option value="rango de fechas">Rango de fechas</ion-select-option>
+        </ion-select>
+      </ion-item>
 
-          <ion-item>      
-            <ion-label><ion-icon name="hourglass-outline"style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;Fecha de visita</ion-label>    
-            <ion-datetime  style="margin-bottom: -8px;" name="fechaInicio" placeholder="Fecha visita"                      
-                      displayFormat="DD / MMM / YYYY"
-                      monthShortNames="Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre"
-                      doneText="Aceptar"
-                      cancelText="Cancelar"
-                      [ngModel] ="visita.fechaInicio.toISOString()"
-                      
+      <ion-item>
+        <ion-label>
+          <ion-icon name="hourglass-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;Fecha de visita
+        </ion-label>
+        <ion-datetime style="margin-bottom: -8px;" name="fechaInicio" placeholder="Fecha visita"
+          displayFormat="DD / MMM / YYYY"
+          monthShortNames="Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre"
+          doneText="Aceptar" cancelText="Cancelar" [ngModel]="visita.fechaInicio.toISOString()"
+          (ionChange)="cambioFechaIniciaVisita( $event )">
+        </ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="alarm-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;Fecha de término
+        </ion-label>
+        <ion-datetime style="margin-bottom: -8px;" name="fechaTermina" placeholder="Fecha termina"
+          displayFormat="DD / MMM / YYYY"
+          monthShortNames="Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre"
+          doneText="Aceptar" cancelText="Cancelar" [ngModel]="visita.fechaTermina.toISOString()"
+          (ionChange)="cambioFechaTerminaVisita( $event )">
+        </ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="people-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;¿Viene con acompañantes?
+        </ion-label>
+        <ion-toggle slot="end" name="conAcompaniantes" [(ngModel)]="visita.conAcompaniantes"></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="person-add-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;¿Usted viene todos los días?
+        </ion-label>
+        <ion-toggle slot="end" name="visitaDiaria" [(ngModel)]="visita.visitaDiaria"></ion-toggle>
+      </ion-item>
+    </ion-list>
+    <ion-footer>
+      <ion-toolbar color="light" style="position: fixed; bottom: 0px;">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" offset-md="4" offset-sm="4">
+              <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
 
-                        
-                      (ionChange)="cambioFechaIniciaVisita( $event )" >
-          </ion-datetime>   
-          </ion-item>
-          <ion-item>                    
-            <ion-label><ion-icon name="alarm-outline"style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;Fecha de término</ion-label>  
-            <ion-datetime  style="margin-bottom: -8px;" name="fechaTermina" placeholder="Fecha termina"
-                      displayFormat="DD / MMM / YYYY"
-                      monthShortNames="Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre"
-                      doneText="Aceptar"
-                      cancelText="Cancelar"
-                      [ngModel] ="visita.fechaTermina.toISOString()"
-                      (ionChange)="cambioFechaTerminaVisita( $event )" >
-          </ion-datetime>   
-          </ion-item>
-          <ion-item>
-            <ion-label><ion-icon name="people-outline"style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;¿Viene con acompañantes?</ion-label> 
-            <ion-toggle slot="end" name="conAcompaniantes" [(ngModel)]="visita.conAcompaniantes"></ion-toggle>
-          </ion-item>
-          <ion-item>
-            <ion-label><ion-icon name="person-add-outline"style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;¿Usted viene todos los días?</ion-label> 
-            <ion-toggle slot="end" name="visitaDiaria" [(ngModel)]="visita.visitaDiaria"></ion-toggle>
-          </ion-item>
-        </ion-list>
-        <ion-footer>
-          <ion-toolbar  color="light"  style="position: fixed; bottom: 0px;">
-            <ion-grid>
-              <ion-row>
-                <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" offset-md="4" offset-sm="4">
-            <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
-
-              <ion-button fill="clear" size="small"  type="submit"  [disabled]="formulario.invalid" style="text-transform: none;margin-left: 120px; margin-top: -40px;">Guardar
-                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #00DDFF;" ></ion-icon>
+              <ion-button fill="clear" size="small" type="submit" [disabled]="formulario.invalid"
+                style="text-transform: none;margin-left: 120px; margin-top: -40px;">Guardar
+                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #00DDFF;">
+                </ion-icon>
               </ion-button>
-            
-            
-              <ion-button  fill="clear" size="small"  style="text-transform: none; margin-top: -80px;  margin-left: 220px; " routerLink={this.appdirectorios}>Cancelar
-                    <ion-icon  slot="start" name="close-circle-outline" style="font-size:23px; color: #00DDFF;" ></ion-icon>
-                      </ion-button>
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
-          </ion-toolbar>
-        </ion-footer>
 
-       
-        </form>  
+
+              <ion-button fill="clear" size="small"
+                style="text-transform: none; margin-top: -80px;  margin-left: 220px; " 
+                routerLink="/visitas">
+                Cancelar
+                <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-toolbar>
+    </ion-footer>
+
+
+  </form>
 </ion-content>

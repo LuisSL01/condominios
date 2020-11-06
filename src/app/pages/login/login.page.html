@@ -11,17 +11,19 @@
   <form>
     <ion-item lines="full">
       <ion-label position="floating">Cuenta de correo</ion-label>
-      <ion-input type="text" required></ion-input>
+      <ion-input name="user"  [(ngModel)]="user" type="text" required></ion-input>
     </ion-item>
 
     <ion-item lines="full">
       <ion-label position="floating">Contraseña</ion-label>
-      <ion-input type="password" required></ion-input>
+      <ion-input name="pass" [(ngModel)]="pass" type="password" required></ion-input>
     </ion-item>
 
     <ion-row>
       <ion-col >
-        <ion-button routerLink="/inicio" type="submit" color="secondary" expand="block">¡Entra a tú cuenta!</ion-button>
+        <ion-button 
+        (click)="iniciarSesion()"
+        type="submit" color="secondary" expand="block">¡Entra a tú cuenta!</ion-button>
         <a *ngIf="false" [routerLink]="['/forgot-password']" class="small-text">¿Olvidaste tu contraseña?</a>
       </ion-col>
     </ion-row>

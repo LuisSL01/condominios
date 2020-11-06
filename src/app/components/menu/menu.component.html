@@ -8,6 +8,16 @@
   </ion-header>
   <ion-content>
     <ion-list>
+      <ion-menu-toggle >
+
+        <ion-item routerLink="/home" detail>
+          <ion-icon slot="start"  name="log-out-outline" color="medium"> </ion-icon>
+          <ion-label>
+            Cerrar sesión
+          </ion-label>
+        </ion-item>
+
+      </ion-menu-toggle>
       <ion-menu-toggle *ngFor="let c of componentes | async">
 
         <ion-item [routerLink]="c.redirectTo" detail>

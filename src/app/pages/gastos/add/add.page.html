@@ -1,114 +1,129 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-buttons slot="start" >
-   
-        <ion-menu-button color="light" menu="primerMenu"></ion-menu-button>      
+    <ion-buttons slot="start">
+
+      <ion-menu-button color="light" menu="primerMenu"></ion-menu-button>
 
     </ion-buttons>
     <ion-title></ion-title>
-    <ion-img src="assets/g.png"  style="margin-right: 155px; height:50px;"></ion-img>
+    <ion-img src="assets/g.png" style="margin-right: 155px; height:50px;"></ion-img>
   </ion-toolbar>
 </ion-header>
 
-<app-header  titulo="Nuevo gasto"></app-header>
+<app-header titulo="Nuevo gasto"></app-header>
 
 <!--style="
 color: #00DDFF;
 margin-left: -20px;
 " -->
 <ion-content>
-    <form #formulario="ngForm" (ngSubmit)="save()">
-        <ion-list>
+  <form #formulario="ngForm" (ngSubmit)="save()">
+    <ion-list>
 
-          <ion-item>
-            <ion-label><ion-icon name="alarm-outline"style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Fecha</ion-label> 
-            <ion-datetime  style="margin-bottom: -8px;" name="fechaGasto"
-            displayFormat="DD / MMM / YYYY"
-            monthShortNames="Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre"
-              cancelText="Descartar"
-              doneText="Aceptar"
-              [ngModel] ="gasto.fechaGasto.toISOString()"
-              (ionChange)="cambioFecha($event )" >
-              </ion-datetime>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="alarm-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Fecha
+        </ion-label>
+        <ion-datetime style="margin-bottom: -8px;" name="fechaGasto" displayFormat="DD / MMM / YYYY"
+          monthShortNames="Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre"
+          cancelText="Descartar" doneText="Aceptar" [ngModel]="gasto.fechaGasto.toISOString()"
+          (ionChange)="cambioFecha($event )">
+        </ion-datetime>
 
-          </ion-item>
-          <ion-item>
-            <ion-label><ion-icon name="receipt-outline" style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Tipo de registro</ion-label>  
-            <ion-select name="tipoGasto" [(ngModel)]="gasto.tipoGasto" 
-              value="gasto.tipoGasto" okText="Aceptar" cancelText="Cancelar">
-              <ion-select-option value="Gasto general">Gasto general</ion-select-option>
-              <ion-select-option value="Vigilancia">Vigilancia</ion-select-option>
-              <ion-select-option value="Jardineria">Jardinería</ion-select-option>
-              <ion-select-option value="Limpieza">Limpieza</ion-select-option>
-              <ion-select-option value="Mantenimiento general">Mantenimiento general</ion-select-option>
-            </ion-select>
-          </ion-item>
-          <ion-item>
-            <ion-label><ion-icon name= "calculator-outline" style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Cantidad</ion-label> 
-            <ion-input name="cantidad" type="number" [(ngModel)]="gasto.cantidad">
-            </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label><ion-icon name="pencil-outline" style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Descripción</ion-label>      
-            <ion-textarea   rows="1" cols="1" name="descripcion" style="margin-top: -20px;" [(ngModel)]="gasto.descripcion"></ion-textarea>
-          </ion-item>
-          <ion-item>
-            <ion-label><ion-icon name="cash-outline"style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Forma de pago</ion-label> 
-            <ion-select name="formaPago" [(ngModel)]="gasto.formaPago" 
-              value="gasto.formaPago" okText="Aceptar" cancelText="Cancelar">
-              <ion-select-option value="Efectivo">Efectivo</ion-select-option>
-              <ion-select-option value="Transferencia">Transferencia</ion-select-option>
-              <ion-select-option value="Otro">Otro</ion-select-option>              
-            </ion-select>
-          </ion-item>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="receipt-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Tipo de registro
+        </ion-label>
+        <ion-select name="tipoGasto" [(ngModel)]="gasto.tipoGasto" value="gasto.tipoGasto" okText="Aceptar"
+          cancelText="Cancelar">
+          <ion-select-option value="Gasto general">Gasto general</ion-select-option>
+          <ion-select-option value="Vigilancia">Vigilancia</ion-select-option>
+          <ion-select-option value="Jardineria">Jardinería</ion-select-option>
+          <ion-select-option value="Limpieza">Limpieza</ion-select-option>
+          <ion-select-option value="Mantenimiento general">Mantenimiento general</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="calculator-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Cantidad
+        </ion-label>
+        <ion-input name="cantidad" type="number" [(ngModel)]="gasto.cantidad">
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="pencil-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Descripción
+        </ion-label>
+        <ion-textarea rows="1" cols="1" name="descripcion" style="margin-top: -20px;" [(ngModel)]="gasto.descripcion">
+        </ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="cash-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Forma de pago
+        </ion-label>
+        <ion-select name="formaPago" [(ngModel)]="gasto.formaPago" value="gasto.formaPago" okText="Aceptar"
+          cancelText="Cancelar">
+          <ion-select-option value="Efectivo">Efectivo</ion-select-option>
+          <ion-select-option value="Transferencia">Transferencia</ion-select-option>
+          <ion-select-option value="Otro">Otro</ion-select-option>
+        </ion-select>
+      </ion-item>
 
-          <ion-item>
-            <ion-button fill="clear" size="small" (click)="camara()">
-              <ion-icon slot="start" name="camera-outline" style="font-size:23px; color: #00DDFF;"></ion-icon></ion-button>
-    
-            <ion-button fill="clear" size="small" (click)="libreria()">
-              <ion-icon slot="start"name="image-outline" style="font-size:23px; color: #00DDFF;"></ion-icon></ion-button>
-          </ion-item>
-          <ion-item>
+      <ion-item>
+        <ion-button fill="clear" size="small" (click)="camara()">
+          <ion-icon slot="start" name="camera-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+        </ion-button>
 
-            <ion-col size="3" *ngFor="let image of gasto.imgs">
-              <ion-card>
-                <img [src]="image | imageSanitizer">
-              </ion-card>
-            </ion-col>
-          </ion-item>
+        <ion-button fill="clear" size="small" (click)="libreria()">
+          <ion-icon slot="start" name="image-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <ion-item>
+
+        <ion-col size="3" *ngFor="let image of gasto.imgs">
+          <ion-card>
+            <img [src]="image | imageSanitizer">
+          </ion-card>
+        </ion-col>
+      </ion-item>
 
 
-        </ion-list>
+    </ion-list>
 
-        <ion-footer>
-          <ion-toolbar  color="light" style="position: fixed; bottom: 0px;">
-            <ion-grid>
-              <ion-row>
-                <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" offset-md="4" offset-sm="4">
-            <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
+    <ion-footer>
+      <ion-toolbar color="light" style="position: fixed; bottom: 0px;">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" offset-md="4" offset-sm="4">
+              <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
 
-              <ion-button fill="clear" size="small"  type="submit" [disabled]="formulario.invalid" style="text-transform: none; margin-left: 120px; margin-top: -40px;">Guardar
-                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #00DDFF;" ></ion-icon>
+              <ion-button fill="clear" size="small" type="submit" [disabled]="formulario.invalid"
+                style="text-transform: none; margin-left: 120px; margin-top: -40px;">Guardar
+                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #00DDFF;">
+                </ion-icon>
               </ion-button>
-            
-            
-              <ion-button  fill="clear" size="small"  style="text-transform: none; margin-top: -80px;  margin-left: 220px;" routerLink={this.appdirectorios}>Cancelar
-                    <ion-icon  slot="start" name="close-circle-outline" style="font-size:23px; color: #00DDFF;" ></ion-icon>
-                      </ion-button>
-
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
-          </ion-toolbar>
-        </ion-footer>
 
 
-    
-      </form>
+              <ion-button fill="clear" size="small"
+                style="text-transform: none; margin-top: -80px;  margin-left: 220px;" 
+                routerLink="/gastos">
+                Cancelar
+                <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+              </ion-button>
+
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-toolbar>
+    </ion-footer>
+
+
+
+  </form>
 </ion-content>

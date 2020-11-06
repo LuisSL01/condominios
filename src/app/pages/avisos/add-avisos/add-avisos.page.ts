@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Aviso } from '../../../models/aviso.model';
 import { DataLocalAvisoService } from '../../../services/data-local-aviso.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Router } from '@angular/router';
 
 declare var window: any;
 @Component({
@@ -19,7 +20,8 @@ export class AddAvisosPage implements OnInit {
   //Inyectamos el servicio de data local.
 
   constructor(private dataLocalAvisoService: DataLocalAvisoService,
-    private camera: Camera) {
+    private camera: Camera,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -72,5 +74,16 @@ export class AddAvisosPage implements OnInit {
   getAviso() {
 
   }
+
+  cancel(){
+
+    
+    console.log('in boton cancel..');
+    this.router.navigate(['/avisos']);
+
+
+    
+  }
+    
 
 }

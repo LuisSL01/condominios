@@ -11,6 +11,7 @@ export class AddPage implements OnInit {
   votacion:Votacion = new Votacion();
   
 
+  
   //se debe declarar un arreglo de preguntas
   //se debe declarar un arreglo de opciones
   votacionPreguntaArr:VotacionPregunta[];

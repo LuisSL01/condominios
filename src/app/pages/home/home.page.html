@@ -11,14 +11,14 @@
   <ion-grid>
     <ion-row>
       <ion-col align-self-center>
-        <ion-button  expand="block" color="secondary" 
+        <ion-button *ngIf="false"  expand="block" color="secondary" 
         href="https://www.erpvortex.com/crm/preRegistro.xhtml" >Nueva cuenta
           
         </ion-button>
 
-        <span class="divider line one-line">ó</span>
+        <span *ngIf="false" class="divider line one-line">ó</span>
 
-        <span class="already">¿Ya tiene una cuenta?</span>
+        <span *ngIf="false" class="already">¿Ya tiene una cuenta?</span>
 
         <ion-button [routerLink]="['/login']" expand="block" color="secondary" >Iniciar sesión</ion-button>
 
