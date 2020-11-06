@@ -8,13 +8,14 @@
       <span class="text-primary"> ${{anuncio.precio}} - Tel.: {{anuncio.telefono}} </span>
       <div class="card-more">
         <ion-button fill="clear" (click)="lanzarMenu()">
-          <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
+          <ion-icon slot="icon-only" color="primary" name="ellipsis-vertical-outline"></ion-icon>
         </ion-button>
       </div>
 
     </ion-card-subtitle>
 
   </ion-card-header>
+
   <ion-card-content>
     {{anuncio.descripcion}}
   </ion-card-content>
