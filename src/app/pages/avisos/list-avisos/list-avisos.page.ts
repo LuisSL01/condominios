@@ -44,21 +44,26 @@ export class ListAvisosPage implements OnInit {
 
     const actionSheet = await this.actionSheetCtrl.create({
       buttons: [
-         /*
         {
-          text: 'Compartir',
+          text: 'Ver respuestas',
           icon: 'share',
           cssClass: 'action-dark',
           handler: () => {
-            console.log('Share clicked');
-            this.socialSharing.share(
-              this.noticia.title,
-              this.noticia.source.name,
-              '',
-              this.noticia.url
-            ); 
+            console.log('Ver respuestas');
+        
+             
         }
-      },*/
+      },
+        {
+          text: 'Responder',
+          icon: 'share',
+          cssClass: 'action-dark',
+          handler: () => {
+            console.log('Responder');
+        
+             
+        }
+      },
       guardarBorrarBtn,
       {
         text: 'Cancelar',
