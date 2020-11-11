@@ -20,7 +20,7 @@
           <ion-icon name="mail-open-outline" style="font-size:23px; color: #00DDFF; 
           margin-bottom: -5px;"></ion-icon>&nbsp;Destinatario
         </ion-label>
-        <ion-select name="destinatario" [(ngModel)]="aviso.destinatario" value="aviso.destinatario" okText="Aceptar"
+        <ion-select name="manzanaDestino" [(ngModel)]="aviso.manzanaDestino" value="aviso.manzanaDestino" okText="Aceptar"
           cancelText="Cancelar">
           <ion-select-option value="todos">Todos</ion-select-option>
           <ion-select-option value="m1">Manzana 1</ion-select-option>
@@ -30,7 +30,7 @@
       </ion-item>
 
       <ion-item>
-        <ion-label>
+        <ion-label  position="floating">
           <ion-icon name="megaphone-outline" style="font-size:23px; color: #00DDFF; 
           margin-bottom: -5px;"></ion-icon>&nbsp;Título
         </ion-label>
@@ -38,11 +38,11 @@
         </ion-input>
       </ion-item>
       <ion-item>
-        <ion-label>
+        <ion-label position="floating">
           <ion-icon name="create-outline" style="font-size:23px; color: #00DDFF; 
           margin-bottom: -5px;"></ion-icon>&nbsp;Mensaje
         </ion-label>
-        <ion-textarea style="margin-bottom: -11px; font-size: 14px;" placeholder="Aquí escriba su mensaje"
+        <ion-textarea  style="margin-bottom: -11px; font-size: 14px;"
           name="mensaje" [(ngModel)]="aviso.mensaje" required>
         </ion-textarea>
       </ion-item>

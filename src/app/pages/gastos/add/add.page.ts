@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Gasto } from '../../../models/gasto.model';
 import { DataLocalGastoService } from '../../../services/data-local-gasto.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Router } from '@angular/router';
 
 declare var window: any;
 
@@ -16,7 +17,8 @@ export class AddPage implements OnInit {
   enCamara:boolean;
 
   constructor(private dataLocalGastoService : DataLocalGastoService,
-              private camera: Camera) {
+              private camera: Camera,
+              private router:Router) {
     console.log('im in constructor of gastos');
     
    }
@@ -63,13 +65,13 @@ export class AddPage implements OnInit {
   }
 
   cambioFecha(event){
-    console.log('cambio fecha..');
     this.gasto.fechaGasto = new Date(event.detail.value);
   }
-  save(){
-    console.log('save a new gasto');
-    console.log(this.gasto);
+  save(){    
+    
     this.dataLocalGastoService.guardarGasto(this.gasto);
+    this.router.navigate(['/gastos']);
+
   }
 
 }

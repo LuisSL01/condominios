@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PagosComprobantes } from '../../../models/pagos-comprobantes.model';
 import { DataLocalPagosComprobantesService } from '../../../services/data-local-pagos-comprobantes.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Router } from '@angular/router';
 
 declare var window: any;
 
@@ -18,7 +19,8 @@ export class AddPage implements OnInit {
 
 
   constructor(private dataLocalPagosComprobantesService: DataLocalPagosComprobantesService,
-    private camera: Camera) { }
+    private camera: Camera,
+    private router: Router) { }
 
   ngOnInit() {
   }
@@ -61,9 +63,9 @@ export class AddPage implements OnInit {
   }
 
   save(){
-    console.log('save new Pago ');
-    console.log(this.pago);
+    
     this.dataLocalPagosComprobantesService.guardarPagoComprobante(this.pago);    
+    this.router.navigate(['/pagos-comprobantes']);
   }
 
 }

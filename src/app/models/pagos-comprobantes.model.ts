@@ -5,8 +5,13 @@ export class PagosComprobantes{
     public idstatus:number;//aqui el estatus podra ser cambiaodo por el usuario que autorize los pagos
     public fechaCreacion:Date;
 
-    public fechaPago:Date;
+    public anioPago:Date;
     public mesPago:string;//se agrega de esta manera para que pueda ser listada desde la vista
+
+    
+    public fechaAplicarPago:Date;//Se crea este campo en base de datos para sustituir anioPago y mesPago;
+
+
     public formaPago:string;
     public montoOriginal:number;
     public montoPagado:number;

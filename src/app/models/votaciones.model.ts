@@ -10,7 +10,7 @@ export class Votacion{
     public isOpen:boolean;
     public aplicaOpcionesSI_NO:boolean;
 
-    public preguntas: VotacionPregunta[];
+    public preguntas: VotacionPregunta[];//Se crea en base de datos como jsonb
 
     constructor(){
         console.log('Iam in the constrictor of votaciones');

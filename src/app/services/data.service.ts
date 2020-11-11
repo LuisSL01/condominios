@@ -7,6 +7,7 @@ import { Componente } from '../interfaces/interface';
 })
 export class DataService {
 
+
   constructor(private http: HttpClient) { }
 
   getMenuOpts(){

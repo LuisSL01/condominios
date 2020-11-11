@@ -69,6 +69,8 @@ export class AddAvisosPage implements OnInit {
     console.log('save');
     console.log(this.aviso);
     this.dataLocalAvisoService.guardarAviso(this.aviso);
+
+    this.router.navigate(['/avisos']);
   }
 
   getAviso() {

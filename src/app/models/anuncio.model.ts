@@ -2,9 +2,10 @@ export class Anuncio{
     public idanuncio:number;
     public idempresa:number;
     public idagenteCreo:number;
+    
     public titulo:string;
     public descripcion:string;
-    public precio:string;
+    public precio:number;
     public telefono:string;
     public fechaVence:Date;
     

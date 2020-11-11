@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataLocalAvisoService } from 'src/app/services/data-local-aviso.service';
 import { Aviso } from 'src/app/models/aviso.model';
+import { IonInfiniteScroll } from '@ionic/angular';
 
 
 @Component({
@@ -15,7 +16,11 @@ export class AvisosPage implements OnInit {
 
   public avisosList: Aviso[];
 
-  constructor(public dataLocalAvisoService: DataLocalAvisoService) { 
+  @ViewChild(IonInfiniteScroll) infiniteScroll : IonInfiniteScroll;
+  //Con esto recuperamos el componente de la vista y al estar tipado obtenemos la ayuda de typescript
+                                                                    
+
+  constructor(public dataLocalAvisoService: DataLocalAvisoService) {
     this.avisosList = this.dataLocalAvisoService.avisos;
   }
 
@@ -23,33 +28,48 @@ export class AvisosPage implements OnInit {
   }
 
   buscar(event) {
-    console.log('aviso.buscar()');
-    this.textoBuscar = event.detail.value;
-    
+    /* await this.dataLocalAvisoService.buscar(event.detail.value); */    
+    this.textoBuscar = event.detail.value;    
     this.avisosList = this.dataLocalAvisoService.avisos;
     if (this.textoBuscar === '') {
       return;
     }else{
-
-      console.log('this.textoBuscar', this.textoBuscar);
-      this.textoBuscar = this.textoBuscar.toLowerCase();
-      console.log('antes de entrar al filter');
-      
+      this.textoBuscar = this.textoBuscar.toLowerCase();      
       this.avisosList = this.avisosList.filter(item => {
-        /* console.log(item.titulo.toLowerCase());
-        console.log(this.textoBuscar);
-        console.log(item.titulo.toLowerCase().includes(this.textoBuscar)); */
         return (item.titulo.toLowerCase().includes(this.textoBuscar)
          || item.mensaje.toLowerCase().includes(this.textoBuscar)
           );
       }
-
-      );
-
-      console.log('despues de terminar el filter');
-      
+      ); 
     }
 
+
+  }
+
+  loadData(event){
+    /* console.log(event); */
+
+    setTimeout(() => {
+
+  /*     if(this.avisosList.length > 30){
+        //Aqui debemos saber cuando ya no hay mas registros que reecuperar de la
+        //BD
+        this.infiniteScroll.complete();
+        this.infiniteScroll.disabled = true;//Para ocultar el componente y ya no carge mas
+        return;
+      }
+
+      //En este ejemplo se crean 10 nuevos elementos y se insertan en el arreglo
+      //Aqui deberiamos estar recuperando los 10 nuevos de la base de datos
+      const nuevoArr = Array(10);
+      this.avisosList.push(...nuevoArr); */
+
+
+      this.infiniteScroll.complete();
+
+
+      /* event.target.complete(); */
+    }, 1500);
 
   }
 }

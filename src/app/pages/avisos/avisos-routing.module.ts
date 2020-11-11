@@ -15,7 +15,15 @@ const routes: Routes = [
   {
     path: 'list-avisos',
     loadChildren: () => import('./list-avisos/list-avisos.module').then( m => m.ListAvisosPageModule)
+  },  {
+    path: 'respuestas',
+    loadChildren: () => import('./respuestas/respuestas.module').then( m => m.RespuestasPageModule)
+  },
+  {
+    path: 'add-respuesta',
+    loadChildren: () => import('./add-respuesta/add-respuesta.module').then( m => m.AddRespuestaPageModule)
   }
+
 ];
 
 @NgModule({

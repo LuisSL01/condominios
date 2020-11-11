@@ -16,7 +16,10 @@ export class ListPage implements OnInit {
   
 
   constructor(public dataLocalDirectorioService:DataLocalDirectorioService,
-    private actionSheetCtrl: ActionSheetController) { }
+    private actionSheetCtrl: ActionSheetController) { 
+      console.log('en el constructor de list directorio page');
+      
+    }
 
   ngOnInit() {
   }

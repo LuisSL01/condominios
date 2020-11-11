@@ -9,8 +9,10 @@ import { Storage } from '@ionic/storage';
 export class DataLocalVotacionesService {
 
   votaciones:Votacion[]=[];
+  nombreEtiquetaJson = "votaciones";
   constructor(public storage : Storage,
     private dataLocalService : DataLocalService) {
+      this.nombreEtiquetaJson = this.dataLocalService.idempresa + "_" + this.nombreEtiquetaJson;
       this.cargarVotaciones();
    }
 
@@ -19,7 +21,7 @@ export class DataLocalVotacionesService {
     if( ! existe){
       votacion.idvotacion = this.dataLocalService.getNumeroNegativo() *-1;
       this.votaciones.unshift(votacion);
-      this.storage.set('votaciones', this.votaciones);
+      this.storage.set(this.nombreEtiquetaJson, this.votaciones);
       this.dataLocalService.presentToast('Votación agregado');
     }
    }
@@ -27,12 +29,12 @@ export class DataLocalVotacionesService {
 
    borrarVotacion(votacion: Votacion) {
     this.votaciones = this.votaciones.filter(vot => vot.idvotacion !== votacion.idvotacion)
-    this.storage.set('votaciones', this.votaciones);
+    this.storage.set(this.nombreEtiquetaJson, this.votaciones);
     this.dataLocalService.presentToast('Votación borrada');
   }
 
    async cargarVotaciones(){
-      const vot = await this.storage.get('votaciones');
+      const vot = await this.storage.get(this.nombreEtiquetaJson);
       if(vot){
         this.votaciones = vot;
       }

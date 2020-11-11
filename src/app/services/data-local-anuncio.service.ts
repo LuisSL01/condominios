@@ -10,10 +10,11 @@ import { DataLocalService } from './data-local.service';
 export class DataLocalAnuncioService {
 
   anuncios: Anuncio[] = [];
+  nombreEtiquetaJson = "anuncios";
 
   constructor(private storage: Storage,
     private dataLocalService: DataLocalService) {
-    console.log('constructor de data local anuncio service');
+    this.nombreEtiquetaJson = this.dataLocalService.idempresa + "_"+this.nombreEtiquetaJson;
     this.cargarAnuncios();
   }
 
@@ -22,19 +23,19 @@ export class DataLocalAnuncioService {
     if (!existe) {
       anuncio.idanuncio = this.dataLocalService.getNumeroNegativo() * -1;
       this.anuncios.unshift(anuncio)
-      this.storage.set('anuncios', this.anuncios);
+      this.storage.set(this.nombreEtiquetaJson, this.anuncios);
       this.dataLocalService.presentToast('Anuncio agregado');
     }
   }
 
   borrarAnuncio(anuncio: Anuncio) {
     this.anuncios = this.anuncios.filter(ann => ann.idanuncio !== anuncio.idanuncio);
-    this.storage.set('anuncios', this.anuncios);
+    this.storage.set(this.nombreEtiquetaJson, this.anuncios);
     this.dataLocalService.presentToast('Anuncio borrado');
   }
 
   async cargarAnuncios() {
-    const anncios = await this.storage.get('anuncios')
+    const anncios = await this.storage.get(this.nombreEtiquetaJson)
     if (anncios) {
       this.anuncios = anncios;
     }

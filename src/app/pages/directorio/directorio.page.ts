@@ -15,6 +15,8 @@ export class DirectorioPage implements OnInit {
   public directorioList: Directorio[]; 
   constructor(public dataLocalDirectorioService:DataLocalDirectorioService) { 
     this.directorioList = this.dataLocalDirectorioService.directorios;
+    console.log('en el constrictor de directoio page');
+    
   }
 
   ngOnInit() {

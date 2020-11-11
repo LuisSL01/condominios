@@ -5,6 +5,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 declare var window: any;
 /* import * as moment from 'moment-timezone'; */
+import { Router } from '@angular/router';
 
 
 
@@ -24,7 +25,8 @@ export class AddPage implements OnInit {
 
 
   constructor(private dataLocalAnuncioService: DataLocalAnuncioService,
-    private camera: Camera) {
+    private camera: Camera,
+    private router:Router) {
     /* this.momentjs().tz('America/Mexico_City');   */
   }
 
@@ -86,6 +88,7 @@ export class AddPage implements OnInit {
 
     console.log(this.anuncio);
     this.dataLocalAnuncioService.guardarAnuncio(this.anuncio);
+    this.router.navigate(['/anuncios']);
   }
   cambioFechaVence(event) {
     console.log('cambio fecha vence: ', event);

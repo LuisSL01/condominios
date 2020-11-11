@@ -36,7 +36,7 @@ export class AnunciosPage implements OnInit {
         return (
           (item.titulo.toLowerCase().includes(this.textoBuscar))
          || (item.descripcion.toLowerCase().includes(this.textoBuscar))
-         || (item.precio.toLowerCase().includes(this.textoBuscar))
+         
           );
       }
       );
