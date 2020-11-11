@@ -8,21 +8,20 @@ import { DataLocalService } from './data-local.service';
 export class DataLocalDirectorioService {
 
   directorios: Directorio[] = [];
+  nombreEtiquetaJson ="directorios";
 
   constructor(private storage: Storage,
     private dataLocalService: DataLocalService) {
+      this.nombreEtiquetaJson = this.dataLocalService.idempresa + "_" + this.nombreEtiquetaJson;
     this.cargarDirectorios();
   }
 
   guardarDirectorio(directorio: Directorio) {
-    //se inserta la noticia que se recibe en el arr    
     const existe = this.directorios.find(dir => dir.iddirectorio === directorio.iddirectorio);
-    console.log('El directorio ya existe...');
-    console.log(existe);
     if (!existe) {
       directorio.iddirectorio = this.dataLocalService.getNumeroNegativo() * -1;
       this.directorios.unshift(directorio);
-      this.storage.set('directorios', this.directorios);
+      this.storage.set(this.nombreEtiquetaJson, this.directorios);
       this.dataLocalService.presentToast('Directorio agregado');
     }
   }
@@ -31,12 +30,12 @@ export class DataLocalDirectorioService {
   borrarDirectorio(directorio: Directorio) {
     //Nota en lugar de estar filtrando por titulo deberia ser por ID.    
     this.directorios = this.directorios.filter(dir => dir.iddirectorio !== directorio.iddirectorio);
-    this.storage.set('avisos', this.directorios);
+    this.storage.set(this.nombreEtiquetaJson, this.directorios);
     this.dataLocalService.presentToast('Directorio borrado');
   }
 
   async cargarDirectorios() {
-    const dirs = await this.storage.get('directorios')
+    const dirs = await this.storage.get(this.nombreEtiquetaJson)
     if (dirs) {
       this.directorios = dirs;
     }

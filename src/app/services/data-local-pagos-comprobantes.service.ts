@@ -9,9 +9,11 @@ import { DataLocalService } from './data-local.service';
 export class DataLocalPagosComprobantesService {
 
   pagosComprobantes: PagosComprobantes[] = [];
+  nombreEtiquetaJson ="pagoscomprobantes";
 
   constructor(private storage: Storage,
               private dataLocalService: DataLocalService) {
+    this.nombreEtiquetaJson = this.dataLocalService.idempresa + "_" +this.nombreEtiquetaJson; 
     this.cargarPagosComprobantes();
   }
   guardarPagoComprobante(pagoComprobante: PagosComprobantes) {
@@ -19,7 +21,7 @@ export class DataLocalPagosComprobantesService {
     if(! existe ){
       pagoComprobante.idpagocomprobante = this.dataLocalService.getNumeroNegativo()*-1;      
       this.pagosComprobantes.unshift(pagoComprobante);
-      this.storage.set('pagoscomprobantes', this.pagosComprobantes);
+      this.storage.set(this.nombreEtiquetaJson, this.pagosComprobantes);
       this.dataLocalService.presentToast('Pago comprobante agregado');
     }
   }
@@ -31,7 +33,7 @@ export class DataLocalPagosComprobantesService {
   }
 
   async cargarPagosComprobantes() {
-    const pgsComprobantes = await this.storage.get('pagoscomprobantes');
+    const pgsComprobantes = await this.storage.get(this.nombreEtiquetaJson);
     if (pgsComprobantes) {
       this.pagosComprobantes = pgsComprobantes;
     }

@@ -1,9 +1,9 @@
 <ion-card lines="none">
   <ion-card-header>
-    <ion-card-title>{{directorio.nombre}}</ion-card-title>
+    <ion-card-title>{{directorio.nombreCompleto}}</ion-card-title>
     
     <ion-card-subtitle>
-      <span class="text-primary">  {{directorio.apellidoP}} {{directorio.apellidoM}} </span>
+      <span class="text-primary">  Datos personales </span>
       <div class="card-more">
         <ion-button fill="clear" (click)="lanzarMenu()">
           <ion-icon slot="icon-only" color="primary" name="ellipsis-vertical-outline"></ion-icon>
@@ -14,20 +14,19 @@
 
   </ion-card-header>
 
-  <ion-card-content>
+  <!-- <ion-card-content>
   
-    <ion-label>{{directorio.nombrePrivada}}</ion-label>
+    <ion-label>{{directorio.direccion}}</ion-label>
 
-    <ion-label>{{directorio.direccion.cp}}
-      {{directorio.direccion.calle}}
-      {{directorio.direccion.numInterior}}
+    <ion-label>{{directorio.codigoPostal}}-
+      {{directorio.estadoProvinciaRegion}}
+      {{directorio.ciudad}}
 
-      {{directorio.direccion.numExterior}}      
+      {{directorio.colonia}}      
     </ion-label>
 
-    <ion-label>Cel.: {{directorio.direccion.celular}} </ion-label>
-    <ion-label>Tel.1: {{directorio.direccion.telefono1}}</ion-label>
-    <ion-label>Tel.2: {{directorio.direccion.telefono2}}</ion-label>
+    <ion-label>Cel.: {{directorio.numeroTelefono}} </ion-label>
+  
 
-  </ion-card-content>
+  </ion-card-content> -->
 </ion-card>

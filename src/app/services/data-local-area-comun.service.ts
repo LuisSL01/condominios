@@ -9,9 +9,10 @@ import { Storage } from '@ionic/storage';
 export class DataLocalAreaComunService {
 
   areasComunes:AreaComun[]=[];
-
+  nombreEtiquetaJson = "areascomunes";
   constructor(private dataLocalService : DataLocalService,
               private storage:Storage) {
+                this.nombreEtiquetaJson = this.dataLocalService.idempresa + "_" + this.nombreEtiquetaJson;
               this.cargarAreasComunes();
 
    }
@@ -20,19 +21,19 @@ export class DataLocalAreaComunService {
     if(! existe ){
       areaComun.idareaComun = this.dataLocalService.getNumeroNegativo() * -1;
       this.areasComunes.unshift(areaComun);
-      this.storage.set('areascomunes',this.areasComunes);
+      this.storage.set(this.nombreEtiquetaJson,this.areasComunes);
       this.dataLocalService.presentToast('Área agregada');
     }
    }
 
   borrarAreaComun(areaComun : AreaComun) {
     this.areasComunes = this.areasComunes.filter(are => are.idareaComun !== areaComun.idareaComun)
-    this.storage.set('areascomunes',this.areasComunes);
+    this.storage.set(this.nombreEtiquetaJson,this.areasComunes);
     this.dataLocalService.presentToast('Área borrada');
   }
 
    async cargarAreasComunes(){
-     const areas = await this.storage.get('areascomunes');
+     const areas = await this.storage.get(this.nombreEtiquetaJson);
      if(areas){
        this.areasComunes = areas;
      }

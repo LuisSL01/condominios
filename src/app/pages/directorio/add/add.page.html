@@ -13,67 +13,64 @@
 <app-header titulo="Nuevo directorio"></app-header>
 
 <ion-content>
-  <form #formulario1="ngForm" (ngSubmit)="save()">
+  <form #formulario1="ngForm" (ngSubmit)="save()" >
 
     <ion-list>
       <ion-item>
         <ion-label position="floating">
           <ion-icon name="person-outline" style="font-size:23px; color: #00DDFF; 
               margin-bottom: -5px;
-          "></ion-icon>&nbsp;Nombre
+          "></ion-icon>&nbsp;Nombre completo
         </ion-label>
-        <ion-input name="nombre" color="primary" [(ngModel)]="directorio.nombre" required>
+        <ion-input name="nombreCompleto" color="primary" [(ngModel)]="directorio.nombreCompleto" required>
         </ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating" style="margin-left: 23px;">&nbsp;Apellido Paterno</ion-label>
-        <ion-input name="apellidoP" [(ngModel)]="directorio.apellidoP" required>
-        </ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating" style="margin-left: 23px;">&nbsp;Apellido Materno</ion-label>
-        <ion-input name="apellidoM" [(ngModel)]="directorio.apellidoM">
-        </ion-input>
+        <ion-label >
+          <ion-icon name="home-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;
+          "></ion-icon>&nbsp;Nombre Manzana
+        </ion-label>
+        <ion-select name="nombreManzana" [(ngModel)]="directorio.nombreManzana" 
+          value="directorio.nombreManzana" okText="Aceptar"
+          cancelText="Cancelar">          
+          <ion-select-option value="m1">Manzana 1</ion-select-option>
+          <ion-select-option value="m2">Manzana 2</ion-select-option>
+          <ion-select-option value="m3">Manzana 3</ion-select-option>
+        </ion-select>
       </ion-item>
       <ion-item>
         <ion-label position="floating">
           <ion-icon name="home-outline" style="font-size:23px; color: #00DDFF; 
               margin-bottom: -5px;
-          "></ion-icon>&nbsp;Dirección
+          "></ion-icon>&nbsp;Calle /núm. interior/núm. exterior
         </ion-label>
-        <ion-input name="privada" [(ngModel)]="directorio.nombrePrivada">
+        <ion-input name="direccion" color="primary" [(ngModel)]="directorio.direccion" required>
         </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">&nbsp;Código postal
+        </ion-label>
+        <ion-input name="codigoPostal" color="primary" [(ngModel)]="directorio.codigoPostal">
+        </ion-input>        
+      </ion-item>
+      <ion-item>
+        <ion-button fill="clear"  expand="block" size="small" style="text-transform: none;font-size:16px;margin-left: -4px; " >
+          <ion-icon slot="start" name="checkmark-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+          Validar código postal
+        </ion-button>
+
+       
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">&nbsp;Número de telefono
+        </ion-label>
+        <ion-input name="numeroTelefono" color="primary" [(ngModel)]="directorio.numeroTelefono" >
+        </ion-input>        
       </ion-item>
 
-      <ion-item>
-        <ion-label position="floating" style="margin-left: 23px;">&nbsp;Número Interior/Exterior</ion-label>
-        <ion-input name="numInterior" [(ngModel)]="directorio.direccion.numInterior">
-        </ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating" style="margin-left: 23px;">&nbsp;Colonia</ion-label>
-        <ion-input name="colonia" [(ngModel)]="directorio.direccion.colonia">
-        </ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating" style="margin-left: 23px;">&nbsp;Código Postal</ion-label>
-        <ion-input name="codigoPostal" type="number" [(ngModel)]="directorio.direccion.cp">
-        </ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">
-          <ion-icon name="call-outline" style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;
-          ">></ion-icon>&nbsp;Celular
-        </ion-label>
-        <ion-input name="celular" [(ngModel)]="directorio.direccion.celular">
-        </ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating" style="margin-left: 23px;">&nbsp;Teléfono 1</ion-label>
-        <ion-input name="telefono1" [(ngModel)]="directorio.direccion.telefono1">
-        </ion-input>
-      </ion-item>
+
+
 
     </ion-list>
 

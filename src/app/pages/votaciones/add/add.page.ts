@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Votacion, VotacionPregunta, VotacionPreguntaOpcion } from '../../../models/votaciones.model';
 import { DataLocalVotacionesService } from '../../../services/data-local-votaciones.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add',
@@ -23,7 +24,8 @@ export class AddPage implements OnInit {
 
 
 
-  constructor(private dataLocalVotacionesService: DataLocalVotacionesService) { }
+  constructor(private dataLocalVotacionesService: DataLocalVotacionesService,
+              private router:Router) { }
 
   ngOnInit() {
 
@@ -55,6 +57,7 @@ export class AddPage implements OnInit {
     console.log(this.votacion);
     
     this.dataLocalVotacionesService.guardarVotacion(this.votacion);
+    this.router.navigate(['/votaciones']);
 
   }
 

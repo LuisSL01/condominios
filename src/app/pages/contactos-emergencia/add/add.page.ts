@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ContactosEmergencia } from '../../../models/contactos-emergencia.model';
 import { DataLocalContactosEmergenciaService } from '../../../services/data-local-contactos-emergencia.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add',
@@ -9,7 +10,8 @@ import { DataLocalContactosEmergenciaService } from '../../../services/data-loca
 })
 export class AddPage implements OnInit {
   contactoEmergencia:ContactosEmergencia = new ContactosEmergencia();
-  constructor(private dataLocalContactosEmergenciaService: DataLocalContactosEmergenciaService) { }
+  constructor(private dataLocalContactosEmergenciaService: DataLocalContactosEmergenciaService,
+    private router:Router) { }
 
   ngOnInit() {
   }
@@ -19,7 +21,7 @@ export class AddPage implements OnInit {
     console.log('I am in save new contacto emergencia..');
     console.log(this.contactoEmergencia);
     this.dataLocalContactosEmergenciaService.guardarContactoEmergencia(this.contactoEmergencia);
-    
+    this.router.navigate(['/contactos-emergencia']);
   }
 
 }

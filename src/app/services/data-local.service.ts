@@ -13,7 +13,8 @@ export class DataLocalService {
 
   numeroNegativo = -1;//Numero negativo para tener un numero consucitivo de los registros que se vayan creando
   
-
+  idempresa:number =0;
+  
   constructor(public toastController: ToastController) {
   }
 
@@ -26,7 +27,7 @@ export class DataLocalService {
   }
 
   getNumeroNegativo() {
-    return this.numeroNegativo--;
+    return Math.floor((Math.random() * (100000-1))+1);//NUmero entre 1 y 100000
   }
 
   

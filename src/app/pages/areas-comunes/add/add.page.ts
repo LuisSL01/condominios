@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AreaComun } from '../../../models/area-comun.model';
 import { DataLocalAreaComunService } from '../../../services/data-local-area-comun.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Router } from '@angular/router';
 
 declare var window: any;
 
@@ -16,7 +17,8 @@ export class AddPage implements OnInit {
   enCamara:boolean;
 
   constructor(private dataLocalAreaComunService: DataLocalAreaComunService,
-              private camera: Camera) { }
+              private camera: Camera,
+              private router:Router) { }
 
   ngOnInit() {
   }
@@ -61,9 +63,8 @@ getCameraOptions(): any {
 
 
   save(){
-    console.log('save the new area');
-    console.log(this.areaComun);
     this.dataLocalAreaComunService.guardarAreaComun(this.areaComun);
+    this.router.navigate(['/areas-comunes']);
   }
   
   cambioHoraInicia(event){
