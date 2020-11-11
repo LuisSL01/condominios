@@ -62,26 +62,27 @@ ion-header{
 .uno {
     display: block;
     text-align: center;
-    padding-bottom: 3px;
-    margin-left: 50px;
-    color:white;
-    margin-top: 10px;
+   margin-right: 60px;
+  
 
    
 }
 .dos {
     display: block;
     text-align: center;
-    padding-bottom: 3px;
-    color:white;
-    margin-top: -37px;
+    margin-top: -34px;
+  
+  
 }
 .tres {
     display: block;
     text-align: center;
-    padding-bottom: 3px;
-    color:white;
-    margin-top: -38px;
-    margin-right: 50px;
-   
+    margin-left: 60px;
+    margin-top: -35px;
+}
+ion-button{
+    width: 250px;
+    text-transform: none;
+    margin-left: auto;
+  margin-right: auto;
 }
