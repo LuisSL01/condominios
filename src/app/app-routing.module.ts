@@ -64,10 +64,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule)
   },
   {
-    path: 'pagos',//No se utilizo
-    loadChildren: () => import('./pages/pagos/pagos.module').then( m => m.PagosPageModule)
-  },
-  {
     path: 'adeudos',
     loadChildren: () => import('./pages/adeudos/adeudos.module').then( m => m.AdeudosPageModule)
   },
@@ -75,14 +71,6 @@ const routes: Routes = [
     path: 'validar-comprobantes',
     loadChildren: () => import('./pages/validar-comprobantes/validar-comprobantes.module').then( m => m.ValidarComprobantesPageModule)
   },
-
-
-
-
-
-
- 
-
 ];
 
 @NgModule({
