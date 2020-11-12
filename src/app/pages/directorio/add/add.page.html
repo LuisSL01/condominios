@@ -10,7 +10,7 @@
         <ion-label position="floating">
           <ion-icon name="person-outline" style="font-size:23px; color: #00DDFF; 
               margin-bottom: -5px;
-          "></ion-icon>&nbsp;Nombre completo
+          "></ion-icon>&nbsp;&nbsp;Nombre completo
         </ion-label>
         <ion-input name="nombreCompleto" color="primary" [(ngModel)]="directorio.nombreCompleto" required>
         </ion-input>
@@ -19,7 +19,7 @@
         <ion-label >
           <ion-icon name="home-outline" style="font-size:23px; color: #00DDFF; 
               margin-bottom: -5px;
-          "></ion-icon>&nbsp;Nombre Manzana
+          "></ion-icon>&nbsp;&nbsp;Nombre Manzana
         </ion-label>
         <ion-select name="nombreManzana" [(ngModel)]="directorio.nombreManzana" 
           value="directorio.nombreManzana" okText="Aceptar"
@@ -31,30 +31,36 @@
       </ion-item>
       <ion-item>
         <ion-label position="floating">
-          <ion-icon name="home-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="location-outline" style="font-size:23px; color: #00DDFF; 
               margin-bottom: -5px;
-          "></ion-icon>&nbsp;Calle /núm. interior/núm. exterior
+          "></ion-icon>&nbsp;&nbsp;Calle /núm. interior/núm. exterior
         </ion-label>
         <ion-input name="direccion" color="primary" [(ngModel)]="directorio.direccion" required>
         </ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">&nbsp;Código postal
+        <ion-label position="floating">
+          <ion-icon name="map-outline" style="font-size:23px; color: #00DDFF; 
+          margin-bottom: -5px;
+      "></ion-icon>&nbsp;&nbsp;Código postal
         </ion-label>
         <ion-input name="codigoPostal" color="primary" [(ngModel)]="directorio.codigoPostal">
         </ion-input>        
       </ion-item>
       <ion-item>
         <ion-button fill="clear"  expand="block" size="small" style="text-transform: none;font-size:16px;margin-left: -4px; " >
-          <ion-icon slot="start" name="checkmark-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
-          Validar código postal
+          <ion-icon slot="start" name="checkmark-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>&nbsp;&nbsp;Validar código postal
         </ion-button>
 
        
       </ion-item>
       <ion-item>
-        <ion-label position="floating">&nbsp;Número de telefono
-        </ion-label>
+        <ion-label position="floating">
+          <ion-icon name="call-outline" style="font-size:23px; color: #00DDFF; 
+          margin-bottom: -5px;
+      "></ion-icon>&nbsp;&nbsp;Número de télefono
+      
+        </ion-label>   
         <ion-input name="numeroTelefono" color="primary" [(ngModel)]="directorio.numeroTelefono" >
         </ion-input>        
       </ion-item>
@@ -66,8 +72,8 @@
 
 
 
-    <ion-footer>
-      <ion-toolbar color="light" style="position: fixed; bottom: 0px;">
+    <ion-footer class="ion-no-border" translucent>
+      <ion-toolbar color="light" style="position: fixed; bottom: 0px; height: 63px;">
         <ion-grid>
           <ion-row>
             <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" offset-md="4" offset-sm="4">

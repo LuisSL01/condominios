@@ -15,8 +15,7 @@ margin-left: -20px;
           <ion-icon name="alarm-outline" style="font-size:23px; color: #00DDFF; 
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Fecha
         </ion-label>
-        <ion-datetime style="margin-bottom: -8px;" name="fechaGasto" displayFormat="DD / MMM / YYYY"
-          monthShortNames="Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre"
+        <ion-datetime style="margin-bottom: -8px;" name="fechaGasto"  displayFormat="DD/MM/YYYY"
           cancelText="Descartar" doneText="Aceptar" [ngModel]="gasto.fechaGasto.toISOString()"
           (ionChange)="cambioFecha($event )">
         </ion-datetime>

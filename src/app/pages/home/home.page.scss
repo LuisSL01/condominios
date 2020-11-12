@@ -45,13 +45,15 @@
 ion-label{
     text-align: center;
     background:#0c153e;
+ 
 }
 ion-img{
     background:#0c153e;
-    margin:10px auto;
+    margin:5px auto;
     display:block;
     height:100px;
     width: 250px;
+    margin-top: -30px;
 }
 
 ion-header{
@@ -63,14 +65,14 @@ ion-header{
     display: block;
     text-align: center;
    margin-right: 60px;
-  
+
 
    
 }
 .dos {
     display: block;
     text-align: center;
-    margin-top: -34px;
+    margin-top: -33px;
   
   
 }
@@ -78,11 +80,28 @@ ion-header{
     display: block;
     text-align: center;
     margin-left: 60px;
-    margin-top: -35px;
+    margin-top: -32px;
 }
 ion-button{
     width: 250px;
     text-transform: none;
     margin-left: auto;
   margin-right: auto;
+  height: 25px;
+}
+.small-text {
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    text-align: center;
+ 
+}
+ion-input{
+    background: white;
+    width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 25px;
+    font-size: 13px;
+    
 }

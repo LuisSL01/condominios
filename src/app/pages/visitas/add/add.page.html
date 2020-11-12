@@ -43,8 +43,8 @@
               margin-bottom: -5px;"></ion-icon>&nbsp;Fecha de visita
         </ion-label>
         <ion-datetime style="margin-bottom: -8px;" name="fechaInicio" placeholder="Fecha visita"
-          displayFormat="DD / MMM / YYYY"
-          monthShortNames="Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre"
+          displayFormat="DD/MM/YYYY"
+       
           doneText="Aceptar" cancelText="Cancelar" [ngModel]="visita.fechaInicio.toISOString()"
           (ionChange)="cambioFechaIniciaVisita( $event )">
         </ion-datetime>
@@ -55,8 +55,8 @@
               margin-bottom: -5px;"></ion-icon>&nbsp;Fecha de término
         </ion-label>
         <ion-datetime style="margin-bottom: -8px;" name="fechaTermina" placeholder="Fecha termina"
-          displayFormat="DD / MMM / YYYY"
-          monthShortNames="Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre"
+          displayFormat="DD/MM/YYYY"
+          
           doneText="Aceptar" cancelText="Cancelar" [ngModel]="visita.fechaTermina.toISOString()"
           (ionChange)="cambioFechaTerminaVisita( $event )">
         </ion-datetime>

@@ -1,37 +1,57 @@
-<ion-header>
+<ion-header class="ion-no-border" translucent>
   <ion-img  src="assets/login.PNG"></ion-img>
 </ion-header>
 
 
-<ion-label color="light" style="font-family: ParalucentW00-DemiBold;"> ¡HOLA!</ion-label> 
+<ion-label color="light" style="font-family: ParalucentW00-DemiBold; margin-top: -4px;" > ¡HOLA!</ion-label> 
 
-  <ion-label color="light" style="padding-bottom:10px;"> Inicia sesión con tu cuenta</ion-label>
+  <ion-label color="light" > Inicia sesión con tu cuenta</ion-label>
 
 <ion-content class="auth-form">
   <ion-grid>
     <ion-row>
       <ion-col align-self-center>
-        <ion-button *ngIf="false"  expand="block" color="secondary" 
-        href="https://www.erpvortex.com/crm/preRegistro.xhtml" >Nueva cuenta
+        <ion-button   expand="block" color="secondary" 
+        href="https://www.erpvortex.com/crm/preRegistro.xhtml" >Crear una nueva cuenta
           
         </ion-button>
 
-        <span *ngIf="false" class="divider line one-line">ó</span>
+        <span  class="divider line one-line">ó</span>
 
-        <span *ngIf="false" class="already">¿Ya tiene una cuenta?</span>
+        <span  class="already" style="font-size: 15px;">¿Ya tiene una cuenta?</span>
+        <br>
 
-        <ion-button [routerLink]="['/login']" expand="block" color="secondary" >Iniciar sesión</ion-button>
+       <!-- <ion-button [routerLink]="['/login']" expand="block" color="secondary" >Iniciar sesión</ion-button>-->
 
 
-        <ion-button  *ngIf="false" expand="block" color="light" href="https://www.erpvortex.com/crm/404.xhtml" >Continuar con Facebook
-          <ion-icon slot="start" name="logo-facebook" style="font-size:23px; color: #01143f; margin-right: 10px;"></ion-icon>
+          <ion-input name="user" placeholder="Usuario" type="text" required>
+            
+            <ion-icon slot="start" name="person" style="font-size:15px; color: #01143f; margin-left:5px; "></ion-icon>
+          </ion-input>
+      <br>
+          <ion-input name="pass" type="password" placeholder="Contraseña" required>
+            <ion-icon slot="start" name="lock-closed"style="font-size:15px; color: #01143f; margin-left:5px;"></ion-icon>
+          </ion-input>
+          <br>
+            <ion-button type="submit" color="secondary" expand="block">Iniciar sesión</ion-button>
+      
+            <span class="already" style="color:rgb(150, 150, 150); font-size: 13px;">¿Olvidaste tú contraseña?</span>
+
+
+  <br>
+     <br>
+         <br>    
+             <br>   
+        <ion-button *ngIf="false" expand="block" color="light" href="https://www.erpvortex.com/crm/404.xhtml" >Continuar con Facebook
+          <ion-icon slot="start" name="logo-facebook" style="font-size:18px; color: #01143f; "></ion-icon>
         </ion-button>
         
-        <ion-button *ngIf="false" expand="block" color="light" href="https://www.erpvortex.com/crm/404.xhtml" >Continuar con Google
-        <ion-icon slot="start" name="logo-google" style="font-size:22px; color: #01143f; margin-right: 35px;"></ion-icon></ion-button>
+        <ion-button  *ngIf="false" expand="block" color="light" href="https://www.erpvortex.com/crm/404.xhtml" >Continuar con Google
+        <ion-icon slot="start" name="logo-google" style="font-size:18px; color: #01143f;    "></ion-icon></ion-button>
 
-       
-
+        <ion-button *ngIf="false"  expand="block" color="light" href="https://www.erpvortex.com/crm/404.xhtml" >Continuar con Apple ID
+          <ion-icon slot="start" name="logo-apple" style="font-size:18px; color: #01143f; "></ion-icon></ion-button>
+        
  
            <span class="uno">
             <ion-button  fill="clear" size="small" href="https://www.facebook.com/ERPVORTEX/">
@@ -49,14 +69,14 @@
            </ion-button></span>
      
 
-  <span class="already" style="font-family: ParalucentW00-DemiBold; color:rgb(78, 78, 78); font-size: 15px; ">¿Quieres saber más?</span>
+  <span class="already" style="font-family: ParalucentW00-DemiBold; color:rgb(78, 78, 78); font-size: 14px; ">¿Quieres saber más?</span>
 
-  <span class="already" style="color:rgb(150, 150, 150); font-size: 13px;">contact@corbee.com</span>
+  <span class="already" style="color:rgb(150, 150, 150); font-size: 12px;">contact@corbee.com</span>
 </ion-col>
 </ion-row>
 </ion-grid>
   <ion-footer>
-    <ion-toolbar  color="secondary" style="position: fixed; bottom: 0px;">
+    <ion-toolbar  color="secondary" style="position: fixed; bottom: 0px; height:20px;">
     </ion-toolbar>
   </ion-footer>
 </ion-content>
