@@ -24,16 +24,18 @@
        <!-- <ion-button [routerLink]="['/login']" expand="block" color="secondary" >Iniciar sesión</ion-button>-->
 
 
-          <ion-input name="user" placeholder="Usuario" type="text" required>
+          <ion-input name="user" placeholder="Usuario"  [(ngModel)]="user" type="text" required>
             
             <ion-icon slot="start" name="person" style="font-size:15px; color: #01143f; margin-left:5px; "></ion-icon>
           </ion-input>
       <br>
-          <ion-input name="pass" type="password" placeholder="Contraseña" required>
+          <ion-input name="pass" type="password" [(ngModel)]="pass" placeholder="Contraseña" required>
             <ion-icon slot="start" name="lock-closed"style="font-size:15px; color: #01143f; margin-left:5px;"></ion-icon>
           </ion-input>
           <br>
-            <ion-button type="submit" color="secondary" expand="block">Iniciar sesión</ion-button>
+            <ion-button type="submit" color="secondary" 
+            (click)="iniciarSesion()"
+            expand="block">Iniciar sesión</ion-button>
       
             <span class="already" style="color:rgb(150, 150, 150); font-size: 13px;">¿Olvidaste tú contraseña?</span>
 
