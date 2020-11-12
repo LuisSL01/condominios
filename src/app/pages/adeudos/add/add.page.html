@@ -1,0 +1,108 @@
+<app-menu-header></app-menu-header>
+<app-header titulo="Nuevo adeudo"></app-header>
+<ion-content>
+  <form #formulario="ngForm" (ngSubmit)="save()">
+    <ion-list>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="calendar-outline" style="font-size:23px; color: #00DDFF; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Registrar adeudo
+        </ion-label>
+        <ion-select name="todos" [(ngModel)]="adeudo.todos" value="adeudo.todos" okText="Aceptar"
+        (ionChange)="cambioDestinatario(adeudo.todos)"
+          (click)="onClick()"
+          cancelText="Cancelar">
+          <ion-select-option value="1">Todos</ion-select-option>
+          <ion-select-option value="2">Solo a uno</ion-select-option>
+          
+        </ion-select>
+
+      </ion-item>
+      <ion-item *ngIf=" ! todos">
+        <ion-label   >
+          <ion-icon name="calendar-outline" style="font-size:23px; color: #00DDFF; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Agente
+        </ion-label>
+        <ion-select name="nombreAgente" [(ngModel)]="adeudo.nombreAgente" value="adeudo.nombreAgente" okText="Aceptar"
+          cancelText="Cancelar">
+          <ion-select-option value="Juanito perez">Juanito perez</ion-select-option>
+          <ion-select-option value="Maria lopez">Maria lopez</ion-select-option>          
+        </ion-select>
+
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="calendar-outline" style="font-size:23px; color: #00DDFF; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Concepto
+        </ion-label>
+        <ion-select name="concepto" [(ngModel)]="adeudo.concepto" value="adeudo.concepto" okText="Aceptar"
+          (ionChange)="cambioConcepto(adeudo.concepto)"
+          cancelText="Cancelar">
+          <ion-select-option value="Mantenimiento">Mantenimiento</ion-select-option>
+          <ion-select-option value="Jardineria">Jardineria</ion-select-option>
+          <ion-select-option value="Fiestas">Fiestas</ion-select-option>
+          <ion-select-option value="Otro">Otro</ion-select-option>
+        </ion-select>
+
+      </ion-item>
+      <ion-item  *ngIf="ponerDescripcion">
+        <ion-label position="floating">
+          <ion-icon name="create-outline" style="font-size:23px; color: #00DDFF; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;Descripción</ion-label>
+        
+        <ion-textarea rows="2" cols="1" 
+          name="descripcion" [(ngModel)]="adeudo.descripcion"></ion-textarea>   
+        
+        
+      </ion-item>
+
+      <ion-item>
+        <ion-label>
+          <ion-icon name="calculator-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Cantidad
+        </ion-label>
+        <ion-input name="cantidad" type="number" [(ngModel)]="adeudo.cantidad">
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>
+          <ion-icon name="alarm-outline" style="font-size:23px; color: #00DDFF; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;Fecha a cubrir
+        </ion-label>
+
+        <ion-datetime style="margin-bottom: -8px;" name="fechaCubrir" placeholder="Fecha cubrir"
+          displayFormat="MMM / YYYY"
+          monthShortNames="Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre"
+          cancelText="Descartar" doneText="Aceptar" [ngModel]="adeudo.fechaCubrir.toISOString()"
+          (ionChange)="cambioFechaVence( $event )">
+        </ion-datetime>
+      </ion-item>
+
+
+
+    </ion-list>
+    <ion-footer>
+      <ion-toolbar color="light" style="position: fixed; bottom: 0px;">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" offset-md="4" offset-sm="4">
+              <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
+
+              <ion-button fill="clear" size="small" type="submit" [disabled]="formulario.invalid"
+                style="text-transform: none; margin-left: 120px; margin-top: -40px;">Guardar
+                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #00DDFF;">
+                </ion-icon>
+              </ion-button>
+              <ion-button fill="clear" size="small"
+                style="text-transform: none; margin-top: -80px;  margin-left: 220px; " routerLink="/adeudos">
+                Cancelar
+                <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-toolbar>
+    </ion-footer>
+  </form>
+</ion-content>

@@ -14,6 +14,8 @@ export class DataLocalPagosComprobantesService {
   constructor(private storage: Storage,
               private dataLocalService: DataLocalService) {
     this.nombreEtiquetaJson = this.dataLocalService.idempresa + "_" +this.nombreEtiquetaJson; 
+    console.log('this.nombreEtiquetaJson: '+this.nombreEtiquetaJson);
+    
     this.cargarPagosComprobantes();
   }
   guardarPagoComprobante(pagoComprobante: PagosComprobantes) {
@@ -28,7 +30,7 @@ export class DataLocalPagosComprobantesService {
 
   borrarPagoComprobante(pagoComprobante: PagosComprobantes){
     this.pagosComprobantes = this.pagosComprobantes.filter(pag => pag.idpagocomprobante !== pagoComprobante.idpagocomprobante);
-    this.storage.set('pagoscomprobantes', this.pagosComprobantes);
+    this.storage.set(this.nombreEtiquetaJson, this.pagosComprobantes);
     this.dataLocalService.presentToast('Pago comprobante borrado');
   }
 

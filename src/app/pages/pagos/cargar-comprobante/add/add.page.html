@@ -1,0 +1,72 @@
+<app-menu-header></app-menu-header>
+<app-header titulo="Nuevo comprobante"></app-header>
+<ion-content>
+  <form #formulario1="ngForm" (ngSubmit)="save()">
+    <ion-list>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="calendar-outline" style="font-size:23px; color: #00DDFF; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Mes
+        </ion-label>
+        <ion-select name="mesPago" [(ngModel)]="pago.mesPago" value="pago.mesPago" okText="Aceptar"
+          cancelText="Cancelar">
+          <ion-select-option value="Febrero 2020">Febrero 2020</ion-select-option>
+          <ion-select-option value="Marzo 2020">Marzo 2020</ion-select-option>
+          <ion-select-option value="Abril 2020">Abril 2020</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="cash-outline" style="font-size:23px; color: #00DDFF; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Forma de pago
+        </ion-label>
+        <ion-select name="formaPago" [(ngModel)]="pago.formaPago" value="pago.formaPago" okText="Aceptar"
+          cancelText="Cancelar">
+          <ion-select-option value="efectivo">Efectivo</ion-select-option>
+          <ion-select-option value="cheque">Cheque</ion-select-option>
+          <ion-select-option value="transferencia">Transferencia</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-button fill="clear" size="small" (click)="camara()">
+          <ion-icon slot="start" name="camera-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" size="small" (click)="libreria()">
+          <ion-icon slot="start" name="image-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <ion-item>
+        <ion-col size="3" *ngFor="let image of pago.imgs">
+          <ion-card>
+            <img [src]="image | imageSanitizer">
+          </ion-card>
+        </ion-col>
+      </ion-item>
+    </ion-list>
+
+    <ion-footer>
+      <ion-toolbar color="light" style="position: fixed; bottom: 0px;">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" offset-md="4" offset-sm="4">
+              <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
+
+              <ion-button fill="clear" size="small" type="submit" [disabled]="formulario1.invalid"
+                style="text-transform: none; margin-left: 120px; margin-top: -40px;">Guardar
+                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #00DDFF;">
+                </ion-icon>
+              </ion-button>
+              <ion-button fill="clear" size="small"
+                style="text-transform: none; margin-top: -80px;  margin-left: 220px; " 
+                routerLink="/pagos/cargar-comprobante">
+                Cancelar
+                <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-toolbar>
+    </ion-footer>
+
+  </form>
+</ion-content>

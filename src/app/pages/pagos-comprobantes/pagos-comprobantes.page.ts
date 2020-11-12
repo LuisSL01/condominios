@@ -15,6 +15,10 @@ export class PagosComprobantesPage implements OnInit {
 
   constructor(public dataLocalPagosComprobantesService: DataLocalPagosComprobantesService) { 
     this.pagoComprobanteList = this.dataLocalPagosComprobantesService.pagosComprobantes;
+    console.log('en el constructor de pago comprobante ');
+    
+    console.log('this.pagoComprobanteList: '+this.pagoComprobanteList);
+    
   }
 
   ngOnInit() {

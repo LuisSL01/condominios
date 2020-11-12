@@ -5,17 +5,20 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { PipesModule } from '../pipes/pipes.module';
 import { MenuComponent } from './menu/menu.component';
+import { MenuHeaderComponent } from './menu-header/menu-header.component';
 
 
 
 @NgModule({
   declarations: [    
     HeaderComponent,
-    MenuComponent
+    MenuComponent,
+    MenuHeaderComponent
   ],
   exports:[    
     HeaderComponent,
-    MenuComponent
+    MenuComponent,
+    MenuHeaderComponent
   ],
   imports: [
     RouterModule,

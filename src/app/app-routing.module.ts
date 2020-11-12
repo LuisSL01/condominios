@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'inicio',//se le indica que pagina es la principal al cargar
+    redirectTo: 'home',//se le indica que pagina es la principal al cargar
     pathMatch: 'full'
   },
   {
@@ -63,6 +63,21 @@ const routes: Routes = [
     path: 'forgot-password',
     loadChildren: () => import('./pages/forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule)
   },
+  {
+    path: 'pagos',//No se utilizo
+    loadChildren: () => import('./pages/pagos/pagos.module').then( m => m.PagosPageModule)
+  },
+  {
+    path: 'adeudos',
+    loadChildren: () => import('./pages/adeudos/adeudos.module').then( m => m.AdeudosPageModule)
+  },
+  {
+    path: 'validar-comprobantes',
+    loadChildren: () => import('./pages/validar-comprobantes/validar-comprobantes.module').then( m => m.ValidarComprobantesPageModule)
+  },
+
+
+
 
 
 

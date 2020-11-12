@@ -16,6 +16,9 @@ export class DataLocalAvisoService {
   constructor(private storage: Storage,
     private dataLocalService: DataLocalService) {
     this.nombreEtiquetaJson = this.dataLocalService.idempresa + "_" + this.nombreEtiquetaJson;
+
+    console.log('this.nombreEtiquetaJson: '+this.nombreEtiquetaJson);
+    
     this.cargarAvisos();
   }
 

@@ -13,7 +13,10 @@ export class InicioPage implements OnInit {
   componentes: Observable<Componente[]>;
 
   constructor(private dataService: DataService,
-    private menuCtrl: MenuController) { }
+    private menuCtrl: MenuController) {
+
+      
+     }
 
   ngOnInit() {
     this.componentes = this.dataService.getMenuOpts();

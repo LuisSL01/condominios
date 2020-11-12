@@ -18,6 +18,16 @@
       "icon": "cash-outline",
       "name": "Pagos comprobantes",
       "redirectTo": "/pagos-comprobantes"
+    },
+    {
+      "icon": "cash-outline",
+      "name": "Validar comprobantes ",
+      "redirectTo": "/validar-comprobantes"
+    },
+    {
+      "icon": "wallet-outline",
+      "name": "Adeudos",
+      "redirectTo": "/adeudos"
     }
     ,
     {

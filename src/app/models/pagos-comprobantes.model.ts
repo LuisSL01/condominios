@@ -11,6 +11,9 @@ export class PagosComprobantes{
     
     public fechaAplicarPago:Date;//Se crea este campo en base de datos para sustituir anioPago y mesPago;
 
+    public fechaAutorizo:Date;//
+    public idagenteAutorizo:number;
+    
 
     public formaPago:string;
     public montoOriginal:number;

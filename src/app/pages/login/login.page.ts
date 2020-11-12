@@ -28,12 +28,16 @@ export class LoginPage implements OnInit {
     console.log(this.user);
     console.log(this.pass);
 
-    if(this.user.toLowerCase() === 'test1' && this.pass.toLowerCase() === 'test1'){
+    if(this.user.toLowerCase() === 'test1' 
+                && this.pass.toLowerCase() === 'test1'){
       console.log('debo redireccionar al menu');
       this.dataLocalService.idempresa = 1;//Aqui es cuando se podra setear el id del usuario que se este logueando
-      this.router.navigate(['/inicio']);
-      
-      
+      this.router.navigate(['/inicio']);            
+    }else if(this.user.toLowerCase() === 'test2' 
+                && this.pass.toLowerCase() === 'test2'){
+      console.log('debo redireccionar al menu');
+      this.dataLocalService.idempresa = 2;//Aqui es cuando se podra setear el id del usuario que se este logueando
+      this.router.navigate(['/inicio']);            
     }else{
       console.log('debo lanzar la alerta');
       this.presentAlert();

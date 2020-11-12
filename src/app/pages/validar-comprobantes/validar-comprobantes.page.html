@@ -1,0 +1,18 @@
+<app-menu-header></app-menu-header>
+<app-header titulo="Validar Comprobantes"></app-header>
+<ion-content fullscreen>
+  <ion-searchbar animated (ionChange)="buscar($event)" placeholder="Buscar"></ion-searchbar>
+  <ion-slides class="emptyData" *ngIf="comprobantesValidarList.length === 0">
+    <ion-slide class="emptyData">
+      <ion-label>No hay comprobantes por revisar</ion-label>
+    </ion-slide>
+  </ion-slides>
+  <ion-grid fixed *ngIf="comprobantesValidarList.length > 0">    
+    <ion-row>
+      <ion-col size="12" 
+        *ngFor="let comprobante of comprobantesValidarList">
+        <app-list [comprobante]="comprobante"></app-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
