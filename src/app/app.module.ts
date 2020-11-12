@@ -28,6 +28,7 @@ import { OneSignal } from '@ionic-native/onesignal/ngx';
      HttpClientModule,
      IonicStorageModule.forRoot()
     ],
+
   providers: [
 
     /* No funciono
