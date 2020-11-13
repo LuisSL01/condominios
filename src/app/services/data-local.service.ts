@@ -27,7 +27,7 @@ export class DataLocalService {
   }
 
   getNumeroNegativo() {
-    return Math.floor((Math.random() * (100000-1))+1);//NUmero entre 1 y 100000
+    return new Date().getTime() + Math.floor((Math.random() * (1000-1))+1);//NUmero entre 1 y 1000
   }
 
   

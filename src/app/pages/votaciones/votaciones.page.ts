@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataLocalVotacionesService } from '../../services/data-local-votaciones.service';
-import { Votacion } from '../../models/votaciones.model';
+import { Encuesta } from '../../models/votaciones.model';
 
 
 @Component({
@@ -10,7 +10,7 @@ import { Votacion } from '../../models/votaciones.model';
 })
 export class VotacionesPage implements OnInit {
   textoBuscar ='';
-  public votacionesList : Votacion[];
+  public votacionesList : Encuesta[];
   constructor(public dataLocalVotacionesService: DataLocalVotacionesService) {
     this.votacionesList = this.dataLocalVotacionesService.votaciones;
    }
