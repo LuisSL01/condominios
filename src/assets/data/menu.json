@@ -20,12 +20,12 @@
       "redirectTo": "/pagos-comprobantes"
     },
     {
-      "icon": "cash-outline",
+      "icon": "checkbox-outline",
       "name": "Validar comprobantes ",
       "redirectTo": "/validar-comprobantes"
     },
     {
-      "icon": "wallet-outline",
+      "icon": "trending-down-outline",
       "name": "Adeudos",
       "redirectTo": "/adeudos"
     }
