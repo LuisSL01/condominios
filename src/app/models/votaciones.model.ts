@@ -1,4 +1,6 @@
-export class Votacion{
+import { EncuestaPreguntaOpcion } from './encuesta-pregunta-opcion.model';
+import { EncuestaPregunta } from './encuesta-pregunta.model';
+export class Encuesta{
     public idvotacion:number;
     public idempresa:number;
     public idagenteCreo:number;
@@ -10,36 +12,33 @@ export class Votacion{
     public isOpen:boolean;
     public aplicaOpcionesSI_NO:boolean;
 
-    public preguntas: VotacionPregunta[];//Se crea en base de datos como jsonb
+    public preguntas: EncuestaPregunta[];//Se crea en base de datos como jsonb
 
+    pregunta = new EncuestaPregunta();
+
+
+    
+    
+    
     constructor(){
         console.log('Iam in the constrictor of votaciones');
         this.fechaCreacion = new Date();
         this.aplicaOpcionesSI_NO = true;
         this.fechaTermina = new Date();
-        this.horaTermina = new Date();   
-        this.preguntas = new Array();
+        this.horaTermina = new Date(); 
+        
+        this.preguntas = Array();
+        this.pregunta.opciones = Array();
+        this.pregunta.opciones.push(new EncuestaPreguntaOpcion());
+        this.pregunta.opciones.push(new EncuestaPreguntaOpcion());
+
+        this.preguntas.push(this.pregunta);
+
+        console.log('terminando el cosntructor');
+        
+        
     } 
 }
 
-export class VotacionPregunta{
-
-    public pregunta:string;    
-    public opciones: VotacionPreguntaOpcion[];
-    constructor(){
-        console.log('I am in constructor of votacion pregunta');
-        this.opciones = new Array();
-    }
-
-}
-
-export class VotacionPreguntaOpcion{
-
-    public opcion:string;
-    constructor(){
-        console.log('I am in constructor of votacion pregunta opcion');        
-    }
-
-}
 
 

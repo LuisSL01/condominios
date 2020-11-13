@@ -42,7 +42,7 @@
     },
     {
       "icon": "options-outline",
-      "name": "Votaciones",
+      "name": "Encuestas",
       "redirectTo": "/votaciones"
     },
     {

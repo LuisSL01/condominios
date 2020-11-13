@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DataLocalVotacionesService } from '../../../services/data-local-votaciones.service';
-import { Votacion } from '../../../models/votaciones.model';
+import { Encuesta } from '../../../models/votaciones.model';
 import { ActionSheetController } from '@ionic/angular';
 
 @Component({
@@ -10,7 +10,7 @@ import { ActionSheetController } from '@ionic/angular';
 })
 export class ListPage implements OnInit {
 
-  @Input() votacion:Votacion;
+  @Input() encuesta:Encuesta;
 
   constructor(public dataLocalVotacionesService: DataLocalVotacionesService,
     private actionSheetCtrl: ActionSheetController) { }
@@ -27,8 +27,8 @@ export class ListPage implements OnInit {
         cssClass: 'action-dark',
         handler: () => {
           console.log('Borrar votación');
-          console.log(this.votacion);  
-          this.dataLocalVotacionesService.borrarVotacion(this.votacion);
+          console.log(this.encuesta);  
+          this.dataLocalVotacionesService.borrarVotacion(this.encuesta);
         }
       };
 
