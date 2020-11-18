@@ -7,7 +7,7 @@
       <ion-item>
         <ion-label position="floating">
           <ion-icon name="person-outline" style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;Nombre
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Nombre
         </ion-label>
         <ion-input name="nombre" [(ngModel)]="visita.nombre" required>
         </ion-input>
@@ -15,7 +15,7 @@
       <ion-item>
         <ion-label>
           <ion-icon name="create-outline" style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;Tipo de visita
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Tipo de visita
         </ion-label>
         <ion-select name="tipoVisita" [(ngModel)]="visita.tipoVisita" value="visita.tipoVisita" okText="Aceptar"
           cancelText="Cancelar">
@@ -27,7 +27,7 @@
       <ion-item>
         <ion-label>
           <ion-icon name="flash-outline" style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;Duración
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Duración
         </ion-label>
         <ion-select name="duracion" [(ngModel)]="visita.duracion" value="visita.duracion" okText="Aceptar"
           cancelText="Cancelar">
@@ -40,7 +40,7 @@
       <ion-item>
         <ion-label>
           <ion-icon name="hourglass-outline" style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;Fecha de visita
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Fecha de visita
         </ion-label>
         <ion-datetime style="margin-bottom: -8px;" name="fechaInicio" placeholder="Fecha visita"
           displayFormat="DD/MM/YYYY"
@@ -52,7 +52,7 @@
       <ion-item>
         <ion-label>
           <ion-icon name="alarm-outline" style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;Fecha de término
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Fecha de término
         </ion-label>
         <ion-datetime style="margin-bottom: -8px;" name="fechaTermina" placeholder="Fecha termina"
           displayFormat="DD/MM/YYYY"
@@ -64,14 +64,14 @@
       <ion-item>
         <ion-label>
           <ion-icon name="people-outline" style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;¿Viene con acompañantes?
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;¿Viene con acompañantes?
         </ion-label>
         <ion-toggle slot="end" name="conAcompaniantes" [(ngModel)]="visita.conAcompaniantes"></ion-toggle>
       </ion-item>
       <ion-item>
         <ion-label>
           <ion-icon name="person-add-outline" style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;¿Usted viene todos los días?
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;¿Usted viene todos los días?
         </ion-label>
         <ion-toggle slot="end" name="visitaDiaria" [(ngModel)]="visita.visitaDiaria"></ion-toggle>
       </ion-item>

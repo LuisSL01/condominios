@@ -60,8 +60,7 @@
         <ion-item  *ngFor="let opc of pre.opciones; let o = index">
           <ion-label position="floating" >
             <ion-icon name="hand-left-outline" style="font-size:23px; color: #00DDFF; 
-            margin-bottom: -5px;"></ion-icon>
-            &nbsp;&nbsp;Opción {{o + 1}}
+            margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Opción {{o + 1}}
           </ion-label>
           <ion-input name="opcion{{o + 1 + i}}" [(ngModel)]=" pre.opciones[o].opcion " type="text" style="margin-bottom: -5px;"></ion-input>
         </ion-item>
@@ -73,16 +72,14 @@
       <ion-item>
         <ion-button fill="clear" size="small" style="text-transform: none;font-size:16px;margin-left: -4px; "
           (click)="agregarNuevaOpcion()">
-          <ion-icon slot="start" name="add-circle-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
-          Añadir opción
+          <ion-icon slot="start" name="add-circle-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>&nbsp;&nbsp;Añadir opción
         </ion-button>
       </ion-item>
 
       <ion-item>
         <ion-button fill="clear" size="small" style="text-transform: none; font-size:16px; margin-left: -4px;"
           (click)="agregarNuevaPregunta()">
-          <ion-icon slot="start" name="help-circle-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
-          Añadir pregunta
+          <ion-icon slot="start" name="help-circle-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>&nbsp;&nbsp;Añadir pregunta
         </ion-button>
       </ion-item>
 

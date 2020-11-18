@@ -7,7 +7,7 @@
         <ion-list>
           <ion-item>
             <ion-label position="floating"><ion-icon name="easel-outline"style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;Título del anuncio</ion-label>
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Título del anuncio</ion-label>
             <ion-input name="titulo" [(ngModel)]="anuncio.titulo" required>
             </ion-input>
           </ion-item>
@@ -15,7 +15,7 @@
           <ion-item>
             <ion-label position="floating">
               <ion-icon name="create-outline" style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;Descripción</ion-label>
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Descripción</ion-label>
             
             <ion-textarea rows="2" cols="1" 
               name="descripcion"[(ngModel)]="anuncio.descripcion" required></ion-textarea>            
@@ -24,19 +24,19 @@
           </ion-item>
           <ion-item>
             <ion-label position="floating"><ion-icon name="cash-outline"style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;Precio</ion-label>         
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Precio</ion-label>         
             <ion-input  name="precio" type="number" [(ngModel)]="anuncio.precio" required>
             </ion-input>
           </ion-item>
           <ion-item>
             <ion-label position="floating"><ion-icon name="call-outline"style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;Teléfono</ion-label>
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Teléfono</ion-label>
             <ion-input name="telefono" [(ngModel)]="anuncio.telefono">
             </ion-input>
           </ion-item>
           <ion-item>
             <ion-label><ion-icon name="alarm-outline"style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;Fecha de expiración</ion-label>  
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Fecha de expiración</ion-label>  
 
             <ion-datetime style="margin-bottom: -8px;" name="fechaVence" placeholder="Fecha vence"                      
                      
@@ -52,7 +52,7 @@
           
           <ion-item>
             <ion-label><ion-icon name="bar-chart-outline"style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;Estatus</ion-label>  
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Estatus</ion-label>  
             <ion-toggle slot="end" name="estatus" [(ngModel)]="anuncio.estatus"></ion-toggle>
           </ion-item>
 
