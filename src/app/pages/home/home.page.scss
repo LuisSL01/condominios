@@ -72,7 +72,7 @@ ion-header{
 .dos {
     display: block;
     text-align: center;
-    margin-top: -33px;
+    margin-top: -32px;
   
   
 }
@@ -88,13 +88,14 @@ ion-button{
     margin-left: auto;
   margin-right: auto;
   height: 25px;
+  background:#0c153e;
 }
 .small-text {
     text-decoration: none;
     display: block;
     font-size: 14px;
     text-align: center;
- 
+    margin-top:6px;
 }
 ion-input{
     background: white;
@@ -104,4 +105,7 @@ ion-input{
     height: 25px;
     font-size: 13px;
     
+}
+ion-content{
+    background:#0c153e; 
 }

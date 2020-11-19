@@ -36,10 +36,8 @@
             <ion-button type="submit" color="secondary" 
             (click)="iniciarSesion()"
             expand="block">Iniciar sesión</ion-button>
-      
-            <span class="already" style="color:rgb(150, 150, 150); font-size: 13px;">¿Olvidaste tú contraseña?</span>
-
-
+            <a [routerLink]="['/forgot-password']" class="small-text" style="color:rgb(150, 150, 150); font-size: 13px;">¿Olvidaste tú contraseña?</a>
+       
   <br>
      <br>
          <br>    
@@ -48,7 +46,7 @@
           <ion-icon slot="start" name="logo-facebook" style="font-size:18px; color: #01143f; "></ion-icon>
         </ion-button>
         
-        <ion-button  *ngIf="false" expand="block" color="light" href="https://www.erpvortex.com/crm/404.xhtml" >Continuar con Google
+        <ion-button *ngIf="false"  expand="block" color="light" href="https://www.erpvortex.com/crm/404.xhtml" >Continuar con Google
         <ion-icon slot="start" name="logo-google" style="font-size:18px; color: #01143f;    "></ion-icon></ion-button>
 
         <ion-button *ngIf="false"  expand="block" color="light" href="https://www.erpvortex.com/crm/404.xhtml" >Continuar con Apple ID
@@ -77,7 +75,7 @@
 </ion-col>
 </ion-row>
 </ion-grid>
-  <ion-footer>
+  <ion-footer class="ion-no-border" translucent>
     <ion-toolbar  color="secondary" style="position: fixed; bottom: 0px; height:20px;">
     </ion-toolbar>
   </ion-footer>
