@@ -25,40 +25,37 @@
         </ion-select>
       </ion-item>
       <ion-item>
+
         <ion-label>
           <ion-icon name="flash-outline" style="font-size:23px; color: #00DDFF; 
               margin-bottom: -5px;"></ion-icon>&nbsp;Duración
         </ion-label>
         <ion-select name="duracion" [(ngModel)]="visita.duracion" value="visita.duracion" okText="Aceptar"
-          cancelText="Cancelar">
-          <ion-select-option value="solo hoy">Solo hoy</ion-select-option>
+          (ionChange)="cambioDuracion(visita.duracion)" cancelText="Cancelar">
+          <ion-select-option value="solo_hoy">Solo hoy</ion-select-option>
           <ion-select-option value="indefinido">Indefinido</ion-select-option>
-          <ion-select-option value="rango de fechas">Rango de fechas</ion-select-option>
+          <ion-select-option value="entre_fechas">Rango de fechas</ion-select-option>
         </ion-select>
       </ion-item>
 
-      <ion-item>
+      <ion-item *ngIf="visita.duracion === 'entre_fechas'">
         <ion-label>
           <ion-icon name="hourglass-outline" style="font-size:23px; color: #00DDFF; 
               margin-bottom: -5px;"></ion-icon>&nbsp;Fecha de visita
         </ion-label>
         <ion-datetime style="margin-bottom: -8px;" name="fechaInicio" placeholder="Fecha visita"
-          displayFormat="DD/MM/YYYY"
-       
-          doneText="Aceptar" cancelText="Cancelar" [ngModel]="visita.fechaInicio.toISOString()"
-          (ionChange)="cambioFechaIniciaVisita( $event )">
+          displayFormat="DD/MM/YYYY" doneText="Aceptar" cancelText="Cancelar"
+          [ngModel]="visita.fechaInicio.toISOString()" (ionChange)="cambioFechaIniciaVisita( $event )">
         </ion-datetime>
       </ion-item>
-      <ion-item>
+      <ion-item *ngIf="visita.duracion === 'entre_fechas'">
         <ion-label>
           <ion-icon name="alarm-outline" style="font-size:23px; color: #00DDFF; 
               margin-bottom: -5px;"></ion-icon>&nbsp;Fecha de término
         </ion-label>
         <ion-datetime style="margin-bottom: -8px;" name="fechaTermina" placeholder="Fecha termina"
-          displayFormat="DD/MM/YYYY"
-          
-          doneText="Aceptar" cancelText="Cancelar" [ngModel]="visita.fechaTermina.toISOString()"
-          (ionChange)="cambioFechaTerminaVisita( $event )">
+          displayFormat="DD/MM/YYYY" doneText="Aceptar" cancelText="Cancelar"
+          [ngModel]="visita.fechaTermina.toISOString()" (ionChange)="cambioFechaTerminaVisita( $event )">
         </ion-datetime>
       </ion-item>
       <ion-item>
@@ -68,15 +65,28 @@
         </ion-label>
         <ion-toggle slot="end" name="conAcompaniantes" [(ngModel)]="visita.conAcompaniantes"></ion-toggle>
       </ion-item>
-      <ion-item>
+      <ion-item *ngIf="visita.duracion === 'entre_fechas' || visita.duracion === 'indefinido' ">
         <ion-label>
           <ion-icon name="person-add-outline" style="font-size:23px; color: #00DDFF; 
               margin-bottom: -5px;"></ion-icon>&nbsp;¿Usted viene todos los días?
         </ion-label>
         <ion-toggle slot="end" name="visitaDiaria" [(ngModel)]="visita.visitaDiaria"></ion-toggle>
       </ion-item>
+
+      <ion-list *ngIf=" ! visita.visitaDiaria">
+
+
+        <ion-item *ngFor="let elem of dias">
+          <ion-label>{{elem.name}}</ion-label>
+          <ion-checkbox slot="end" name="{{elem.name}}" [(ngModel)]="elem.isChecked"></ion-checkbox>
+        </ion-item>
+
+
+      </ion-list>
+
+
     </ion-list>
-    
+
     <ion-footer class="ion-no-border" translucent>
       <ion-toolbar color="light" style="position: fixed; bottom: 0px; height: 63px;">
         <ion-grid>
@@ -92,8 +102,7 @@
 
 
               <ion-button fill="clear" size="small"
-                style="text-transform: none; margin-top: -80px;  margin-left: 220px; " 
-                routerLink="/visitas">
+                style="text-transform: none; margin-top: -80px;  margin-left: 220px; " routerLink="/visitas">
                 Cancelar
                 <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
               </ion-button>

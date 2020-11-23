@@ -56,6 +56,11 @@
       "redirectTo": "/visitas"
     },
     {
+      "icon": "car-sport-outline",
+      "name": "Bitacora visitas",
+      "redirectTo": "/bitacora-visitas"
+    },
+    {
       "icon": "leaf-outline",
       "name": "Áreas comunes",
       "redirectTo": "/areas-comunes"

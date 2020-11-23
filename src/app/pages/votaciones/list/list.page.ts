@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DataLocalVotacionesService } from '../../../services/data-local-votaciones.service';
 import { Encuesta } from '../../../models/votaciones.model';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, ModalController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { ResponderEncuestaPage } from '../responder-encuesta/responder-encuesta.page';
 
 @Component({
   selector: 'app-list',
@@ -13,7 +15,9 @@ export class ListPage implements OnInit {
   @Input() encuesta:Encuesta;
 
   constructor(public dataLocalVotacionesService: DataLocalVotacionesService,
-    private actionSheetCtrl: ActionSheetController) { }
+    private actionSheetCtrl: ActionSheetController,
+    private modalCtrl:ModalController,
+    private router:Router) { }
 
   ngOnInit() {
   }
@@ -22,11 +26,11 @@ export class ListPage implements OnInit {
 
     let guardarBorrarBtn;
       guardarBorrarBtn = {
-        text: 'Borrar votación',
+        text: 'Borrar encuesta',
         icon: 'trash',
         cssClass: 'action-dark',
         handler: () => {
-          console.log('Borrar votación');
+          console.log('Borrar encuesta');
           console.log(this.encuesta);  
           this.dataLocalVotacionesService.borrarVotacion(this.encuesta);
         }
@@ -34,6 +38,15 @@ export class ListPage implements OnInit {
 
     const actionSheet = await this.actionSheetCtrl.create({
       buttons: [
+      {
+        text: 'Responder',
+        icon: 'share',
+        cssClass: 'action-dark',
+        handler: () => {
+          console.log('Responder');
+          this.presentModalRespoderEncuesta();
+      }
+      },
       guardarBorrarBtn,
       {
         text: 'Cancelar',
@@ -46,6 +59,20 @@ export class ListPage implements OnInit {
       }]
     });
     await actionSheet.present();
+  }
+
+  
+  async presentModalRespoderEncuesta(){
+    const modal = await this.modalCtrl.create({
+      component: ResponderEncuestaPage,
+    componentProps:{
+      titulo: this.encuesta.titulo,
+      mensaje: this.encuesta.mensaje,
+      preguntas: this.encuesta.preguntas
+    },
+      cssClass: 'my-custom-class'
+    });
+    return await modal.present();
   }
 
 }

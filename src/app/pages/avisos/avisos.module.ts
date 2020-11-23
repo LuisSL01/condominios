@@ -16,11 +16,9 @@ import { PipesModule } from '../../pipes/pipes.module';
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
-    
+    FormsModule,    
     IonicModule,
-    AvisosPageRoutingModule,
-    
+    AvisosPageRoutingModule,    
     ComponentsModule,
     PipesModule
   ],

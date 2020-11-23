@@ -71,21 +71,6 @@ export class AddPage implements OnInit {
     });
   }
   save() {
-    // Set the default timezone to UTC
-    // More info about moment timezone: http://momentjs.com/timezone/docs
-    /* this.momentjs.tz.setDefault('UTC');
-    this.momentjs.locale('es'); */
-    // Current datetime according to the default timezone (UTC as determined above)
-    /* let currentDateTime = this.momentjs().format('YYYY-MM-DD HH:mm:ss ZZ');
-    console.log(currentDateTime); 
-    // A specific datetime according to a specific timezone ('Africa/Cairo' in this example) other than the default one (UTC as determined above)
-    let dateTimeAccordingToAnotherTimezone = this.momentjs().format('MMMM Do YYYY, h:mm:ss a');
-    console.log(dateTimeAccordingToAnotherTimezone);
-    console.log('save new anuncio');
-    console.log(this.momentjs); */
-
-
-
     console.log(this.anuncio);
     this.dataLocalAnuncioService.guardarAnuncio(this.anuncio);
     this.router.navigate(['/anuncios']);

@@ -54,6 +54,7 @@ export class ListAvisosPage implements OnInit {
 
     const actionSheet = await this.actionSheetCtrl.create({
       buttons: [
+        
         {
           text: 'Ver respuestas ('+tamanioRespuestas+')',
           icon: 'share',

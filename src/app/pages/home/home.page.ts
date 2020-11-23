@@ -31,10 +31,12 @@ export class HomePage implements OnInit {
     if(this.user.toLowerCase() === 'test1' 
                 && this.pass.toLowerCase() === 'test1'){    
       this.dataLocalService.idempresa = 1;//Aqui es cuando se podra setear el id del usuario que se este logueando
+      this.dataLocalService.miIdAgente = 10;
       this.router.navigate(['/inicio']);            
     }else if(this.user.toLowerCase() === 'test2' 
                 && this.pass.toLowerCase() === 'test2'){      
       this.dataLocalService.idempresa = 2;//Aqui es cuando se podra setear el id del usuario que se este logueando
+      this.dataLocalService.miIdAgente = 20;
       this.router.navigate(['/inicio']);            
     }else{      
       this.presentAlert();

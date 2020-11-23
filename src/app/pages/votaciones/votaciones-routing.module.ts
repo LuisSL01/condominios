@@ -15,7 +15,16 @@ const routes: Routes = [
   {
     path: 'add',
     loadChildren: () => import('./add/add.module').then( m => m.AddPageModule)
+  },  {
+    path: 'responder-encuesta',
+    loadChildren: () => import('./responder-encuesta/responder-encuesta.module').then( m => m.ResponderEncuestaPageModule)
+  },
+  {
+    path: 'opciones-pregunta',
+    loadChildren: () => import('./opciones-pregunta/opciones-pregunta.module').then( m => m.OpcionesPreguntaPageModule)
   }
+
+
 ];
 
 @NgModule({

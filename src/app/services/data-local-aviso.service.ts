@@ -15,11 +15,16 @@ export class DataLocalAvisoService {
 
   constructor(private storage: Storage,
     private dataLocalService: DataLocalService) {
-    this.nombreEtiquetaJson = this.dataLocalService.idempresa + "_" + this.nombreEtiquetaJson;
+    
 
     console.log('this.nombreEtiquetaJson: '+this.nombreEtiquetaJson);
     
     this.cargarAvisos();
+  }
+
+  
+  construyeNombreEtiqueta(){
+    return this.nombreEtiquetaJson = this.dataLocalService.idempresa + "_avisos";
   }
 
 
@@ -30,7 +35,7 @@ export class DataLocalAvisoService {
       aviso.idaviso = this.dataLocalService.getNumeroNegativo() * -1;
       this.avisos.unshift(aviso);
       //ahora enviamos el arreglo de las noticias a guardar en el dtorage.
-      this.storage.set(this.nombreEtiquetaJson, this.avisos);
+      this.storage.set(this.construyeNombreEtiqueta(), this.avisos);
       this.dataLocalService.presentToast('Aviso agregado');
     }
 
@@ -39,7 +44,7 @@ export class DataLocalAvisoService {
   guardarRespuestaAviso(avisoOriginal: Aviso, respuestaAviso: Aviso) {
     console.log('guardarRespuestaAviso');
     avisoOriginal.avisosRespuestaList.unshift(respuestaAviso);
-    this.storage.set(this.nombreEtiquetaJson, this.avisos);
+    this.storage.set(this.construyeNombreEtiqueta(), this.avisos);
     this.dataLocalService.presentToast('respuesta agregada');
     /* 
         const existe = this.avisos.find( avi => avi.idaviso === avisoOriginal.idaviso );
@@ -58,7 +63,7 @@ export class DataLocalAvisoService {
 
   borrarAviso(aviso: Aviso) {
     this.avisos = this.avisos.filter(avso => avso.idaviso !== aviso.idaviso)
-    this.storage.set(this.nombreEtiquetaJson, this.avisos);
+    this.storage.set(this.construyeNombreEtiqueta(), this.avisos);
     this.dataLocalService.presentToast('Aviso borrado');
   }
 
@@ -69,7 +74,7 @@ export class DataLocalAvisoService {
   async cargarAvisos() {
     console.log('cargando mis avisos');
 
-    const avisosA = await this.storage.get(this.nombreEtiquetaJson);
+    const avisosA = await this.storage.get(this.construyeNombreEtiqueta());
     if (avisosA) {
       //Cuando viene != null se iguala al arreglo global
       this.avisos = avisosA;

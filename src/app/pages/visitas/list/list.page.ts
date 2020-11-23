@@ -28,12 +28,21 @@ export class ListPage implements OnInit {
         handler: () => {
           console.log('Borrar visita');
           this.dataLocalVisitaService.borrarVisita(this.visita);
+          
         }
       };
 
     const actionSheet = await this.actionSheetCtrl.create({
       buttons: [
       guardarBorrarBtn,
+      {
+        text: 'Compartir qr',
+        icon: 'share',        
+        cssClass: 'action-dark',
+        handler: () => {
+          console.log('Compartir qr');
+        }
+      },
       {
         text: 'Cancelar',
         icon: 'close',
@@ -42,7 +51,8 @@ export class ListPage implements OnInit {
         handler: () => {
           console.log('Cancel clicked');
         }
-      }]
+      }
+    ]
     });
     await actionSheet.present();
   }

@@ -1,20 +1,23 @@
 import { EncuestaPreguntaOpcion } from './encuesta-pregunta-opcion.model';
+import { EncuestaPreguntaRespuesta } from './encuesta-pregunta-respuesta.model';
 
-export class EncuestaPregunta{
-    public idpregunta:number;
-    public pregunta:string;    
-    public opciones: EncuestaPreguntaOpcion[];
+export class EncuestaPregunta {
+  public idpregunta: number;
+  public pregunta: string;
+  public opciones: EncuestaPreguntaOpcion[];
+  public respuestas:EncuestaPreguntaRespuesta[];
 
 
-    constructor(){
-        console.log('I am in constructor of votacion pregunta');
-        this.pregunta ='';
-        //La primera pregunta se inicializa con dos posibles opciones
-        this.opciones = Array();
-      /*   this.opciones.push(new EncuestaPreguntaOpcion());
-        this.opciones.push(new EncuestaPreguntaOpcion());
-        console.log('inicializando opciones: '+ this.opciones.length); */
-        
-    }
+
+  constructor() {
+    this.idpregunta = this.getNumeroRandom() * -1;
+    this.pregunta = '';
+    this.opciones = Array();
+    this.respuestas = Array();
+  }
+
+  getNumeroRandom() {
+    return Math.floor((Math.random() * (10000 - 1)) + 1);//NUmero entre 1 y 10000
+  }
 
 }
