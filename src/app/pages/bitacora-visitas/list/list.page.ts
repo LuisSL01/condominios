@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { DataLocalVisitaService } from '../../../services/data-local-visita.service';
-import { Visita } from '../../../models/visita.model';
+import { Component, Input, OnInit } from '@angular/core';
+import { BitacoraVisita } from '../../../models/bitacora-visitas.model';
+import { DataLocalBitacoraVisitaService } from '../../../services/data-local-bitacora-visita.service';
 import { ActionSheetController } from '@ionic/angular';
 
 @Component({
@@ -10,10 +10,13 @@ import { ActionSheetController } from '@ionic/angular';
 })
 export class ListPage implements OnInit {
 
-  @Input() visita:Visita;
+  @Input() bitacora:BitacoraVisita;
 
-  constructor(public dataLocalVisitaService: DataLocalVisitaService,
-    private actionSheetCtrl: ActionSheetController) { }
+  constructor(public dataLocalBitacoraVisitaService : DataLocalBitacoraVisitaService,
+              public actionSheetCtrl : ActionSheetController) {
+                console.log('en el constructor de list page registro de visitas 2');
+                
+               }
 
   ngOnInit() {
   }
@@ -22,27 +25,18 @@ export class ListPage implements OnInit {
 
     let guardarBorrarBtn;
       guardarBorrarBtn = {
-        text: 'Borrar visita',
+        text: 'Borrar registro',
         icon: 'trash',
         cssClass: 'action-dark',
         handler: () => {
-          console.log('Borrar visita');
-          this.dataLocalVisitaService.borrarVisita(this.visita);
-          
+          console.log('Borrar bitacora visita');
+          this.dataLocalBitacoraVisitaService.borrar(this.bitacora);
         }
       };
 
     const actionSheet = await this.actionSheetCtrl.create({
       buttons: [
       guardarBorrarBtn,
-      {
-        text: 'Compartir qr',
-        icon: 'share',        
-        cssClass: 'action-dark',
-        handler: () => {
-          console.log('Compartir qr');
-        }
-      },
       {
         text: 'Cancelar',
         icon: 'close',
@@ -51,8 +45,7 @@ export class ListPage implements OnInit {
         handler: () => {
           console.log('Cancel clicked');
         }
-      }
-    ]
+      }]
     });
     await actionSheet.present();
   }

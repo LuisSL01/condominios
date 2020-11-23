@@ -12,10 +12,16 @@ export class VotacionesPage implements OnInit {
   textoBuscar ='';
   public votacionesList : Encuesta[];
   constructor(public dataLocalVotacionesService: DataLocalVotacionesService) {
+    this.dataLocalVotacionesService.cargarVotaciones();
     this.votacionesList = this.dataLocalVotacionesService.votaciones;
+    console.log('ejecutando el constructor..');
+
+    
    }
 
   ngOnInit() {
+    console.log('ejecutando el on init');
+    
   }
 
   

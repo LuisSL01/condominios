@@ -9,7 +9,7 @@
     <ion-list>
       <ion-item>
 
-        <ion-label>
+        <ion-label position="floating">
           <ion-icon name="pencil-outline" style="font-size:23px; color: #00DDFF; 
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Título
         </ion-label>
@@ -18,7 +18,7 @@
       <ion-item>
 
 
-        <ion-label>
+        <ion-label position="floating">
           <ion-icon name="chatbubble-ellipses-outline" style="font-size:23px; color: #00DDFF; 
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Mensaje
         </ion-label>
@@ -54,7 +54,15 @@
             &nbsp;&nbsp;Pregunta {{i + 1}}
           </ion-label>
           <ion-input name="pregunta{{i + 1}}" 
-          [(ngModel)]="pre.pregunta" type="text" style="margin-bottom: -5px;"></ion-input>
+          [(ngModel)]="pre.pregunta" type="text" style="margin-bottom: -5px;">           
+          </ion-input>
+          <ion-button fill="clear" size="small" style="text-transform: none;font-size:16px;margin-left: -4px; "
+          *ngIf=" ( i + 1 ) > 1 "
+            slot="end"
+            (click)="eliminarPregunta(pre)">
+           <ion-icon slot="start" name="trash" style="font-size:23px; color: #00DDFF;"></ion-icon>          
+          </ion-button>
+          
         </ion-item>
 
         <ion-item  *ngFor="let opc of pre.opciones; let o = index">
@@ -62,7 +70,15 @@
             <ion-icon name="hand-left-outline" style="font-size:23px; color: #00DDFF; 
             margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Opción {{o + 1}}
           </ion-label>
-          <ion-input name="opcion{{o + 1 + i}}" [(ngModel)]=" pre.opciones[o].opcion " type="text" style="margin-bottom: -5px;"></ion-input>
+
+          <ion-input name="opcion{{( o + 1 )+ opc.idopcion }}" [(ngModel)]="opc.opcion " type="text" style="margin-bottom: -5px;"></ion-input>
+
+          <ion-button fill="clear" size="small" style="text-transform: none;font-size:16px;margin-left: -4px; "
+          *ngIf=" ( o + 1 ) > 2 "
+          slot="end"
+          (click)="eliminarOpcion(pre, opc)">
+         <ion-icon slot="start" name="trash" style="font-size:23px; color: #00DDFF;"></ion-icon>          
+        </ion-button>
         </ion-item>
 
       </ion-list>

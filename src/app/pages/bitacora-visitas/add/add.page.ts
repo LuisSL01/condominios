@@ -1,12 +1,11 @@
-import { Component, OnInit, LOCALE_ID } from '@angular/core';
-import { Anuncio } from '../../../models/anuncio.model';
-import { DataLocalAnuncioService } from '../../../services/data-local-anuncio.service';
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Camera , CameraOptions } from '@ionic-native/camera/ngx';
+import { BitacoraVisita } from '../../../models/bitacora-visitas.model';
+import { DataLocalBitacoraVisitaService } from '../../../services/data-local-bitacora-visita.service';
+
 
 declare var window: any;
-/* import * as moment from 'moment-timezone'; */
-import { Router } from '@angular/router';
-
 
 
 @Component({
@@ -16,19 +15,13 @@ import { Router } from '@angular/router';
 })
 export class AddPage implements OnInit {
 
-  anuncio: Anuncio = new Anuncio();
-  idanuncio: number;
-  enCamara: boolean;
+  registroVisita:BitacoraVisita = new BitacoraVisita();
+  enCamara:boolean;
 
 
-  /* momentjs: any = moment; */
-
-
-  constructor(private dataLocalAnuncioService: DataLocalAnuncioService,
-    private camera: Camera,
-    private router:Router) {
-    /* this.momentjs().tz('America/Mexico_City');   */
-  }
+  constructor(private dataLocalBitacoraVisitaService : DataLocalBitacoraVisitaService,
+              private camera:Camera,
+              private router:Router) { }
 
   ngOnInit() {
   }
@@ -61,24 +54,24 @@ export class AddPage implements OnInit {
     this.procesarImagen(this.getCameraOptions());
   }
 
-
   procesarImagen(options: CameraOptions) {
     this.camera.getPicture(options).then((imageData) => {
       const img = window.Ionic.WebView.convertFileSrc(imageData);
-      this.anuncio.imgs.push(img);
+      this.registroVisita.imgs.push(img);
     }, (err) => {
       // Handle error
     });
   }
-  save() {
-    console.log(this.anuncio);
-    this.dataLocalAnuncioService.guardarAnuncio(this.anuncio);
-    this.router.navigate(['/anuncios']);
+
+  scanQR(){
+    console.log('scanQR()');
+    
   }
-  cambioFechaVence(event) {
-    console.log('cambio fecha vence: ', event);
-    /* this.anuncio.fechaVence = this.momentjs()(event.detail.value);  */
-    this.anuncio.fechaVence = new Date(event.detail.value);
+  
+  save() {
+    console.log(this.registroVisita);
+    this.dataLocalBitacoraVisitaService.guardar(this.registroVisita);
+    this.router.navigate(['/bitacora-visitas']);
   }
 
 }

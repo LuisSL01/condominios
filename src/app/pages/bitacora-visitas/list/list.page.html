@@ -1,0 +1,40 @@
+<ion-card lines="none">
+  <ion-card-header>
+    <ion-card-title>{{bitacora.nombreCompleto}}</ion-card-title>
+
+    <ion-card-subtitle>
+      <span class="text-primary"> {{bitacora.fechaCreacion | date:'h:mm a - dd MMM yy '}} </span>
+      <div class="card-more">
+        <ion-button fill="clear" (click)="lanzarMenu()">
+          <ion-icon slot="icon-only" color="primary" name="ellipsis-vertical-outline"></ion-icon>
+        </ion-button>
+      </div>
+
+    </ion-card-subtitle>
+
+  </ion-card-header>
+
+  <ion-card-content>
+    {{bitacora.descripcion}}
+  </ion-card-content>
+  <ion-item>
+
+    <ion-slides pager="true" *ngIf="bitacora.imgs.length > 1">
+
+      <ion-slide *ngFor="let img of bitacora.imgs" class="image-slide">
+        <img [src]="img | imageSanitizer">
+      </ion-slide>
+
+    </ion-slides>
+
+    <ion-slides *ngIf="bitacora.imgs.length === 1">
+
+      <ion-slide *ngFor="let img of bitacora.imgs" class="image-slide">
+        <img [src]="img | imageSanitizer">
+      </ion-slide>
+
+    </ion-slides>
+
+  </ion-item>
+</ion-card>
+ 

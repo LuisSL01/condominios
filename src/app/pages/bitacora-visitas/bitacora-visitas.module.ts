@@ -4,25 +4,22 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AvisosPageRoutingModule } from './avisos-routing.module';
+import { BitacoraVisitasPageRoutingModule } from './bitacora-visitas-routing.module';
 
-import { AvisosPage } from './avisos.page';
+import { BitacoraVisitasPage } from './bitacora-visitas.page';
+import { ListPage } from './list/list.page';
 import { ComponentsModule } from '../../components/components.module';
-import { ListAvisosPage } from './list-avisos/list-avisos.page';
 import { PipesModule } from '../../pipes/pipes.module';
-
-
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,    
+    FormsModule,
     IonicModule,
-    AvisosPageRoutingModule,    
+    BitacoraVisitasPageRoutingModule,
     ComponentsModule,
     PipesModule
   ],
-  /* declarations: [AvisosPage, AddAvisosPage] */
-  declarations: [AvisosPage, ListAvisosPage]
+  declarations: [BitacoraVisitasPage, ListPage]
 })
-export class AvisosPageModule {}
+export class BitacoraVisitasPageModule {}

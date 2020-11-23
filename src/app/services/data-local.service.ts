@@ -14,6 +14,7 @@ export class DataLocalService {
   numeroNegativo = -1;//Numero negativo para tener un numero consucitivo de los registros que se vayan creando
   
   idempresa:number =0;
+  miIdAgente:number =0;
   
   constructor(public toastController: ToastController) {
   }

@@ -1,10 +1,15 @@
+
 export class EncuestaPreguntaOpcion{
+
     public idopcion:number;
     public opcion:string;
-    constructor(){       
-        console.log('quitando el opcion a nulo');
-         
-        console.log('I am in constructor of votacion pregunta opcion');        
+    
+    constructor(){  
+        this.idopcion = this.getNumeroRandom() * -1;        
+    }
+
+    getNumeroRandom() {
+        return Math.floor((Math.random() * (10000-1))+1);//NUmero entre 1 y 10000
     }
 
 }

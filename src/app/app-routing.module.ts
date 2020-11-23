@@ -70,7 +70,11 @@ const routes: Routes = [
   {
     path: 'validar-comprobantes',
     loadChildren: () => import('./pages/validar-comprobantes/validar-comprobantes.module').then( m => m.ValidarComprobantesPageModule)
+  },  {
+    path: 'bitacora-visitas',
+    loadChildren: () => import('./pages/bitacora-visitas/bitacora-visitas.module').then( m => m.BitacoraVisitasPageModule)
   },
+
 ];
 
 @NgModule({

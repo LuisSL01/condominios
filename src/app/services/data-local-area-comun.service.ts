@@ -11,29 +11,33 @@ export class DataLocalAreaComunService {
   areasComunes:AreaComun[]=[];
   nombreEtiquetaJson = "areascomunes";
   constructor(private dataLocalService : DataLocalService,
-              private storage:Storage) {
-                this.nombreEtiquetaJson = this.dataLocalService.idempresa + "_" + this.nombreEtiquetaJson;
+              private storage:Storage) {                
               this.cargarAreasComunes();
 
    }
+
+   construyeNombreEtiqueta(){
+    return this.nombreEtiquetaJson = this.dataLocalService.idempresa + "_areascomunes";
+   }
+
    guardarAreaComun(areaComun : AreaComun){
     const existe = this.areasComunes.find( are => are.idareaComun === areaComun.idareaComun );
     if(! existe ){
       areaComun.idareaComun = this.dataLocalService.getNumeroNegativo() * -1;
       this.areasComunes.unshift(areaComun);
-      this.storage.set(this.nombreEtiquetaJson,this.areasComunes);
+      this.storage.set(this.construyeNombreEtiqueta(),this.areasComunes);
       this.dataLocalService.presentToast('Área agregada');
     }
    }
 
   borrarAreaComun(areaComun : AreaComun) {
     this.areasComunes = this.areasComunes.filter(are => are.idareaComun !== areaComun.idareaComun)
-    this.storage.set(this.nombreEtiquetaJson,this.areasComunes);
+    this.storage.set(this.construyeNombreEtiqueta(),this.areasComunes);
     this.dataLocalService.presentToast('Área borrada');
   }
 
    async cargarAreasComunes(){
-     const areas = await this.storage.get(this.nombreEtiquetaJson);
+     const areas = await this.storage.get(this.construyeNombreEtiqueta());
      if(areas){
        this.areasComunes = areas;
      }

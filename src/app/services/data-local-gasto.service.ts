@@ -14,8 +14,12 @@ export class DataLocalGastoService {
   nombreEtiquetaJson = "gastos";
   constructor(public storage : Storage,
               private dataLocalService : DataLocalService) { 
-                this.nombreEtiquetaJson = this.dataLocalService.idempresa + "_" + this.nombreEtiquetaJson;
+                
       this.cargarGastos();
+    }
+
+    construyeNombreEtiqueta(){
+      return this.nombreEtiquetaJson = this.dataLocalService.idempresa + "_gastos";
     }
 
     guardarGasto(gasto: Gasto){
@@ -23,19 +27,19 @@ export class DataLocalGastoService {
       if(! existe ){
         gasto.idgasto = this.dataLocalService.getNumeroNegativo()*-1;
         this.gastos.unshift(gasto);
-        this.storage.set(this.nombreEtiquetaJson,this.gastos);
+        this.storage.set(this.construyeNombreEtiqueta(),this.gastos);
         this.dataLocalService.presentToast('Gasto agregado');
       }
 
     }
     borrarGasto(gasto: Gasto){
       this.gastos = this.gastos.filter(gas => gas.idgasto !== gasto.idgasto)
-      this.storage.set(this.nombreEtiquetaJson,this.gastos);
+      this.storage.set(this.construyeNombreEtiqueta(),this.gastos);
       this.dataLocalService.presentToast('Gasto borrado');
 
     }
     async cargarGastos(){
-      const gastos = await this.storage.get(this.nombreEtiquetaJson) 
+      const gastos = await this.storage.get(this.construyeNombreEtiqueta()) 
       if(gastos){
         this.gastos = gastos;
       }

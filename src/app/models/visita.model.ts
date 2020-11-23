@@ -12,12 +12,15 @@ export class Visita{
     public visitaDiaria:Boolean;
     public pathQR:string;
 
+    public diasVisitaSemana:number[];//Sunday is 0, Monday is 1, and so on.
+
     constructor(){
         this.fechaCreacion = new Date();
         this.conAcompaniantes = true;
-        this.visitaDiaria = false;
+        this.visitaDiaria = true;
         this.fechaInicio = new Date();
         this.fechaTermina = new Date();
+        this.diasVisitaSemana = new Array();
 
         console.log('I am in constructor of votacion pregunta');
     }
