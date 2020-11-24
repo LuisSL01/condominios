@@ -7,23 +7,23 @@
     <ion-list>
       <ion-item>
         <ion-label>
-          <ion-icon name="bar-chart-outline" style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;Visita programada
+          <ion-icon name="calendar-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Visita programada
         </ion-label>
         <ion-toggle slot="end" name="visitaProgramada" [(ngModel)]="registroVisita.visitaProgramada"></ion-toggle>
       </ion-item>
       <ion-item *ngIf=" registroVisita.visitaProgramada ">
         <ion-button fill="clear" expand="block" size="small"
           style="text-transform: none;font-size:16px;margin-left: -4px; " (click)="scanQR()">
-          <ion-icon slot="start" name="checkmark-outline" style="font-size:23px; color: #00DDFF;">
+          <ion-icon slot="start" name="qr-code-outline" style="font-size:23px; color: #00DDFF; margin-left: 1px;">
           </ion-icon>&nbsp;&nbsp;Escanear QR
         </ion-button>
       </ion-item>
 
       <ion-item >
         <ion-label>
-          <ion-icon name="easel-outline" style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;Nombre completo
+          <ion-icon name="person-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Nombre completo
         </ion-label>
         <ion-input name="nombreCompleto" [(ngModel)]="registroVisita.nombreCompleto" required>
         </ion-input>
@@ -31,16 +31,16 @@
 
       <ion-item>
         <ion-label>
-          <ion-icon name="bar-chart-outline" style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;Con auto
+          <ion-icon name="car-sport-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;¿Ingresa con auto?
         </ion-label>
         <ion-toggle slot="end" name="conAuto" [(ngModel)]="registroVisita.conAuto"></ion-toggle>
       </ion-item>
 
       <ion-item *ngIf=" registroVisita.conAuto ">
         <ion-label>
-          <ion-icon name="easel-outline" style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;Placa
+          <ion-icon name="alert-circle-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Placas de su auto
         </ion-label>
         <ion-input name="placa" [(ngModel)]="registroVisita.placa">
         </ion-input>
@@ -48,18 +48,18 @@
 
       <ion-item>
         <ion-label>
-          <ion-icon name="easel-outline" style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;Personas ingresan
+          <ion-icon name="person-add-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;No. personas ingresan
         </ion-label>
         <ion-input name="personasQueIngresan" [(ngModel)]="registroVisita.personasQueIngresan">
         </ion-input>
       </ion-item>
       <ion-item>
         <ion-label>
-          <ion-icon name="easel-outline" style="font-size:23px; color: #00DDFF; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;Observaciones
+          <ion-icon name="pencil-outline" style="font-size:23px; color: #00DDFF; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Observaciones
         </ion-label>
-        <ion-textarea name="observaciones" [(ngModel)]="registroVisita.observaciones"></ion-textarea>
+        <ion-textarea rows="1" cols="1" name="observaciones" [(ngModel)]="registroVisita.observaciones"></ion-textarea>
 
 
       </ion-item>
