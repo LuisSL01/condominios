@@ -23,10 +23,7 @@ const routes: Routes = [
     path: 'anuncios',
     loadChildren: () => import('./pages/anuncios/anuncios.module').then( m => m.AnunciosPageModule)
   },
-  {
-    path: 'pagos-comprobantes',
-    loadChildren: () => import('./pages/pagos-comprobantes/pagos-comprobantes.module').then( m => m.PagosComprobantesPageModule)
-  },
+
   {
     path: 'estados-cuenta',
     loadChildren: () => import('./pages/estados-cuenta/estados-cuenta.module').then( m => m.EstadosCuentaPageModule)
@@ -35,18 +32,18 @@ const routes: Routes = [
     path: 'gastos',
     loadChildren: () => import('./pages/gastos/gastos.module').then( m => m.GastosPageModule)
   },
-  {
+/*   {
     path: 'votaciones',
     loadChildren: () => import('./pages/votaciones/votaciones.module').then( m => m.VotacionesPageModule)
-  },
+  }, */
   {
     path: 'contactos-emergencia',
     loadChildren: () => import('./pages/contactos-emergencia/contactos-emergencia.module').then( m => m.ContactosEmergenciaPageModule)
   },
-  {
+/*   {
     path: 'visitas',
     loadChildren: () => import('./pages/visitas/visitas.module').then( m => m.VisitasPageModule)
-  },
+  }, */
   {
     path: 'areas-comunes',
     loadChildren: () => import('./pages/areas-comunes/areas-comunes.module').then( m => m.AreasComunesPageModule)
@@ -63,17 +60,36 @@ const routes: Routes = [
     path: 'forgot-password',
     loadChildren: () => import('./pages/forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule)
   },
-  {
-    path: 'adeudos',
-    loadChildren: () => import('./pages/adeudos/adeudos.module').then( m => m.AdeudosPageModule)
-  },
-  {
-    path: 'validar-comprobantes',
-    loadChildren: () => import('./pages/validar-comprobantes/validar-comprobantes.module').then( m => m.ValidarComprobantesPageModule)
-  },  {
+
+  /* {
     path: 'bitacora-visitas',
     loadChildren: () => import('./pages/bitacora-visitas/bitacora-visitas.module').then( m => m.BitacoraVisitasPageModule)
+  }, */
+  {
+    path: 'pagos',
+    loadChildren: () => import('./pages/pagos/pagos.module').then( m => m.PagosPageModule)
   },
+  {
+    path: 'asambleas',
+    loadChildren: () => import('./pages/asambleas/asambleas.module').then( m => m.AsambleasPageModule)
+  },
+  {
+    path: 'boton-panico',
+    loadChildren: () => import('./pages/boton-panico/boton-panico.module').then( m => m.BotonPanicoPageModule)
+  },
+  {
+    path: 'perfil',
+    loadChildren: () => import('./pages/perfil/perfil.module').then( m => m.PerfilPageModule)
+  },
+  {
+    path: 'reglamento',
+    loadChildren: () => import('./pages/reglamento/reglamento.module').then( m => m.ReglamentoPageModule)
+  },
+  {
+    path: 'mis-visitas',
+    loadChildren: () => import('./pages/mis-visitas/mis-visitas.module').then( m => m.MisVisitasPageModule)
+  },
+
 
 ];
 

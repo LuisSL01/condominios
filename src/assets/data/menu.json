@@ -1,70 +1,62 @@
 [
-    {
-      "icon": "alert-circle-outline",
-      "name": "Avisos",
-      "redirectTo": "/avisos"
-    },
-    {
-      "icon": "book-outline",
-      "name": "Directorios",
-      "redirectTo": "/directorio"
-    },
-    {
-      "icon": "megaphone-outline",
-      "name": "Anuncios",
-      "redirectTo": "/anuncios"
-    },
-    {
-      "icon": "cash-outline",
-      "name": "Pagos comprobantes",
-      "redirectTo": "/pagos-comprobantes"
-    },
-    {
-      "icon": "checkbox-outline",
-      "name": "Validar comprobantes ",
-      "redirectTo": "/validar-comprobantes"
-    },
-    {
-      "icon": "trending-down-outline",
-      "name": "Adeudos",
-      "redirectTo": "/adeudos"
-    }
-    ,
-    {
-      "icon": "wallet-outline",
-      "name": "Estados de cuenta",
-      "redirectTo": "/estados-cuenta"
-    },
-    {
-      "icon": "pricetags-outline",
-      "name": "Gastos",
-      "redirectTo": "/gastos"
-    },
-    {
-      "icon": "options-outline",
-      "name": "Encuestas",
-      "redirectTo": "/votaciones"
-    },
-    {
-      "icon": "call-outline",
-      "name": "Contactos de emergencia",
-      "redirectTo": "/contactos-emergencia"
-    },
-    {
-      "icon": "people-outline",
-      "name": "Visitas",
-      "redirectTo": "/visitas"
-    },
-    {
-      "icon": "car-sport-outline",
-      "name": "Bitacora visitas",
-      "redirectTo": "/bitacora-visitas"
-    },
-    {
-      "icon": "leaf-outline",
-      "name": "Áreas comunes",
-      "redirectTo": "/areas-comunes"
-    }
-   
-  ]
-  
+  {
+    "icon": "megaphone-outline",
+    "name": "Anuncios",
+    "redirectTo": "/anuncios"
+  },
+  {
+    "icon": "leaf-outline",
+    "name": "Áreas comunes",
+    "redirectTo": "/areas-comunes"
+  },
+  {
+    "icon": "people-outline",
+    "name": "Asambleas",
+    "redirectTo": "/asambleas"
+  },
+  {
+    "icon": "alert-circle-outline",
+    "name": "Avisos",
+    "redirectTo": "/avisos"
+  },
+  {
+    "icon": "alert-circle-outline",
+    "name": "Boton panico",
+    "redirectTo": "/boton-panico"
+  },
+  {
+    "icon": "call-outline",
+    "name": "Contactos de emergencia",
+    "redirectTo": "/contactos-emergencia"
+  },
+  {
+    "icon": "book-outline",
+    "name": "Directorios",
+    "redirectTo": "/directorio"
+  },
+  {
+    "icon": "pricetags-outline",
+    "name": "Gastos",
+    "redirectTo": "/gastos"
+  },
+  {
+    "icon": "cash-outline",
+    "name": "Pagos",
+    "redirectTo": "/pagos"
+  },
+  {
+    "icon": "person-circle-outline",
+    "name": "Perfil",
+    "redirectTo": "/perfil"
+  },
+  {
+    "icon": "document-outline",    
+    "name": "Reglamento",
+    "redirectTo": "/reglamento"
+  },
+  {
+    "icon": "people-outline",
+    "name": "Visitas",
+    "redirectTo": "/mis-visitas"
+  }
+]

@@ -1,0 +1,28 @@
+<app-menu-header></app-menu-header>
+
+<app-header titulo="Bitacora visitas"></app-header>
+<ion-content fullscreen>
+  <ion-searchbar placeholder="Buscar" animated (ionChange)="buscar($event)"></ion-searchbar>
+  <ion-slides class="emptyData" *ngIf="bitacoraRegistrosList.length === 0">
+    <ion-slide class="emptyData">
+      <ion-label>No hay registros</ion-label>
+    </ion-slide>
+  </ion-slides>
+
+  <ion-grid fixed *ngIf="bitacoraRegistrosList.length > 0">
+
+    <ion-row>
+      <ion-col size="12" *ngFor="let bit of bitacoraRegistrosList">
+
+        <app-list [bitacora]="bit"></app-list>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/mis-visitas/bitacora-visitas/add">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
