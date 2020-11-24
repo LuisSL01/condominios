@@ -20,8 +20,8 @@
     "redirectTo": "/avisos"
   },
   {
-    "icon": "alert-circle-outline",
-    "name": "Boton panico",
+    "icon": "warning-outline",
+    "name": "Boton pánico",
     "redirectTo": "/boton-panico"
   },
   {
@@ -50,7 +50,7 @@
     "redirectTo": "/perfil"
   },
   {
-    "icon": "document-outline",    
+    "icon": "document-text-outline",    
     "name": "Reglamento",
     "redirectTo": "/reglamento"
   },
