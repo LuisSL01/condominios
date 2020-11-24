@@ -1,4 +1,5 @@
 [
+<<<<<<< HEAD
   {
     "icon": "megaphone-outline",
     "name": "Anuncios",
@@ -60,3 +61,74 @@
     "redirectTo": "/mis-visitas"
   }
 ]
+=======
+    {
+      "icon": "alert-circle-outline",
+      "name": "Avisos",
+      "redirectTo": "/avisos"
+    },
+    {
+      "icon": "book-outline",
+      "name": "Directorios",
+      "redirectTo": "/directorio"
+    },
+    {
+      "icon": "megaphone-outline",
+      "name": "Anuncios",
+      "redirectTo": "/anuncios"
+    },
+    {
+      "icon": "cash-outline",
+      "name": "Pagos comprobantes",
+      "redirectTo": "/pagos-comprobantes"
+    },
+    {
+      "icon": "checkbox-outline",
+      "name": "Validar comprobantes ",
+      "redirectTo": "/validar-comprobantes"
+    },
+    {
+      "icon": "trending-down-outline",
+      "name": "Adeudos",
+      "redirectTo": "/adeudos"
+    }
+    ,
+    {
+      "icon": "wallet-outline",
+      "name": "Estados de cuenta",
+      "redirectTo": "/estados-cuenta"
+    },
+    {
+      "icon": "pricetags-outline",
+      "name": "Gastos",
+      "redirectTo": "/gastos"
+    },
+    {
+      "icon": "options-outline",
+      "name": "Encuestas",
+      "redirectTo": "/votaciones"
+    },
+    {
+      "icon": "call-outline",
+      "name": "Contactos de emergencia",
+      "redirectTo": "/contactos-emergencia"
+    },
+    {
+      "icon": "people-outline",
+      "name": "Visitas",
+      "redirectTo": "/visitas"
+    },
+    {
+      "icon": "car-sport-outline",
+      "name": "Bitácora visitas",
+      "redirectTo": "/bitacora-visitas"
+    },
+    {
+      "icon": "leaf-outline",
+      "name": "Áreas comunes",
+      "redirectTo": "/areas-comunes"
+    }
+   
+  ]
+  
+>>>>>>> cc4db3563a4fc29b1a3a3f34919a1495ae3af227

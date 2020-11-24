@@ -28,7 +28,7 @@ export class ListPage implements OnInit {
         handler: () => {
           console.log('Borrar visita');
           this.dataLocalVisitaService.borrarVisita(this.visita);
-          
+        
         }
       };
 
