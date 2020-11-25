@@ -7,7 +7,7 @@
     <ion-list>
       <ion-item>
         <ion-label>
-          <ion-icon name="calendar-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="calendar-outline" style="font-size:23px; color: #50c8ec; 
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Visita programada
         </ion-label>
         <ion-toggle slot="end" name="visitaProgramada" [(ngModel)]="registroVisita.visitaProgramada"></ion-toggle>
@@ -15,14 +15,14 @@
       <ion-item *ngIf=" registroVisita.visitaProgramada ">
         <ion-button fill="clear" expand="block" size="small"
           style="text-transform: none;font-size:16px;margin-left: -4px; " (click)="scanQR()">
-          <ion-icon slot="start" name="qr-code-outline" style="font-size:23px; color: #00DDFF; margin-left: 1px;">
+          <ion-icon slot="start" name="qr-code-outline" style="font-size:23px; color: #50c8ec; margin-left: 1px;">
           </ion-icon>&nbsp;&nbsp;Escanear QR
         </ion-button>
       </ion-item>
 
       <ion-item >
         <ion-label>
-          <ion-icon name="person-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="person-outline" style="font-size:23px; color: #50c8ec; 
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Nombre completo
         </ion-label>
         <ion-input name="nombreCompleto" [(ngModel)]="registroVisita.nombreCompleto" required>
@@ -31,7 +31,7 @@
 
       <ion-item>
         <ion-label>
-          <ion-icon name="car-sport-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="car-sport-outline" style="font-size:23px; color: #50c8ec; 
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;¿Ingresa con auto?
         </ion-label>
         <ion-toggle slot="end" name="conAuto" [(ngModel)]="registroVisita.conAuto"></ion-toggle>
@@ -39,7 +39,7 @@
 
       <ion-item *ngIf=" registroVisita.conAuto ">
         <ion-label>
-          <ion-icon name="alert-circle-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="alert-circle-outline" style="font-size:23px; color: #50c8ec; 
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Placas de su auto
         </ion-label>
         <ion-input name="placa" [(ngModel)]="registroVisita.placa">
@@ -48,7 +48,7 @@
 
       <ion-item>
         <ion-label>
-          <ion-icon name="person-add-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="person-add-outline" style="font-size:23px; color: #50c8ec; 
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;No. personas ingresan
         </ion-label>
         <ion-input name="personasQueIngresan" [(ngModel)]="registroVisita.personasQueIngresan">
@@ -56,7 +56,7 @@
       </ion-item>
       <ion-item>
         <ion-label>
-          <ion-icon name="pencil-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="pencil-outline" style="font-size:23px; color: #50c8ec; 
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Observaciones
         </ion-label>
         <ion-textarea rows="1" cols="1" name="observaciones" [(ngModel)]="registroVisita.observaciones"></ion-textarea>
@@ -66,12 +66,12 @@
 
       <ion-item>
         <ion-button fill="clear" size="small" (click)="camara()">
-          <ion-icon slot="start" name="camera-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+          <ion-icon slot="start" name="camera-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
 
         </ion-button>
 
         <ion-button fill="clear" size="small" (click)="libreria()">
-          <ion-icon slot="start" name="image-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+          <ion-icon slot="start" name="image-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
 
         </ion-button>
       </ion-item>
@@ -94,7 +94,7 @@
 
               <ion-button fill="clear" size="small" type="submit" [disabled]="formulario.invalid"
                 style="text-transform: none; margin-left: 120px; margin-top: -40px;">Guardar
-                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #00DDFF;">
+                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #50c8ec;">
                 </ion-icon>
               </ion-button>
 
@@ -102,7 +102,7 @@
               <ion-button fill="clear" size="small"
                 style="text-transform: none; margin-top: -80px;  margin-left: 220px;" routerLink="/mis-visitas/bitacora-visitas">
                 Cancelar
-                <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+                <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
               </ion-button>
 
             </ion-col>

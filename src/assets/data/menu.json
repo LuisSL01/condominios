@@ -55,7 +55,7 @@
     "redirectTo": "/reglamento"
   },
   {
-    "icon": "people-outline",
+    "icon": "business-outline",
     "name": "Visitas",
     "redirectTo": "/mis-visitas"
   }

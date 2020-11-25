@@ -6,7 +6,7 @@
     <ion-list>
       <ion-item>
         <ion-label>
-          <ion-icon name="person-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="person-outline" style="font-size:23px; color: #50c8ec; 
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Nombre
         </ion-label>
         <ion-input name="nombre" [(ngModel)]="visita.nombre" required>
@@ -14,7 +14,7 @@
       </ion-item>
       <ion-item>
         <ion-label>
-          <ion-icon name="create-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="create-outline" style="font-size:23px; color: #50c8ec; 
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Tipo de visita
         </ion-label>
         <ion-select name="tipoVisita" [(ngModel)]="visita.tipoVisita" value="visita.tipoVisita" okText="Aceptar"
@@ -27,7 +27,7 @@
       <ion-item>
 
         <ion-label>
-          <ion-icon name="stopwatch-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="stopwatch-outline" style="font-size:23px; color: #50c8ec; 
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Duración
         </ion-label>
         <ion-select name="duracion" [(ngModel)]="visita.duracion" value="visita.duracion" okText="Aceptar"
@@ -40,7 +40,7 @@
 
       <ion-item *ngIf="visita.duracion === 'entre_fechas'">
         <ion-label>
-          <ion-icon name="hourglass-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="hourglass-outline" style="font-size:23px; color: #50c8ec; 
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Fecha de visita
         </ion-label>
         <ion-datetime style="margin-bottom: -8px;" name="fechaInicio" placeholder="Fecha visita"
@@ -50,7 +50,7 @@
       </ion-item>
       <ion-item *ngIf="visita.duracion === 'entre_fechas'">
         <ion-label>
-          <ion-icon name="alarm-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="alarm-outline" style="font-size:23px; color: #50c8ec; 
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Fecha de término
         </ion-label>
         <ion-datetime style="margin-bottom: -8px;" name="fechaTermina" placeholder="Fecha termina"
@@ -60,14 +60,14 @@
       </ion-item>
       <ion-item>
         <ion-label>
-          <ion-icon name="people-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="people-outline" style="font-size:23px; color: #50c8ec; 
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;¿Viene con acompañantes?
         </ion-label>
         <ion-toggle slot="end" name="conAcompaniantes" [(ngModel)]="visita.conAcompaniantes"></ion-toggle>
       </ion-item>
       <ion-item *ngIf="visita.duracion === 'entre_fechas' || visita.duracion === 'indefinido' ">
         <ion-label>
-          <ion-icon name="person-add-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="person-add-outline" style="font-size:23px; color: #50c8ec; 
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;¿Usted viene todos los días?
         </ion-label>
         <ion-toggle slot="end" name="visitaDiaria" [(ngModel)]="visita.visitaDiaria"></ion-toggle>
@@ -96,7 +96,7 @@
 
               <ion-button fill="clear" size="small" type="submit" [disabled]="formulario.invalid"
                 style="text-transform: none;margin-left: 120px; margin-top: -40px;">Guardar
-                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #00DDFF;">
+                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #50c8ec;">
                 </ion-icon>
               </ion-button>
 
@@ -104,7 +104,7 @@
               <ion-button fill="clear" size="small"
                 style="text-transform: none; margin-top: -80px;  margin-left: 220px; " routerLink="/mis-visitas/visitas">
                 Cancelar
-                <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+                <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
               </ion-button>
             </ion-col>
           </ion-row>

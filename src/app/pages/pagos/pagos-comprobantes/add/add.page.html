@@ -5,7 +5,7 @@
     <ion-list>
       <ion-item>
         <ion-label>
-          <ion-icon name="calendar-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="calendar-outline" style="font-size:23px; color: #50c8ec; 
           margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Mes
         </ion-label>
         <ion-select name="mesPago" [(ngModel)]="pago.mesPago" value="pago.mesPago" okText="Aceptar"
@@ -19,7 +19,7 @@
 
       <ion-item>
         <ion-label>
-          <ion-icon name="cash-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="cash-outline" style="font-size:23px; color: #50c8ec; 
           margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Forma de pago
         </ion-label>
         <ion-select name="formaPago" [(ngModel)]="pago.formaPago" value="pago.formaPago" okText="Aceptar"
@@ -32,10 +32,10 @@
 
       <ion-item>
         <ion-button fill="clear" size="small" (click)="camara()">
-          <ion-icon slot="start" name="camera-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+          <ion-icon slot="start" name="camera-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
         </ion-button>
         <ion-button fill="clear" size="small" (click)="libreria()">
-          <ion-icon slot="start" name="image-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+          <ion-icon slot="start" name="image-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
         </ion-button>
       </ion-item>
       <ion-item>
@@ -56,14 +56,14 @@
 
               <ion-button fill="clear" size="small" type="submit" [disabled]="formulario1.invalid"
                 style="text-transform: none; margin-left: 120px; margin-top: -40px;">Guardar
-                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #00DDFF;">
+                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #50c8ec;">
                 </ion-icon>
               </ion-button>
               <ion-button fill="clear" size="small"
                 style="text-transform: none; margin-top: -80px;  margin-left: 220px; "
                 routerLink="/pagos/pagos-comprobantes">
                 Cancelar
-                <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+                <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
               </ion-button>
             </ion-col>
           </ion-row>

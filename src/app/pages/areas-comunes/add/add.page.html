@@ -8,7 +8,7 @@
       <ion-item>
 
         <ion-label>
-          <ion-icon name="pencil-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="pencil-outline" style="font-size:23px; color: #50c8ec; 
           margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Nombre
         </ion-label>
         <ion-input name="nombre" [(ngModel)]="areaComun.nombre" required>
@@ -16,7 +16,7 @@
       </ion-item>
       <ion-item>
         <ion-label>
-          <ion-icon name="create-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="create-outline" style="font-size:23px; color: #50c8ec;
           margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Descripción
         </ion-label>
         <ion-textarea rows="1" cols="1" style="margin-top: -20px;" name="descripcion"
@@ -24,7 +24,7 @@
       </ion-item>
       <ion-item>
         <ion-label>
-          <ion-icon name="cash-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="cash-outline" style="font-size:23px; color: #50c8ec; 
           margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Costo
         </ion-label>
         <ion-input type="number" name="costo" [(ngModel)]="areaComun.costo" required>
@@ -32,7 +32,7 @@
       </ion-item>
       <ion-item>
         <ion-label>
-          <ion-icon name="color-palette-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="color-palette-outline" style="font-size:23px; color: #50c8ec;
           margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Color
         </ion-label>
         <ion-select name="color" [(ngModel)]="areaComun.color" value="areaComun.color" okText="Aceptar"
@@ -44,7 +44,7 @@
       </ion-item>
       <ion-item>
         <ion-label>
-          <ion-icon name="calendar-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="calendar-outline" style="font-size:23px; color: #50c8ec;
           margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Disponibilidad
         </ion-label>
         
@@ -52,7 +52,7 @@
       <ion-item>
 
         <ion-label>
-          <ion-icon name="sunny-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="sunny-outline" style="font-size:23px; color: #50c8ec;
           margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;¿Cualquier día?
         </ion-label>
 
@@ -61,7 +61,7 @@
       <ion-item>
 
         <ion-label>
-          <ion-icon name="time-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="time-outline" style="font-size:23px; color: #50c8ec;
           margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;¿Cualquier hora?
         </ion-label>
         <ion-toggle slot="end" name="todasLasHoras" [(ngModel)]="areaComun.todasLasHoras"></ion-toggle>
@@ -69,7 +69,7 @@
 
       <ion-item>
         <ion-label>
-          <ion-icon name="alarm-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="alarm-outline" style="font-size:23px; color: #50c8ec; 
           margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Hora de inicio
         </ion-label>
         <ion-datetime name="horaInicia" displayFormat="HH:mm A" cancelText="Descartar" style="margin-bottom: -5px;"
@@ -78,7 +78,7 @@
       </ion-item>
       <ion-item>
         <ion-label>
-          <ion-icon name="hourglass-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="hourglass-outline" style="font-size:23px; color: #50c8ec;
           margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Hora de término
         </ion-label>
         <ion-datetime name="horaTermina" style="margin-bottom: -5px;" displayFormat="HH:mm A" cancelText="Descartar"
@@ -88,11 +88,11 @@
 
       <ion-item>
         <ion-button fill="clear" size="small" (click)="camara()">
-          <ion-icon slot="start" name="camera-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+          <ion-icon slot="start" name="camera-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
         </ion-button>
 
         <ion-button fill="clear" size="small" (click)="libreria()">
-          <ion-icon slot="start" name="image-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+          <ion-icon slot="start" name="image-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
         </ion-button>
       </ion-item>
       <ion-item>
@@ -116,7 +116,7 @@
 
               <ion-button fill="clear" size="small" type="submit" [disabled]="formulario.invalid"
                 style="text-transform: none; margin-left: 120px; margin-top: -40px;">Guardar
-                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #00DDFF;">
+                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #50c8ec;">
                 </ion-icon>
               </ion-button>
 
@@ -125,7 +125,7 @@
                 style="text-transform: none; margin-top: -80px;  margin-left: 220px;" 
                 routerLink="/areas-comunes">
                 Cancelar
-                <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+                <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color:#50c8ec;"></ion-icon>
               </ion-button>
             </ion-col>
           </ion-row>

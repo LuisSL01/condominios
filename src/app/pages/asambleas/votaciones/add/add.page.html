@@ -10,7 +10,7 @@
       <ion-item>
 
         <ion-label>
-          <ion-icon name="pencil-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="pencil-outline" style="font-size:23px; color: #50c8ec; 
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Título
         </ion-label>
         <ion-input name="titulo" [(ngModel)]="encuesta.titulo" type="text"></ion-input>
@@ -19,7 +19,7 @@
 
 
         <ion-label>
-          <ion-icon name="chatbubble-ellipses-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="chatbubble-ellipses-outline" style="font-size:23px; color: #50c8ec; 
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Mensaje
         </ion-label>
         <ion-input name="mensaje" [(ngModel)]="encuesta.mensaje" type="text"></ion-input>
@@ -27,7 +27,7 @@
       <ion-item>
 
         <ion-label>
-          <ion-icon name="calendar-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="calendar-outline" style="font-size:23px; color: #50c8ec; 
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Fecha Término
         </ion-label>
         <ion-datetime name="fechaTermina" style="margin-bottom: -8px;" displayFormat="DD/MM/YYYY" doneText="Aceptar"
@@ -37,7 +37,7 @@
       </ion-item>
       <ion-item>
         <ion-label>
-          <ion-icon name="alarm-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="alarm-outline" style="font-size:23px; color: #50c8ec; 
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Hora Término
         </ion-label>
         <ion-datetime name="horaTermina" displayFormat="HH:mm A" doneText="Aceptar" cancelText="Cancelar"
@@ -49,7 +49,7 @@
       <ion-list *ngFor="let pre of encuesta.preguntas; let i = index">
         <ion-item>
           <ion-label>
-            <ion-icon name="help-outline" style="font-size:23px; color: #00DDFF; 
+            <ion-icon name="help-outline" style="font-size:23px; color: #50c8ec; 
             margin-bottom: -5px;"></ion-icon>
             &nbsp;&nbsp;Pregunta {{i + 1}}
           </ion-label>
@@ -60,14 +60,14 @@
           *ngIf=" ( i + 1 ) > 1 "
             slot="end"
             (click)="eliminarPregunta(pre)">
-           <ion-icon slot="start" name="trash" style="font-size:23px; color: #00DDFF;"></ion-icon>          
+           <ion-icon slot="start" name="trash" style="font-size:23px; color: #50c8ec;"></ion-icon>          
           </ion-button>
           
         </ion-item>
 
         <ion-item  *ngFor="let opc of pre.opciones; let o = index">
           <ion-label>
-            <ion-icon name="bulb-outline" style="font-size:23px; color: #00DDFF; 
+            <ion-icon name="bulb-outline" style="font-size:23px; color: #50c8ec; 
             margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Opción {{o + 1}}
           </ion-label>
 
@@ -77,7 +77,7 @@
           *ngIf=" ( o + 1 ) > 2 "
           slot="end"
           (click)="eliminarOpcion(pre, opc)">
-         <ion-icon slot="start" name="trash" style="font-size:23px; color: #00DDFF;"></ion-icon>          
+         <ion-icon slot="start" name="trash" style="font-size:23px; color: #50c8ec;"></ion-icon>          
         </ion-button>
         </ion-item>
 
@@ -88,14 +88,14 @@
       <ion-item>
         <ion-button fill="clear" size="small" style="text-transform: none;font-size:16px;margin-left: -3px; "
           (click)="agregarNuevaOpcion()">
-          <ion-icon slot="start" name="add-circle-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>&nbsp;&nbsp;Añadir opción
+          <ion-icon slot="start" name="add-circle-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>&nbsp;&nbsp;Añadir opción
         </ion-button>
       </ion-item>
 
       <ion-item>
         <ion-button fill="clear" size="small" style="text-transform: none; font-size:16px; margin-left: -4px;"
           (click)="agregarNuevaPregunta()">
-          <ion-icon slot="start" name="help-circle-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>&nbsp;&nbsp;Añadir pregunta
+          <ion-icon slot="start" name="help-circle-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>&nbsp;&nbsp;Añadir pregunta
         </ion-button>
       </ion-item>
 
@@ -113,14 +113,14 @@
 
               <ion-button fill="clear" size="small" type="submit" [disabled]="formulario.invalid"
                 style="text-transform: none; margin-left: 120px; margin-top: -40px;">Guardar
-                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #00DDFF;">
+                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #50c8ec;">
                 </ion-icon>
               </ion-button>
 
 
               <ion-button fill="clear" size="small"
                 style="text-transform: none; margin-top: -80px;  margin-left: 220px;" routerLink="/asambleas/votaciones">Cancelar
-                <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+                <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
               </ion-button>
             </ion-col>
           </ion-row>

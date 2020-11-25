@@ -15,7 +15,7 @@
     <ion-list>
       <ion-item>
         <ion-label>
-          <ion-icon name="mail-open-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="mail-open-outline" style="font-size:23px; color: #50c8ec; 
           margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Destinatario
         </ion-label>
         <ion-select name="manzanaDestino" [(ngModel)]="aviso.manzanaDestino" value="aviso.manzanaDestino" okText="Aceptar"
@@ -29,7 +29,7 @@
 
       <ion-item>
         <ion-label>
-          <ion-icon name="megaphone-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="megaphone-outline" style="font-size:23px; color: #50c8ec; 
           margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Título
         </ion-label>
         <ion-input name="titulo" [(ngModel)]="aviso.titulo" required>
@@ -37,7 +37,7 @@
       </ion-item>
       <ion-item>
         <ion-label>
-          <ion-icon name="create-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="create-outline" style="font-size:23px; color: #50c8ec; 
           margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Mensaje
         </ion-label>
         <ion-textarea  style="margin-bottom: -11px; font-size: 14px;"
@@ -46,12 +46,12 @@
       </ion-item>
       <ion-item>
         <ion-button fill="clear" size="small" (click)="camara()">
-          <ion-icon slot="start" name="camera-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+          <ion-icon slot="start" name="camera-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
 
         </ion-button>
 
         <ion-button fill="clear" size="small" (click)="libreria()">
-          <ion-icon slot="start" name="image-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+          <ion-icon slot="start" name="image-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
 
         </ion-button>
       </ion-item>
@@ -74,14 +74,14 @@
 
               <ion-button fill="clear" size="small" type="submit" [disabled]="formulario1.invalid"
                 style="text-transform: none; margin-left: 120px; margin-top: -40px;">Guardar
-                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #00DDFF;">
+                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #50c8ec;">
                 </ion-icon>
               </ion-button>
 
 
               <ion-button fill="clear" size="small"
                 style="text-transform: none; margin-top: -80px;  margin-left:220px;" routerLink="/avisos">Cancelar
-                <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+                <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
               </ion-button>
             </ion-col>
           </ion-row>
