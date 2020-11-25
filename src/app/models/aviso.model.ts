@@ -3,7 +3,7 @@ export class Aviso{
     public idempresa:number;
     public idagenteCreo:number;
     /* public idagenteDestino:number; */
-    public idAvisoOriginal:number;//guardar solo id
+    /* public idAvisoOriginal:number;//guardar solo id */
     public manzanaDestino: string;
     public titulo: string
     public mensaje: string;    

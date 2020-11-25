@@ -11,7 +11,15 @@ const routes: Routes = [
   {
     path: 'votaciones',
     loadChildren: () => import('./votaciones/votaciones.module').then( m => m.VotacionesPageModule)
+  },  {
+    path: 'convocatorias',
+    loadChildren: () => import('./convocatorias/convocatorias.module').then( m => m.ConvocatoriasPageModule)
+  },
+  {
+    path: 'resoluciones',
+    loadChildren: () => import('./resoluciones/resoluciones.module').then( m => m.ResolucionesPageModule)
   }
+
 
 ];
 

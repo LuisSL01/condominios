@@ -32,18 +32,11 @@ const routes: Routes = [
     path: 'gastos',
     loadChildren: () => import('./pages/gastos/gastos.module').then( m => m.GastosPageModule)
   },
-/*   {
-    path: 'votaciones',
-    loadChildren: () => import('./pages/votaciones/votaciones.module').then( m => m.VotacionesPageModule)
-  }, */
+
   {
     path: 'contactos-emergencia',
     loadChildren: () => import('./pages/contactos-emergencia/contactos-emergencia.module').then( m => m.ContactosEmergenciaPageModule)
   },
-/*   {
-    path: 'visitas',
-    loadChildren: () => import('./pages/visitas/visitas.module').then( m => m.VisitasPageModule)
-  }, */
   {
     path: 'areas-comunes',
     loadChildren: () => import('./pages/areas-comunes/areas-comunes.module').then( m => m.AreasComunesPageModule)
@@ -60,11 +53,6 @@ const routes: Routes = [
     path: 'forgot-password',
     loadChildren: () => import('./pages/forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule)
   },
-
-  /* {
-    path: 'bitacora-visitas',
-    loadChildren: () => import('./pages/bitacora-visitas/bitacora-visitas.module').then( m => m.BitacoraVisitasPageModule)
-  }, */
   {
     path: 'pagos',
     loadChildren: () => import('./pages/pagos/pagos.module').then( m => m.PagosPageModule)

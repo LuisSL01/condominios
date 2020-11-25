@@ -21,7 +21,19 @@ const routes: Routes = [
   {
     path: 'adeudos',
     loadChildren: () => import('./adeudos/adeudos.module').then( m => m.AdeudosPageModule)
+  },  {
+    path: 'cfdi',
+    loadChildren: () => import('./cfdi/cfdi.module').then( m => m.CfdiPageModule)
+  },
+  {
+    path: 'constancia-no-adeudo',
+    loadChildren: () => import('./constancia-no-adeudo/constancia-no-adeudo.module').then( m => m.ConstanciaNoAdeudoPageModule)
+  },
+  {
+    path: 'recibos',
+    loadChildren: () => import('./recibos/recibos.module').then( m => m.RecibosPageModule)
   }
+
 
 
 ];
