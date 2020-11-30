@@ -38,6 +38,17 @@ export class DataLocalVisitaService {
     this.dataLocalService.presentToast('Visita borrada');
   }
 
+/*Asi tendría que ser par que al hora de borrar una visita se acturlice la vista 
+  //borrarVisita(visita: Visita) {
+    // se obtiene el índice del objeto filtrando por su id
+    //let index = this.visitas.findIndex(vis => vis.idvisita == visita.idvisita);
+    // se elimina ese elemento del arreglo orignal y la vista
+    // se actualiza
+   // this.visitas.slice(index,1);
+   // this.storage.set(this.construyeNombreEtiqueta(), this.visitas);
+   // this.dataLocalService.presentToast('Visita borrada');
+   }*/
+
   async cargarVisitas() {
     const visitas = await this.storage.get(this.construyeNombreEtiqueta());
     if (visitas) {

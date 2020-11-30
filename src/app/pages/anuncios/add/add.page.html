@@ -6,7 +6,7 @@
       <form #formulario="ngForm" (ngSubmit)="save()">
         <ion-list>
           <ion-item>
-            <ion-label><ion-icon name="easel-outline"style="font-size:23px; color: #00DDFF; 
+            <ion-label><ion-icon name="newspaper-outline" style="font-size:23px; color: #50c8ec;
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Título del anuncio</ion-label>
             <ion-input name="titulo" [(ngModel)]="anuncio.titulo" required>
             </ion-input>
@@ -14,7 +14,7 @@
 
           <ion-item>
             <ion-label>
-              <ion-icon name="create-outline" style="font-size:23px; color: #00DDFF; 
+              <ion-icon name="create-outline" style="font-size:23px; color: #50c8ec;
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Descripción</ion-label>
             
             <ion-textarea rows="1" cols="1" 
@@ -23,19 +23,19 @@
 
           </ion-item>
           <ion-item>
-            <ion-label><ion-icon name="cash-outline"style="font-size:23px; color: #00DDFF; 
+            <ion-label><ion-icon name="cash-outline"style="font-size:23px; color: #50c8ec; 
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Precio</ion-label>         
             <ion-input  name="precio" type="number" [(ngModel)]="anuncio.precio" required>
             </ion-input>
           </ion-item>
           <ion-item>
-            <ion-label><ion-icon name="call-outline"style="font-size:23px; color: #00DDFF; 
+            <ion-label><ion-icon name="call-outline"style="font-size:23px; color: #50c8ec; 
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Teléfono</ion-label>
             <ion-input name="telefono" [(ngModel)]="anuncio.telefono">
             </ion-input>
           </ion-item>
           <ion-item>
-            <ion-label><ion-icon name="alarm-outline"style="font-size:23px; color: #00DDFF; 
+            <ion-label><ion-icon name="today-outline"style="font-size:23px; color: #50c8ec;
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Fecha de expiración</ion-label>  
 
             <ion-datetime style="margin-bottom: -8px;" name="fechaVence" placeholder="Fecha vence"                      
@@ -51,19 +51,19 @@
 
           
           <ion-item>
-            <ion-label><ion-icon name="bar-chart-outline"style="font-size:23px; color: #00DDFF; 
+            <ion-label><ion-icon name="receipt-outline"style="font-size:23px; color: #50c8ec;
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Estatus</ion-label>  
             <ion-toggle slot="end" name="estatus" [(ngModel)]="anuncio.estatus"></ion-toggle>
           </ion-item>
 
           <ion-item>
             <ion-button fill="clear" size="small" (click)="camara()">
-              <ion-icon slot="start" name="camera-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+              <ion-icon slot="start" name="camera-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
              
             </ion-button>
     
             <ion-button fill="clear" size="small" (click)="libreria()">
-              <ion-icon slot="start" name="image-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+              <ion-icon slot="start" name="image-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
               
             </ion-button>
           </ion-item>
@@ -85,14 +85,14 @@
                   <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
 
               <ion-button fill="clear" size="small"  type="submit" [disabled]="formulario.invalid" style="text-transform: none; margin-left: 120px; margin-top: -40px;">Guardar
-                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #00DDFF;" ></ion-icon>
+                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #50c8ec;" ></ion-icon>
               </ion-button>
             
             
               <ion-button fill="clear" size="small"  style="text-transform: none; margin-top: -80px;  margin-left: 220px;" 
               routerLink="/anuncios"
               >Cancelar
-                    <ion-icon  slot="start" name="close-circle-outline" style="font-size:23px; color: #00DDFF;" ></ion-icon>
+                    <ion-icon  slot="start" name="close-circle-outline" style="font-size:23px; color: #50c8ec;" ></ion-icon>
                       </ion-button>
 
                     </ion-col>

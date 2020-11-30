@@ -3,7 +3,7 @@
 <app-header titulo="Nuevo gasto"></app-header>
 
 <!--style="
-color: #00DDFF;
+color: #50c8ec;
 margin-left: -20px;
 " -->
 <ion-content>
@@ -12,7 +12,7 @@ margin-left: -20px;
 
       <ion-item>
         <ion-label>
-          <ion-icon name="alarm-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="alarm-outline" style="font-size:23px; color: #50c8ec; 
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Fecha
         </ion-label>
         <ion-datetime style="margin-bottom: -8px;" name="fechaGasto"  displayFormat="DD/MM/YYYY"
@@ -23,7 +23,7 @@ margin-left: -20px;
       </ion-item>
       <ion-item>
         <ion-label>
-          <ion-icon name="receipt-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="receipt-outline" style="font-size:23px; color: #50c8ec; 
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Tipo de registro
         </ion-label>
         <ion-select name="tipoGasto" [(ngModel)]="gasto.tipoGasto" value="gasto.tipoGasto" okText="Aceptar"
@@ -37,7 +37,7 @@ margin-left: -20px;
       </ion-item>
       <ion-item>
         <ion-label>
-          <ion-icon name="calculator-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="calculator-outline" style="font-size:23px; color: #50c8ec; 
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Cantidad
         </ion-label>
         <ion-input name="cantidad" type="number" [(ngModel)]="gasto.cantidad">
@@ -45,7 +45,7 @@ margin-left: -20px;
       </ion-item>
       <ion-item>
         <ion-label>
-          <ion-icon name="pencil-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="pencil-outline" style="font-size:23px; color: #50c8ec; 
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Descripción
         </ion-label>
         <ion-textarea rows="1" cols="1" name="descripcion" style="margin-top: -20px;" [(ngModel)]="gasto.descripcion">
@@ -53,7 +53,7 @@ margin-left: -20px;
       </ion-item>
       <ion-item>
         <ion-label>
-          <ion-icon name="cash-outline" style="font-size:23px; color: #00DDFF; 
+          <ion-icon name="cash-outline" style="font-size:23px; color: #50c8ec; 
               margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Forma de pago
         </ion-label>
         <ion-select name="formaPago" [(ngModel)]="gasto.formaPago" value="gasto.formaPago" okText="Aceptar"
@@ -66,11 +66,11 @@ margin-left: -20px;
 
       <ion-item>
         <ion-button fill="clear" size="small" (click)="camara()">
-          <ion-icon slot="start" name="camera-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+          <ion-icon slot="start" name="camera-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
         </ion-button>
 
         <ion-button fill="clear" size="small" (click)="libreria()">
-          <ion-icon slot="start" name="image-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+          <ion-icon slot="start" name="image-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
         </ion-button>
       </ion-item>
       <ion-item>
@@ -95,7 +95,7 @@ margin-left: -20px;
 
               <ion-button fill="clear" size="small" type="submit" [disabled]="formulario.invalid"
                 style="text-transform: none; margin-left: 120px; margin-top: -40px;">Guardar
-                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #00DDFF;">
+                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #50c8ec;">
                 </ion-icon>
               </ion-button>
 
@@ -104,7 +104,7 @@ margin-left: -20px;
                 style="text-transform: none; margin-top: -80px;  margin-left: 220px;" 
                 routerLink="/gastos">
                 Cancelar
-                <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+                <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
               </ion-button>
 
             </ion-col>
