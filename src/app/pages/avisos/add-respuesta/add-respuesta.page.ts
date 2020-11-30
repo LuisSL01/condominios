@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Aviso } from 'src/app/models/aviso.model';
 import { ModalController } from '@ionic/angular';
 import { DataLocalAvisoService } from '../../../services/data-local-aviso.service';
+import { Publicacion } from '../../../models/publicacion.model';
 
 @Component({
   selector: 'app-add-respuesta',
@@ -12,11 +12,11 @@ export class AddRespuestaPage implements OnInit {
 
 
 
-  aviso: Aviso = new Aviso();
+  aviso: Publicacion = new Publicacion();
   
 
   @Input() titulo:string;
-  @Input() avisoPadre:Aviso;
+  @Input() avisoPadre:Publicacion;
 
   constructor(private modalCtrl: ModalController,
     private dataLocalAvisoService:DataLocalAvisoService) { }

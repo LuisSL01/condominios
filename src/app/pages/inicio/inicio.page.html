@@ -1,17 +1,76 @@
 <app-menu-header></app-menu-header>
 
-<ion-content>
-  <ion-list >
-    <ion-item *ngFor="let c of componentes | async"  
-    [routerLink]="c.redirectTo" detail>
-  <ion-icon  slot="start" 
-             [name] = "c.icon"
-             color="medium" > </ion-icon>
-  <ion-label>
-   {{c.name}}
-  </ion-label>
- </ion-item> 
-  </ion-list>
+<ion-content fullscreen>
+ <!--  <ion-list>
+    <ion-item *ngFor="let c of componentes | async" [routerLink]="c.redirectTo" detail>
+      <ion-icon slot="start" [name]="c.icon" color="medium"> </ion-icon>
+      <ion-label>
+        {{c.name}}
+      </ion-label>
+    </ion-item>
+  </ion-list> -->
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-searchbar placeholder="Buscar" animated (ionChange)="buscar($event)"></ion-searchbar>  
+  <ion-slides class="emptyData" *ngIf="publicaciones.length === 0">
+    <ion-slide class="emptyData">
+      <ion-label>No hay registros</ion-label>
+    </ion-slide>
+  </ion-slides>
+  
+  <ion-grid fixed *ngIf="publicaciones.length > 0 ">
+    <ion-row>
+     <ion-col  size="12"
+         *ngFor="let pub of publicaciones">
+
+         <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{pub.titulo}} - {{pub.fechaCreacion  | date:'dd/MM/yyyy h:mm aaa'}}</ion-card-title>
+        
+            <ion-card-subtitle>
+              <span class="text-primary"> {{pub.tipo}}</span>
+              <div class="card-more">
+                <ion-button fill="clear" (click)="lanzarMenu()">
+                  <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
+                </ion-button>
+              </div>
+        
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            {{pub.descripcion}}
+          </ion-card-content>
+          <ion-item>
+            <ion-slides pager="true" *ngIf="pub.imgs.length > 1">
+              <ion-slide *ngFor="let img of pub.imgs" class="image-slide">
+                <img [src]="img | imageSanitizer">
+              </ion-slide>
+            </ion-slides>
+            <ion-slides *ngIf="pub.imgs.length === 1" >
+              <ion-slide *ngFor="let img of pub.imgs" class="image-slide">
+                <img [src]="img | imageSanitizer">
+              </ion-slide>
+            </ion-slides>
+          </ion-item>
+        </ion-card>
+
+     </ion-col>
+   </ion-row>
+  </ion-grid>
+
+
+<!--   <ion-list>
+    <ion-item *ngFor="let pub of publicaciones">
+      <ion-icon slot="start" name="megaphone-outline" color="medium"> </ion-icon>
+      <ion-label>
+        {{pub.titulo}} - {{pub.descripcion}}
+      </ion-label>
+    </ion-item>
+  </ion-list> -->
+
 </ion-content>
 
 <ion-footer class="ion-no-border" translucent>
@@ -20,9 +79,9 @@
     <ion-grid>
       <ion-row>
         <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" offset-md="4" offset-sm="4">
-    <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
-  </ion-col>
-</ion-row>
-</ion-grid>
+          <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-toolbar>
 </ion-footer>

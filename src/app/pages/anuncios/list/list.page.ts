@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DataLocalAnuncioService } from '../../../services/data-local-anuncio.service';
-import { Anuncio } from '../../../models/anuncio.model';
+
 import { ActionSheetController } from '@ionic/angular';
+import { Publicacion } from '../../../models/publicacion.model';
 
 @Component({
   selector: 'app-list',
@@ -10,7 +11,7 @@ import { ActionSheetController } from '@ionic/angular';
 })
 export class ListPage implements OnInit {
 
-  @Input() anuncio :Anuncio;
+  @Input() anuncio :Publicacion;
   
 
   constructor(public dataLocalAnuncioService: DataLocalAnuncioService,

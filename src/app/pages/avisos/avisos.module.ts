@@ -10,6 +10,7 @@ import { AvisosPage } from './avisos.page';
 import { ComponentsModule } from '../../components/components.module';
 import { ListAvisosPage } from './list-avisos/list-avisos.page';
 import { PipesModule } from '../../pipes/pipes.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -18,6 +19,7 @@ import { PipesModule } from '../../pipes/pipes.module';
     CommonModule,
     FormsModule,    
     IonicModule,
+    ReactiveFormsModule,
     AvisosPageRoutingModule,    
     ComponentsModule,
     PipesModule

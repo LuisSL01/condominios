@@ -1,9 +1,18 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>list</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-card class="card-image">
+  <ion-card-header>
+    <ion-card-title>{{convocatoria.titulo}}</ion-card-title>
+    <ion-card-subtitle>
+      <span class="text-primary"> {{convocatoria.fechaCreacion | date:'h:mm a - dd MMM yy '}} </span>
+      <div class="card-more">
+        <ion-button fill="clear" (click)="lanzarMenu()">
+          <ion-icon slot="icon-only" color="primary" name="ellipsis-vertical-outline"></ion-icon>
+        </ion-button>
+      </div>
+    </ion-card-subtitle>
+  </ion-card-header>
 
-<ion-content>
+  <ion-card-content>
+    {{convocatoria.descripcion}}
+  </ion-card-content>
 
-</ion-content>
+</ion-card>

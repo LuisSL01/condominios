@@ -2,10 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { DataLocalService } from '../../../services/data-local.service';
 import { DataLocalAvisoService } from '../../../services/data-local-aviso.service';
 import { ActionSheetController, ModalController } from '@ionic/angular';
-import { Aviso } from 'src/app/models/aviso.model';
 import { AddRespuestaPage } from '../add-respuesta/add-respuesta.page';
 import { Router } from '@angular/router';
 import { RespuestasPage } from '../respuestas/respuestas.page';
+import { Publicacion } from '../../../models/publicacion.model';
 
 @Component({
   selector: 'app-list-avisos',
@@ -16,7 +16,7 @@ export class ListAvisosPage implements OnInit {
 
 
 
-  @Input() aviso: Aviso;
+  @Input() aviso: Publicacion;
   slideSoloOpts = {
     allowSlideNext: false,
     allowSlidePrev: false
@@ -35,7 +35,7 @@ export class ListAvisosPage implements OnInit {
 
     let tamanioRespuestas =0;
     
-      tamanioRespuestas = this.aviso.avisosRespuestaList.length;
+      tamanioRespuestas = this.aviso.respuestas.length;
     
     
     let guardarBorrarBtn;
@@ -106,14 +106,14 @@ export class ListAvisosPage implements OnInit {
       component: RespuestasPage,
     componentProps:{
       titulo: this.aviso.titulo,
-      respuestas: this.aviso.avisosRespuestaList
+      respuestas: this.aviso.respuestas
     },
       cssClass: 'my-custom-class'
     });
     return await modal.present();
   }
 
-  borrarAviso(aviso: Aviso){
+  borrarAviso(aviso: Publicacion){
     this.dataLocalAvisoService.borrarAviso(aviso);
     this.router.navigate(['/avisos']);
   }

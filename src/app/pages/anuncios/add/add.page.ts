@@ -6,6 +6,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 declare var window: any;
 /* import * as moment from 'moment-timezone'; */
 import { Router } from '@angular/router';
+import { Publicacion } from '../../../models/publicacion.model';
 
 
 
@@ -16,7 +17,7 @@ import { Router } from '@angular/router';
 })
 export class AddPage implements OnInit {
 
-  anuncio: Anuncio = new Anuncio();
+  anuncio: Publicacion = new Publicacion();
   idanuncio: number;
   enCamara: boolean;
 
@@ -72,6 +73,7 @@ export class AddPage implements OnInit {
   }
   save() {
     console.log(this.anuncio);
+    this.anuncio.tipo = 'Anuncio';
     this.dataLocalAnuncioService.guardarAnuncio(this.anuncio);
     this.router.navigate(['/anuncios']);
   }

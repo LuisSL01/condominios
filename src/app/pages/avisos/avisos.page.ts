@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataLocalAvisoService } from 'src/app/services/data-local-aviso.service';
-import { Aviso } from 'src/app/models/aviso.model';
+
 import { IonInfiniteScroll } from '@ionic/angular';
+import { Publicacion } from '../../models/publicacion.model';
 
 
 @Component({
@@ -14,7 +15,7 @@ export class AvisosPage implements OnInit {
     fecha: Date = new Date(); */
   textoBuscar = '';
 
-  public avisosList: Aviso[];
+  public avisosList: Publicacion[];
 
   @ViewChild(IonInfiniteScroll) infiniteScroll : IonInfiniteScroll;
   //Con esto recuperamos el componente de la vista y al estar tipado obtenemos la ayuda de typescript
@@ -37,7 +38,7 @@ export class AvisosPage implements OnInit {
       this.textoBuscar = this.textoBuscar.toLowerCase();      
       this.avisosList = this.avisosList.filter(item => {
         return (item.titulo.toLowerCase().includes(this.textoBuscar)
-         || item.mensaje.toLowerCase().includes(this.textoBuscar)
+         || item.descripcion.toLowerCase().includes(this.textoBuscar)
           );
       }
       ); 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataLocalAnuncioService } from 'src/app/services/data-local-anuncio.service';
-import { Anuncio } from '../../models/anuncio.model';
+import { Publicacion } from '../../models/publicacion.model';
 
 @Component({
   selector: 'app-anuncios',
@@ -9,7 +9,7 @@ import { Anuncio } from '../../models/anuncio.model';
 })
 export class AnunciosPage implements OnInit {
   textoBuscar ='';
-  public anunciosList : Anuncio[];
+  public anunciosList : Publicacion[];
 
 
   constructor(public dataLocalAnuncioService: DataLocalAnuncioService) { 

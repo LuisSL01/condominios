@@ -14,6 +14,7 @@ export class DataLocalVotacionesService{
   nombreEtiquetaJson = "encuestas";
   constructor(public storage: Storage,
     private dataLocalService: DataLocalService) {
+      this.cargarVotaciones();
       
   }
   

@@ -8,6 +8,8 @@ import { ConvocatoriasPageRoutingModule } from './convocatorias-routing.module';
 
 import { ConvocatoriasPage } from './convocatorias.page';
 import { ComponentsModule } from '../../../components/components.module';
+import { ListPage } from './list/list.page';
+
 
 @NgModule({
   imports: [
@@ -17,6 +19,6 @@ import { ComponentsModule } from '../../../components/components.module';
     ConvocatoriasPageRoutingModule,
     ComponentsModule
   ],
-  declarations: [ConvocatoriasPage]
+  declarations: [ConvocatoriasPage, ListPage]
 })
 export class ConvocatoriasPageModule {}

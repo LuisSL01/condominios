@@ -62,5 +62,6 @@ export class AddPage implements OnInit {
   save(){    
     this.dataLocalVotacionesService.guardarVotacion(this.encuesta);
     this.router.navigate(['/asambleas/votaciones']);
+    
   }
 }

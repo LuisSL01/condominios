@@ -10,16 +10,16 @@
 <app-header titulo="Nuevo aviso"></app-header>
 
 <ion-content>
-  <form #formulario1="ngForm" (ngSubmit)="save()">
 
+  <form #formulario="ngForm" (ngSubmit)="save()">
     <ion-list>
       <ion-item>
         <ion-label>
           <ion-icon name="mail-open-outline" style="font-size:23px; color: #00DDFF; 
           margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Destinatario
         </ion-label>
-        <ion-select name="manzanaDestino" [(ngModel)]="aviso.manzanaDestino" value="aviso.manzanaDestino" okText="Aceptar"
-          cancelText="Cancelar">
+        <ion-select name="manzanaDestino" [(ngModel)]="aviso.manzanaDestino" value="aviso.manzanaDestino"
+          okText="Aceptar" cancelText="Cancelar">
           <ion-select-option value="todos">Todos</ion-select-option>
           <ion-select-option value="m1">Manzana 1</ion-select-option>
           <ion-select-option value="m2">Manzana 2</ion-select-option>
@@ -40,8 +40,8 @@
           <ion-icon name="create-outline" style="font-size:23px; color: #00DDFF; 
           margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Mensaje
         </ion-label>
-        <ion-textarea  style="margin-bottom: -11px; font-size: 14px;"
-          name="mensaje" [(ngModel)]="aviso.mensaje" required>
+        <ion-textarea style="margin-bottom: -11px; font-size: 14px;" name="descripcion" [(ngModel)]="aviso.descripcion"
+          required>
         </ion-textarea>
       </ion-item>
       <ion-item>
@@ -64,7 +64,7 @@
       </ion-item>
     </ion-list>
 
-    
+
     <ion-footer class="ion-no-border" translucent>
       <ion-toolbar color="light" style="position: fixed; bottom: 0px; height: 63px;">
         <ion-grid>
@@ -72,15 +72,15 @@
             <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" offset-md="4" offset-sm="4">
               <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
 
-              <ion-button fill="clear" size="small" type="submit" [disabled]="formulario1.invalid"
+              <ion-button fill="clear" size="small" type="submit" [disabled]="formulario.invalid"
                 style="text-transform: none; margin-left: 120px; margin-top: -40px;">Guardar
                 <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #00DDFF;">
                 </ion-icon>
               </ion-button>
 
 
-              <ion-button fill="clear" size="small"
-                style="text-transform: none; margin-top: -80px;  margin-left:220px;" routerLink="/avisos">Cancelar
+              <ion-button fill="clear" size="small" style="text-transform: none; margin-top: -80px;  margin-left:220px;"
+                routerLink="/avisos">Cancelar
                 <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
               </ion-button>
             </ion-col>
@@ -89,6 +89,5 @@
 
       </ion-toolbar>
     </ion-footer>
-
   </form>
 </ion-content>

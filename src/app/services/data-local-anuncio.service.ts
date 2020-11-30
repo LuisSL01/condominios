@@ -3,13 +3,14 @@ import { Storage } from '@ionic/storage';
 import { ToastController } from '@ionic/angular';
 import { Anuncio } from '../models/anuncio.model';
 import { DataLocalService } from './data-local.service';
+import { Publicacion } from '../models/publicacion.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataLocalAnuncioService {
 
-  anuncios: Anuncio[] = [];
+  anuncios: Publicacion[] = [];
   nombreEtiquetaJson = "";
 
   constructor(private storage: Storage,
@@ -20,18 +21,18 @@ export class DataLocalAnuncioService {
     return this.nombreEtiquetaJson = this.dataLocalService.idempresa + "_anuncios";
   }
 
-  guardarAnuncio(anuncio: Anuncio) {
-    const existe = this.anuncios.find(ann => ann.idanuncio === anuncio.idanuncio);
+  guardarAnuncio(anuncio: Publicacion) {
+    const existe = this.anuncios.find(ann => ann.idpublicacion === anuncio.idpublicacion);
     if (!existe) {
-      anuncio.idanuncio = this.dataLocalService.getNumeroNegativo() * -1;
+      anuncio.idpublicacion = this.dataLocalService.getNumeroNegativo() * -1;
       this.anuncios.unshift(anuncio)
       this.storage.set(this.construyeNombreEtiqueta(), this.anuncios);
       this.dataLocalService.presentToast('Anuncio agregado');
     }
   }
 
-  borrarAnuncio(anuncio: Anuncio) {
-    this.anuncios = this.anuncios.filter(ann => ann.idanuncio !== anuncio.idanuncio);
+  borrarAnuncio(anuncio: Publicacion) {
+    this.anuncios = this.anuncios.filter(ann => ann.idpublicacion !== anuncio.idpublicacion);
     this.storage.set(this.construyeNombreEtiqueta(), this.anuncios);
     this.dataLocalService.presentToast('Anuncio borrado');
   }

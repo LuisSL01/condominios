@@ -1,9 +1,69 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>add</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-menu-header></app-menu-header>
+<app-header titulo="Nueva resolución"></app-header>
 
 <ion-content>
+  <form #formulario="ngForm" (ngSubmit)="save()">
 
+    <ion-list>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="mail-open-outline" style="font-size:23px; color: #00DDFF; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Destinatario
+        </ion-label>
+        <ion-select name="manzanaDestino" [(ngModel)]="resolucion.manzanaDestino" value="resolucion.manzanaDestino" okText="Aceptar"
+          cancelText="Cancelar">
+          <ion-select-option value="todos">Todos</ion-select-option>
+          <ion-select-option value="m1">Manzana 1</ion-select-option>
+          <ion-select-option value="m2">Manzana 2</ion-select-option>
+          <ion-select-option value="m3">Manzana 3</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>
+          <ion-icon name="megaphone-outline" style="font-size:23px; color: #00DDFF; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Título
+        </ion-label>
+        <ion-input name="titulo" [(ngModel)]="resolucion.titulo" required>
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="create-outline" style="font-size:23px; color: #00DDFF; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Mensaje
+        </ion-label>
+        <ion-textarea  style="margin-bottom: -11px; font-size: 14px;"
+          name="descripcion" [(ngModel)]="resolucion.descripcion" required>
+        </ion-textarea>
+      </ion-item>
+      
+      
+    </ion-list>
+
+    
+    <ion-footer class="ion-no-border" translucent>
+      <ion-toolbar color="light" style="position: fixed; bottom: 0px; height: 63px;">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" offset-md="4" offset-sm="4">
+              <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
+
+              <ion-button fill="clear" size="small" type="submit" [disabled]="formulario.invalid"
+                style="text-transform: none; margin-left: 120px; margin-top: -40px;">Guardar
+                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #00DDFF;">
+                </ion-icon>
+              </ion-button>
+              
+              <ion-button fill="clear" size="small"
+                style="text-transform: none; margin-top: -80px;  margin-left:220px;" routerLink="/asambleas/resoluciones">Cancelar
+                <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+      </ion-toolbar>
+    </ion-footer>
+
+  </form>
 </ion-content>

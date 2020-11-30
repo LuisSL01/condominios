@@ -8,6 +8,7 @@ import { ResolucionesPageRoutingModule } from './resoluciones-routing.module';
 
 import { ResolucionesPage } from './resoluciones.page';
 import { ComponentsModule } from '../../../components/components.module';
+import { ListPage } from './list/list.page';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { ComponentsModule } from '../../../components/components.module';
     ResolucionesPageRoutingModule,
     ComponentsModule
   ],
-  declarations: [ResolucionesPage]
+  declarations: [ResolucionesPage, ListPage]
 })
 export class ResolucionesPageModule {}
