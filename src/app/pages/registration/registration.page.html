@@ -1,0 +1,175 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Crear cuenta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- <form>
+    <ion-item lines="full">
+      <ion-label position="floating"><ion-icon name="person-outline" style="font-size:23px; color: #50c8ec; 
+        margin-bottom: -5px;
+    "></ion-icon>&nbsp;Nombre</ion-label>
+      <ion-input type="text" required></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating"><ion-icon name="pencil-outline" style="font-size:23px; color: #50c8ec; 
+        margin-bottom: -5px;
+    "></ion-icon>&nbsp;Apellidos</ion-label>
+      <ion-input type="text" required></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating"><ion-icon name="at-outline" style="font-size:23px; color: #50c8ec; 
+        margin-bottom: -5px;
+    "></ion-icon>&nbsp;Cuenta de correo</ion-label>
+      <ion-input type="text" required></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating"><ion-icon name="lock-closed-outline" style="font-size:23px; color: #50c8ec; 
+        margin-bottom: -5px;
+    "></ion-icon>&nbsp;Contraseña</ion-label>
+      <ion-input type="password" required></ion-input>
+    </ion-item>
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="secondary" expand="block">¡Regístrate!</ion-button>
+      </ion-col>
+    </ion-row>
+  </form> -->
+
+
+
+  <form [formGroup]="createAgente" (ngSubmit)="guardarDatos()">
+    <ion-item>
+      <ion-label>Nombre completo:</ion-label>
+      <ion-input formControlName="nombreCompleto"></ion-input>
+    </ion-item>
+    <ion-label color="danger"
+      *ngIf="createAgente.controls.nombreCompleto.errors?.required && (createAgente.touched || createAgente.dirty)">* El
+      nombre es obligatorio </ion-label>
+    <ion-label color="danger"
+      *ngIf="createAgente.controls.nombreCompleto.errors?.minlength && (createAgente.touched || createAgente.dirty)">*
+      El nombre tiene que tener al menos 4 caracteres.</ion-label>
+
+    <ion-item>
+      <ion-label>Usuario:</ion-label>
+      <ion-input formControlName="username" autocomplete="off"></ion-input>
+    </ion-item>
+    <ion-label color="danger"
+      *ngIf="createAgente.controls.username.errors?.required && (createAgente.touched || createAgente.dirty)">* El
+      usuario es obligatorio </ion-label>
+    <ion-label color="danger"
+      *ngIf="createAgente.controls.username.errors?.minlength && (createAgente.touched || createAgente.dirty)">* El
+      usuario tiene que tener al menos 6 caracteres.</ion-label>
+
+    <ion-item>
+      <ion-label>Contraseña</ion-label>
+      <ion-input type="password" placeholder="Contraseña" formControlName="password" autocomplete="off"></ion-input>
+    </ion-item>
+    <ion-label color="danger"
+      *ngIf="createAgente.controls.password.errors?.required && (createAgente.touched || createAgente.dirty)">* La
+      contraseña es requerida </ion-label>
+
+
+    <ion-item>
+      <ion-label class="control-label">Repetir Contraseña </ion-label>
+      <ion-input type="password" placeholder="Repetir Contraseña" formControlName="confirmarPassword"
+        autocomplete="off"></ion-input>
+    </ion-item>
+    <ion-label color="danger"
+      *ngIf="createAgente.controls.confirmarPassword.errors?.required && (createAgente.touched || createAgente.dirty)">*
+      La contraseña es requerida </ion-label>
+
+    <!--    <ion-label color="danger" *ngIf="createAgente.get('confirmarPassword').errors['mustMatch']">* La contraseña no
+      coincide </ion-label> -->
+
+
+    <ion-item>
+      <ion-label>Email:</ion-label>
+      <ion-input formControlName="email"></ion-input>
+    </ion-item>
+    <ion-label color="danger"
+      *ngIf="createAgente.controls.email.errors?.email && (createAgente.touched || createAgente.dirty)">* El email no es
+      válido.</ion-label>
+
+    <div formGroupName="direccion">
+      <ion-item>
+        <ion-label class="control-label">Calle </ion-label>
+        <ion-input type="text" class="form-control" formControlName="calle" id="calle" placeholder="Calle"></ion-input>
+      </ion-item>
+      <div
+        *ngIf="createAgente.get('direccion').get('calle').invalid && (createAgente.get('direccion').get('calle').dirty || createAgente.get('direccion').get('calle').touched)">
+        <div *ngIf="createAgente.get('direccion').get('calle').errors['required']">
+          La dirección es requerida.
+        </div>
+      </div>
+
+      <ion-item>
+        <ion-label class="control-label">Código Postal </ion-label>
+        <ion-input type="text" class="form-control" 
+        formControlName="asentamiento" placeholder="CP"></ion-input>
+      </ion-item>
+      <div
+        *ngIf="createAgente.get('direccion').get('asentamiento').invalid && (createAgente.get('direccion').get('asentamiento').dirty || createAgente.get('direccion').get('asentamiento').touched)">
+        <div *ngIf="createAgente.get('direccion').get('asentamiento').errors['required']">
+         El código postal es requerido
+        </div>
+      </div>
+      <ion-item>
+        <p class="ion-text-center">
+          <ion-button (click)="validarCP()" expand="block" fill="clear" shape="round">
+            Validar cp
+          </ion-button>
+        </p>
+       
+      </ion-item>
+
+<!-- 
+      <ng-template #codigosPostalesResults let-r="result" let-t="term">
+        <ngb-highlight [result]="r.codigoPostal + ' - ' + r.colonia" [term]="t">
+        </ngb-highlight>
+      </ng-template>
+      <ion-label  class="control-label" for="asentamiento">Código Postal </ion-label >
+      <ion-input id="asentamiento" type="text" class="form-control"        
+        formControlName="asentamiento"
+        (change)="cambio()"
+        
+        [resultTemplate]="codigosPostalesResults" 
+        [inputFormatter]="formatter" 
+        maxlength="5" placeholder="C.P." ></ion-input>
+      <div>
+        <br>
+        <ng-container
+          *ngTemplateOutlet="selectedCodigoPostalData;context: { zipCode: createAgente.get('direccion').get('asentamiento').value }">
+        </ng-container>
+      </div>
+      <ng-template #selectedCodigoPostalData let-z="zipCode">
+        <strong>Colonia:</strong> {{z?.colonia}}, <strong>Municipio:</strong> {{z?.municipio}}, <strong>Estado:</strong>
+        {{z?.estado}}
+      </ng-template>
+      <div *ngIf="searching" class="fa-1x text-success text-center"> Buscando <i class="fas fa-spinner fa-spin"></i>
+      </div>
+      <div class="invalid-feedback" *ngIf="searchFailed">Lo sentimos, no se encontraron coincidencias.</div> -->
+
+    </div>
+    <p class="ion-text-center">
+      <ion-button type="submit" [disabled]="!createAgente.valid">Guardar</ion-button>
+    </p>
+  </form>
+
+
+
+  <ion-footer>
+    <ion-toolbar color="light" style="position: fixed; bottom: 0px;">
+      <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
+    </ion-toolbar>
+  </ion-footer>
+
+</ion-content>

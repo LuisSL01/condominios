@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
+
 const routes: Routes = [
   {
     path: '',
@@ -76,6 +77,10 @@ const routes: Routes = [
   {
     path: 'mis-visitas',
     loadChildren: () => import('./pages/mis-visitas/mis-visitas.module').then( m => m.MisVisitasPageModule)
+  },
+  {
+    path: 'registration',
+    loadChildren: () => import('./pages/registration/registration.module').then( m => m.RegistrationPageModule)
   },
 
 
