@@ -21,10 +21,13 @@ export class Publicacion{
 
     public respuestas:Publicacion[];
 
+    public estatus:boolean;
+
     constructor(){
         this.fechaCreacion = new Date();
         this.imgs = new Array();
         this.respuestas = new Array();
         this.fechaVence = new Date();
+        this.estatus = true;
     }
 }
