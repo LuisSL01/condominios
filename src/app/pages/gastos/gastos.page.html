@@ -1,11 +1,11 @@
 <app-menu-header></app-menu-header>
 
-<app-header titulo ="Gastos"></app-header>
+<app-header titulo ="Gastos del condominio"></app-header>
 <ion-content fullscreen>  
   <ion-searchbar placeholder="Buscar" animated (ionChange)="buscar($event)"></ion-searchbar>  
   <ion-slides class="emptyData" *ngIf="gastoList.length === 0">
     <ion-slide class="emptyData">
-      <ion-label>No hay gastos</ion-label>
+      <ion-label>No hay registros</ion-label>
     </ion-slide>
   </ion-slides>
   

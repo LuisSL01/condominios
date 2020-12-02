@@ -14,8 +14,47 @@ export class DataLocalContactosEmergenciaService {
 
   constructor(private dataLocalService: DataLocalService,
               private storage: Storage) {
+    
                 
     this.cargarContactosEmergencia();
+    this.cargarContactosDefault();
+
+
+  }
+
+  cargarContactosDefault(){
+
+    console.log('cargando contactos default...');
+    
+    /* let contac = new ContactosEmergencia();
+    contac.nombre ='Emergencias';
+    contac.celular ='911'; */
+
+    this.contactosEmergencia.push(this.addContactoDefault('Emergencias','911'));
+    this.contactosEmergencia.push(this.addContactoDefault('Capufe','074'));
+    this.contactosEmergencia.push(this.addContactoDefault('Ángeles Verdes','078'));
+    this.contactosEmergencia.push(this.addContactoDefault('Cruz Roja','53 95 11 11'));
+    this.contactosEmergencia.push(this.addContactoDefault('LOCATEL','56 58 11 11'));
+    this.contactosEmergencia.push(this.addContactoDefault('Protección Civil','56 83 22 22'));
+    this.contactosEmergencia.push(this.addContactoDefault('Denuncia Anónima','089'));
+    this.contactosEmergencia.push(this.addContactoDefault('Incendios Forestales','55 54 06 12'));
+    this.contactosEmergencia.push(this.addContactoDefault('Policía Federal','088'));
+    this.contactosEmergencia.push(this.addContactoDefault('Fuga de agua','56 54 32 10'));
+    this.contactosEmergencia.push(this.addContactoDefault('Fuga de gas','53 53 57 63'));
+
+
+
+  }
+
+  addContactoDefault(nombre:string, numero:string):any
+  {
+    let contac = new ContactosEmergencia();
+    contac.idcontacoEmergencia = this.dataLocalService.getNumeroNegativo() * -1;
+    contac.nombre =nombre;
+    
+    contac.telefono = numero;
+    return contac;
+
   }
 
   construyeNombreEtiqueta(){

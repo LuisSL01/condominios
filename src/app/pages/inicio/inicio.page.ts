@@ -20,14 +20,17 @@ export class InicioPage implements OnInit {
 
   constructor(private dataService: DataService,
               private menuCtrl: MenuController,
-              private publicacionService : PublicacionService) {
+              public publicacionService : PublicacionService) {
+                this.componentes = this.dataService.getMenuOpts();
+                this.publicaciones = this.publicacionService.publicaciones;
+                  console.log('this.publicaciones:'+ this.publicaciones);
 
       
      }
 
   ngOnInit() {
-    this.componentes = this.dataService.getMenuOpts();
-    this.publicaciones = this.publicacionService.publicaciones;
+  
+      
   }
 
   doRefresh(event) {
@@ -37,6 +40,14 @@ export class InicioPage implements OnInit {
       console.log('Async operation has ended');
       event.target.complete();
     }, 2000);
+
+
+    console.log('this.publicaciones:'+ this.publicaciones);
+  }
+
+
+  buscar(){
+
   }
 
   toogleMenu(){

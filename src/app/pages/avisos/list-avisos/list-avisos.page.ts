@@ -41,11 +41,11 @@ export class ListAvisosPage implements OnInit {
     let guardarBorrarBtn;
 
       guardarBorrarBtn = {
-        text: 'Borrar aviso',
+        text: 'Borrar',
         icon: 'trash',
         cssClass: 'action-dark',
         handler: () => {
-          console.log('Borrar aviso');
+          console.log('Borrar');
           console.log(this.aviso);          
           this.dataLocalAvisoService.borrarAviso(this.aviso);
           

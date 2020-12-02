@@ -27,14 +27,14 @@ export class PublicacionService {
     if (ann) {
       this.publicaciones.push(...ann);
     }
-    const con = await this.storage.get(this.dataLocalService.idempresa+"_convocatorias");
+   /*  const con = await this.storage.get(this.dataLocalService.idempresa+"_convocatorias");
     if (con) {      
       this.publicaciones.push(...con);
     } 
     const res = await this.storage.get(this.dataLocalService.idempresa+"_resoluciones");
     if (res) {      
       this.publicaciones.push(...res);
-    } 
+    }  */
     console.log('publicaciones: '+ this.publicaciones);
     
    }

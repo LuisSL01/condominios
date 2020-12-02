@@ -12,7 +12,7 @@ export class ContactosEmergencia{
     //celular, telefono y telefono2 se guardaran en dato tipo jsonb
 
     constructor(){
-        console.log('I am in constructor of Contactos emergencia');        
+        
     }
 
 

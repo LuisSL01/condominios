@@ -1,7 +1,7 @@
 [
   {
     "icon": "megaphone-outline",
-    "name": "Notificar a comunidad",
+    "name": "Anuncios",
     "redirectTo": "/anuncios"
   },
   {
@@ -14,11 +14,7 @@
     "name": "Asambleas",
     "redirectTo": "/asambleas"
   },
-  {
-    "icon": "alert-circle-outline",
-    "name": "Avisos",
-    "redirectTo": "/avisos"
-  },
+
   {
     "icon": "warning-outline",
     "name": "Boton pánico",
@@ -38,6 +34,11 @@
     "icon": "pricetags-outline",
     "name": "Gastos del condominio",
     "redirectTo": "/gastos"
+  },
+  {
+    "icon": "alert-circle-outline",
+    "name": "Notificar a comunidad",
+    "redirectTo": "/avisos"
   },
   {
     "icon": "cash-outline",

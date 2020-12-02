@@ -1,30 +1,30 @@
 <app-menu-header></app-menu-header>
 
 <ion-content fullscreen>
-  <ion-list>
+  <!-- <ion-list>
     <ion-item *ngFor="let c of componentes | async" [routerLink]="c.redirectTo" detail>
       <ion-icon slot="start" [name]="c.icon" color="medium"> </ion-icon>
       <ion-label>
         {{c.name}}
       </ion-label>
     </ion-item>
-  </ion-list>
+  </ion-list> -->
 
- <!--  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
   <ion-searchbar placeholder="Buscar" animated (ionChange)="buscar($event)"></ion-searchbar>  
-  <ion-slides class="emptyData" *ngIf="publicaciones.length === 0">
+  <ion-slides class="emptyData" *ngIf="publicacionService.publicaciones.length === 0">
     <ion-slide class="emptyData">
       <ion-label>No hay registros</ion-label>
     </ion-slide>
   </ion-slides>
   
-  <ion-grid fixed *ngIf="publicaciones.length > 0 ">
+  <ion-grid fixed *ngIf="publicacionService.publicaciones.length > 0 ">
     <ion-row>
      <ion-col  size="12"
-         *ngFor="let pub of publicaciones">
+         *ngFor="let pub of publicacionService.publicaciones">
 
          <ion-card>
           <ion-card-header>
@@ -33,9 +33,9 @@
             <ion-card-subtitle>
               <span class="text-primary"> {{pub.tipo}}</span>
               <div class="card-more">
-                <ion-button fill="clear" (click)="lanzarMenu()">
+               <!--  <ion-button fill="clear" (click)="lanzarMenu()">
                   <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
-                </ion-button>
+                </ion-button> -->
               </div>
         
             </ion-card-subtitle>
@@ -59,7 +59,7 @@
 
      </ion-col>
    </ion-row>
-  </ion-grid> -->
+  </ion-grid>
 
 
 <!--   <ion-list>

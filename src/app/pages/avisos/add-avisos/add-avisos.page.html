@@ -7,7 +7,7 @@
     <ion-img src="assets/g.png" style="margin-right: 155px; height:50px;"></ion-img>
   </ion-toolbar>
 </ion-header>
-<app-header titulo="Nuevo aviso"></app-header>
+<app-header titulo="Nueva notificación"></app-header>
 
 <ion-content>
 
@@ -21,6 +21,7 @@
         <ion-select name="manzanaDestino" [(ngModel)]="aviso.manzanaDestino" value="aviso.manzanaDestino"
           okText="Aceptar" cancelText="Cancelar">
           <ion-select-option value="todos">Todos</ion-select-option>
+          <ion-select-option value="administrador">Administrador</ion-select-option>
           <ion-select-option value="m1">Manzana 1</ion-select-option>
           <ion-select-option value="m2">Manzana 2</ion-select-option>
           <ion-select-option value="m3">Manzana 3</ion-select-option>
