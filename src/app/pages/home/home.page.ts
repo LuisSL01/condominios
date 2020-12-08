@@ -86,7 +86,7 @@ export class HomePage implements OnInit {
       this.dataLocalService.idempresa = 2;//Aqui es cuando se podra setear el id del usuario que se este logueando
       this.dataLocalService.miIdAgente = 20;
       this.router.navigate(['/inicio']);
-      this.showToast("Bienvenido " + loginPayload.username.toLowerCase());
+      this.showToast("Bienvenido a armonía residencial" + loginPayload.username.toLowerCase());
     }else{      
       this.presentAlert();
     }
@@ -94,7 +94,7 @@ export class HomePage implements OnInit {
 
   showLoading() {
     this.load = this.loadingController.create({
-      message: 'Iniciando session espere',
+      message: 'Iniciando sesión, espere',
       duration: 2000
     }).then((loadingData) => {
       loadingData.present();
@@ -115,7 +115,7 @@ export class HomePage implements OnInit {
       cssClass: 'my-custom-class',
       header: 'Mensaje',
       subHeader: 'Error de autenticación',
-      message: 'Usuario o contraseña invalidos.',
+      message: 'Usuario o contraseña inválidos.',
       buttons: ['OK']
     });
 
