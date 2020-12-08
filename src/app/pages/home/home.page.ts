@@ -21,6 +21,7 @@ export class HomePage implements OnInit {
   load: any;
   idAgente: number = 0;
   empresas: any[] = [];
+  user:string;
 
   constructor(
     public userData: UserData,
@@ -86,6 +87,8 @@ export class HomePage implements OnInit {
        }); */
 
     //******************************* 
+
+    this.user = loginPayload.username.toLowerCase();
     if (loginPayload.username.toLowerCase() === 'test1'
       && loginPayload.password.toLowerCase() === 'test1') {
       this.dataLocalService.idempresa = 1;//Aqui es cuando se podra setear el id del usuario que se este logueando
@@ -96,7 +99,7 @@ export class HomePage implements OnInit {
       if (this.empresas.length === 1) { //Debo redirecionar al inicio, solo hay una empresa
         this.userData.login(this.login.username);
         this.router.navigateByUrl('/inicio');
-        this.showToast("Bienvenido a la residencia: "+ this.empresas[0].nombre);
+        this.showToast("Bienvenido a armonía residencial: " + loginPayload.username.toLowerCase());
       } else if (this.empresas.length > 1) {
         this.presentModalListEmpresas()//Debo presentar el modal para seleccionar una empresa
       } else {//Error al recuperar las empresas del user
@@ -113,7 +116,7 @@ export class HomePage implements OnInit {
       if (this.empresas.length === 1) { //Debo redirecionar al inicio, solo hay una empresa
         this.userData.login(this.login.username);
         this.router.navigateByUrl('/inicio');
-        this.showToast("Bienvenido a la residencia: "+ this.empresas[0].nombre);
+        this.showToast("Bienvenido a armonía residencial: " + loginPayload.username.toLowerCase());
       } else if (this.empresas.length > 1) {
         this.presentModalListEmpresas()//Debo presentar el modal para seleccionar una empresa
       } else {//Error al recuperar las empresas del user
@@ -126,14 +129,14 @@ export class HomePage implements OnInit {
       this.dataLocalService.idempresa = 1;//Aqui es cuando se podra setear el id del usuario que se este logueando
       this.dataLocalService.miIdAgente = 10;
       this.router.navigate(['/inicio']);
-      this.showToast("Bienvenido a armonía residencial" + loginPayload.username.toLowerCase());
+      this.showToast("Bienvenido a armonía residencial: " + loginPayload.username.toLowerCase());
     }
     else if (loginPayload.username.toLowerCase() === 'eosorio'
       && loginPayload.password.toLowerCase() === 'eosorio') {
       this.dataLocalService.idempresa = 1;//Aqui es cuando se podra setear el id del usuario que se este logueando
       this.dataLocalService.miIdAgente = 10;
       this.router.navigate(['/inicio']);
-      this.showToast("Bienvenido a armonía residencial" + loginPayload.username.toLowerCase());
+      this.showToast("Bienvenido a armonía residencial: " + loginPayload.username.toLowerCase());
     }
     else {
       this.presentAlert();
@@ -236,7 +239,8 @@ export class HomePage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: EmpresaPage,
       componentProps: {
-        empresas: this.empresas
+        empresas: this.empresas,
+        username: this.user
       },
       cssClass: 'my-custom-class'
     });

@@ -12,6 +12,7 @@ export class EmpresaPage implements OnInit {
 
 
   @Input() empresas:any[];
+  @Input() username:string;
 
 
   constructor(private modalCtrl: ModalController,
@@ -31,8 +32,8 @@ export class EmpresaPage implements OnInit {
     console.log('empresa selected..', empresa);
     console.log('navehando a la new empresa');    
     
-    this.router.navigate(['/inicio']);    
-    this.showToast('Bienvenido a la residencia: '+ empresa.nombre)
+    this.router.navigate(['/inicio']);        
+    this.showToast("Bienvenido a armonía residencial: " + this.username);
 
     this.modalCtrl.dismiss();
   }
