@@ -209,7 +209,7 @@ export class RegistrationPage implements OnInit {
             });
           /* console.log(this.createAgente.value); */
     }else{
-      this.showToast('necesario selecccionar una emoresa');
+      this.showToast('necesario selecccionar una residencia');
     }
   }
 
