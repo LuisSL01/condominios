@@ -7,6 +7,7 @@ declare var window: any;
 /* import * as moment from 'moment-timezone'; */
 import { Router } from '@angular/router';
 import { Publicacion } from '../../../models/publicacion.model';
+import { ArchivoVortex } from 'src/app/models/archivo-vortex.model';
 
 
 
@@ -67,6 +68,9 @@ export class AddPage implements OnInit {
     this.camera.getPicture(options).then((imageData) => {
       const img = window.Ionic.WebView.convertFileSrc(imageData);
       this.anuncio.imgs.push(img);
+      
+      this.anuncio.data.push(new ArchivoVortex(img));//Se crea un elemento de tipo archivo vortex cada que se toma una foto
+
     }, (err) => {
       // Handle error
     });

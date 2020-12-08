@@ -1,3 +1,4 @@
+import { ArchivoVortex } from './archivo-vortex.model';
 export class Publicacion{
 
 
@@ -11,6 +12,8 @@ export class Publicacion{
     public descripcion: string;
     public fechaCreacion: Date;
     public imgs:string[];//data en tipo json
+
+    public data:ArchivoVortex[];
 
     public precio:number;
     public fechaVence:Date;
@@ -29,5 +32,7 @@ export class Publicacion{
         this.respuestas = new Array();
         this.fechaVence = new Date();
         this.estatus = true;
+        
+        this.data = new Array();
     }
 }

@@ -27,17 +27,12 @@ export class AddRespuestaPage implements OnInit {
   cancelar(){
     console.log('cancelar');
     this.modalCtrl.dismiss();
-
-    
-
   }
   save(){
     console.log('save in add respuestaPage');
     this.dataLocalAvisoService.guardarRespuestaAviso(this.avisoPadre, this.aviso);
-    console.log('navegando de regresoo');
-    
-    this.modalCtrl.dismiss();
-    
+    console.log('navegando de regresoo');    
+    this.modalCtrl.dismiss();    
   }
 
 }

@@ -6,7 +6,19 @@ export const environment = {
   production: false,
   //  url: 'http://192.168.73.100:3000',
   // Endpoints para Gestión de Credenciales
-  authServiceBaseUrl: 'http://localhost:8080',
+
+  
+  authServiceBaseUrl: 'http://54.177.89.203:8080',
+  coreServiceBaseUrl: 'http://54.177.89.203:8081',
+  formsServiceBaseUrl: 'http://54.177.89.203:8082', 
+ 
+
+
+  /* authServiceBaseUrl: 'http://localhost:8080',
+  coreServiceBaseUrl: 'http://localhost:8081',
+  formsServiceBaseUrl: 'http://localhost:8082', */
+
+  
   authApiGetUsersOperation: '/users/',
   authApiBaseUserOperation: '/user/',
   authApiUpdatePasswordOperation: '/user/updatePassword/',
@@ -18,12 +30,15 @@ export const environment = {
   authApiGetTokenOperation: '/token/generate-token',
   authApiGetUsersByRoleOperation: '/users:listByRole',
   // Endpoints para Gestión de Operaciones de Negocio
-  coreServiceBaseUrl: 'http://localhost:8081',
+  
   // -> Empresa
   coreApiBaseEmpresaOperation: '/empresa',
   coreApiFilterEmpresaOperation: '/filter',
+  coreApiActividadEconomicaEmpresaOperation: '/actividadEconomica',
   coreApiGetConfiguracionEmpresaOperation: '/configuracion',
   coreApiGetFormularioEmpresaOperation: '/formulario',
+  coreApiGetEmpresasAgente: '/listEmpresas',
+
   // -> Agentes
   coreApiBaseAgenteOperation: '/agente',
   coreApiBaseEmpresaGerenteOperation: ':listEmpresaGerente',
@@ -87,7 +102,7 @@ export const environment = {
   coreApiGetCodigoCotizacionCatalog: '/filter',
   googleMapsKey: 'AIzaSyAYCA8FtUjOYaBcwY50oaNoZquwAGm97mo',
 
-  formsServiceBaseUrl: 'http://localhost:8082',
+  
  // formularios
   //  -> Productos
   formsApiBaseFormularioOperation: '/formulario',

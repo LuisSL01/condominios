@@ -69,11 +69,22 @@
           </ion-item>
           <ion-item>
             <ion-col size="3" *ngFor="let image of anuncio.imgs">
+              <ion-label>image</ion-label>
               <ion-card>
                 <img [src]="image | imageSanitizer">
               </ion-card>
             </ion-col>
           </ion-item>
+
+          <ion-item>
+            <ion-col size="3" *ngFor="let data of anuncio.data">
+              <ion-label>{{data.path}}</ion-label>
+              <ion-card>
+                <img [src]=" data.path | imageSanitizer">
+              </ion-card>
+            </ion-col>
+          </ion-item>
+
 </ion-list>
 
 

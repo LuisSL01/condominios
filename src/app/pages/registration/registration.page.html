@@ -47,16 +47,7 @@
 
 
   <form [formGroup]="createAgente" (ngSubmit)="guardarDatos()">
-    <ion-item>
-      <ion-label>Nombre completo:</ion-label>
-      <ion-input formControlName="nombreCompleto"></ion-input>
-    </ion-item>
-    <ion-label color="danger"
-      *ngIf="createAgente.controls.nombreCompleto.errors?.required && (createAgente.touched || createAgente.dirty)">* El
-      nombre es obligatorio </ion-label>
-    <ion-label color="danger"
-      *ngIf="createAgente.controls.nombreCompleto.errors?.minlength && (createAgente.touched || createAgente.dirty)">*
-      El nombre tiene que tener al menos 4 caracteres.</ion-label>
+
 
     <ion-item>
       <ion-label>Usuario:</ion-label>
@@ -87,8 +78,27 @@
       *ngIf="createAgente.controls.confirmarPassword.errors?.required && (createAgente.touched || createAgente.dirty)">*
       La contraseña es requerida </ion-label>
 
-    <!--    <ion-label color="danger" *ngIf="createAgente.get('confirmarPassword').errors['mustMatch']">* La contraseña no
-      coincide </ion-label> -->
+      <!-- <ion-label color="danger"
+      *ngIf="createAgente.get('confirmarPassword').errors['mustMatch']">* La contraseña no coindice </ion-label> -->
+
+   
+
+    <ion-item>
+      <ion-label>Nombre completo:</ion-label>
+      <ion-input formControlName="nombreCompleto"></ion-input>
+    </ion-item>
+    <ion-label color="danger"
+      *ngIf="createAgente.controls.nombreCompleto.errors?.required && (createAgente.touched || createAgente.dirty)">* El
+      nombre es obligatorio </ion-label>
+    <ion-label color="danger"
+      *ngIf="createAgente.controls.nombreCompleto.errors?.minlength && (createAgente.touched || createAgente.dirty)">*
+      El nombre tiene que tener al menos 4 caracteres.</ion-label>
+
+
+    <ion-item>
+      <ion-label>Celular:</ion-label>
+      <ion-input formControlName="celular"></ion-input>
+    </ion-item>
 
 
     <ion-item>
@@ -101,7 +111,7 @@
 
     <div formGroupName="direccion">
       <ion-item>
-        <ion-label class="control-label">Calle </ion-label>
+        <ion-label>Calle </ion-label>
         <ion-input type="text" class="form-control" formControlName="calle" id="calle" placeholder="Calle"></ion-input>
       </ion-item>
       <div
@@ -112,52 +122,61 @@
       </div>
 
       <ion-item>
-        <ion-label class="control-label">Código Postal </ion-label>
-        <ion-input type="text" class="form-control" 
-        formControlName="asentamiento" placeholder="CP"></ion-input>
+        <ion-label>Manzana del domicilio </ion-label>
+        <ion-input type="text" formControlName="numeroExterior" placeholder="ej: 38-B"></ion-input>
+      </ion-item>
+      <div
+        *ngIf="createAgente.get('direccion').get('numeroExterior').invalid && (createAgente.get('direccion').get('numeroExterior').dirty || createAgente.get('direccion').get('numeroExterior').touched)">
+        <div *ngIf="createAgente.get('direccion').get('numeroExterior').errors['required']">
+          La manzana del domicilio es requerida.
+        </div>
+      </div>
+
+      <ion-item>
+        <ion-label>Código Postal </ion-label>
+        <ion-input type="text" class="form-control" formControlName="asentamiento" placeholder="CP"></ion-input>
       </ion-item>
       <div
         *ngIf="createAgente.get('direccion').get('asentamiento').invalid && (createAgente.get('direccion').get('asentamiento').dirty || createAgente.get('direccion').get('asentamiento').touched)">
         <div *ngIf="createAgente.get('direccion').get('asentamiento').errors['required']">
-         El código postal es requerido
+          El código postal es requerido
         </div>
       </div>
       <ion-item>
         <p class="ion-text-center">
           <ion-button (click)="validarCP()" expand="block" fill="clear" shape="round">
-            Validar cp
+            Validar código postal
           </ion-button>
         </p>
-       
       </ion-item>
 
-<!-- 
-      <ng-template #codigosPostalesResults let-r="result" let-t="term">
-        <ngb-highlight [result]="r.codigoPostal + ' - ' + r.colonia" [term]="t">
-        </ngb-highlight>
-      </ng-template>
-      <ion-label  class="control-label" for="asentamiento">Código Postal </ion-label >
-      <ion-input id="asentamiento" type="text" class="form-control"        
-        formControlName="asentamiento"
-        (change)="cambio()"
-        
-        [resultTemplate]="codigosPostalesResults" 
-        [inputFormatter]="formatter" 
-        maxlength="5" placeholder="C.P." ></ion-input>
-      <div>
-        <br>
-        <ng-container
-          *ngTemplateOutlet="selectedCodigoPostalData;context: { zipCode: createAgente.get('direccion').get('asentamiento').value }">
-        </ng-container>
-      </div>
-      <ng-template #selectedCodigoPostalData let-z="zipCode">
-        <strong>Colonia:</strong> {{z?.colonia}}, <strong>Municipio:</strong> {{z?.municipio}}, <strong>Estado:</strong>
-        {{z?.estado}}
-      </ng-template>
-      <div *ngIf="searching" class="fa-1x text-success text-center"> Buscando <i class="fas fa-spinner fa-spin"></i>
-      </div>
-      <div class="invalid-feedback" *ngIf="searchFailed">Lo sentimos, no se encontraron coincidencias.</div> -->
+      <ion-item *ngIf=" ! searchFailed">
+        <ion-label>Asentamiento</ion-label>
+        <ion-select interface="action-sheet"
+          cancelText="Cancelar"
+          placeholder="Seleccionar" (ionChange)="cambioAsentamiento($event)">
+          <ion-select-option *ngFor="let asento of asentamientos" [value]="asento">
+            {{ asento.colonia }}-{{ asento.municipio}}--{{asento.estado}}
+          </ion-select-option>
+        </ion-select>
 
+      </ion-item>      
+
+      <ion-item *ngIf=" ! searchFailed">
+       <!-- 
+         Aqui se listaran las empresas y podran ser seleccionadas para que el usuario pueda elegir a que 
+         empresa se quiera dar de alta
+
+        --> 
+        <ion-label>Residencia</ion-label>
+        <ion-select interface="action-sheet" 
+          cancelText="Cancelar"
+          placeholder="Seleccionar" (ionChange)="cambioEmpresa($event)">
+          <ion-select-option *ngFor="let emp of empresas" [value]="emp.id">
+            {{ emp.alias }}-{{ emp.nombre}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
     </div>
     <p class="ion-text-center">
       <ion-button type="submit" [disabled]="!createAgente.valid">Guardar</ion-button>
