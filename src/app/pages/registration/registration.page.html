@@ -48,147 +48,185 @@
 
   <form [formGroup]="createAgente" (ngSubmit)="guardarDatos()">
 
+    <ion-list>
 
-    <ion-item>
-      <ion-label>Usuario:</ion-label>
-      <ion-input formControlName="username" autocomplete="off"></ion-input>
-    </ion-item>
-    <ion-label color="danger"
-      *ngIf="createAgente.controls.username.errors?.required && (createAgente.touched || createAgente.dirty)">* El
-      usuario es obligatorio </ion-label>
-    <ion-label color="danger"
-      *ngIf="createAgente.controls.username.errors?.minlength && (createAgente.touched || createAgente.dirty)">* El
-      usuario tiene que tener al menos 6 caracteres.</ion-label>
+      <ion-item>
+        <ion-label>Usuario:</ion-label>
+        <ion-input formControlName="username" autocomplete="off"></ion-input>
+      </ion-item>
+      <ion-label color="danger"
+        *ngIf="createAgente.controls.username.errors?.required && (createAgente.touched || createAgente.dirty)">* El
+        usuario es obligatorio </ion-label>
+      <ion-label color="danger"
+        *ngIf="createAgente.controls.username.errors?.minlength && (createAgente.touched || createAgente.dirty)">* El
+        usuario tiene que tener al menos 6 caracteres.</ion-label>
 
-    <ion-item>
-      <ion-label>Contraseña</ion-label>
-      <ion-input type="password" placeholder="Contraseña" formControlName="password" autocomplete="off"></ion-input>
-    </ion-item>
-    <ion-label color="danger"
-      *ngIf="createAgente.controls.password.errors?.required && (createAgente.touched || createAgente.dirty)">* La
-      contraseña es requerida </ion-label>
+      <ion-item>
+        <ion-label>Contraseña</ion-label>
+        <ion-input type="password" placeholder="Contraseña" formControlName="password" autocomplete="off"></ion-input>
+      </ion-item>
+      <ion-label color="danger"
+        *ngIf="createAgente.controls.password.errors?.required && (createAgente.touched || createAgente.dirty)">* La
+        contraseña es requerida </ion-label>
 
 
-    <ion-item>
-      <ion-label class="control-label">Repetir Contraseña </ion-label>
-      <ion-input type="password" placeholder="Repetir Contraseña" formControlName="confirmarPassword"
-        autocomplete="off"></ion-input>
-    </ion-item>
-    <ion-label color="danger"
-      *ngIf="createAgente.controls.confirmarPassword.errors?.required && (createAgente.touched || createAgente.dirty)">*
-      La contraseña es requerida </ion-label>
+      <ion-item>
+        <ion-label class="control-label">Repetir Contraseña </ion-label>
+        <ion-input type="password" placeholder="Repetir Contraseña" formControlName="confirmarPassword"
+          autocomplete="off"></ion-input>
+      </ion-item>
+      <ion-label color="danger"
+        *ngIf="createAgente.controls.confirmarPassword.errors?.required && (createAgente.touched || createAgente.dirty)">
+        *
+        La contraseña es requerida </ion-label>
 
       <!-- <ion-label color="danger"
       *ngIf="createAgente.get('confirmarPassword').errors['mustMatch']">* La contraseña no coindice </ion-label> -->
 
-   
-
-    <ion-item>
-      <ion-label>Nombre completo:</ion-label>
-      <ion-input formControlName="nombreCompleto"></ion-input>
-    </ion-item>
-    <ion-label color="danger"
-      *ngIf="createAgente.controls.nombreCompleto.errors?.required && (createAgente.touched || createAgente.dirty)">* El
-      nombre es obligatorio </ion-label>
-    <ion-label color="danger"
-      *ngIf="createAgente.controls.nombreCompleto.errors?.minlength && (createAgente.touched || createAgente.dirty)">*
-      El nombre tiene que tener al menos 4 caracteres.</ion-label>
 
 
-    <ion-item>
-      <ion-label>Celular:</ion-label>
-      <ion-input formControlName="celular"></ion-input>
-    </ion-item>
-
-
-    <ion-item>
-      <ion-label>Email:</ion-label>
-      <ion-input formControlName="email"></ion-input>
-    </ion-item>
-    <ion-label color="danger"
-      *ngIf="createAgente.controls.email.errors?.email && (createAgente.touched || createAgente.dirty)">* El email no es
-      válido.</ion-label>
-
-    <div formGroupName="direccion">
       <ion-item>
-        <ion-label>Calle </ion-label>
-        <ion-input type="text" class="form-control" formControlName="calle" id="calle" placeholder="Calle"></ion-input>
+        <ion-label>Nombre completo:</ion-label>
+        <ion-input formControlName="nombreCompleto"></ion-input>
       </ion-item>
-      <div
-        *ngIf="createAgente.get('direccion').get('calle').invalid && (createAgente.get('direccion').get('calle').dirty || createAgente.get('direccion').get('calle').touched)">
-        <div *ngIf="createAgente.get('direccion').get('calle').errors['required']">
-          La dirección es requerida.
+      <ion-label color="danger"
+        *ngIf="createAgente.controls.nombreCompleto.errors?.required && (createAgente.touched || createAgente.dirty)">*
+        El
+        nombre es obligatorio </ion-label>
+      <ion-label color="danger"
+        *ngIf="createAgente.controls.nombreCompleto.errors?.minlength && (createAgente.touched || createAgente.dirty)">*
+        El nombre tiene que tener al menos 4 caracteres.</ion-label>
+
+
+      <ion-item>
+        <ion-label>Celular:</ion-label>
+        <ion-input formControlName="celular"></ion-input>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-label>Email:</ion-label>
+        <ion-input formControlName="email"></ion-input>
+      </ion-item>
+      <ion-label color="danger"
+        *ngIf="createAgente.controls.email.errors?.email && (createAgente.touched || createAgente.dirty)">* El email no
+        es
+        válido.</ion-label>
+
+      <div formGroupName="direccion">
+        <ion-item>
+          <ion-label>Calle </ion-label>
+          <ion-input type="text" class="form-control" formControlName="calle" id="calle" placeholder="Calle">
+          </ion-input>
+        </ion-item>
+        <div
+          *ngIf="createAgente.get('direccion').get('calle').invalid && (createAgente.get('direccion').get('calle').dirty || createAgente.get('direccion').get('calle').touched)">
+          <div *ngIf="createAgente.get('direccion').get('calle').errors['required']">
+            La dirección es requerida.
+          </div>
         </div>
-      </div>
 
-      <ion-item>
-        <ion-label>Manzana del domicilio </ion-label>
-        <ion-input type="text" formControlName="numeroExterior" placeholder="ej: 38-B"></ion-input>
-      </ion-item>
-      <div
-        *ngIf="createAgente.get('direccion').get('numeroExterior').invalid && (createAgente.get('direccion').get('numeroExterior').dirty || createAgente.get('direccion').get('numeroExterior').touched)">
-        <div *ngIf="createAgente.get('direccion').get('numeroExterior').errors['required']">
-          La manzana del domicilio es requerida.
+        <ion-item>
+          <ion-label>Manzana del domicilio </ion-label>
+          <ion-input type="text" formControlName="numeroExterior" placeholder="ej: 38-B"></ion-input>
+        </ion-item>
+        <div
+          *ngIf="createAgente.get('direccion').get('numeroExterior').invalid && (createAgente.get('direccion').get('numeroExterior').dirty || createAgente.get('direccion').get('numeroExterior').touched)">
+          <div *ngIf="createAgente.get('direccion').get('numeroExterior').errors['required']">
+            *La manzana del domicilio es requerida.
+          </div>
         </div>
-      </div>
 
-      <ion-item>
-        <ion-label>Código Postal </ion-label>
-        <ion-input type="text" class="form-control" formControlName="asentamiento" placeholder="CP"></ion-input>
-      </ion-item>
-      <div
-        *ngIf="createAgente.get('direccion').get('asentamiento').invalid && (createAgente.get('direccion').get('asentamiento').dirty || createAgente.get('direccion').get('asentamiento').touched)">
-        <div *ngIf="createAgente.get('direccion').get('asentamiento').errors['required']">
-          El código postal es requerido
+        <ion-item>
+          <ion-label>Código Postal </ion-label>
+          <ion-input type="text" class="form-control" formControlName="asentamiento" placeholder="CP"></ion-input>
+        </ion-item>
+        <div
+          *ngIf="createAgente.get('direccion').get('asentamiento').invalid && (createAgente.get('direccion').get('asentamiento').dirty || createAgente.get('direccion').get('asentamiento').touched)">
+          <div *ngIf="createAgente.get('direccion').get('asentamiento').errors['required']">
+            * El código postal es requerido
+          </div>
         </div>
-      </div>
-      <ion-item>
-        <p class="ion-text-center">
-          <ion-button (click)="validarCP()" expand="block" fill="clear" shape="round">
-            Validar código postal
-          </ion-button>
-        </p>
-      </ion-item>
+        <ion-item>
+          <p class="ion-text-center">
+            <ion-button (click)="validarCP()" expand="block" fill="clear" shape="round">
+              Validar código postal
+            </ion-button>
+          </p>
+        </ion-item>
 
-      <ion-item *ngIf=" ! searchFailed">
-        <ion-label>Asentamiento</ion-label>
-        <ion-select interface="action-sheet"
-          cancelText="Cancelar"
-          placeholder="Seleccionar" (ionChange)="cambioAsentamiento($event)">
-          <ion-select-option *ngFor="let asento of asentamientos" [value]="asento">
-            {{ asento.colonia }}-{{ asento.municipio}}--{{asento.estado}}
-          </ion-select-option>
-        </ion-select>
+        <ion-item *ngIf=" ! searchFailed">
+          <ion-label>Asentamiento</ion-label>
+          <ion-select interface="action-sheet" cancelText="Cancelar" placeholder="Seleccionar"
+            (ionChange)="cambioAsentamiento($event)">
+            <ion-select-option *ngFor="let asento of asentamientos" [value]="asento">
+              {{ asento.colonia }}-{{ asento.municipio}}--{{asento.estado}}
+            </ion-select-option>
+          </ion-select>
 
-      </ion-item>      
+        </ion-item>
 
-      <ion-item *ngIf=" ! searchFailed">
-       <!-- 
+        <ion-item *ngIf=" ! searchFailed">
+          <!-- 
          Aqui se listaran las empresas y podran ser seleccionadas para que el usuario pueda elegir a que 
          empresa se quiera dar de alta
 
-        --> 
-        <ion-label>Residencia</ion-label>
-        <ion-select interface="action-sheet" 
-          cancelText="Cancelar"
-          placeholder="Seleccionar" (ionChange)="cambioEmpresa($event)">
-          <ion-select-option *ngFor="let emp of empresas" [value]="emp.id">
-            {{ emp.alias }}-{{ emp.nombre}}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-    </div>
-    <p class="ion-text-center">
-      <ion-button type="submit" [disabled]="!createAgente.valid">Guardar</ion-button>
-    </p>
+        -->
+          <ion-label>Residencia</ion-label>
+          <ion-select interface="action-sheet" cancelText="Cancelar" placeholder="Seleccionar"
+            (ionChange)="cambioEmpresa($event)">
+            <ion-select-option *ngFor="let emp of empresas" [value]="emp.id">
+              {{ emp.alias }}-{{ emp.nombre}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+
+
+    </ion-list>
+
+    <ion-footer class="ion-no-border" translucent>
+      <ion-toolbar color="light" style="position: static;  bottom:47px; height: 50px;">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" offset-md="4" offset-sm="4">
+              <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
+
+              <ion-button fill="clear" size="small" type="submit" [disabled]="!createAgente.valid"
+                style="text-transform: none; margin-left: 120px; margin-top: -40px;">Guardar
+                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #50c8ec;">
+                </ion-icon>
+              </ion-button>
+
+
+              <ion-button fill="clear" size="small"
+                style="text-transform: none; margin-top: -80px;  margin-left: 220px;" routerLink="/home">Volver
+                <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-toolbar>
+    </ion-footer>
+
+
+    <ion-footer class="ion-no-border" translucent>
+      <ion-toolbar color="light" style=" position: static; bottom: 0px; height: 48px;">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" offset-md="4" offset-sm="4">
+              <ion-img src="assets/1.gif"
+                style=" height:60px; display: block; width:400px;  margin-right: 20px; margin-top: -15px;"></ion-img>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-toolbar>
+    </ion-footer>
   </form>
 
 
 
-  <ion-footer>
-    <ion-toolbar color="light" style="position: fixed; bottom: 0px;">
-      <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
-    </ion-toolbar>
-  </ion-footer>
+
+
 
 </ion-content>
