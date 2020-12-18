@@ -50,9 +50,9 @@ export class DataLocalAvisoService {
 
   guardarAviso(aviso: Publicacion) {
     //se inserta la noticia que se recibe en el arr    
-    const existe = this.avisos.find(avi => avi.idpublicacion === aviso.idpublicacion);
+    const existe = this.avisos.find(avi => avi.id === aviso.id);
     if (!existe) {
-      aviso.idpublicacion = this.dataLocalService.getNumeroNegativo() * -1;
+      aviso.id = this.dataLocalService.getNumeroNegativo() * -1;
       this.avisos.unshift(aviso);
       //ahora enviamos el arreglo de las noticias a guardar en el dtorage.
       this.storage.set(this.construyeNombreEtiqueta(), this.avisos);
@@ -69,7 +69,7 @@ export class DataLocalAvisoService {
   }
 
   borrarAviso(aviso: Publicacion) {
-    this.avisos = this.avisos.filter(avso => avso.idpublicacion !== aviso.idpublicacion);
+    this.avisos = this.avisos.filter(avso => avso.id !== aviso.id);
     this.storage.set(this.construyeNombreEtiqueta(), this.avisos);
     this.dataLocalService.presentToast('Aviso borrado');
   }

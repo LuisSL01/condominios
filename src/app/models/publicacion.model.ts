@@ -1,8 +1,8 @@
-import { ArchivoVortex } from './archivo-vortex.model';
+import { ArchivoVortexApp } from './archivo-vortex.model';
 export class Publicacion{
 
 
-    public idpublicacion:number;
+    public id:number;
     public empresa:number;
     public agenteCreador:number;
 
@@ -10,10 +10,10 @@ export class Publicacion{
     public manzanaDestino: string;
     public titulo: string
     public descripcion: string;
-    public fechaCreacion: Date;
-    public imgs:string[];//data en tipo json
+    public fechaDeCreacion: Date;
+    /* public imgs:string[];//data en tipo json */
 
-    public data:ArchivoVortex[];
+    public data:ArchivoVortexApp[];
 
     public precio:number;
     public fechaVence:Date;
@@ -27,12 +27,11 @@ export class Publicacion{
     public estatus:boolean;
 
     constructor(){
-        this.fechaCreacion = new Date();
-        this.imgs = new Array();
+        this.fechaDeCreacion = new Date();
+        /* this.imgs = new Array(); */
         this.respuestas = new Array();
         this.fechaVence = new Date();
-        this.estatus = true;
-        
+        this.estatus = true;        
         this.data = new Array();
     }
 }

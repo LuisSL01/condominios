@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DataLocalAnuncioService } from '../../../services/data-local-anuncio.service';
+import { AnuncioService } from '../../../services/anuncio.service';
 
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, ToastController } from '@ionic/angular';
 import { Publicacion } from '../../../models/publicacion.model';
 
 @Component({
@@ -12,16 +12,20 @@ import { Publicacion } from '../../../models/publicacion.model';
 export class ListPage implements OnInit {
 
   @Input() anuncio :Publicacion;
+
+
+  pathS3:string ="https://almacenamientonube.s3.us-west-1.amazonaws.com/";
+  pathBase64:string ="data:image/jpeg;base64,";
   
 
-  constructor(public dataLocalAnuncioService: DataLocalAnuncioService,
-    private actionSheetCtrl: ActionSheetController) { }
+  constructor(public anuncioService: AnuncioService,
+    private actionSheetCtrl: ActionSheetController,
+    private toastr: ToastController,) { }
 
   ngOnInit() {
   }
 
   async lanzarMenu() {
-
     let guardarBorrarBtn;
       guardarBorrarBtn = {
         text: 'Borrar anuncio',
@@ -30,8 +34,29 @@ export class ListPage implements OnInit {
         handler: () => {
           console.log('Borrar anuncio');
           console.log(this.anuncio);  
-          this.dataLocalAnuncioService.borrarAnuncio(this.anuncio);
-          
+          if(this.anuncio.id > 0){
+            console.log('Debo ir a borrar desde el server');            
+
+            this.anuncioService.borrarAnuncio(this.anuncio.id).subscribe(
+              (data) => {
+                if (data.status === 200) {
+                  console.log('"data.result"', data.result);
+                  console.log("anuncio eliminado correctamente correctamente");
+                  this.showToast("anuncio eliminado correctamente");                  
+                } else {
+                  console.log('Llego otro status al eliminar anuncio');                  
+                }
+              },
+              (err) => {
+                console.log(err);
+                console.log('Llego otro status al eliminar anuncio');
+              },
+              () => {}
+            );
+          }else{
+            console.log('Debo borrar de data local');
+            this.anuncioService.borrarAnuncioLocal(this.anuncio);            
+          }          
         }
       };
 
@@ -49,6 +74,17 @@ export class ListPage implements OnInit {
       }]
     });
     await actionSheet.present();
+  }
+
+  showToast(dataMessage: string) {
+    this.toastr
+      .create({
+        message: dataMessage,
+        duration: 2000,
+      })
+      .then((toastData) => {
+        toastData.present();
+      });
   }
 
 }

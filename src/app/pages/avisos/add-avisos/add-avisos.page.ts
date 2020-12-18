@@ -66,7 +66,7 @@ export class AddAvisosPage implements OnInit {
   procesarImagen(options: CameraOptions) {
     this.camera.getPicture(options).then((imageData) => {
       const img = window.Ionic.WebView.convertFileSrc(imageData);
-      this.aviso.imgs.push(img);
+      /* this.aviso.imgs.push(img); */
     }, (err) => {
       // Handle error
     });
@@ -95,8 +95,7 @@ export class AddAvisosPage implements OnInit {
   addAviso(){
 
     console.log('add aviso in add avisos page');
-    this.aviso.imgs.push('una imagen path');
-    this.aviso.imgs.push('2 imagen path');
+    
     const formularioData = new FormData();
     formularioData.append('empresa','14');
     formularioData.append('titulo',this.aviso.titulo);

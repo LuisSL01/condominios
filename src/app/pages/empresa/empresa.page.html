@@ -9,7 +9,7 @@
     <ion-item *ngFor="let empresa of empresas" (click)="empresaSelected(empresa)" detail>
 
       <ion-label>
-        {{empresa.nombre}}
+        {{empresa.id}} --  {{empresa.nombre}}
       </ion-label>
     </ion-item>
   </ion-list>

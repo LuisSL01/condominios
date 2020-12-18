@@ -30,7 +30,10 @@ export class EmpresaPage implements OnInit {
 
   empresaSelected(empresa: any) {
     console.log('empresa selected..', empresa);
-    console.log('navehando a la new empresa');    
+    console.log('navehando a la new empresa');   
+    
+    window.localStorage.setItem('empresaData', JSON.stringify({"nombre":empresa.nombre,"id":empresa.id}));
+    this.storage.set('empresaData', JSON.stringify({"nombre":empresa.nombre,"id":empresa.id}));
     
     this.router.navigate(['/inicio']);        
     this.showToast("Bienvenido a armonía residencial: " + this.username);

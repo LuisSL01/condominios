@@ -21,6 +21,7 @@
     "@angular/router": "~9.1.6",
     "@ionic-native/camera": "^5.28.0",
     "@ionic-native/core": "^5.0.7",
+    "@ionic-native/file": "^5.30.0",
     "@ionic-native/file-transfer": "^5.28.0",
     "@ionic-native/header-color": "^5.28.0",
     "@ionic-native/onesignal": "^5.28.0",
@@ -87,7 +88,8 @@
         "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
       },
       "cordova-plugin-ionic-keyboard": {},
-      "cordova-plugin-headercolor": {}
+      "cordova-plugin-headercolor": {},
+      "cordova-plugin-file": {}
     },
     "platforms": [
       "ios",

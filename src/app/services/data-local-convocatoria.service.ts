@@ -28,9 +28,9 @@ export class DataLocalConvocatoriaService {
   }
 
   guardar(convocatoria : Publicacion){
-    const existe = this.convocatorias.find(con => con.idpublicacion === convocatoria.idpublicacion);
+    const existe = this.convocatorias.find(con => con.id === convocatoria.id);
     if (!existe) {
-      convocatoria.idpublicacion = this.dataLocalService.getNumeroNegativo() * -1;
+      convocatoria.id = this.dataLocalService.getNumeroNegativo() * -1;
       this.convocatorias.unshift(convocatoria);
       this.storage.set(this.construyeNombreEtiqueta(), this.convocatorias);
       this.dataLocalService.presentToast('Convocatoria agregada');
@@ -38,7 +38,7 @@ export class DataLocalConvocatoriaService {
 
   }
   borrar(convocatoria : Publicacion){
-    this.convocatorias = this.convocatorias.filter(con => con.idpublicacion !== convocatoria.idpublicacion)
+    this.convocatorias = this.convocatorias.filter(con => con.id !== convocatoria.id)
     this.storage.set(this.construyeNombreEtiqueta(), this.convocatorias);
     this.dataLocalService.presentToast('Convocatoria borrada');
   }

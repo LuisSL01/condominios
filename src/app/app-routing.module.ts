@@ -85,6 +85,14 @@ const routes: Routes = [
     path: 'empresa',
     loadChildren: () => import('./pages/empresa/empresa.module').then( m => m.EmpresaPageModule)
   },
+  {
+    path: 'sincronizar',
+    loadChildren: () => import('./pages/sincronizar/sincronizar.module').then( m => m.SincronizarPageModule)
+  },
+  {
+    path: 'agente',
+    loadChildren: () => import('./pages/agente/agente.module').then( m => m.AgentePageModule)
+  },
 
 
 

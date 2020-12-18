@@ -4,7 +4,7 @@
 <ion-content fullscreen>
     <ion-list>
 
-        <ion-item routerLink="/home" detail>
+        <ion-item detail (click)="logOut()">
             <ion-icon slot="start" name="log-out-outline" color="medium"> </ion-icon>
             <ion-label>
                 Cerrar sesión

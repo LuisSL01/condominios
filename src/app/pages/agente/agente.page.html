@@ -1,0 +1,50 @@
+<app-menu-header></app-menu-header>
+<app-header titulo="Agentes"></app-header>
+<ion-content fullscreen>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-searchbar placeholder="Buscar" animated (ionChange)="buscar($event)"></ion-searchbar>
+  <ion-slides class="emptyData" *ngIf="agentesList.length === 0">
+    <ion-slide class="emptyData">
+      <ion-label>No hay registros</ion-label>
+    </ion-slide>
+  </ion-slides>
+
+  <ion-grid fixed *ngIf="agentesList.length > 0 ">
+    <ion-row>
+      <ion-col size="12" *ngFor="let agente of agentesList">
+
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{idEmpresa}} {{agente.id}} -{{agente.nombreCompleto}} - {{agente.departamento}}</ion-card-title>
+
+            <ion-card-subtitle>
+              <span class="text-primary"> {{agente.email}}</span>
+              <div class="card-more">
+                <ion-button fill="clear" (click)="lanzarMenu(agente.id, agente.activo)">
+                  <ion-icon slot="icon-only" color="primary" name="ellipsis-vertical-outline"></ion-icon>
+                </ion-button>
+              </div>
+
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            Activo: {{agente.activo ? 'SI':'NO'}}
+          </ion-card-content>
+        </ion-card>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="crescent"
+      loadingText="Cargando más datos...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

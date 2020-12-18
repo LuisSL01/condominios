@@ -9,6 +9,8 @@ export class UserData {
   _favorites: string[] = [];
   HAS_LOGGED_IN = 'hasLoggedIn';
   HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
+  idEmpresa = 0;
+  idAgente = 0;
 
   constructor(
     public storage: Storage
@@ -72,4 +74,26 @@ export class UserData {
       return value;
     });
   }
+
+  recuperaIdEmpresa(){
+    this.idEmpresa =  JSON.parse(window.localStorage.getItem('empresaData')).id;//Recuperamos el id empresa de empresaData    
+  }
+  recuperaIdAgente(){
+    this.idAgente = JSON.parse(window.localStorage.getItem('userDetails')).id;//Recuperamos el id agente de userDetails    
+  }
+
+  getIdAgente(): number{    
+    if(this.idAgente === 0){
+      this.recuperaIdAgente();
+    }
+    return this.idAgente;
+  }
+
+  getIdEmpresa(): number{
+    if(this.idEmpresa === 0){
+      this.recuperaIdEmpresa();
+    }
+    return this.idEmpresa;
+  }
+
 }

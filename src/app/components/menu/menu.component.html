@@ -28,6 +28,27 @@
         </ion-item>
 
       </ion-menu-toggle>
+
+      <ion-menu-toggle >
+        <ion-item>
+          <ion-label></ion-label>
+        </ion-item>
+
+        <ion-item routerLink="/agente" detail>
+          <ion-icon slot="start"  name="people-outline" color="medium"> </ion-icon>
+          <ion-label>
+            Agentes
+          </ion-label>
+        </ion-item>
+        <ion-item routerLink="/sincronizar" detail>
+          <ion-icon slot="start"  name="cloud-upload-outline" color="medium"> </ion-icon>
+          <ion-label>
+            Sincronizar
+          </ion-label>
+        </ion-item>
+    
+
+      </ion-menu-toggle>
     </ion-list>
   </ion-content>
 </ion-menu>

@@ -1,38 +1,63 @@
-import { Component, OnInit, LOCALE_ID } from '@angular/core';
-import { Anuncio } from '../../../models/anuncio.model';
-import { DataLocalAnuncioService } from '../../../services/data-local-anuncio.service';
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Component, OnInit, LOCALE_ID } from "@angular/core";
+import { Anuncio } from "../../../models/anuncio.model";
+import { AnuncioService } from "../../../services/anuncio.service";
+import { Camera, CameraOptions } from "@ionic-native/camera/ngx";
 
 declare var window: any;
 /* import * as moment from 'moment-timezone'; */
-import { Router } from '@angular/router';
-import { Publicacion } from '../../../models/publicacion.model';
-import { ArchivoVortex } from 'src/app/models/archivo-vortex.model';
-
-
+import { Router } from "@angular/router";
+import { Publicacion } from "../../../models/publicacion.model";
+import { ArchivoVortexApp } from "src/app/models/archivo-vortex.model";
+import { FormBuilder, Validators } from "@angular/forms";
+import { ToastController } from "@ionic/angular";
+/* import { File } from '@ionic-native/file/ngx'; */
+import { UserData } from "../../../providers/user-data";
 
 @Component({
-  selector: 'app-add',
-  templateUrl: './add.page.html',
-  styleUrls: ['./add.page.scss'],
+  selector: "app-add",
+  templateUrl: "./add.page.html",
+  styleUrls: ["./add.page.scss"],
 })
 export class AddPage implements OnInit {
-
   anuncio: Publicacion = new Publicacion();
-  idanuncio: number;
+  
   enCamara: boolean;
+  data: ArchivoVortexApp[] = new Array();
+  dataTemp: ArchivoVortexApp[] = new Array();  
 
+  createAnuncio = this.fb.group({
+    //Esto para construir los formularios dinamicamente
+    titulo: ["", [Validators.required]],
+    descripcion: ["", [Validators.required]],
+    precio: ["", [Validators.required]],
+    telefono: [""],
+    tipo: ["ANUNCIO"],
+    fechaVence: [new Date()],
+    estatus: [true],
+  });
+  idEmpresa: number;
+  idAgente: number;
 
   /* momentjs: any = moment; */
 
+  constructor(
 
-  constructor(private dataLocalAnuncioService: DataLocalAnuncioService,
+    private anuncioService: AnuncioService,
     private camera: Camera,
-    private router:Router) {
-    /* this.momentjs().tz('America/Mexico_City');   */
+    private router: Router,
+    private fb: FormBuilder,
+    private toastr: ToastController,
+    private userData: UserData
+  ) {
+    /* this.idEmpresa = JSON.parse(window.localStorage.getItem('empresaData')).id;//Recuperamos el id empresa de empresaData
+    this.idAgente = JSON.parse(window.localStorage.getItem('userDetails')).id;//Recuperamos el id agente de userDetails */
   }
 
   ngOnInit() {
+    this.idEmpresa = this.userData.getIdEmpresa();
+    this.idAgente = this.userData.getIdAgente();
+    console.log("this.idEmpresa: "+ this.idEmpresa);
+    console.log("this.idAgente: "+ this.idAgente);
   }
 
   getCameraOptions(): any {
@@ -44,11 +69,12 @@ export class AddPage implements OnInit {
     }
     const options: CameraOptions = {
       quality: 60,
-      destinationType: this.camera.DestinationType.FILE_URI,
+      /* destinationType: this.camera.DestinationType.FILE_URI, */
+      destinationType: this.camera.DestinationType.DATA_URL, //Esto es para que lo transforme en BASE64
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       correctOrientation: true,
-      sourceType: sourceTypeSelected
+      sourceType: sourceTypeSelected,
     };
     return options;
   }
@@ -63,28 +89,94 @@ export class AddPage implements OnInit {
     this.procesarImagen(this.getCameraOptions());
   }
 
-
-  procesarImagen(options: CameraOptions) {
-    this.camera.getPicture(options).then((imageData) => {
-      const img = window.Ionic.WebView.convertFileSrc(imageData);
-      this.anuncio.imgs.push(img);
-      
-      this.anuncio.data.push(new ArchivoVortex(img));//Se crea un elemento de tipo archivo vortex cada que se toma una foto
-
-    }, (err) => {
-      // Handle error
-    });
+  async procesarImagen(options: CameraOptions) {
+    this.camera.getPicture(options).then(
+      (imageData) => {
+        console.log("imageData:" + imageData);
+        /* const img = window.Ionic.WebView.convertFileSrc(imageData); */
+        const img = "data:image/jpeg;base64," + imageData; //Se agrega para que se muestren en la lista
+        const title = this.anuncio.titulo + "_aviso.jpg";
+        this.dataTemp.push(new ArchivoVortexApp(img, title));
+        this.data.push(new ArchivoVortexApp(imageData, title)); //Se setea la imagen en base 64
+      },
+      (err) => {
+        // Handle error
+      }
+    );
   }
   save() {
-    console.log(this.anuncio);
-    this.anuncio.tipo = 'Anuncio';
-    this.dataLocalAnuncioService.guardarAnuncio(this.anuncio);
-    this.router.navigate(['/anuncios']);
-  }
-  cambioFechaVence(event) {
-    console.log('cambio fecha vence: ', event);
-    /* this.anuncio.fechaVence = this.momentjs()(event.detail.value);  */
-    this.anuncio.fechaVence = new Date(event.detail.value);
+    console.log(this.createAnuncio.value);
+    /* this.anuncio.tipo = 'ANUNCIO'; */
+    const anuncioObj = {
+      empresa: this.idEmpresa,
+      agenteCreador: this.idAgente,
+      titulo: this.createAnuncio.value.titulo,
+      descripcion: this.createAnuncio.value.descripcion,
+      precio: this.createAnuncio.value.precio,      
+      tipo: this.createAnuncio.value.tipo,
+      fechaVence: this.createAnuncio.value.fechaVence,
+      data: {
+        archivos: [],//Se debe enviar vacio, ya que las imagenes se procesan por separado.
+      },
+    };
+    const formData = new FormData(); //Esto no esta trabajanco chido...
+    formData.append("data", JSON.stringify(anuncioObj));
+    formData.append("file", JSON.stringify(this.data));
+    console.log("anuncio enviado: ", formData);
+
+    //Se envia a guardar en el server
+    this.anuncioService.guardarAnuncio(formData).subscribe(
+      (data) => {
+        if (data.status === 200) {
+          console.log('"data.result"', data.result);
+          console.log("anuncio registrado correctamente");
+          this.showToast("anuncio registrado correctamente");
+          this.guardarAnuncioLocalmente();
+          this.router.navigate(["/anuncios"]);
+        } else {
+          console.log('Llego otro status al guardar anuncio');
+          this.guardarAnuncioLocalmente();
+          this.router.navigate(["/anuncios"]);
+        }
+      },
+      (err) => {
+        console.log(err);
+        console.log('Llego otro status al guardar anuncio');
+        this.guardarAnuncioLocalmente();
+        this.router.navigate(["/anuncios"]);
+       
+      },
+      () => {}
+    );
+    /*     this.anuncioService.guardarAnuncio(this.anuncio);
+    this.router.navigate(['/anuncios']); */
   }
 
+  guardarAnuncioLocalmente() {
+    console.log('guardando anuncio localmente');    
+    this.anuncio.empresa = this.idEmpresa;
+    this.anuncio.agenteCreador = this.idAgente;
+    this.anuncio.titulo = this.createAnuncio.value.titulo;
+    this.anuncio.descripcion = this.createAnuncio.value.descripcion;
+    this.anuncio.precio = this.createAnuncio.value.precio;
+    this.anuncio.tipo = this.createAnuncio.value.tipo;
+    this.anuncio.fechaVence = this.createAnuncio.value.fechaVence;
+    this.anuncio.data = this.data;
+    this.anuncioService.guardarAnuncioLocal(this.anuncio);
+  }
+
+  showToast(dataMessage: string) {
+    this.toastr
+      .create({
+        message: dataMessage,
+        duration: 2000,
+      })
+      .then((toastData) => {
+        toastData.present();
+      });
+  }
+  cambioFechaVence(event) {
+    console.log("cambio fecha vence: ", event);
+    this.anuncio.fechaVence = new Date(event.detail.value);
+  }
 }

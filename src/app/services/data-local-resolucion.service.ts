@@ -30,9 +30,9 @@ export class DataLocalResolucionService {
   }
 
   guardar(resolucion: Publicacion) {
-    const existe = this.resoluciones.find(res => res.idpublicacion === resolucion.idpublicacion);
+    const existe = this.resoluciones.find(res => res.id === resolucion.id);
     if (!existe) {
-      resolucion.idpublicacion = this.dataLocalService.getNumeroNegativo() * -1;
+      resolucion.id = this.dataLocalService.getNumeroNegativo() * -1;
       this.resoluciones.unshift(resolucion);
       this.storage.set(this.construyeNombreEtiqueta(), this.resoluciones);
       this.dataLocalService.presentToast('Resolución agregada');
@@ -41,7 +41,7 @@ export class DataLocalResolucionService {
   }
 
   borrar(resolucion: Publicacion) {
-    this.resoluciones = this.resoluciones.filter(res => res.idpublicacion !== resolucion.idpublicacion)
+    this.resoluciones = this.resoluciones.filter(res => res.id !== resolucion.id)
     this.storage.set(this.construyeNombreEtiqueta(), this.resoluciones);
     this.dataLocalService.presentToast('Resolución borrada');
   }
@@ -54,5 +54,7 @@ export class DataLocalResolucionService {
     }
   }
 
+
+  
 
 }

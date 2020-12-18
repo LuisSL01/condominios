@@ -42,7 +42,7 @@ export class RegistrationPage implements OnInit {
       calle: [null, null],
       numeroExterior: ['', Validators.required],
       numeroInterior: ['', null],
-      asentamiento: [null, null]
+      asentamiento: [null, Validators.required]
     })
   }
     ,
@@ -163,6 +163,7 @@ export class RegistrationPage implements OnInit {
   guardarDatos() {
     if(this.empresaSelected > 0){      
           this.createAgente.value.direccion.asentamiento = this.asentamientoSelected;
+          this.createAgente.value.direccion.numeroExterior = this.createAgente.value.direccion.numeroExterior.toUpperCase();
           const agenteObj = {
             agente: {
               rfc: 'RFC' + new Date().getTime()
@@ -174,6 +175,16 @@ export class RegistrationPage implements OnInit {
               , subDepartamento: 'SIN SUBDEPARTAMENTO'
               , telefono: this.createAgente.value.celular
               , gerente: 4
+
+
+
+
+
+              , activo:false
+
+
+
+
               /* , fechaDeNacimiento: '01/01/2020 00:00:00.100'
               , fechaDeIngreso: '01/01/2020 00:00:00.100' *///No es necesario
               , empresa: this.empresaSelected
@@ -195,8 +206,40 @@ export class RegistrationPage implements OnInit {
           this.agenteService.registerUsuario(agenteObj).subscribe(data => {
             if (data.status === 200) {
               console.log('"data.result"', data.result);
+
+              //Aqui debo registrarlo a la lista de empresas.
+
+              const formData = new FormData(); //Esto no esta trabajanco chido...
+              formData.append("id_agente", data.result.id);
+              formData.append("id_empresa", ""+this.empresaSelected);
+              console.log("objeto enviado: ", formData);
+              this.agenteService.addAgenteToEmpresa(formData).subscribe(
+                (data) => {
+                  if (data.status === 200) {
+                    console.log('"data.result"', data.result);                    
+                    this.showToast("agente asociado a empresa correctamente");
+                  } else {
+                    console.log('Llego otro status al asociar agente a empresa');              
+                  }
+                },
+                (err) => {
+                  console.log(err);
+                  console.log('Llego otro status al asociar agente a empresa');      
+                },
+                () => {}
+
+              );
+
+              //Se envia a guardar en el server
+           
+
+           
+
+
               console.log('registrado coreectamente');
               this.showToast('Usuario registrado correctamente');
+
+
             } else {              
               this.showToast('No se pudo registrar el usuario');
             }

@@ -2,16 +2,21 @@
 <app-header titulo="Anuncios"></app-header>
 <ion-content fullscreen>
 
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
   <ion-searchbar  placeholder="Buscar" animated (ionChange)="buscar($event)"></ion-searchbar>
 
-  <ion-slides class="emptyData" *ngIf="anunciosList.length === 0">
+  <ion-slides class="emptyData" *ngIf="anunciosList?.length === 0 && anunciosListLocal?.length === 0">
     <ion-slide class="emptyData">
       <ion-label>No hay anuncios</ion-label>
     </ion-slide>
   </ion-slides>
 
-  <ion-grid fixed *ngIf="anunciosList.length > 0">
-    
+
+
+  <ion-grid fixed *ngIf="anunciosList?.length > 0">    
     <ion-row>
       <ion-col size="12"
         *ngFor="let anuncio of anunciosList">
@@ -19,6 +24,25 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <ion-grid fixed *ngIf="anunciosListLocal?.length > 0">    
+    <ion-row>
+      <ion-col size="12"
+        *ngFor="let ann2 of anunciosListLocal">
+        <app-list [anuncio]="ann2"></app-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="crescent"
+      loadingText="Cargando más datos...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button routerLink="/anuncios/add">
