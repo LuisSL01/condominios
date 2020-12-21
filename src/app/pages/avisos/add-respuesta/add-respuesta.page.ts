@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { DataLocalAvisoService } from '../../../services/data-local-aviso.service';
+import { AvisoService } from '../../../services/aviso.service';
 import { Publicacion } from '../../../models/publicacion.model';
+import { RespuestaPublicacion } from '../../../models/respuesta-publicacion.model';
 
 @Component({
   selector: 'app-add-respuesta',
@@ -12,14 +13,17 @@ export class AddRespuestaPage implements OnInit {
 
 
 
-  aviso: Publicacion = new Publicacion();
+  /* aviso: Publicacion = new Publicacion(); */
+  aviso:RespuestaPublicacion = new RespuestaPublicacion();
+  
+
   
 
   @Input() titulo:string;
   @Input() avisoPadre:Publicacion;
 
   constructor(private modalCtrl: ModalController,
-    private dataLocalAvisoService:DataLocalAvisoService) { }
+    private dataLocalAvisoService:AvisoService) { }
 
   ngOnInit() {
   }
@@ -30,7 +34,7 @@ export class AddRespuestaPage implements OnInit {
   }
   save(){
     console.log('save in add respuestaPage');
-    this.dataLocalAvisoService.guardarRespuestaAviso(this.avisoPadre, this.aviso);
+    this.dataLocalAvisoService.saveRespuestaAviso(this.avisoPadre, this.aviso);
     console.log('navegando de regresoo');    
     this.modalCtrl.dismiss();    
   }

@@ -1,17 +1,9 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-menu-button color="light" menu="primerMenu"></ion-menu-button>
-    </ion-buttons>
-    <ion-title></ion-title>
-    <ion-img src="assets/g.png" style="margin-right: 155px; height:50px;"></ion-img>
-  </ion-toolbar>
-</ion-header>
+<app-menu-header></app-menu-header>
 <app-header titulo="Nueva notificación"></app-header>
 
 <ion-content>
 
-  <form #formulario="ngForm" (ngSubmit)="save()">
+  <!-- <form #formulario="ngForm" (ngSubmit)="save()">
     <ion-list>
       <ion-item>
         <ion-label>
@@ -48,12 +40,9 @@
       <ion-item>
         <ion-button fill="clear" size="small" (click)="camara()">
           <ion-icon slot="start" name="camera-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
-
         </ion-button>
-
         <ion-button fill="clear" size="small" (click)="libreria()">
           <ion-icon slot="start" name="image-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
-
         </ion-button>
       </ion-item>
       <ion-item>
@@ -72,14 +61,11 @@
           <ion-row>
             <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" offset-md="4" offset-sm="4">
               <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
-
               <ion-button fill="clear" size="small" type="submit" [disabled]="formulario.invalid"
                 style="text-transform: none; margin-left: 120px; margin-top: -40px;">Guardar
                 <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #50c8ec;">
                 </ion-icon>
               </ion-button>
-
-
               <ion-button fill="clear" size="small" style="text-transform: none; margin-top: -80px;  margin-left:220px;"
                 routerLink="/avisos">Cancelar
                 <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
@@ -90,18 +76,98 @@
 
       </ion-toolbar>
     </ion-footer>
+   <app-footer></app-footer>
+  </form> -->
+
+  <form [formGroup]="createNotificacion" (ngSubmit)="save()">
+    <ion-list>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="mail-open-outline" style="font-size:23px; color: #50c8ec; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Destinatario
+        </ion-label>
+        <ion-select interface="popover" placeholder="Seleccionar"  formControlName="destinatario"
+          okText="Aceptar" cancelText="Cancelar">
+          <ion-select-option value="todos">Todos</ion-select-option>
+          <ion-select-option value="administrador">Administrador</ion-select-option>
+          <ion-select-option *ngFor="let manzana of manzanas" [value]="manzana">
+            {{ manzana}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-label color="danger"
+      *ngIf="createNotificacion.controls.destinatario.errors?.required && (createNotificacion.touched || createNotificacion.dirty)">* El
+      destinatario es obligatorio </ion-label>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="megaphone-outline" style="font-size:23px; color: #50c8ec; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Título
+        </ion-label>
+        <ion-input  formControlName="titulo">
+        </ion-input>
+      </ion-item>
+      <ion-label color="danger"
+      *ngIf="createNotificacion.controls.titulo.errors?.required && (createNotificacion.touched || createNotificacion.dirty)">* El
+      título es obligatorio </ion-label>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="create-outline" style="font-size:23px; color: #50c8ec; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Mensaje
+        </ion-label>
+        <ion-textarea style="margin-bottom: -11px; font-size: 14px;"  formControlName="descripcion">
+        </ion-textarea>
+      </ion-item>
+      <ion-label color="danger"
+      *ngIf="createNotificacion.controls.descripcion.errors?.required && (createNotificacion.touched || createNotificacion.dirty)">* El
+      mensaje es obligatorio </ion-label>
+      <ion-item>
+        <ion-button fill="clear" size="small" (click)="camara()">
+          <ion-icon slot="start" name="camera-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" size="small" (click)="libreria()">
+          <ion-icon slot="start" name="image-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <!-- <ion-item>
+        <ion-col size="3" *ngFor="let image of aviso.imgs">
+          <ion-card>
+            <img [src]="image | imageSanitizer">
+          </ion-card>
+        </ion-col>
+      </ion-item> -->
+      <ion-item>
+        <ion-col size="3" *ngFor="let dat of data">          
+          <ion-card>            
+            <img  src="{{pathBase64}}{{dat.base64}}">
+          </ion-card>
+        </ion-col>
+      </ion-item>
+
+  
+    </ion-list>
 
 
     <ion-footer class="ion-no-border" translucent>
-      <ion-toolbar color="light" style=" position: fixed; bottom: 0px; height: 48px;">
+      <ion-toolbar color="light" style="position:fixed;  bottom:47px; height: 50px;">
         <ion-grid>
           <ion-row>
             <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" offset-md="4" offset-sm="4">
-              <ion-img src="assets/1.gif" style=" height:60px; display: block; width:400px;  margin-right: 20px; margin-top: -15px;"></ion-img>
+              <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
+              <ion-button fill="clear" size="small" type="submit" [disabled]=" ! createNotificacion.valid"
+                style="text-transform: none; margin-left: 120px; margin-top: -40px;">Guardar
+                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #50c8ec;">
+                </ion-icon>
+              </ion-button>
+              <ion-button fill="clear" size="small" style="text-transform: none; margin-top: -80px;  margin-left:220px;"
+                routerLink="/avisos">Cancelar
+                <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color: #00DDFF;"></ion-icon>
+              </ion-button>
             </ion-col>
           </ion-row>
         </ion-grid>
+
       </ion-toolbar>
     </ion-footer>
+   <app-footer></app-footer>
   </form>
 </ion-content>

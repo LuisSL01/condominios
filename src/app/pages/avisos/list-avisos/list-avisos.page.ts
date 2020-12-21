@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DataLocalService } from '../../../services/data-local.service';
-import { DataLocalAvisoService } from '../../../services/data-local-aviso.service';
-import { ActionSheetController, ModalController } from '@ionic/angular';
+import { AvisoService } from '../../../services/aviso.service';
+import { ActionSheetController, ModalController, ToastController } from '@ionic/angular';
 import { AddRespuestaPage } from '../add-respuesta/add-respuesta.page';
 import { Router } from '@angular/router';
 import { RespuestasPage } from '../respuestas/respuestas.page';
@@ -21,9 +21,13 @@ export class ListAvisosPage implements OnInit {
     allowSlideNext: false,
     allowSlidePrev: false
   };
-  constructor(public dataLocalAvisoService:DataLocalAvisoService,
+
+
+
+  constructor(public avisoService:AvisoService,
           private actionSheetCtrl: ActionSheetController,
           private modalCtlr: ModalController,
+          private toastCtrl: ToastController,
           private router: Router) { }
 
 
@@ -47,8 +51,28 @@ export class ListAvisosPage implements OnInit {
         handler: () => {
           console.log('Borrar');
           console.log(this.aviso);          
-          this.dataLocalAvisoService.borrarAviso(this.aviso);
-          
+
+          if(this.aviso.id > 0){            
+            this.avisoService.delete(this.aviso.id).subscribe(
+              (data) => {
+                if (data.status === 200) {
+                  console.log('"data.result"', data.result);
+                  console.log("notificacion eliminada correctamente");
+                  this.showToast("notificacion eliminada correctamente");                  
+                } else {
+                  console.log('Llego otro status al eliminar anuncio');                  
+                }
+              },
+              (err) => {
+                console.log(err);
+                console.log('Llego otro status al eliminar anuncio');
+              },
+              () => {}
+            );
+          }else{
+            console.log('Debo borrar de data local');
+            this.avisoService.deleteLocal(this.aviso);
+          }
         }
       };
 
@@ -88,6 +112,16 @@ export class ListAvisosPage implements OnInit {
     await actionSheet.present();
 
   }
+  showToast(dataMessage: string) {
+    this.toastCtrl
+      .create({
+        message: dataMessage,
+        duration: 2000,
+      })
+      .then((toastData) => {
+        toastData.present();
+      });
+  }
 
   async presentModalCreateRespuesta() {
     const modal = await this.modalCtlr.create({
@@ -114,7 +148,7 @@ export class ListAvisosPage implements OnInit {
   }
 
   borrarAviso(aviso: Publicacion){
-    this.dataLocalAvisoService.borrarAviso(aviso);
+    this.avisoService.deleteLocal(aviso);
     this.router.navigate(['/avisos']);
   }
 

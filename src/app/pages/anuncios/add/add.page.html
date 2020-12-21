@@ -211,10 +211,9 @@
         </ion-col>
       </ion-item> -->
       <ion-item>
-        <ion-col size="3" *ngFor="let data of dataTemp">
-          <ion-label>{{data.path}}</ion-label>
-          <ion-card>
-            <img [src]=" data.base64 | imageSanitizer">
+        <ion-col size="3" *ngFor="let dat of data">          
+          <ion-card>            
+            <img  src="{{pathBase64}}{{dat.base64}}">
           </ion-card>
         </ion-col>
       </ion-item>

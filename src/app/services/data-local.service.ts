@@ -31,6 +31,10 @@ export class DataLocalService {
     return new Date().getTime() + Math.floor((Math.random() * (1000-1))+1);//NUmero entre 1 y 1000
   }
 
+  getNumeroRandom() {
+    return new Date().getTime() + Math.floor((Math.random() * (1000-1))+1);//NUmero entre 1 y 1000
+  }
+
   
 
 

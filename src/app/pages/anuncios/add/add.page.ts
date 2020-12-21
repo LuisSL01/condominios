@@ -23,7 +23,7 @@ export class AddPage implements OnInit {
   
   enCamara: boolean;
   data: ArchivoVortexApp[] = new Array();
-  dataTemp: ArchivoVortexApp[] = new Array();  
+  /* dataTemp: ArchivoVortexApp[] = new Array();   */
 
   createAnuncio = this.fb.group({
     //Esto para construir los formularios dinamicamente
@@ -37,6 +37,7 @@ export class AddPage implements OnInit {
   });
   idEmpresa: number;
   idAgente: number;
+  pathBase64:string ="data:image/jpeg;base64,";
 
   /* momentjs: any = moment; */
 
@@ -92,11 +93,11 @@ export class AddPage implements OnInit {
   async procesarImagen(options: CameraOptions) {
     this.camera.getPicture(options).then(
       (imageData) => {
-        console.log("imageData:" + imageData);
+        /* console.log("imageData:" + imageData); */
         /* const img = window.Ionic.WebView.convertFileSrc(imageData); */
-        const img = "data:image/jpeg;base64," + imageData; //Se agrega para que se muestren en la lista
-        const title = this.anuncio.titulo + "_aviso.jpg";
-        this.dataTemp.push(new ArchivoVortexApp(img, title));
+        /* const img = "data:image/jpeg;base64," + imageData; //Se agrega para que se muestren en la lista */
+        const title = this.createAnuncio.value.titulo + "_aviso.jpg";
+        /* this.dataTemp.push(new ArchivoVortexApp(img, title)); */
         this.data.push(new ArchivoVortexApp(imageData, title)); //Se setea la imagen en base 64
       },
       (err) => {
@@ -131,7 +132,7 @@ export class AddPage implements OnInit {
           console.log('"data.result"', data.result);
           console.log("anuncio registrado correctamente");
           this.showToast("anuncio registrado correctamente");
-          this.guardarAnuncioLocalmente();
+          /* this.guardarAnuncioLocalmente(); */
           this.router.navigate(["/anuncios"]);
         } else {
           console.log('Llego otro status al guardar anuncio');

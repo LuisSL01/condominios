@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { PipesModule } from '../pipes/pipes.module';
 import { MenuComponent } from './menu/menu.component';
 import { MenuHeaderComponent } from './menu-header/menu-header.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 
@@ -13,12 +14,14 @@ import { MenuHeaderComponent } from './menu-header/menu-header.component';
   declarations: [    
     HeaderComponent,
     MenuComponent,
-    MenuHeaderComponent
+    MenuHeaderComponent,
+    FooterComponent
   ],
   exports:[    
     HeaderComponent,
     MenuComponent,
-    MenuHeaderComponent
+    MenuHeaderComponent,
+    FooterComponent
   ],
   imports: [
     RouterModule,

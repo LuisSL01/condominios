@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
-import { DataLocalAvisoService } from 'src/app/services/data-local-aviso.service';
+import { AvisoService } from 'src/app/services/aviso.service';
 import { Directorio } from '../../../models/directorio.model';
 import { DataLocalDirectorioService } from '../../../services/data-local-directorio.service';
 

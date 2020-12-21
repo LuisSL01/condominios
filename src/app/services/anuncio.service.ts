@@ -42,39 +42,13 @@ export class AnuncioService {
   }
 
   getAnuncios(idEmpresa: number, page: number, size: number, filters: string){
-    console.log(this.baseUrl +environment.coreApiBaseAnuncioOperation + environment.coreApiGetAnunciosListOperation +"/"+idEmpresa+"?page="+page+"&size="+size+"");
-    return this.http.get<ApiResponse>(this.baseUrl +environment.coreApiBaseAnuncioOperation + environment.coreApiGetAnunciosListOperation + '/' + idEmpresa + '?page=' + page + '&size=' + size + (filters ? ('&filters=' + filters):'')).pipe(share());
+    console.log(this.baseUrl +environment.coreApiBasePublicacionOperation + environment.coreApiGetAnunciosListOperation +"/"+idEmpresa+ "/ANUNCIO?page="+page+"&size="+size+"");
+    return this.http.get<ApiResponse>(this.baseUrl +environment.coreApiBasePublicacionOperation + environment.coreApiGetAnunciosListOperation + '/' + idEmpresa + '/ANUNCIO?page=' + page + '&size=' + size + (filters ? ('&filters=' + filters):'')).pipe(share());
   }
 
- getDataAnuncios(idEmpresa:number, page: number, size: number, filters:string, event?) {   
-    this.getAnuncios(idEmpresa, page, size, filters)
-      .subscribe(
-        (data) => {
-          if (data.status === 200) {
-            /* this.anuncios = data.result.content;        */     
-            this.anuncios.push(...data.result.content);
-            console.log(this.anuncios);
-            this.storage.set(idEmpresa + "_anuncios", this.anuncios);    
-            
-            if(event){
-              event.target.complete();
-            }
 
-          } else {
-            console.log(data.status);
-            this.recuperaAnunciosStorage(idEmpresa);            
-          }
-        },
-        (err) => {
-          console.log(err);
-          this.recuperaAnunciosStorage(idEmpresa);
-          
-        }
-      );
-  }
-
- async recuperaAnunciosStorage(idEmpresa : number){   
-   console.log('recupera anuncios storage: ', idEmpresa + "_anuncios");   
+ async recuperaAnunciosStorage(idEmpresa : number){
+   console.log('recupera anuncios storage: ', idEmpresa + "_anuncios");
     const ann = await this.storage.get(idEmpresa + "_anuncios")
     console.log('ann: '+ann);    
     if (ann) {
@@ -84,14 +58,6 @@ export class AnuncioService {
     }
   }
 
-  buscaAnunciosLocales(){
-    this.cargarAnunciosLocales();
-/*     if(this.anunciosLocales.length > 0){      
-      this.anuncios.push(...this.anunciosLocales);
-    } */
-  }
-
-  
   guardarAnuncio(anuncioData: FormData): Observable<ApiResponse> {
     console.log('guardarAnuncio:'+this.baseUrl + this.publicacionContext);
     console.log('anuncioData',anuncioData);
@@ -99,8 +65,6 @@ export class AnuncioService {
   }
     
   guardarAnuncios(listAnuncios: FormData): Observable<ApiResponse> {
-
-
     console.log('guardarAnuncios->sincronizando:'+this.baseUrl + environment.coreApiBasePublicacionesOperation);    
     return this.http.post<ApiResponse>(this.baseUrl + environment.coreApiBasePublicacionesOperation, listAnuncios).pipe(share());
   }
@@ -119,7 +83,7 @@ export class AnuncioService {
 
   borrarAnuncio(idPublicacion: number) : Observable<ApiResponse> {
     console.log('borrando pub..');    
-    return this.http.delete<ApiResponse>(this.baseUrl + environment.coreApiBaseAnuncioOperation + "/" + idPublicacion).pipe(share());
+    return this.http.delete<ApiResponse>(this.baseUrl + environment.coreApiBasePublicacionOperation + "/" + idPublicacion).pipe(share());
   }
 
   async cargarAnunciosLocales() {

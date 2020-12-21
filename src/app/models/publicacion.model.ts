@@ -1,4 +1,5 @@
 import { ArchivoVortexApp } from './archivo-vortex.model';
+import { RespuestaPublicacion } from './respuesta-publicacion.model';
 export class Publicacion{
 
 
@@ -7,7 +8,7 @@ export class Publicacion{
     public agenteCreador:number;
 
     //Todo esto(Abajo) deberia ir dentro del json?
-    public manzanaDestino: string;
+    public destinatario: string;
     public titulo: string
     public descripcion: string;
     public fechaDeCreacion: Date;
@@ -22,7 +23,7 @@ export class Publicacion{
     //Todo esto(Arriba) deberia ir dentro del json?
     public tipo:string;//aviso, convocatoria, resolucion, anuncio
 
-    public respuestas:Publicacion[];
+    public respuestas:RespuestaPublicacion[];
 
     public estatus:boolean;
 

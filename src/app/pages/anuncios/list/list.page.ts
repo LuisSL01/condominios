@@ -32,11 +32,9 @@ export class ListPage implements OnInit {
         icon: 'trash',
         cssClass: 'action-dark',
         handler: () => {
-          console.log('Borrar anuncio');
-          console.log(this.anuncio);  
-          if(this.anuncio.id > 0){
-            console.log('Debo ir a borrar desde el server');            
-
+          /* console.log('Borrar anuncio');
+          console.log(this.anuncio);   */
+          if(this.anuncio.id > 0){            
             this.anuncioService.borrarAnuncio(this.anuncio.id).subscribe(
               (data) => {
                 if (data.status === 200) {
