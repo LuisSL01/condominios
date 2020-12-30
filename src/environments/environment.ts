@@ -14,9 +14,9 @@ export const environment = {
  
 
 
-  authServiceBaseUrl: 'http://192.168.80.104:8080',
-  coreServiceBaseUrl: 'http://192.168.80.104:8081',
-  formsServiceBaseUrl: 'http://192.168.80.104:8082',
+  authServiceBaseUrl: 'http://192.168.80.100:8080',
+  coreServiceBaseUrl: 'http://192.168.80.100:8081',
+  formsServiceBaseUrl: 'http://192.168.80.100:8082',
 
   
   authApiGetUsersOperation: '/users/',
@@ -114,13 +114,25 @@ export const environment = {
   formsApiGetCodigoFormularioCatalog: '/filter',*/
   coreApiBaseMarcaCatalog: '/marca', 
 
+  coreApiBaseDeleteOperation: '/delete',
   //app- avisos
   coreApiBaseAvisosAdministracionOperation: '/aviso',
   coreApiBasePublicacionOperation: '/publicacion',
+  coreApiBasePublicacionRespuestaOperation: '/respuesta',  
   coreApiBasePublicacionesOperation: '/publicaciones',
-
   coreApiBaseAnuncioOperation: '/anuncio',
   coreApiGetAnunciosListOperation: ':listByEmpresa',
+
+  //Areas-Comunes
+  coreApiBaseAreaComunOperation: '/area-comun',
+  
+  coreApiBaseAreasComunesOperation: '/areas-comunes',
+  coreApiGetAreaComunListOperation: ':listByEmpresa',
+
+  coreApiBaseAreaComunReservaOperation:'/area-comun-reserva',
+
+
+
 
 
 };

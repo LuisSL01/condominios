@@ -34,8 +34,10 @@ export class AvisoService {
               private userData:UserData) {
   }
 
+  
+
   construyeNombreEtiqueta(){
-    return this.nombreEtiquetaJson = this.dataLocalService.idempresa + "_avisos_local";
+    return this.nombreEtiquetaJson =  this.userData.getIdEmpresa() + "_notificaciones_local";
   }
 
   saveLocal(anuncio: Publicacion) {
@@ -67,15 +69,22 @@ export class AvisoService {
     return this.http.post<ApiResponse>(this.baseUrl + this.publicacionContext, notificacionData).pipe(share());
   }  
 
+  saveRespuesta(idPublicacion:number, respuesta: any): Observable<ApiResponse> {
+    console.log('saveRespuesta:'+this.baseUrl + this.publicacionContext + environment.coreApiBasePublicacionRespuestaOperation+"/"+idPublicacion);
+    console.log('respuesta',respuesta);
+    return this.http.post<ApiResponse>(this.baseUrl + this.publicacionContext + environment.coreApiBasePublicacionRespuestaOperation+'/'+idPublicacion, respuesta).pipe(share());
+  }  
+
   saveNotificaciones(listNotificaciones: FormData): Observable<ApiResponse> {
     console.log('guardarNotificaciones->sincronizando:'+this.baseUrl + environment.coreApiBasePublicacionesOperation);    
     return this.http.post<ApiResponse>(this.baseUrl + environment.coreApiBasePublicacionesOperation, listNotificaciones).pipe(share());
   }
 
 
-  saveRespuestaAviso(avisoOriginal: Publicacion, respuestaAviso: RespuestaPublicacion) {
+  saveRespuestaAvisoLocal(avisoOriginal: Publicacion, respuestaAviso: RespuestaPublicacion) {
     console.log('guardarRespuestaAviso');
-    avisoOriginal.respuestas.unshift(respuestaAviso);
+    avisoOriginal.respuestas.respuestasPublicacion.unshift(respuestaAviso);
+    this.notificacionesLocales.unshift(avisoOriginal);
     this.storage.set(this.construyeNombreEtiqueta(), this.notificacionesLocales);
     this.dataLocalService.presentToast('respuesta agregada');   
   }
@@ -87,8 +96,8 @@ export class AvisoService {
   }
 
   delete(idPublicacion: number) : Observable<ApiResponse> {
-    console.log('borrando pub..');
-    return this.http.delete<ApiResponse>(this.baseUrl + environment.coreApiBasePublicacionOperation + "/" + idPublicacion).pipe(share());
+    console.log('borrando pub: ',this.baseUrl + environment.coreApiBasePublicacionOperation +environment.coreApiBaseDeleteOperation + "/" + idPublicacion );    
+    return this.http.delete<ApiResponse>(this.baseUrl + environment.coreApiBasePublicacionOperation + environment.coreApiBaseDeleteOperation + "/" + idPublicacion).pipe(share());
   }
 
 

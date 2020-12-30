@@ -4,6 +4,8 @@ import { Publicacion } from "../../models/publicacion.model";
 import { Storage } from "@ionic/storage";
 import { UserData } from "../../providers/user-data";
 import { IonInfiniteScroll } from "@ionic/angular";
+/* import { NetworkService } from '../../services/network.service'; */
+
 
 @Component({
   selector: "app-anuncios",
@@ -17,7 +19,6 @@ export class AnunciosPage implements OnInit {
 
   idEmpresa: number;
   filters: any;
-
   anunciosPage: number = 0;
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
@@ -25,8 +26,11 @@ export class AnunciosPage implements OnInit {
   constructor(
     public anuncioService: AnuncioService,
     private userData: UserData,
-    private storage: Storage
+    private storage: Storage,
+    /* private networkService: NetworkService */
   ) {
+    console.log('en el constructor de anuncios page..');
+    
     this.idEmpresa = this.userData.getIdEmpresa();
   }
 
@@ -36,6 +40,10 @@ export class AnunciosPage implements OnInit {
   }
 
   async cargaAnunciosStorage(){
+    console.log('cargaAnunciosStorage................');
+    
+    /* console.log('this.networkService.getCurrentNetworkStatus(): ',this.networkService.getCurrentNetworkStatus()); */
+    
       /* console.log('recuperaAnunciosLocalStorage');     */
       await this.cargarAnunciosTemporalesStorage(this.idEmpresa);
       /* console.log('termino de buscar en storage'); */

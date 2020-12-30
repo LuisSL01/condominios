@@ -4,13 +4,11 @@ import { AnuncioService } from "../../../services/anuncio.service";
 import { Camera, CameraOptions } from "@ionic-native/camera/ngx";
 
 declare var window: any;
-/* import * as moment from 'moment-timezone'; */
 import { Router } from "@angular/router";
 import { Publicacion } from "../../../models/publicacion.model";
 import { ArchivoVortexApp } from "src/app/models/archivo-vortex.model";
 import { FormBuilder, Validators } from "@angular/forms";
 import { ToastController } from "@ionic/angular";
-/* import { File } from '@ionic-native/file/ngx'; */
 import { UserData } from "../../../providers/user-data";
 
 @Component({
@@ -142,7 +140,7 @@ export class AddPage implements OnInit {
       },
       (err) => {
         console.log(err);
-        console.log('Llego otro status al guardar anuncio');
+        this.showToast("Error: "+ err);
         this.guardarAnuncioLocalmente();
         this.router.navigate(["/anuncios"]);
        

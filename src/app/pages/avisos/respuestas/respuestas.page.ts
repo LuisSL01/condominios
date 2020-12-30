@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 import { Publicacion } from '../../../models/publicacion.model';
+import { RespuestaApp } from '../../../models/respuestaApp.model';
+import { RespuestaPublicacion } from '../../../models/respuesta-publicacion.model';
 
 @Component({
   selector: 'app-respuestas',
@@ -10,8 +12,13 @@ import { Publicacion } from '../../../models/publicacion.model';
 })
 export class RespuestasPage implements OnInit {
 
+  
   @Input() titulo:string;
-  @Input()  respuestas:Publicacion[];
+
+  @Input()  respuestas:RespuestaPublicacion[];
+
+
+
   constructor(private modalCtrl: ModalController) { }
 
   ngOnInit() {

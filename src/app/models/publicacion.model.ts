@@ -1,5 +1,6 @@
 import { ArchivoVortexApp } from './archivo-vortex.model';
 import { RespuestaPublicacion } from './respuesta-publicacion.model';
+import { RespuestaApp} from './respuestaApp.model';
 export class Publicacion{
 
 
@@ -23,14 +24,13 @@ export class Publicacion{
     //Todo esto(Arriba) deberia ir dentro del json?
     public tipo:string;//aviso, convocatoria, resolucion, anuncio
 
-    public respuestas:RespuestaPublicacion[];
+    public respuestas:RespuestaApp;
 
     public estatus:boolean;
 
     constructor(){
         this.fechaDeCreacion = new Date();
-        /* this.imgs = new Array(); */
-        this.respuestas = new Array();
+        /* this.imgs = new Array(); */        
         this.fechaVence = new Date();
         this.estatus = true;        
         this.data = new Array();

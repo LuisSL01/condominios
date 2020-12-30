@@ -1,9 +1,11 @@
 export class RespuestaPublicacion{
 
+    public nombreAgente:string;
     public agenteCreador:number;
-    public mensaje:string;    
-
-    constructor(){    
+    public mensaje:string;
+    
+    
+    constructor(){
     }
 
   /*   constructor(_agenteCreador : number, _mensaje:string){
@@ -11,5 +13,5 @@ export class RespuestaPublicacion{
         this.mensaje = _mensaje;
     } */
 
-    
+
 }

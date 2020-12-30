@@ -42,12 +42,13 @@ export class ListPage implements OnInit {
                   console.log("anuncio eliminado correctamente correctamente");
                   this.showToast("anuncio eliminado correctamente");                  
                 } else {
-                  console.log('Llego otro status al eliminar anuncio');                  
+                  console.log('Llego otro status al eliminar anuncio');  
+                  this.showToast("Error al eliminar registro");                  
                 }
               },
               (err) => {
-                console.log(err);
-                console.log('Llego otro status al eliminar anuncio');
+                console.log(err);                
+                this.showToast("Error al eliminar registro");                  
               },
               () => {}
             );

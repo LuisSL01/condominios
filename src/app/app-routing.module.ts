@@ -43,6 +43,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/areas-comunes/areas-comunes.module').then( m => m.AreasComunesPageModule)
   },
   {
+    path: 'area-comun-reserva',
+    loadChildren: () => import('./pages/area-comun-reserva/area-comun-reserva.module').then( m => m.AreaComunReservaPageModule)
+  },
+  {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
@@ -81,7 +85,8 @@ const routes: Routes = [
   {
     path: 'registration',
     loadChildren: () => import('./pages/registration/registration.module').then( m => m.RegistrationPageModule)
-  },  {
+  },
+  {
     path: 'empresa',
     loadChildren: () => import('./pages/empresa/empresa.module').then( m => m.EmpresaPageModule)
   },
@@ -93,6 +98,15 @@ const routes: Routes = [
     path: 'agente',
     loadChildren: () => import('./pages/agente/agente.module').then( m => m.AgentePageModule)
   },
+  {
+    path: 'mis-areas-comunes',
+    loadChildren: () => import('./pages/mis-areas-comunes/mis-areas-comunes.module').then( m => m.MisAreasComunesPageModule)
+  },
+  {
+    path: 'menu-areas-comunes',
+    loadChildren: () => import('./pages/menu-areas-comunes/menu-areas-comunes.module').then( m => m.MenuAreasComunesPageModule)
+  },
+
 
 
 

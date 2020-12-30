@@ -23,8 +23,8 @@ export class PerfilPage implements OnInit {
     this.userData.logout().then(() => {
       this.storage.remove('empresaData');
       this.storage.remove('userDetails');
-      this.userData.idEmpresa =0;
-      this.userData.idAgente =0;
+      this.userData.empresa_id =0;
+      this.userData.agente_id =0;
 
 
       return this.router.navigateByUrl('/home');

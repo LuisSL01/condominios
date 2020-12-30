@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { ToastController } from '@ionic/angular';
 
 
 @Injectable({
@@ -9,11 +10,13 @@ export class UserData {
   _favorites: string[] = [];
   HAS_LOGGED_IN = 'hasLoggedIn';
   HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
-  idEmpresa = 0;
-  idAgente = 0;
+  empresa_id:number = 0;
+  agente_id:number = 0;
+  nombreCompleto:string ="";
 
   constructor(
-    public storage: Storage
+    public storage: Storage,
+    private toastCtrl: ToastController
   ) { }
 
   hasFavorite(sessionName: string): boolean {
@@ -76,24 +79,43 @@ export class UserData {
   }
 
   recuperaIdEmpresa(){
-    this.idEmpresa =  JSON.parse(window.localStorage.getItem('empresaData')).id;//Recuperamos el id empresa de empresaData    
+    this.empresa_id =  JSON.parse(window.localStorage.getItem('empresaData')).id;//Recuperamos el id empresa de empresaData    
   }
   recuperaIdAgente(){
-    this.idAgente = JSON.parse(window.localStorage.getItem('userDetails')).id;//Recuperamos el id agente de userDetails    
+    this.agente_id = JSON.parse(window.localStorage.getItem('userDetails')).id;//Recuperamos el id agente de userDetails      
+  }
+  recuperaNombreCompleto(){
+    this.nombreCompleto = JSON.parse(window.localStorage.getItem('userDetails')).nombre;//Recuperamos el nombre
   }
 
   getIdAgente(): number{    
-    if(this.idAgente === 0){
+    if(this.agente_id === 0){
       this.recuperaIdAgente();
     }
-    return this.idAgente;
+    return this.agente_id;
   }
 
   getIdEmpresa(): number{
-    if(this.idEmpresa === 0){
+    if(this.empresa_id === 0){
       this.recuperaIdEmpresa();
     }
-    return this.idEmpresa;
+    return this.empresa_id;
+  }
+
+  getNombreCompleto():string{
+    if(this.nombreCompleto.length ===0){
+      this.recuperaNombreCompleto();
+    }
+    return this.nombreCompleto;
+  }
+
+  showToast(dataMessage: string) {
+    this.toastCtrl.create({
+      message: dataMessage,
+      duration: 2000
+    }).then((toastData) => {
+      toastData.present();
+    });
   }
 
 }

@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DataLocalAreaComunService } from '../../../services/data-local-area-comun.service';
+import { AreaComunService } from '../../../services/area-comun.service';
 import { AreaComun } from '../../../models/area-comun.model';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, ToastController } from '@ionic/angular';
+import { UserData } from '../../../providers/user-data';
 
 @Component({
   selector: 'app-list',
@@ -11,9 +12,15 @@ import { ActionSheetController } from '@ionic/angular';
 export class ListPage implements OnInit {
 
   @Input() areaComun:AreaComun;
+
   
-  constructor(public dataLocalAreaComunService: DataLocalAreaComunService,
-    private actionSheetCtrl: ActionSheetController) { }
+  pathS3:string ="https://almacenamientonube.s3.us-west-1.amazonaws.com/";
+  pathBase64:string ="data:image/jpeg;base64,";
+  
+  constructor(
+              public areaComunService: AreaComunService,
+              private actionSheetCtrl: ActionSheetController,
+              private userData:UserData) { }
 
   ngOnInit() {
   }
@@ -24,8 +31,25 @@ export class ListPage implements OnInit {
         text: 'Borrar área comun',
         icon: 'trash',
         cssClass: 'action-dark',
-        handler: () => {                    
-          this.dataLocalAreaComunService.borrarAreaComun(this.areaComun);
+        handler: () => {
+          if(this.areaComun.id > 0){
+            this.areaComunService.delete(this.areaComun.id).subscribe(
+              (data) => {
+                if (data.status === 200) {
+                  this.userData.showToast('Área eliminada correctamente');
+                } else {   
+                  this.userData.showToast("Error al eliminar registro");
+                }
+              },
+              (err) => {
+                console.log(err);                
+                this.userData.showToast("Error al eliminar registro");                
+              },
+              () => {}
+            );
+          }else{
+            this.areaComunService.deleteLocal(this.areaComun);
+          }
         }
       };
 

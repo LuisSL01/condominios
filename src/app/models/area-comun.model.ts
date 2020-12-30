@@ -1,28 +1,57 @@
+import { ArchivoVortexApp } from "./archivo-vortex.model";
+
 export class AreaComun{
-    public idareaComun:number;
-    public idempresa:number;
+    public id:number;
+    public empresa:number;
     public nombre:string;
     public descripcion:string;
+    public clasificacion:string;
     public costo:number;
-    public color:string;
-    public todosLosDias:Boolean;
-    public todasLasHoras:Boolean;
+    public codigoColor:string;
+    public disponibleTodosDias:Boolean;
+    public disponibleTodasHoras:Boolean;
     public horaInicia:Date;
     public horaTermina:Date;
-    public imgs:string[];
 
+
+    /* public imgs:string[]; */
+    public data:ArchivoVortexApp[];
+
+    public diasDisponibles:number[];//Sunday is 0, Monday is 1, and so on.    
     constructor(){
         console.log('im in constructor new area comun');
-        
-
-        this.todosLosDias = true;
-        this.todasLasHoras = true;
+        this.disponibleTodosDias = true;
+        this.disponibleTodasHoras = true;
         this.horaInicia = new Date();
         this.horaTermina = new Date();
-        this.imgs = Array();
-        
-        
+        /* this.imgs = Array(); */
+        this.diasDisponibles = new Array();
     }
+}
 
+export class AreaComunReserva{
+    public id:number;
+    public empresa:number;
+    public areaComun:number;
+    public nombre:string;
+
+    public autorizado:boolean;
+    
+    public reserva:Reserva[];
+    constructor(){
+        this.reserva = new Array();
+    }
+}
+
+export class Reserva{
+
+    public fecha:Date;
+    public diaCompleto:boolean;
+    public horaInicia:string;
+    public horaTermina:string;
+
+    constructor(){
+        console.log('inicilzando fechas de reserva');                
+    }
 
 }

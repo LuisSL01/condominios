@@ -133,7 +133,7 @@ export class AgentePage implements OnInit {
       icon: "trash",
       cssClass: "action-dark",
       handler: () => {        
-        const formData = new FormData(); //Esto no esta trabajanco chido...
+        const formData = new FormData();
               formData.append("id_agente",   JSON.stringify(idAgente));
               formData.append("status", JSON.stringify(!status));
         this.agenteService.updateStatus(formData)

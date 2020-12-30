@@ -11,6 +11,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { ListPage } from './list/list.page';
 import { PipesModule } from '../../pipes/pipes.module';
 
+
 @NgModule({
   imports: [
     CommonModule,

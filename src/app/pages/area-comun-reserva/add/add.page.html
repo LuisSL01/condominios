@@ -1,0 +1,70 @@
+<app-menu-header></app-menu-header>
+
+<app-header titulo="Nueva reserva"></app-header>
+
+<ion-content>
+    <form [formGroup]="createReserva" (ngSubmit)="save()">
+        <ion-list>
+
+            <ion-item>
+                <ion-label>
+                    <ion-icon name="pencil-outline" style="font-size:23px; color: #50c8ec; 
+              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Area a reservar
+                </ion-label>
+
+                <ion-select interface="popover" placeholder="Seleccionar" formControlName="areaSelected"
+                    okText="Aceptar" cancelText="Cancelar">
+                    <ion-select-option *ngFor="let area of areasComunesList" [value]="area.id">
+                        {{ area.id}}-{{ area.nombre}}
+                    </ion-select-option>
+                </ion-select>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>
+                    <ion-icon name="today-outline" style="font-size:23px; color: #50c8ec;
+                      margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Fecha
+                </ion-label>
+
+
+                <ion-datetime style="margin-bottom: -8px;" placeholder="Fecha " displayFormat="DD/MM/YYYY"
+                    cancelText="Descartar" doneText="Aceptar" formControlName="fecha">
+                </ion-datetime>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>
+                  <ion-icon name="receipt-outline" style="font-size:23px; color: #50c8ec;
+                      margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;¿Día completo?
+                </ion-label>
+                <ion-toggle formControlName="diaCompleto" slot="end" ></ion-toggle>
+            </ion-item>
+
+            <ion-item *ngIf=" ! createReserva.value.diaCompleto " >
+                <ion-label>
+                    <ion-icon name="alarm-outline" style="font-size:23px; color: #50c8ec; 
+                  margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Hora de inicio
+                </ion-label>
+                <ion-datetime displayFormat="HH A" cancelText="Descartar" style="margin-bottom: -5px;"
+                    doneText="Aceptar" formControlName="horaInicia">
+
+                </ion-datetime>
+            </ion-item>
+            <ion-item *ngIf=" ! createReserva.value.diaCompleto " >
+                <ion-label>
+                    <ion-icon name="alarm-outline" style="font-size:23px; color: #50c8ec; 
+                  margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Hora termina
+                </ion-label>
+
+                <ion-datetime displayFormat="HH A" cancelText="Descartar" style="margin-bottom: -5px;"
+                    doneText="Aceptar" formControlName="horaTermina">
+
+                </ion-datetime>
+            </ion-item>
+
+        </ion-list>
+        <app-buttons valueLinkCancel="/area-comun-reserva" 
+                     valueDisabled="{{! createReserva.valid}}" ></app-buttons>
+
+    </form>
+</ion-content>

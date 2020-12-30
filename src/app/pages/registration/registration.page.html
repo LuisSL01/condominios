@@ -158,11 +158,11 @@
                 margin-bottom: -5px;
             "></ion-icon>&nbsp;&nbsp;Manzana del domicilio:
           </ion-label>
-          <ion-input type="text" formControlName="numeroExterior" autocapitalize="characters" placeholder="ej: 38-B"></ion-input>
+          <ion-input type="text" formControlName="manzana" autocapitalize="characters" placeholder="ej: 38-B"></ion-input>
         </ion-item>
         <div color="danger"
-          *ngIf="createAgente.get('direccion').get('numeroExterior').invalid && (createAgente.get('direccion').get('numeroExterior').dirty || createAgente.get('direccion').get('numeroExterior').touched)">
-          <ion-label color="danger" *ngIf="createAgente.get('direccion').get('numeroExterior').errors['required']">
+          *ngIf="createAgente.get('direccion').get('manzana').invalid && (createAgente.get('direccion').get('manzana').dirty || createAgente.get('direccion').get('manzana').touched)">
+          <ion-label color="danger" *ngIf="createAgente.get('direccion').get('manzana').errors['required']">
             *La manzana del domicilio es requerida.
           </ion-label>
         </div>

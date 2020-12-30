@@ -8,6 +8,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ArchivoVortexApp } from 'src/app/models/archivo-vortex.model';
 import { FormBuilder, Validators } from "@angular/forms";
 import { UserData } from '../../../providers/user-data';
+import { AgenteService } from '../../../services/agente.service';
 
 
 declare var window: any;
@@ -47,6 +48,7 @@ export class AddAvisosPage implements OnInit {
 
 
   constructor(private notificacionService: AvisoService,
+    private agenteService: AgenteService,
     private toastr: ToastController,
     private fb: FormBuilder,
     private camera: Camera,
@@ -58,19 +60,31 @@ export class AddAvisosPage implements OnInit {
     this.buscarManzanas();
     this.idEmpresa = this.userData.getIdEmpresa();
     this.idAgente = this.userData.getIdAgente();
+    console.log('this.idEmpresa: '+ this.idEmpresa);
 
 
   }
 
   buscarManzanas(){
     console.log('buscando manzanas');    
-    this.manzanas = [
+/*     this.manzanas = [
       "37-B", "38-B", "39-B",
       "40-A",  
-  ];
+  ]; */
 
-  //Implementar servicio para ir a buscar las diferentes manzanas de una empresa..
-
+  this.agenteService.getManzanas(this.userData.getIdEmpresa()).subscribe(
+    (data) => {
+      if (data.status === 200) {
+        console.log('Manzanas recuperadas correctamente');
+        this.manzanas = data.result;
+      } else {
+        console.log('Llego otro status al recuperar manzanas');
+      }
+    },
+    (err) => {
+      console.log(err);
+    }
+  );
   }
 
   getCameraOptions(): CameraOptions {
@@ -132,7 +146,7 @@ export class AddAvisosPage implements OnInit {
         archivos: [],//Se debe enviar vacio, ya que las imagenes se procesan por separado.
       },
       respuestas: {
-        respuestasPublicacion: [],//Se debe enviar vacio, ya que las imagenes se procesan por separado.
+        respuestasPublicacion: [],//Se debe enviar vacio, ya que en un principio no se tienen respuestas
       },
     };
 

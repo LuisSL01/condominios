@@ -40,7 +40,8 @@ export class RegistrationPage implements OnInit {
     autoRegistro: [true, null],
     direccion: this.fb.group({
       calle: [null, null],
-      numeroExterior: ['', Validators.required],
+      manzana: ['', Validators.required],
+      numeroExterior: ['', null],      
       numeroInterior: ['', null],
       asentamiento: [null, Validators.required]
     })

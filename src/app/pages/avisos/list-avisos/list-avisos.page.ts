@@ -22,7 +22,8 @@ export class ListAvisosPage implements OnInit {
     allowSlidePrev: false
   };
 
-
+  pathS3:string ="https://almacenamientonube.s3.us-west-1.amazonaws.com/";
+  pathBase64:string ="data:image/jpeg;base64,";
 
   constructor(public avisoService:AvisoService,
           private actionSheetCtrl: ActionSheetController,
@@ -37,11 +38,8 @@ export class ListAvisosPage implements OnInit {
 
   async lanzarMenu() {
 
-    let tamanioRespuestas =0;
-    
-      tamanioRespuestas = this.aviso.respuestas.length;
-    
-    
+    let tamanioRespuestas =0;    
+    tamanioRespuestas = this.aviso.respuestas.respuestasPublicacion.length;
     let guardarBorrarBtn;
 
       guardarBorrarBtn = {
@@ -56,16 +54,18 @@ export class ListAvisosPage implements OnInit {
             this.avisoService.delete(this.aviso.id).subscribe(
               (data) => {
                 if (data.status === 200) {
-                  console.log('"data.result"', data.result);
-                  console.log("notificacion eliminada correctamente");
+             /*      console.log('"data.result"', data.result);
+                  console.log("notificacion eliminada correctamente"); */
                   this.showToast("notificacion eliminada correctamente");                  
                 } else {
                   console.log('Llego otro status al eliminar anuncio');                  
+                  this.showToast("Error al eliminar registro");                  
                 }
               },
               (err) => {
                 console.log(err);
                 console.log('Llego otro status al eliminar anuncio');
+                this.showToast("Error al eliminar registro");                          
               },
               () => {}
             );
@@ -140,7 +140,7 @@ export class ListAvisosPage implements OnInit {
       component: RespuestasPage,
     componentProps:{
       titulo: this.aviso.titulo,
-      respuestas: this.aviso.respuestas
+      respuestas: this.aviso.respuestas.respuestasPublicacion
     },
       cssClass: 'my-custom-class'
     });

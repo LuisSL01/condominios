@@ -26,4 +26,20 @@
       </ion-slide>
     </ion-slides>
   </ion-item> -->
+  <ion-item>
+    <ion-slides pager="true" *ngIf="aviso.data?.archivos.length > 1">
+      <ion-slide *ngFor="let img of aviso.data.archivos" class="image-slide">
+        <!-- <label >{{pathS3}}{{img.rutaS3}} </label> -->
+        <!-- <label >{{pathS3}}{{img.rutaS3}}</label> -->
+        <img  *ngIf="img.rutaS3"  src="{{pathS3}}{{img.rutaS3}}">
+        <img  *ngIf=" ! img.rutaS3"  src="{{pathBase64}}{{img.base64}}">
+      </ion-slide>
+    </ion-slides>
+      <ion-slides *ngIf="aviso.data?.archivos.length === 1">
+        <ion-slide *ngFor="let img of aviso.data.archivos" class="image-slide">          
+          <img  *ngIf="img.rutaS3"  src="{{pathS3}}{{img.rutaS3}}">
+          <img  *ngIf=" ! img.rutaS3"  src="{{pathBase64}}{{img.base64}}">
+        </ion-slide>
+    </ion-slides>  
+  </ion-item>
 </ion-card>

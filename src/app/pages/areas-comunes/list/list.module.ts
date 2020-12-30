@@ -9,13 +9,13 @@ import { ListPageRoutingModule } from './list-routing.module';
 import { ListPage } from './list.page';
 import { PipesModule } from '../../../pipes/pipes.module';
 
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ListPageRoutingModule,
-    PipesModule
+    ListPageRoutingModule
   ],
   declarations: []
 })

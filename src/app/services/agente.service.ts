@@ -42,5 +42,10 @@ export class AgenteService {
     return this.http.get<any>(this.baseUrl +this.agenteContext +environment.coreApiBaseAgenteOperationList+ '/' + idEmpresa + '?page=' + page + '&size=' + size + (filters ? ('&filters=' + filters) : '')).pipe(share());
   }
 
+  getManzanas(idEmpresa:number){
+    console.log("getManzanas: ",this.baseUrl +this.agenteContext + ':listManzanas/' + idEmpresa);    
+    return this.http.get<any>(this.baseUrl +this.agenteContext + ':listManzanas/' + idEmpresa).pipe(share()); 
+  }
+
 
 }

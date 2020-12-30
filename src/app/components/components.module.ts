@@ -7,6 +7,7 @@ import { PipesModule } from '../pipes/pipes.module';
 import { MenuComponent } from './menu/menu.component';
 import { MenuHeaderComponent } from './menu-header/menu-header.component';
 import { FooterComponent } from './footer/footer.component';
+import { ButtonsComponent } from './buttons/buttons.component';
 
 
 
@@ -15,13 +16,15 @@ import { FooterComponent } from './footer/footer.component';
     HeaderComponent,
     MenuComponent,
     MenuHeaderComponent,
-    FooterComponent
+    FooterComponent,
+    ButtonsComponent
   ],
   exports:[    
     HeaderComponent,
     MenuComponent,
     MenuHeaderComponent,
-    FooterComponent
+    FooterComponent,
+    ButtonsComponent
   ],
   imports: [
     RouterModule,
