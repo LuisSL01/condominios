@@ -24,8 +24,7 @@ export class AvisoService {
 
   nombreEtiquetaJson = "";
 
-  baseUrl: string = environment.coreServiceBaseUrl;
-  
+  baseUrl: string = environment.coreServiceBaseUrl;  
   publicacionContext: string = environment.coreApiBasePublicacionOperation;
 
   constructor(private http: HttpClient,

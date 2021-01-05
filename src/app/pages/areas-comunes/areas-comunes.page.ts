@@ -26,10 +26,9 @@ export class AreasComunesPage implements OnInit {
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
-  constructor(
-    public areaComunService: AreaComunService,
-    private userData: UserData,
-    private storage: Storage,) {
+  constructor(public areaComunService: AreaComunService,
+              private userData: UserData,
+              private storage: Storage,) {
 
   }
 

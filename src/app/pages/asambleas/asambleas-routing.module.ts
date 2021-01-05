@@ -10,14 +10,15 @@ const routes: Routes = [
   },
   {
     path: 'votaciones',
-    loadChildren: () => import('./votaciones/votaciones.module').then( m => m.VotacionesPageModule)
-  },  {
+    loadChildren: () => import('../../pages/votaciones/votaciones.module').then( m => m.VotacionesPageModule)
+  },
+  {
     path: 'convocatorias',
-    loadChildren: () => import('./convocatorias/convocatorias.module').then( m => m.ConvocatoriasPageModule)
+    loadChildren: () => import('../../pages/convocatorias/convocatorias.module').then( m => m.ConvocatoriasPageModule)
   },
   {
     path: 'resoluciones',
-    loadChildren: () => import('./resoluciones/resoluciones.module').then( m => m.ResolucionesPageModule)
+    loadChildren: () => import('../../pages/resoluciones/resoluciones.module').then( m => m.ResolucionesPageModule)
   }
 
 

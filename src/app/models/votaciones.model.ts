@@ -1,7 +1,7 @@
 import { EncuestaPreguntaOpcion } from './encuesta-pregunta-opcion.model';
 import { EncuestaPregunta } from './encuesta-pregunta.model';
 export class Encuesta{
-    public idvotacion:number;
+    public id:number;
     public idempresa:number;
     public idagenteCreo:number;
     public fechaCreacion:Date;

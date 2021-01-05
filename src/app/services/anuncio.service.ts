@@ -83,7 +83,6 @@ export class AnuncioService {
 
   borrarAnuncio(idPublicacion: number) : Observable<ApiResponse> {
     console.log('borrando pub: ',this.baseUrl + environment.coreApiBasePublicacionOperation +environment.coreApiBaseDeleteOperation + "/" + idPublicacion );    
-
     return this.http.delete<ApiResponse>(this.baseUrl + environment.coreApiBasePublicacionOperation +environment.coreApiBaseDeleteOperation + "/" + idPublicacion).pipe(share());
   }
 

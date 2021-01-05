@@ -106,6 +106,27 @@ const routes: Routes = [
     path: 'menu-areas-comunes',
     loadChildren: () => import('./pages/menu-areas-comunes/menu-areas-comunes.module').then( m => m.MenuAreasComunesPageModule)
   },
+  {
+    path: 'resoluciones',
+    loadChildren: () => import('./pages/resoluciones/resoluciones.module').then( m => m.ResolucionesPageModule)
+  },
+  {
+    path: 'convocatorias',
+    loadChildren: () => import('./pages/convocatorias/convocatorias.module').then( m => m.ConvocatoriasPageModule)
+  },
+  {
+    path: 'votaciones',
+    loadChildren: () => import('./pages/votaciones/votaciones.module').then( m => m.VotacionesPageModule)
+  },
+  {
+    path: 'visitas',
+    loadChildren: () => import('./pages/visitas/visitas.module').then( m => m.VisitasPageModule)
+  },
+  {
+    path: 'bitacora-visitas',
+    loadChildren: () => import('./pages/bitacora-visitas/bitacora-visitas.module').then( m => m.BitacoraVisitasPageModule)
+  },
+
 
 
 

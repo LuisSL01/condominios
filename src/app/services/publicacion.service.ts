@@ -17,7 +17,7 @@ export class PublicacionService {
    }   
    async cargarPublicaciones(){
     this.publicaciones =[];
-     console.log('cargando publicaciones de: '+ this.dataLocalService.idempresa);
+     /* console.log('cargando publicaciones de: '+ this.dataLocalService.idempresa); */
 
     const avv = await this.storage.get(this.dataLocalService.idempresa+"_avisos");
     if (avv) {
@@ -35,7 +35,7 @@ export class PublicacionService {
     if (res) {      
       this.publicaciones.push(...res);
     }  */
-    console.log('publicaciones: '+ this.publicaciones);
+    /* console.log('publicaciones: '+ this.publicaciones); */
     
    }
 

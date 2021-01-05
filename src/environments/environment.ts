@@ -14,9 +14,9 @@ export const environment = {
  
 
 
-  authServiceBaseUrl: 'http://192.168.80.100:8080',
+  authServiceBaseUrl: 'http://192.168.80.105:8080',
   coreServiceBaseUrl: 'http://192.168.80.100:8081',
-  formsServiceBaseUrl: 'http://192.168.80.100:8082',
+  formsServiceBaseUrl: 'http://192.168.80.105:8082',
 
   
   authApiGetUsersOperation: '/users/',
@@ -124,15 +124,26 @@ export const environment = {
   coreApiGetAnunciosListOperation: ':listByEmpresa',
 
   //Areas-Comunes
-  coreApiBaseAreaComunOperation: '/area-comun',
-  
+  coreApiBaseAreaComunOperation: '/area-comun',  
   coreApiBaseAreasComunesOperation: '/areas-comunes',
   coreApiGetAreaComunListOperation: ':listByEmpresa',
-
   coreApiBaseAreaComunReservaOperation:'/area-comun-reserva',
 
+  //Votaciones
 
+  coreApiBaseVotacionOperation: '/votacion',  
+  coreApiBaseVotacionRespuestaOperation: '/respuesta',  
+  coreApiBaseVotacionesOperation: '/votaciones',
+  coreApiGetVotacionListOperation: ':listByEmpresa',
+  
+  //visitas
+  coreApiBaseVisitaOperation: '/visit',    
+  coreApiBaseVisitasOperation: '/visitas',
+  coreApiGetVisitaListOperation: ':listByEmpresa',
 
+  //bitacora-visita
+  coreApiBaseBitacoraVisitaOperation: '/bitacora-visit',      
+  coreApiGetBitacoraVisitaListOperation: ':listByEmpresa',
 
 
 };

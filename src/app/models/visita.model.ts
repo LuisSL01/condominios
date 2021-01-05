@@ -1,27 +1,26 @@
 export class Visita{
-    public idvisita:number;
-    public idempresa:number;
-    public nombre:string;
-    public idagenteCreo:number;
-    public fechaCreacion:Date;
-    public tipoVisita:number;
-    public duracion:string;
+    public id:number;
+    public empresa:number;
+    public nombreCompleto:string;
+    public idagenteCreo:number;    
+    public tipoDeVisita:number;
+    public duracionDeVisita:string;
     public fechaInicio:Date;
-    public fechaTermina:Date;
+    public fechaTermino:Date;
     public conAcompaniantes:Boolean;
     public visitaDiaria:Boolean;
     public pathQR:string;
+    public fechaDeCreacion;
 
-    public diasVisitaSemana:number[];//Sunday is 0, Monday is 1, and so on.
+    public diasVisita:number[];//Sunday is 0, Monday is 1, and so on.
 
-    constructor(){
-        this.fechaCreacion = new Date();
+    constructor(){        
         this.conAcompaniantes = true;
         this.visitaDiaria = true;
         this.fechaInicio = new Date();
-        this.fechaTermina = new Date();
-        this.diasVisitaSemana = new Array();
-
+        this.fechaTermino = new Date();
+        this.fechaDeCreacion = new Date();
+        this.diasVisita = new Array();
         console.log('I am in constructor of votacion pregunta');
     }
 

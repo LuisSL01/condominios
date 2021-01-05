@@ -1,0 +1,57 @@
+<ion-card lines="none">
+  <ion-card-header>
+    <ion-card-title>{{bitacora.nombreCompleto}}</ion-card-title>
+
+    <ion-card-subtitle>
+      <span class="text-primary"> {{bitacora.fechaDeCreacion }} </span>
+      <div class="card-more">
+        <ion-button fill="clear" (click)="lanzarMenu()">
+          <ion-icon slot="icon-only" color="primary" name="ellipsis-vertical-outline"></ion-icon>
+        </ion-button>
+      </div>
+
+    </ion-card-subtitle>
+
+  </ion-card-header>
+
+  <ion-card-content>
+    {{bitacora.observaciones}}
+  </ion-card-content>
+
+  <ion-item>
+    <ion-slides pager="true" *ngIf="bitacora.data?.archivos.length > 1">
+      <ion-slide *ngFor="let img of bitacora.data.archivos" class="image-slide">
+        <!-- <label >{{pathS3}}{{img.rutaS3}} </label> -->
+        <!-- <label >{{pathS3}}{{img.rutaS3}}</label> -->
+        <img  *ngIf="img.rutaS3"  src="{{pathS3}}{{img.rutaS3}}">
+        <img  *ngIf=" ! img.rutaS3"  src="{{pathBase64}}{{img.base64}}">
+      </ion-slide>
+    </ion-slides>
+      <ion-slides *ngIf="bitacora.data?.archivos.length === 1">
+        <ion-slide *ngFor="let img of bitacora.data.archivos" class="image-slide">          
+          <img  *ngIf="img.rutaS3"  src="{{pathS3}}{{img.rutaS3}}">
+          <img  *ngIf=" ! img.rutaS3"  src="{{pathBase64}}{{img.base64}}">
+        </ion-slide>
+    </ion-slides>  
+  </ion-item>
+<!--   <ion-item>
+
+    <ion-slides pager="true" *ngIf="bitacora.imgs.length > 1">
+
+      <ion-slide *ngFor="let img of bitacora.imgs" class="image-slide">
+        <img [src]="img | imageSanitizer">
+      </ion-slide>
+
+    </ion-slides>
+
+    <ion-slides *ngIf="bitacora.imgs.length === 1">
+
+      <ion-slide *ngFor="let img of bitacora.imgs" class="image-slide">
+        <img [src]="img | imageSanitizer">
+      </ion-slide>
+
+    </ion-slides>
+
+  </ion-item> -->
+</ion-card>
+ 

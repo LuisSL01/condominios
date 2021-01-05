@@ -19,8 +19,8 @@ export class ListPage implements OnInit {
   
 
   constructor(public anuncioService: AnuncioService,
-    private actionSheetCtrl: ActionSheetController,
-    private toastr: ToastController,) { }
+              private actionSheetCtrl: ActionSheetController,
+              private toastr: ToastController,) { }
 
   ngOnInit() {
   }
@@ -39,7 +39,7 @@ export class ListPage implements OnInit {
               (data) => {
                 if (data.status === 200) {
                   console.log('"data.result"', data.result);
-                  console.log("anuncio eliminado correctamente correctamente");
+                  console.log("anuncio eliminado  correctamente");
                   this.showToast("anuncio eliminado correctamente");                  
                 } else {
                   console.log('Llego otro status al eliminar anuncio');  

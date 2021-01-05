@@ -10,11 +10,11 @@ const routes: Routes = [
   },
   {
     path: 'visitas',
-    loadChildren: () => import('./visitas/visitas.module').then( m => m.VisitasPageModule)
+    loadChildren: () => import('../../pages/visitas/visitas.module').then( m => m.VisitasPageModule)
   },
   {
     path: 'bitacora-visitas',
-    loadChildren: () => import('./bitacora-visitas/bitacora-visitas.module').then( m => m.BitacoraVisitasPageModule)
+    loadChildren: () => import('../../pages/bitacora-visitas/bitacora-visitas.module').then( m => m.BitacoraVisitasPageModule)
   }
 ];
 

@@ -1,0 +1,51 @@
+<app-menu-header></app-menu-header>
+<app-header titulo="Nueva convocatoria"></app-header>
+<ion-content>
+  <form [formGroup]="createConvocatoria" (ngSubmit)="save()">
+    <ion-list>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="mail-open-outline" style="font-size:23px; color: #50c8ec; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Destinatario
+        </ion-label>
+        <ion-select interface="popover" placeholder="Seleccionar" formControlName="destinatario" okText="Aceptar"
+          cancelText="Cancelar">
+          <ion-select-option value="todos">Todos</ion-select-option>
+          <ion-select-option *ngFor="let manzana of manzanas" [value]="manzana">
+            {{ manzana}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-label color="danger"
+        *ngIf="createConvocatoria.controls.destinatario.errors?.required && (createConvocatoria.touched || createConvocatoria.dirty)">
+        * El
+        destinatario es obligatorio </ion-label>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="megaphone-outline" style="font-size:23px; color: #50c8ec; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Título
+        </ion-label>
+        <ion-input formControlName="titulo">
+        </ion-input>
+      </ion-item>
+      <ion-label color="danger"
+        *ngIf="createConvocatoria.controls.titulo.errors?.required && (createConvocatoria.touched || createConvocatoria.dirty)">
+        * El
+        título es obligatorio </ion-label>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="create-outline" style="font-size:23px; color: #50c8ec; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Mensaje
+        </ion-label>
+        <ion-textarea style="margin-bottom: -11px; font-size: 14px;" formControlName="descripcion">
+        </ion-textarea>
+      </ion-item>
+      <ion-label color="danger"
+        *ngIf="createConvocatoria.controls.descripcion.errors?.required && (createConvocatoria.touched || createConvocatoria.dirty)">
+        * El
+        mensaje es obligatorio </ion-label>
+    </ion-list>
+    <app-buttons valueLinkCancel="/convocatorias" valueDisabled="{{! createConvocatoria.valid}}"></app-buttons>
+    <app-footer></app-footer>
+  </form>
+</ion-content>

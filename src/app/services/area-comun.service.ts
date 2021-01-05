@@ -17,10 +17,9 @@ export class AreaComunService {
   areasComunes:AreaComun[]=[];
   areasComunesLocal:AreaComun[]=[];
   nombreEtiquetaJson = "";
-  baseUrl: string = environment.coreServiceBaseUrl;
-  areaComunContext: string = environment.coreApiBaseAreaComunOperation;
-  
 
+  baseUrl: string = environment.coreServiceBaseUrl;
+  areaComunContext: string = environment.coreApiBaseAreaComunOperation;  
   nombreEtiqueta = "_areas-comunes";
 
   constructor(private dataLocalService : DataLocalService,

@@ -1,17 +1,18 @@
 
 export class EncuestaPreguntaRespuesta {
-  public idrespuesta:number;  
-  public idagente: number;
-  public idopcion: number;
-  public fechaCreacion:Date;
+  public id:number;  
+  public idAgente: number;
+  public idPregunta:number;
+  public idOpcion: number;
+  
 
   constructor() {
-    this.idrespuesta = this.getNumeroRandom() * -1;    
-    this.fechaCreacion = new Date();
+    this.id = this.getNumeroRandom();    
+    
   }
 
   getNumeroRandom() {
-    return Math.floor((Math.random() * (10000 - 1)) + 1);//NUmero entre 1 y 10000
+    return Math.floor((Math.random() * (100000 - 1)) + 1);//NUmero entre 1 y 10000
   }
 
 }

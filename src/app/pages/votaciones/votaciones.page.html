@@ -1,0 +1,36 @@
+<app-menu-header></app-menu-header>
+
+<app-header titulo ="Encuestas"></app-header>
+<ion-content fullscreen>  
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-searchbar  placeholder="Buscar" animated (ionChange)="buscar($event)"></ion-searchbar>
+  <ion-slides class="emptyData" *ngIf="votacionesList.length === 0">
+    <ion-slide class="emptyData">
+      <ion-label>No hay encuestas</ion-label>
+    </ion-slide>
+  </ion-slides>  
+
+
+
+  <ion-grid fixed *ngIf="votacionesList.length > 0">    
+    <ion-row>
+     <ion-col  size="12" 
+         *ngFor="let encuesta of votacionesList">
+         <app-list [encuesta] = "encuesta" ></app-list>
+
+     </ion-col>
+   </ion-row>
+  </ion-grid>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Cargando más datos...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <ion-fab vertical ="bottom" horizontal ="end" slot="fixed">
+    <ion-fab-button routerLink="/votaciones/add" >
+      <ion-icon name ="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
