@@ -7,7 +7,9 @@ import { IonicModule } from '@ionic/angular';
 import { ReglamentoPageRoutingModule } from './reglamento-routing.module';
 
 import { ReglamentoPage } from './reglamento.page';
-import { ComponentsModule } from '../../components/components.module';
+import { ComponentsModule } from '../../components/components.module'; 
+
+
 
 @NgModule({
   imports: [
@@ -16,6 +18,7 @@ import { ComponentsModule } from '../../components/components.module';
     IonicModule,
     ReglamentoPageRoutingModule,
     ComponentsModule
+    
   ],
   declarations: [ReglamentoPage]
 })

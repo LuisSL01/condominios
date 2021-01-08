@@ -12,6 +12,8 @@ export class UserData {
   HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
   empresa_id:number = 0;
   agente_id:number = 0;
+  nameImageEmpresa ="";
+
   nombreCompleto:string ="";
 
   constructor(
@@ -92,14 +94,14 @@ export class UserData {
     if(this.agente_id === 0){
       this.recuperaIdAgente();
     }
-    return this.agente_id;
+    return this.agente_id = JSON.parse(window.localStorage.getItem('userDetails')).id;;
   }
 
   getIdEmpresa(): number{
-    if(this.empresa_id === 0){
+   /*  if(this.empresa_id === 0){
       this.recuperaIdEmpresa();
-    }
-    return this.empresa_id;
+    } */
+    return JSON.parse(window.localStorage.getItem('empresaData')).id;
   }
 
   getNombreCompleto():string{
@@ -107,6 +109,24 @@ export class UserData {
       this.recuperaNombreCompleto();
     }
     return this.nombreCompleto;
+  }
+
+ 
+
+  setConfigEmpresa(){
+    let empresa_id_temp =  JSON.parse(window.localStorage.getItem('empresaData')).id;//Recuperamos el id empresa de empresaData    
+    if(empresa_id_temp === 7) {
+      /* this.nameImageEmpresa = "esmeralda.png"; */
+      this.nameImageEmpresa = "https://almacenamientonube.s3.us-west-1.amazonaws.com/Config/empresaId_7.png";
+    } 
+    else if (empresa_id_temp === 12 ) {
+      /* this.nameImageEmpresa = "sur.png"; */
+      this.nameImageEmpresa = "https://almacenamientonube.s3.us-west-1.amazonaws.com/Config/empresaId_12.png";
+    }
+    else {
+      /* this.nameImageEmpresa = "sur.png"; */  
+      this.nameImageEmpresa = "https://almacenamientonube.s3.us-west-1.amazonaws.com/Config/empresaId_12.png";
+    }  
   }
 
   showToast(dataMessage: string) {

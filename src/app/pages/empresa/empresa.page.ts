@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
+import { UserData } from '../../providers/user-data';
 
 @Component({
   selector: 'app-empresa',
@@ -18,7 +19,8 @@ export class EmpresaPage implements OnInit {
   constructor(private modalCtrl: ModalController,
     private toastr: ToastController,    
     public storage: Storage,
-    private router: Router) { }
+    private router: Router,
+    private userData:UserData) { }
 
   ngOnInit() {
   }
@@ -34,7 +36,7 @@ export class EmpresaPage implements OnInit {
     
     window.localStorage.setItem('empresaData', JSON.stringify({"nombre":empresa.nombre,"id":empresa.id}));
     this.storage.set('empresaData', JSON.stringify({"nombre":empresa.nombre,"id":empresa.id}));
-    
+    this.userData.setConfigEmpresa();
     this.router.navigate(['/inicio']);        
     this.showToast("Bienvenido a armonía residencial: " + this.username);
 

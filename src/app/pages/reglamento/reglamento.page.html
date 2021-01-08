@@ -2,5 +2,15 @@
 
 <app-header titulo="Reglamento"></app-header>
 <ion-content fullscreen>
-
+    <ion-list>
+        <ion-item>
+            <ion-label>
+                <ion-icon name="pencil-outline" style="font-size:23px; color: #50c8ec;  margin-bottom: -5px;">
+                </ion-icon>&nbsp;&nbsp;Reglamento
+            </ion-label>
+            <ion-button (click)="downloadDoc()" expand="block" fill="clear" shape="round">
+                Descargar/Ver
+            </ion-button>
+        </ion-item>
+    </ion-list>
 </ion-content>

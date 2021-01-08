@@ -14,9 +14,9 @@ export const environment = {
  
 
 
-  authServiceBaseUrl: 'http://192.168.80.105:8080',
-  coreServiceBaseUrl: 'http://192.168.80.100:8081',
-  formsServiceBaseUrl: 'http://192.168.80.105:8082',
+  authServiceBaseUrl: 'http://54.177.89.203:8080',
+  coreServiceBaseUrl: 'http://54.177.89.203:8081',
+  formsServiceBaseUrl: 'http://54.177.89.203:8082',
 
   
   authApiGetUsersOperation: '/users/',

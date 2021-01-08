@@ -79,6 +79,8 @@ export class HomePage implements OnInit {
       this.buscarEmpresasAgente();
       window.localStorage.setItem('empresaData', JSON.stringify({"nombre":this.empresas[0].nombre,"id":this.empresas[0].id}));
       this.storage.set('empresaData', JSON.stringify({"nombre":this.empresas[0].nombre,"id":this.empresas[0].id}));
+      this.userData.setConfigEmpresa();
+
       this.router.navigate(["/inicio"]);
       this.showToast("Bienvenido a armonía residencial: " +loginPayload.username.toLowerCase());
     } else {
@@ -106,6 +108,7 @@ export class HomePage implements OnInit {
                 if(this.empresas.length == 1){//Debo redirecionar al inicio, solo hay una empresa
                 window.localStorage.setItem('empresaData', JSON.stringify({"nombre":this.empresas[0].nombre,"id":this.empresas[0].id}));
                 this.storage.set('empresaData', JSON.stringify({"nombre":this.empresas[0].nombre,"id":this.empresas[0].id}));                  
+                this.userData.setConfigEmpresa();
                 this.router.navigateByUrl('/inicio');
                 this.showToast("Bienvenido " + nombreAgente +" a armonía residencial");
                 }else if(this.empresas.length > 1){
