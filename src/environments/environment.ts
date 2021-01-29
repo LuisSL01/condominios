@@ -145,6 +145,11 @@ export const environment = {
   coreApiBaseBitacoraVisitaOperation: '/bitacora-visit',      
   coreApiGetBitacoraVisitaListOperation: ':listByEmpresa',
 
+  //Adeudo
+  coreApiBaseAdeudoOperation: '/adeudo',    
+  coreApiBaseAdeudosOperation: '/adeudos',
+  coreApiGetAdeudoListOperation: ':listByEmpresa',
+  coreApiGetAdeudoAgenteListOperation: ':listByEmpresaAndAgente',
 
 };
 

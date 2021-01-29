@@ -1,5 +1,5 @@
 export class AdeudoPago{
-    public idadeudopago:number;
+    public id:number;
     public idempresa:number;
     public idagenteCreo:number;
     public fechaCreacion:Date;

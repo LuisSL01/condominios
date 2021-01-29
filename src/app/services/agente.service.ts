@@ -47,5 +47,12 @@ export class AgenteService {
     return this.http.get<any>(this.baseUrl +this.agenteContext + ':listManzanas/' + idEmpresa).pipe(share()); 
   }
 
+  getAllAgentesByEmpresa(idEmpresa:number): Observable<any> {
+    console.log("getAllAgentesByEmpresa: ",this.baseUrl +this.agenteContext + 'list/' + idEmpresa);    
+    return this.http.get<any>(this.baseUrl +this.agenteContext + 'list/' + idEmpresa).pipe(share());
+  }
+
+
+
 
 }
