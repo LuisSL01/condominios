@@ -66,20 +66,27 @@ export class AddPage implements OnInit {
 
   save(){
     console.log(this.createAdeudo.value);
-    let soloUnAgente:boolean = this.createAdeudo.value.destinatario === 'solo-uno' ?true:false;
+    let soloUnAgente:boolean = this.createAdeudo.value.destinatario === 'solo-uno' ? true:false;
 
 
+    if(soloUnAgente){
+      //Debo crear el adeudo a solo un agente      
+          const visitaObj = {
+            empresa : this.idEmpresa,
+            agenteCreador : this.idAgente,
+            agenteAdeuda : this.createAdeudo.value.agenteAdeuda,
+            concepto: this.createAdeudo.value.concepto,
+            descripcion: this.createAdeudo.value.descripcion,
+            cantidad: this.createAdeudo.value.cantidad,
+            fechaCubrir: this.createAdeudo.value.fechaCubrir  
+          };
+
+    }else{
+      //Debo crear el agente a todos los agente de las empresa seleccionada
+
+    }
 
 
-    const visitaObj={
-      empresa : this.idEmpresa,
-      agenteCreador : this.idAgente,
-      agenteAdeuda : this.createAdeudo.value.agenteAdeuda,
-      concepto: this.createAdeudo.value.concepto,
-      descripcion: this.createAdeudo.value.descripcion,
-      cantidad: this.createAdeudo.value.cantidad,
-      fechaCubrir: this.createAdeudo.value.fechaCubrir  
-    };
     
 /* 
     this.dataLocalAdeudoService.guardarAdeudo(this.adeudo);
