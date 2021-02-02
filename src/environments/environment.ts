@@ -13,6 +13,8 @@ export const environment = {
   formsServiceBaseUrl: 'http://54.177.89.203:8082',  */
  
   
+//Es una prueba desde el local
+
   authServiceBaseUrl: 'http://192.168.2.116:8080',
   coreServiceBaseUrl: 'http://192.168.2.116:8081',
   formsServiceBaseUrl: 'http://192.168.2.116:8082',
