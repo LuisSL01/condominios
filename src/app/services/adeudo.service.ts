@@ -32,7 +32,15 @@ export class AdeudoService {
     console.log('cominicando servicio con el servidor');
 
 
-    
+
+    console.log('cominicando servicio con el servidor');
+
+
+
+
+
+
+
     
 
     return this.http.post<ApiResponse>(this.baseUrl + this.adeudoContext, adeudoData).pipe(share());
