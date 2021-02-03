@@ -28,7 +28,10 @@ export class AdeudoService {
 
 
   save(adeudoData: any): Observable<ApiResponse> {
-    console.log('save adeudoData:'+this.baseUrl + this.adeudoContext);    
+    console.log('save adeudoData:'+this.baseUrl + this.adeudoContext);   
+    console.log('cominicando servicio con el servidor');
+    
+
     return this.http.post<ApiResponse>(this.baseUrl + this.adeudoContext, adeudoData).pipe(share());
   } 
   

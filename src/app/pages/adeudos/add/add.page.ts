@@ -76,9 +76,10 @@ export class AddPage implements OnInit {
 
     if(soloUnAgente){
       //Debo crear el adeudo a solo un agente      
+          console.log('Hola soy un cambio');
           const visitaObj = {
 
-            console.log('Hola soy un cambio');
+            
             
             empresa : this.idEmpresa,
             agenteCreador : this.idAgente,
