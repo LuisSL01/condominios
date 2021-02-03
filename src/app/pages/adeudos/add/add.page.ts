@@ -39,6 +39,7 @@ export class AddPage implements OnInit {
     private userData:UserData,
     private agenteService:AgenteService) { 
       console.log('estoy en el constructor de add page adeudo');
+      console.log('pruebaa 1111');
       
     }
 
