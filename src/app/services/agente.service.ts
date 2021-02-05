@@ -19,6 +19,8 @@ export class AgenteService {
 
   registerUsuario(userData: any): Observable<ApiResponse> {
     console.log('registerUsuario:'+this.baseUrlAuth + environment.authApiRegisterAgenteOperation);
+    console.log('Se modifica agente service en rama adeudo');
+    
     return this.http.post<ApiResponse>(this.baseUrlAuth + environment.authApiRegisterAgenteOperation, userData).pipe(share());
   }
 
