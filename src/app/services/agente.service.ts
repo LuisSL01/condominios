@@ -48,8 +48,8 @@ export class AgenteService {
   }
 
   getAllAgentesByEmpresa(idEmpresa:number): Observable<any> {
-    console.log("getAllAgentesByEmpresa: ",this.baseUrl +this.agenteContext + 'list/' + idEmpresa);    
-    return this.http.get<any>(this.baseUrl +this.agenteContext + 'list/' + idEmpresa).pipe(share());
+    console.log("getAllAgentesByEmpresa: ",this.baseUrl +this.agenteContext + '/list/' + idEmpresa);    
+    return this.http.get<any>(this.baseUrl +this.agenteContext + '/list/' + idEmpresa).pipe(share());
   }
 
 

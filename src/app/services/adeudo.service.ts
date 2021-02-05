@@ -28,25 +28,13 @@ export class AdeudoService {
 
 
   save(adeudoData: any): Observable<ApiResponse> {
-    console.log('save adeudoData:'+this.baseUrl + this.adeudoContext);   
-    console.log('cominicando servicio con el servidor');
-
-
-
-    console.log('cominicando servicio con el servidor');
-    console.log('subiendo desde la rama luis');
-    
-    console.log('Hola soy un comentario a la rama feature');
-    
-
-
-
-
-
-
-    
-
+    console.log('save adeudoData:'+this.baseUrl + this.adeudoContext);
     return this.http.post<ApiResponse>(this.baseUrl + this.adeudoContext, adeudoData).pipe(share());
+  }
+   
+  saveByEmpresa(idEmpresa:number, adeudoData: any): Observable<ApiResponse> {
+    console.log('save saveByEmpresa:'+this.baseUrl + environment.coreApiBaseAdeudoByEmpresaOperation+"/"+idEmpresa);
+    return this.http.post<ApiResponse>(this.baseUrl + environment.coreApiBaseAdeudoByEmpresaOperation+"/"+idEmpresa, adeudoData).pipe(share());
   } 
   
   delete(idAdeudo: number) : Observable<ApiResponse> {

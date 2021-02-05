@@ -153,6 +153,7 @@ export const environment = {
 
   //Adeudo
   coreApiBaseAdeudoOperation: '/adeudo',    
+  coreApiBaseAdeudoByEmpresaOperation: '/adeudoByEmpresa',
   coreApiBaseAdeudosOperation: '/adeudos',
   coreApiGetAdeudoListOperation: ':listByEmpresa',
   coreApiGetAdeudoAgenteListOperation: ':listByEmpresaAndAgente',
