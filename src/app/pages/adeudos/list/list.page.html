@@ -1,8 +1,8 @@
 <ion-card>
   <ion-card-header>
-    <ion-card-title>{{adeudo.concepto}}</ion-card-title>
+    <ion-card-title>{{adeudo.nombreAgenteAdeuda}}</ion-card-title>
     <ion-card-subtitle>
-      <span class="text-primary">Cantidad:  {{adeudo.cantidad}} </span>
+      <span class="text-primary">Concepto: {{adeudo.concepto}}, Cantidad:  {{adeudo.cantidad}} </span>
       <div class="card-more">
         <ion-button fill="clear" (click)="lanzarMenu()">
           <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>

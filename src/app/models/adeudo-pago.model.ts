@@ -12,7 +12,8 @@ export class AdeudoPago{
     
 
     public todos:number;    
-    public nombreAgente:string ;
+    public nombreAgenteAdeuda:string ;//para mostrarlo en el List
+
     
     constructor(){
         this.concepto ='Mantenimiento';

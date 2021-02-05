@@ -3,6 +3,11 @@
 <app-header titulo="Adeudos"></app-header>
 
 <ion-content fullscreen>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-searchbar animated (ionChange)="buscar($event)" placeholder="Buscar"></ion-searchbar>
   <ion-slides class="emptyData" *ngIf="adeudos.length === 0">
     <ion-slide class="emptyData">
@@ -21,6 +26,11 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+  
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Cargando más datos...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 
 
