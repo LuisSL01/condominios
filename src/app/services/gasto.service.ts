@@ -7,7 +7,7 @@ import { Gasto } from '../models/gasto.model';
 @Injectable({
   providedIn: 'root'
 })
-export class DataLocalGastoService {
+export class GastoService {
   
   
   gastos:Gasto[]=[];

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataLocalGastoService } from '../../services/data-local-gasto.service';
+import { GastoService } from '../../services/gasto.service';
 import { Gasto } from '../../models/gasto.model';
 
 @Component({
@@ -11,7 +11,7 @@ export class GastosPage implements OnInit {
 
   textoBuscar ='';
   public gastoList: Gasto[];
-  constructor(public dataLocalGastoService:DataLocalGastoService) {
+  constructor(public dataLocalGastoService:GastoService) {
     this.gastoList = this.dataLocalGastoService.gastos;
    }
 
