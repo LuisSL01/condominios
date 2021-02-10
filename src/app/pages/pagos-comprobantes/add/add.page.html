@@ -1,7 +1,8 @@
 <app-menu-header></app-menu-header>
 <app-header titulo="Pagos"></app-header>
 <ion-content>
-  <form #formulario1="ngForm" (ngSubmit)="save()">
+
+ <!--  <form #formulario1="ngForm" (ngSubmit)="save()">
     <ion-list>
       <ion-item>
         <ion-label>
@@ -82,5 +83,67 @@
         </ion-grid>
       </ion-toolbar>
     </ion-footer>
+  </form> -->
+
+  <form [formGroup]="createPagoComprobante"  (ngSubmit)="save()" >
+    <ion-list>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="person-outline" style="font-size:23px; color: #50c8ec; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Agente
+        </ion-label>
+        <ion-select interface="popover" (ionChange)="cambioAgenteAdeudo($event)" okText="Aceptar" cancelText="Cancelar">
+          <ion-select-option *ngFor="let ag of agentes" [value]="ag.id">
+            {{ ag.id}} - {{ ag.nombreCompleto}}
+          </ion-select-option>          
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>
+          <ion-icon name="person-outline" style="font-size:23px; color: #50c8ec; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Adeudo
+        </ion-label>
+        <ion-select formControlName="adeudoId" interface="popover"  okText="Aceptar" cancelText="Cancelar">
+          <ion-select-option *ngFor="let add of adeudos" [value]="add.id">
+            {{ add.concepto }} - {{ add.fechaCubrir | date:' MMM yy '}}
+          </ion-select-option>          
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>
+          <ion-icon name="cash-outline" style="font-size:23px; color: #50c8ec; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Forma de pago
+        </ion-label>
+        <ion-select formControlName="formaPago" okText="Aceptar" cancelText="Cancelar">
+          <ion-select-option value="efectivo">Efectivo</ion-select-option>
+          <ion-select-option value="cheque">Cheque</ion-select-option>
+          <ion-select-option value="transferencia">Transferencia</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-button fill="clear" size="small" (click)="camara()">
+          <ion-icon slot="start" name="camera-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" size="small" (click)="libreria()">
+          <ion-icon slot="start" name="image-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
+        </ion-button>
+      </ion-item>
+      <ion-item>
+        <ion-col size="3" *ngFor="let dat of data">
+          <ion-card>
+            <img  src="{{pathBase64}}{{dat.base64}}">
+          </ion-card>
+        </ion-col>
+      </ion-item>
+    </ion-list>
+    
+    
+    <app-buttons valueLinkCancel="/pagos-comprobantes" 
+    valueDisabled="{{ ! createPagoComprobante.valid}}" ></app-buttons>
+
+    <app-footer></app-footer>
   </form>
 </ion-content>

@@ -66,15 +66,9 @@ export class AddPage implements OnInit {
 
 
   save(){
-
     console.log('guardando nuevo archivo');
-    
-
-
     console.log(this.createAdeudo.value);
     let soloUnAgente:boolean = this.createAdeudo.value.destinatario === 'solo-uno' ? true:false;
-
-
     if(soloUnAgente){
       //Debo crear el adeudo a solo un agente      
           const adeudoObj = {
