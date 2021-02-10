@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DataLocalGastoService } from '../../../services/data-local-gasto.service';
+import { GastoService } from '../../../services/gasto.service';
 import { Gasto } from '../../../models/gasto.model';
 import { ActionSheetController } from '@ionic/angular';
 
@@ -12,7 +12,7 @@ export class ListPage implements OnInit {
 
   @Input() gasto:Gasto;
 
-  constructor(public dataLocalGastoService:DataLocalGastoService,
+  constructor(public gastoService:GastoService,
     private actionSheetCtrl: ActionSheetController) { }
 
   ngOnInit() {
@@ -29,7 +29,7 @@ export class ListPage implements OnInit {
         handler: () => {
           console.log('Borrar gasto');
           console.log(this.gasto);  
-          this.dataLocalGastoService.borrarGasto(this.gasto);
+          this.gastoService.borrarGasto(this.gasto);
         }
       };
 
