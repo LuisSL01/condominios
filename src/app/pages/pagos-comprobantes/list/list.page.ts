@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DataLocalPagosComprobantesService } from '../../../services/data-local-pagos-comprobantes.service';
+import { PagosComprobantesService } from '../../../services/pagos-comprobantes.service';
 import { PagosComprobantes } from '../../../models/pagos-comprobantes.model';
 import { ActionSheetController } from '@ionic/angular';
+import { UserData } from '../../../providers/user-data';
 
 @Component({
   selector: 'app-list',
@@ -11,9 +12,13 @@ import { ActionSheetController } from '@ionic/angular';
 export class ListPage implements OnInit {
 
   @Input() pagoComprobante:PagosComprobantes;
+  
+  pathS3:string ="https://almacenamientonube.s3.us-west-1.amazonaws.com/";
+  pathBase64:string ="data:image/jpeg;base64,";
 
-  constructor(public dataLocalPagosComprobantesService: DataLocalPagosComprobantesService,
-    private actionSheetCtrl: ActionSheetController) { }
+  constructor(public pagosComprobantesService: PagosComprobantesService,
+              private actionSheetCtrl: ActionSheetController,
+              private userData:UserData) { }
 
   ngOnInit() {
   }
@@ -27,8 +32,23 @@ export class ListPage implements OnInit {
         cssClass: 'action-dark',
         handler: () => {
           console.log('Borrar pago comprobante');
-          console.log(this.pagoComprobante);  
-          this.dataLocalPagosComprobantesService.borrarPagoComprobante(this.pagoComprobante);
+          console.log(this.pagoComprobante);
+          if(this.pagoComprobante.id > 0 ){
+            this.pagosComprobantesService.delete(this.pagoComprobante.id).subscribe((data) => {
+                if (data.status === 200) { console.log("eliminado correctamente"); this.userData.showToast('registro eliminado correctamente');}
+                else  this.userData.showToast('Error al eliminar registro');
+              },
+              (err) => {
+                  this.userData.showToast("Error al eliminar registro");                  
+              },
+              () => {}
+            );
+          }else{
+            //Se manda a eliminar de los registros que se tengan locales            
+          }
+
+
+          /* this.dataLocalPagosComprobantesService.borrarPagoComprobante(this.pagoComprobante); */
         }
       };
 

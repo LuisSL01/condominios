@@ -33,7 +33,7 @@ export class AddPage implements OnInit {
   idAgente:number;
 
 
-  constructor(private dataLocalAdeudoService: AdeudoService,
+  constructor(private adeudoService: AdeudoService,
     private router: Router,
     private fb: FormBuilder,
     private userData:UserData,
@@ -66,22 +66,12 @@ export class AddPage implements OnInit {
 
 
   save(){
-
     console.log('guardando nuevo archivo');
-    
-
-
     console.log(this.createAdeudo.value);
     let soloUnAgente:boolean = this.createAdeudo.value.destinatario === 'solo-uno' ? true:false;
-
-
     if(soloUnAgente){
       //Debo crear el adeudo a solo un agente      
-          console.log('Hola soy un cambio');
-          const visitaObj = {
-
-            
-            
+          const adeudoObj = {
             empresa : this.idEmpresa,
             agenteCreador : this.idAgente,
             agenteAdeuda : this.createAdeudo.value.agenteAdeuda,
@@ -90,11 +80,44 @@ export class AddPage implements OnInit {
             cantidad: this.createAdeudo.value.cantidad,
             fechaCubrir: this.createAdeudo.value.fechaCubrir  
           };
-
+          console.log('Objeto enviado..'+ JSON.stringify(adeudoObj));
+          this.adeudoService.save(adeudoObj).subscribe((data) => {
+              console.log(data);
+              if (data.status === 200) { 
+                this.userData.showToast('adeudo registrado correctamente');
+                this.router.navigate(["/adeudos"]);
+              } else {this.userData.showToast('Error al registrar el adeudo, llego otro status');}
+            },
+            (err) => {console.log(err);this.userData.showToast("Error: "+ err);
+            },() => {}
+          );
     }else{
-      //Debo crear el agente a todos los agente de las empresa seleccionada
-
+      //Debo crear el adeudo a todos los agentes de las empresa seleccionada
+      const adeudoObj = {
+        empresa : this.idEmpresa,        
+        agenteCreador : this.idAgente,
+        
+        concepto: this.createAdeudo.value.concepto,
+        descripcion: this.createAdeudo.value.descripcion,
+        cantidad: this.createAdeudo.value.cantidad,
+        fechaCubrir: this.createAdeudo.value.fechaCubrir  
+      };
+      console.log('Objeto enviado..'+ JSON.stringify(adeudoObj));
+      this.adeudoService.saveByEmpresa(this.idEmpresa, adeudoObj).subscribe((data) => {
+          console.log(data);
+          if (data.status === 200) { 
+            this.userData.showToast('adeudos registrado correctamente');
+            this.router.navigate(["/adeudos"]);
+          } else {this.userData.showToast('Error al registrar el adeudo, llego otro status');}
+        },
+        (err) => {console.log(err);this.userData.showToast("Error: "+ err);
+        },() => {}
+      );
     }
+
+
+
+
 
 
     
