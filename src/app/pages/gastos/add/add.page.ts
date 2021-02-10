@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Gasto } from '../../../models/gasto.model';
-import { DataLocalGastoService } from '../../../services/data-local-gasto.service';
+import { GastoService } from '../../../services/gasto.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Router } from '@angular/router';
 
@@ -16,7 +16,7 @@ export class AddPage implements OnInit {
   gasto: Gasto = new Gasto();
   enCamara:boolean;
 
-  constructor(private dataLocalGastoService : DataLocalGastoService,
+  constructor(private dataLocalGastoService : GastoService,
               private camera: Camera,
               private router:Router) {
     console.log('im in constructor of gastos');
