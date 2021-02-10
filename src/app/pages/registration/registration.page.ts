@@ -31,7 +31,7 @@ export class RegistrationPage implements OnInit {
 
   createAgente = this.fb.group({//Esto para construir los formularios dinamicamente
     nombreCompleto: ['', [Validators.required, Validators.minLength(4)]],
-    username: ['', [Validators.required, Validators.minLength(6)]],
+    username: ['', [Validators.required, Validators.minLength(3)]],
     password: ['', Validators.required],
     confirmarPassword: ['', Validators.required],
     email: ['', Validators.email],

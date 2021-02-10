@@ -4,6 +4,9 @@
 
 <ion-content fullscreen>
 
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
   <ion-searchbar animated (ionChange)="buscar($event)" placeholder="Buscar"></ion-searchbar>
 
@@ -25,6 +28,10 @@
     </ion-row>
   </ion-grid>
 
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Cargando más datos...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">

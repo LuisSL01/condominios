@@ -1,27 +1,24 @@
 <ion-card>
   <ion-card-header>
-    <ion-card-title>{{comprobante.mesPago}}</ion-card-title>
+    <ion-card-title  color="{{pagoComprobante.nombreEstatus.includes('POR AUTORIZAR') ?'danger':'success'}}"   >   {{pagoComprobante.nombreAgenteAdeudo}} - {{pagoComprobante.nombreEstatus}} </ion-card-title>
     <ion-card-subtitle>
-      <span class="text-primary">Monto original:  {{comprobante.montoOriginal}} </span>
+      <span class="text-primary">Monto original:  {{pagoComprobante.cantidadAdeudo}} </span>
       <div class="card-more">
         <ion-button fill="clear" (click)="lanzarMenu()">
           <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
         </ion-button>
       </div>
-    </ion-card-subtitle>    
+    </ion-card-subtitle>
   </ion-card-header>
   <ion-card-content>
-    {{comprobante.formaPago}} {{comprobante.montoPagado}}
-  </ion-card-content>
+    {{pagoComprobante.formaPago}}  ${{pagoComprobante.cantidadAdeudo}}
+  </ion-card-content>  
   <ion-item>
-    <ion-slides pager="true" *ngIf="comprobante.imgs.length > 1">
-      <ion-slide *ngFor="let img of comprobante.imgs" class="image-slide">
-        <img [src]="img | imageSanitizer">
-      </ion-slide>
-    </ion-slides>
-    <ion-slides *ngIf="comprobante.imgs.length === 1">
-      <ion-slide *ngFor="let img of comprobante.imgs" class="image-slide">
-        <img [src]="img | imageSanitizer">
+
+    <ion-slides pager="{{pagoComprobante.data?.archivos.length > 1?true:false}}">       
+      <ion-slide *ngFor="let img of pagoComprobante.data.archivos" class="image-slide">
+        <img *ngIf="img.rutaS3" src="{{pathS3}}{{img.rutaS3}}">
+        <img *ngIf=" ! img.rutaS3" src="{{pathBase64}}{{img.base64}}">
       </ion-slide>
     </ion-slides>
   </ion-item>
