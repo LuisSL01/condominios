@@ -1,6 +1,62 @@
-<ion-app>
+
+<ion-app [class.dark-theme]="dark">
   <!--<app-menu></app-menu> sirve para que se dibuje el menu en el lado superior izquierdo-->
-  <app-menu></app-menu>
+  <ion-menu side="start" menuId="primerMenu" contentId="principal">
+    <ion-header>
+      <ion-toolbar color="primary">
+        <!--<ion-title>hola</ion-title>-->      
+        <!-- <ion-img src="assets/{{userData.nameImageEmpresa}}" style="margin-right: 155px; height:50px;"></ion-img> -->
+        <ion-img src="{{userData.nameImageEmpresa}}" style="margin-right: 155px; height:50px;"></ion-img>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-menu-toggle >
+          <ion-item *ngIf="false" routerLink="/home" detail>
+            <ion-icon slot="start"  name="log-out-outline" color="medium"> </ion-icon>
+            <ion-label>
+              Cerrar sesión
+            </ion-label>
+          </ion-item>        
+        </ion-menu-toggle>
+        <ion-menu-toggle *ngFor="let c of componentes | async">  
+          <ion-item [routerLink]="c.redirectTo" detail>
+            <ion-icon slot="start" [name]="c.icon" color="medium"> </ion-icon>
+            <ion-label>
+              {{c.name}}
+            </ion-label>
+          </ion-item>
   
+        </ion-menu-toggle>  
+        <ion-menu-toggle >
+          <ion-item>
+            <ion-label></ion-label>
+          </ion-item>  
+          <ion-item routerLink="/agente" detail>
+            <ion-icon slot="start"  name="people-outline" color="medium"> </ion-icon>
+            <ion-label>
+              Agentes
+            </ion-label>
+          </ion-item>
+          <ion-item routerLink="/sincronizar" detail>
+            <ion-icon slot="start"  name="cloud-upload-outline" color="medium"> </ion-icon>
+            <ion-label>
+              Sincronizar
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-icon slot="start"  name="color-palette-outline" color="medium"> </ion-icon>
+            <ion-label>
+              Tema oscuro
+            </ion-label>
+            <ion-toggle (click)="theme()" [(ngModel)]="dark"></ion-toggle>            
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>     
+    </ion-content>
+  </ion-menu>
+
   <ion-router-outlet id="principal" ></ion-router-outlet>
+
+
 </ion-app>

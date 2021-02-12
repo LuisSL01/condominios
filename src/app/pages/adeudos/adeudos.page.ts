@@ -46,8 +46,12 @@ export class AdeudosPage implements OnInit {
   }
 
   getAdeudos(page: number, size: number, eventInfinite?, eventRefresh?) {
+    console.log('getAdeudos');
+    
     this.adeudoService.getAdeudos(this.idEmpresa, page, size, this.filters)
       .subscribe((data) => {
+        console.log(data);
+        
           if (data.status === 200) {
             if(eventRefresh){
               this.adeudos = [];

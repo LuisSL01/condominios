@@ -45,7 +45,7 @@ export class InicioPage implements OnInit {
 
  
   ngOnInit() {
-    this.cargarAnunciosLocalesStorage();
+    /* this.cargarAnunciosLocalesStorage(); */
     this.cargaAnunciosStorage();
   }
 
