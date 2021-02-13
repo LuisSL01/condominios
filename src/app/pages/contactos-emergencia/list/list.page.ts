@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DataLocalContactosEmergenciaService } from '../../../services/data-local-contactos-emergencia.service';
+import { ContactosEmergenciaService } from '../../../services/contactos-emergencia.service';
 import { ContactosEmergencia } from '../../../models/contactos-emergencia.model';
 import { ActionSheetController } from '@ionic/angular';
 
@@ -12,7 +12,7 @@ export class ListPage implements OnInit {
 
   @Input() contacto:ContactosEmergencia;
   
-  constructor(public dataLocalContactosEmergenciaService : DataLocalContactosEmergenciaService,
+  constructor(public dataLocalContactosEmergenciaService : ContactosEmergenciaService,
     private actionSheetCtrl: ActionSheetController) { }
 
   ngOnInit() {
@@ -29,7 +29,7 @@ export class ListPage implements OnInit {
         handler: () => {
           console.log('Borrar contacto');
           console.log(this.contacto);  
-          this.dataLocalContactosEmergenciaService.borrarContactoEmergencia(this.contacto);          
+          /* this.dataLocalContactosEmergenciaService.borrarContactoEmergencia(this.contacto);           */
         }
       };
 

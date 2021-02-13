@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataLocalContactosEmergenciaService } from '../../services/data-local-contactos-emergencia.service';
+import { ContactosEmergenciaService } from '../../services/contactos-emergencia.service';
 import { ContactosEmergencia } from '../../models/contactos-emergencia.model';
 
 @Component({
@@ -12,8 +12,8 @@ export class ContactosEmergenciaPage implements OnInit {
   textoBuscar ='';
   public contactosList: ContactosEmergencia[];
 
-  constructor( public dataLocalContactosEmergenciaService : DataLocalContactosEmergenciaService ) {
-    this.contactosList = this.dataLocalContactosEmergenciaService.contactosEmergencia;
+  constructor( public dataLocalContactosEmergenciaService : ContactosEmergenciaService ) {
+    this.contactosList = this.dataLocalContactosEmergenciaService.contactos;
    }
 
   ngOnInit() {
@@ -23,7 +23,7 @@ export class ContactosEmergenciaPage implements OnInit {
     console.log('contactoEmergencia.buscar()');    
     this.textoBuscar = event.detail.value;
 
-    this.contactosList = this.dataLocalContactosEmergenciaService.contactosEmergencia;
+    this.contactosList = this.dataLocalContactosEmergenciaService.contactos;
 
     if(this.textoBuscar === ''){
       return ;
@@ -32,7 +32,7 @@ export class ContactosEmergenciaPage implements OnInit {
       this.contactosList = this.contactosList.filter(item => {
         return (
           (item.titulo.toLowerCase().includes(this.textoBuscar))
-         || (item.nombre.toLowerCase().includes(this.textoBuscar))
+         || (item.nombreCompleto.toLowerCase().includes(this.textoBuscar))
           );
       }    
       );
