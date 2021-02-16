@@ -177,7 +177,6 @@ export const environment = {
   
   //Directorios
   coreApiBaseDirectorioOperation: '/directorio',  
-
   coreApiGetDirectorioListOperation: ':listByEmpresa',
 
 };
