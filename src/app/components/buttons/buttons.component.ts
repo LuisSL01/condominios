@@ -10,15 +10,10 @@ export class ButtonsComponent implements OnInit {
   @Input() valueLinkCancel: string;
   @Input() valueDisabled: boolean;
   
-  constructor() { 
-    console.log('valueLinkCancel: '+this.valueLinkCancel);
-    console.log('valueDisabled: '+this.valueDisabled);
+  constructor() {     
   }
 
   ngOnInit() {
-
-    
-
   }
 
 }
