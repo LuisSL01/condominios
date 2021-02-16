@@ -1,6 +1,6 @@
 <ion-card class="card-image">
   <ion-card-header>
-    <ion-card-title>{{convocatoria.titulo}}</ion-card-title>
+    <ion-card-title>{{convocatoria.data.titulo}}</ion-card-title>
     <ion-card-subtitle>
       <span class="text-primary"> {{convocatoria.fechaCreacion | date:'h:mm a - dd MMM yy '}} </span>
       <div class="card-more">
@@ -12,7 +12,7 @@
   </ion-card-header>
 
   <ion-card-content>
-    {{convocatoria.descripcion}}
+    {{convocatoria.data.descripcion}}
   </ion-card-content>
 
 </ion-card>

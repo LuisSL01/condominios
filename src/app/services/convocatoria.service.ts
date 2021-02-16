@@ -25,16 +25,14 @@ export class ConvocatoriaService {
   constructor(private http: HttpClient,
               private storage: Storage,
               private dataLocalService: DataLocalService) {
-      console.log('en el constructor de convocatorias service...');
+      
       
 
       
 
   }
 
-  construyeNombreEtiqueta() {
-    return this.nombreEtiqueta = this.dataLocalService.idempresa + "_convocatorias";
-  }
+  
   
   save(notificacionData: FormData): Observable<ApiResponse> {
     console.log('guardarConvocatoria:'+this.baseUrl + this.publicacionContext);    
@@ -63,7 +61,7 @@ export class ConvocatoriaService {
    }
 
 
-  guardar(convocatoria : Publicacion){
+ /*  guardar(convocatoria : Publicacion){
     const existe = this.convocatorias.find(con => con.id === convocatoria.id);
     if (!existe) {
       convocatoria.id = this.dataLocalService.getNumeroNegativo() * -1;
@@ -72,13 +70,13 @@ export class ConvocatoriaService {
       this.dataLocalService.presentToast('Convocatoria agregada');
     }
 
-  }
-  borrar(convocatoria : Publicacion){
+  } */
+  /* borrar(convocatoria : Publicacion){
     this.convocatorias = this.convocatorias.filter(con => con.id !== convocatoria.id)
     this.storage.set(this.construyeNombreEtiqueta(), this.convocatorias);
     this.dataLocalService.presentToast('Convocatoria borrada');
-  }
-  async cargarRegistros(){
+  } */
+ /*  async cargarRegistros(){
     console.log('this.construyeNombreEtiqueta(): '+this.construyeNombreEtiqueta());
     
     const conv = await this.storage.get(this.construyeNombreEtiqueta());
@@ -86,6 +84,6 @@ export class ConvocatoriaService {
       //Cuando viene != null se iguala al arreglo global
       this.convocatorias = conv;
     }
-  }
+  } */
 
 }

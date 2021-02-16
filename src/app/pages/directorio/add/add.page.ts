@@ -117,9 +117,8 @@ export class AddPage implements OnInit {
   }
 
   nuevo(){
-
-    console.log(this.createDirectorio.value);
-    console.log(this.asentamientoSelected);
+    /* console.log(this.createDirectorio.value);
+    console.log(this.asentamientoSelected); */
 
     this.createDirectorio.value.direccion.asentamiento = this.asentamientoSelected;
 

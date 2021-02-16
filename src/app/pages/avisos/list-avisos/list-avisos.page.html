@@ -1,8 +1,8 @@
 <ion-card class="card-image">
   <ion-card-header>
-    <ion-card-title>{{aviso.titulo}}</ion-card-title>
+    <ion-card-title>{{aviso.data.titulo}}</ion-card-title>
     <ion-card-subtitle>
-      <span class="text-primary"> {{aviso.fechaCreacion | date:'h:mm a - dd MMM yy '}} </span>
+      <span class="text-primary"> {{aviso.data.fechaCreacion | date:'h:mm a - dd MMM yy '}} </span>
       <div class="card-more">
         <ion-button fill="clear" (click)="lanzarMenu()">
           <ion-icon slot="icon-only" color="primary" name="ellipsis-vertical-outline"></ion-icon>
@@ -12,34 +12,16 @@
   </ion-card-header>
 
   <ion-card-content>
-    {{aviso.descripcion}}
+    {{aviso.data.descripcion}}
   </ion-card-content>
- <!--  <ion-item>
-    <ion-slides pager="true" *ngIf="aviso.imgs.length > 1">
-      <ion-slide *ngFor="let img of aviso.imgs" class="image-slide">
-        <img [src]="img | imageSanitizer">
-      </ion-slide>
-    </ion-slides>
-    <ion-slides *ngIf="aviso.imgs.length === 1" [options]="slideSoloOpts">
-      <ion-slide *ngFor="let img of aviso.imgs" class="image-slide">
-        <img [src]="img | imageSanitizer">
-      </ion-slide>
-    </ion-slides>
-  </ion-item> -->
+
   <ion-item>
-    <ion-slides pager="true" *ngIf="aviso.data?.archivos.length > 1">
-      <ion-slide *ngFor="let img of aviso.data.archivos" class="image-slide">
-        <!-- <label >{{pathS3}}{{img.rutaS3}} </label> -->
-        <!-- <label >{{pathS3}}{{img.rutaS3}}</label> -->
+    <ion-slides  pager="{{aviso.files?.archivos.length > 1?true:false}}"  >
+      <ion-slide *ngFor="let img of aviso.files.archivos" class="image-slide">        
         <img  *ngIf="img.rutaS3"  src="{{pathS3}}{{img.rutaS3}}">
         <img  *ngIf=" ! img.rutaS3"  src="{{pathBase64}}{{img.base64}}">
       </ion-slide>
     </ion-slides>
-      <ion-slides *ngIf="aviso.data?.archivos.length === 1">
-        <ion-slide *ngFor="let img of aviso.data.archivos" class="image-slide">          
-          <img  *ngIf="img.rutaS3"  src="{{pathS3}}{{img.rutaS3}}">
-          <img  *ngIf=" ! img.rutaS3"  src="{{pathBase64}}{{img.base64}}">
-        </ion-slide>
-    </ion-slides>  
+
   </ion-item>
 </ion-card>

@@ -23,16 +23,19 @@ export class AddAvisosPage implements OnInit {
   notificacion: Publicacion = new Publicacion();
   enCamara: boolean;
 
-  data: ArchivoVortexApp[] = new Array();
+  files: ArchivoVortexApp[] = new Array();
   /* dataTemp: ArchivoVortexApp[] = new Array();   */
 
   manzanas: any[] =  [];
 
   createNotificacion = this.fb.group({
     //Esto para construir los formularios dinamicamente
-    destinatario: ["", [Validators.required]],
-    titulo: ["", [Validators.required]],
-    descripcion: ["", [Validators.required]],
+    data: this.fb.group({
+      destinatario: ["", [Validators.required]],
+      titulo: ["", [Validators.required]],
+      descripcion: ["", [Validators.required]]
+    }),  
+
     tipo: ["NOTIFICACION"],
   });
 
@@ -122,27 +125,21 @@ export class AddAvisosPage implements OnInit {
       /* const img = "data:image/jpeg;base64," + imageData; //Se agrega para que se muestren en la lista */
       const title = this.createNotificacion.value.titulo + "_notificacion.jpg";
       /* this.dataTemp.push(new ArchivoVortexApp(img, title)); */
-      this.data.push(new ArchivoVortexApp(imageData, title)); //Se setea la imagen en base 64      
+      this.files.push(new ArchivoVortexApp(imageData, title)); //Se setea la imagen en base 64      
     }, (err) => {
       // Handle error
     });
   }
 
   save() {
-    /* console.log('save'); */
-    /* this.addMarca(); */
-    /* this.addAviso(); */
-    /* console.log(this.aviso);    
-    this.aviso.tipo = 'Aviso'; */
+ 
     console.log(this.createNotificacion.value);
     const notificacionObj ={
       empresa:this.idEmpresa,
       agenteCreador:this.idAgente,
-      titulo: this.createNotificacion.value.titulo,
-      descripcion: this.createNotificacion.value.descripcion,      
+      data: this.createNotificacion.value.data,
       tipo: this.createNotificacion.value.tipo,
-      destinatario: this.createNotificacion.value.destinatario,
-      data: {
+      files: {
         archivos: [],//Se debe enviar vacio, ya que las imagenes se procesan por separado.
       },
       respuestas: {
@@ -152,7 +149,7 @@ export class AddAvisosPage implements OnInit {
 
     const formData = new FormData(); //Esto no esta trabajanco chido...
     formData.append("data", JSON.stringify(notificacionObj));
-    formData.append("file", JSON.stringify(this.data));
+    formData.append("file", JSON.stringify(this.files));
     console.log("anuncio enviado: ", formData);
 
     this.notificacionService.save(formData).subscribe(
@@ -187,49 +184,19 @@ export class AddAvisosPage implements OnInit {
 
   guardarNotificacionLocalmente() {
     console.log('guardando anuncio localmente');    
+    /*
     this.notificacion.empresa = this.idEmpresa;
     this.notificacion.agenteCreador = this.idAgente;
-    this.notificacion.titulo = this.createNotificacion.value.titulo;
-    this.notificacion.descripcion = this.createNotificacion.value.descripcion;    
+    this.notificacion.data.titulo = this.createNotificacion.value.titulo;
+    this.notificacion.data.descripcion = this.createNotificacion.value.descripcion;    
     this.notificacion.tipo = this.createNotificacion.value.tipo;    
-    this.notificacion.data = this.data;
+    this.notificacion.files = this.files;
     this.notificacionService.saveLocal(this.notificacion);
+    */
   }
 
 
   
-/*   addAviso(){
-
-    console.log('add aviso in add avisos page');
-    
-    const formularioData = new FormData();
-    formularioData.append('empresa','14');
-    formularioData.append('titulo',this.aviso.titulo);
-    formularioData.append('mensaje',this.aviso.descripcion);
-    formularioData.append('agenteCreador','24');
-    console.log('quitando el data');
-    this.aviso.empresa =14;
-    this.aviso.agenteCreador =24;
-    console.log('seteando empresa y agente creador');
-    console.log('enviando formulario data');
-
-    this.avisoService.addAviso(this.aviso).subscribe(data => {
-        if (data.status === 200) {
-          console.log(data);
-          this.showToast("Se creo correctamente el aviso:"+ data);
-        } else {
-          this.showToast("Error al crear el aviso:"+ data);
-        }
-      }, err => {
-        this.showToast("Error al crear el aviso"+ err);        
-      },
-      () => {
-
-      });
-    
-
-  } */
-
   
   showToast(dataMessage: string) {
     this.toastr.create({
