@@ -121,6 +121,7 @@ export const environment = {
   coreApiBaseMarcaCatalog: '/marca', 
 
   coreApiBaseDeleteOperation: '/delete',
+  coreApiBaseEditOperation: '/edit',
   //app- avisos
   coreApiBaseAvisosAdministracionOperation: '/aviso',
   coreApiBasePublicacionOperation: '/publicacion',
@@ -170,6 +171,15 @@ export const environment = {
    coreApiGetGastoListOperation: ':listByEmpresa',
    coreApiGetGastoAgenteListOperation: ':listByEmpresaAndAgente',
  
+  //Contactos
+  coreApiBaseContactoOperation: '/contacto',  
+  coreApiGetContactoListOperation: ':listByEmpresa',
+  
+  //Directorios
+  coreApiBaseDirectorioOperation: '/directorio',  
+
+  coreApiGetDirectorioListOperation: ':listByEmpresa',
+
 };
 
 /*
@@ -180,3 +190,5 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+
+

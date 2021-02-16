@@ -2,7 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
 import { AvisoService } from 'src/app/services/aviso.service';
 import { Directorio } from '../../../models/directorio.model';
-import { DataLocalDirectorioService } from '../../../services/data-local-directorio.service';
+import { DirectorioService } from '../../../services/directorio.service';
+import { UserData } from '../../../providers/user-data';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list',
@@ -15,10 +17,10 @@ export class ListPage implements OnInit {
 
   
 
-  constructor(public dataLocalDirectorioService:DataLocalDirectorioService,
-    private actionSheetCtrl: ActionSheetController) { 
-      console.log('en el constructor de list directorio page');
-      
+  constructor(public directorioService:DirectorioService,
+              private actionSheetCtrl: ActionSheetController,
+              private userData:UserData,
+              private router: Router) { 
     }
 
   ngOnInit() {
@@ -26,22 +28,38 @@ export class ListPage implements OnInit {
 
   async lanzarMenu() {
 
-    let guardarBorrarBtn;
-      guardarBorrarBtn = {
+    let btnEliminar;
+      btnEliminar = {
         text: 'Borrar directorio',
         icon: 'trash',
         cssClass: 'action-dark',
         handler: () => {
-          console.log('Borrar directorio');
-          console.log(this.directorio);  
-          this.dataLocalDirectorioService.borrarDirectorio(this.directorio);
-          
+          if(this.directorio.id > 0 ){
+            this.directorioService.delete(this.directorio.id).subscribe((data) => {
+                if (data.status === 200) { console.log("eliminado correctamente"); this.userData.showToast('registro eliminado correctamente');}
+                else  this.userData.showToast('Error al eliminar registro');
+              },
+              (err) => {
+                  this.userData.showToast("Error al eliminar registro");                  
+              },
+              () => {}
+            );
+          } 
         }
       };
 
     const actionSheet = await this.actionSheetCtrl.create({
       buttons: [
-      guardarBorrarBtn,
+        {
+          text: 'editar directorio',
+          icon: 'trash',
+          cssClass: 'action-dark',
+          handler: () => {
+            console.log('estoy en editar');
+            
+          }
+        },
+      btnEliminar,
       {
         text: 'Cancelar',
         icon: 'close',
@@ -53,6 +71,12 @@ export class ListPage implements OnInit {
       }]
     });
     await actionSheet.present();
+  }
+
+  onRowSelected(){    
+    console.log('onRowSelected');
+    console.log(this.directorio);    
+    this.router.navigate(['/directorio/add', { item: JSON.stringify(this.directorio)}]);  
   }
 
 }

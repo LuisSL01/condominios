@@ -114,13 +114,6 @@ export class AddPage implements OnInit {
         },() => {}
       );
     }
-
-
-
-
-
-
-    
 /* 
     this.dataLocalAdeudoService.guardarAdeudo(this.adeudo);
     this.router.navigate(['/pagos/adeudos']); */
