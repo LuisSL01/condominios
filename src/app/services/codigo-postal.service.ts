@@ -17,10 +17,7 @@ export class CodigoPostalService {
 
   filterCodigosPostales(codigoPostal: string) : Observable<ApiResponse> {
     console.log('filter codigos podtales');
-
-
-    console.log(this.baseUrl + this.codigoPostalContext+"/"+codigoPostal);
-    
+    console.log(this.baseUrl + this.codigoPostalContext+"/"+codigoPostal);    
     return this.http.get<ApiResponse>(this.baseUrl + this.codigoPostalContext + "/" + codigoPostal).pipe(share());
   }
 }

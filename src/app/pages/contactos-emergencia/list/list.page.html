@@ -1,9 +1,8 @@
-
 <ion-card>
   <ion-card-header>
-    <ion-card-title>  {{contacto.titulo}}</ion-card-title>
+    <ion-card-title>{{contacto.nombreCompleto}}</ion-card-title>
     <ion-card-subtitle>
-      <span class="text-primary"> {{contacto.nombre}} {{contacto.celular}}</span>
+      <span class="text-primary"> {{contacto.titulo}}</span>
       <div class="card-more">
         <ion-button fill="clear" (click)="lanzarMenu()">
           <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
@@ -11,11 +10,11 @@
       </div>
     </ion-card-subtitle>
   </ion-card-header>
-  <ion-card-content *ngIf="contacto.telefono2">
-    {{contacto.telefono}} - {{contacto.telefono2}} 
+  <ion-card-content>
+    <ion-label>
+      <h2 *ngIf="contacto.data.celular">Cel. {{contacto.data.celular}}</h2>
+      <h3 *ngIf="contacto.data.telefono1">Tel1. {{contacto.data.telefono1}}</h3>
+      <h3 *ngIf="contacto.data.telefono2">Tel2. {{contacto.data.telefono2}}</h3>
+    </ion-label>
   </ion-card-content>
-  <ion-card-content *ngIf=" ! contacto.telefono2">
-    {{contacto.telefono}}
-  </ion-card-content>
-
-</ion-card>
+</ion-card> 

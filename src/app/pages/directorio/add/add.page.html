@@ -3,114 +3,117 @@
 <app-header titulo="Nuevo directorio"></app-header>
 
 <ion-content>
-  <form #formulario1="ngForm" (ngSubmit)="save()" >
 
+  <form [formGroup]="createDirectorio" (ngSubmit)="save()">
     <ion-list>
-      <ion-item>
-        <ion-label>
-          <ion-icon name="person-outline" style="font-size:23px; color: #50c8ec; 
-              margin-bottom: -5px;
-          "></ion-icon>&nbsp;&nbsp;Nombre completo
-        </ion-label>
-        <ion-input name="nombreCompleto" color="primary" [(ngModel)]="directorio.nombreCompleto" required>
-        </ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label >
-          <ion-icon name="home-outline" style="font-size:23px; color: #50c8ec; 
-              margin-bottom: -5px;
-          "></ion-icon>&nbsp;&nbsp;Nombre Manzana
-        </ion-label>
-        <ion-select name="nombreManzana" [(ngModel)]="directorio.nombreManzana" 
-          value="directorio.nombreManzana" okText="Aceptar"
-          cancelText="Cancelar">          
-          <ion-select-option value="m1">Manzana 1</ion-select-option>
-          <ion-select-option value="m2">Manzana 2</ion-select-option>
-          <ion-select-option value="m3">Manzana 3</ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-item>
-        <ion-label>
-          <ion-icon name="location-outline" style="font-size:23px; color: #50c8ec; 
-              margin-bottom: -5px;
-          "></ion-icon>&nbsp;&nbsp;Calle /núm. interior/núm. exterior
-        </ion-label>
-        <ion-input name="direccion" color="primary" [(ngModel)]="directorio.direccion" required>
-        </ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>
-          <ion-icon name="map-outline" style="font-size:23px; color: #50c8ec; 
-          margin-bottom: -5px;
-      "></ion-icon>&nbsp;&nbsp;Código postal
-        </ion-label>
-        <ion-input name="codigoPostal" color="primary" [(ngModel)]="directorio.codigoPostal">
-        </ion-input>        
-      </ion-item>
-      <ion-item>
-        <ion-button fill="clear"  expand="block" size="small" style="text-transform: none;font-size:16px;margin-left: -4px; " >
-          <ion-icon slot="start" name="checkmark-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>&nbsp;&nbsp;Validar código postal
+   
+      <div formGroupName="data">
+        
+        <ion-item>
+          <ion-label>
+            <ion-icon name="person-outline" style="font-size:23px; color: #50c8ec; 
+                margin-bottom: -5px;
+            "></ion-icon>&nbsp;&nbsp;Nombre completo
+          </ion-label>
+          <ion-input formControlName="nombreCompleto">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <ion-icon name="document-text-outline" style="font-size:23px; color: #50c8ec; 
+                margin-bottom: -5px;
+            "></ion-icon>&nbsp;&nbsp;Descripción
+          </ion-label>
+          <ion-input formControlName="descripcion">
+          </ion-input>
+        </ion-item>
+
+
+        <ion-item>
+          <ion-label>
+            <ion-icon name="call-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;
+            "></ion-icon>&nbsp;&nbsp;Celular:
+          </ion-label>
+          <ion-input formControlName="celular"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <ion-icon name="mail-outline" style="font-size:23px; color: #50c8ec; 
+                margin-bottom: -5px;
+            "></ion-icon>&nbsp;&nbsp;Email:
+          </ion-label>
+          <ion-input formControlName="email"></ion-input>
+        </ion-item>
+        <div
+          *ngIf="createDirectorio.get('data').get('email').invalid && (createDirectorio.get('data').get('email').dirty || createDirectorio.get('data').get('email').touched)">
+          <ion-label color="danger" *ngIf="createDirectorio.get('data').get('email').errors['email']">
+            El email no es válido.
+          </ion-label>
+        </div>
+      </div>
+      <div formGroupName="direccion">
+        <ion-item>
+          <ion-label>
+            <ion-icon name="home-outline" style="font-size:23px; color: #50c8ec; 
+                margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Domicilio:
+          </ion-label>
+          <ion-input type="text" class="form-control" formControlName="calle" placeholder="Domicilio">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <ion-icon name="home-outline" style="font-size:23px; color: #50c8ec; 
+                margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;# int.:
+          </ion-label>
+          <ion-input type="text" class="form-control" formControlName="numeroInterior" placeholder="# int"> </ion-input>
+
+          <ion-label>
+            <ion-icon name="home-outline" style="font-size:23px; color: #50c8ec; 
+                margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;# ext.:
+          </ion-label>
+          <ion-input type="text" class="form-control" formControlName="numeroExterior" placeholder="# ext"> </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <ion-icon name="home-outline" style="font-size:23px; color: #50c8ec; 
+                margin-bottom: -5px;
+            "></ion-icon>&nbsp;&nbsp;Código Postal:
+          </ion-label>
+          <ion-input type="text" maxlength="5" class="form-control" formControlName="asentamiento" placeholder="CP">
+          </ion-input>
+        </ion-item>
+        <div
+          *ngIf="createDirectorio.get('direccion').get('asentamiento').invalid && (createDirectorio.get('direccion').get('asentamiento').dirty || createDirectorio.get('direccion').get('asentamiento').touched)">
+          <ion-label color="danger" *ngIf="createDirectorio.get('direccion').get('asentamiento').errors['required']">
+            * El código postal es requerido
+          </ion-label>
+        </div>
+
+        <ion-button (click)="validarCP()" expand="block" shape="round">
+          Validar código postal
         </ion-button>
 
-       
-      </ion-item>
-      <ion-item>
-        <ion-label>
-          <ion-icon name="call-outline" style="font-size:23px; color: #50c8ec; 
-          margin-bottom: -5px;
-      "></ion-icon>&nbsp;&nbsp;Número de télefono
-      
-        </ion-label>   
-        <ion-input name="numeroTelefono" color="primary" [(ngModel)]="directorio.numeroTelefono" >
-        </ion-input>        
-      </ion-item>
 
-
-
-
+        <ion-item>
+          <ion-label>
+            <ion-icon name="home-outline" style="font-size:23px; color: #50c8ec; 
+                margin-bottom: -5px;
+            "></ion-icon>&nbsp;&nbsp;Asentamiento:
+          </ion-label>
+          <ion-select interface="action-sheet" cancelText="Cancelar" placeholder="Seleccionar" required
+            (ionChange)="cambioAsentamiento($event)">
+            <ion-select-option *ngFor="let asento of asentamientos" [value]="asento">
+              {{ asento.colonia }}-{{ asento.municipio}}--{{asento.estado}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
     </ion-list>
 
-
-
-    <ion-footer class="ion-no-border" translucent>
-      <ion-toolbar color="light" style="position:fixed;  bottom:47px; height: 50px;">
-        <ion-grid>
-          <ion-row>
-            <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" offset-md="4" offset-sm="4">
-              <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
-
-              <ion-button fill="clear" size="small" type="submit" [disabled]="formulario1.invalid"
-                style="text-transform: none; margin-left: 120px; margin-top: -40px;">Guardar
-                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #50c8ec;">
-                </ion-icon>
-              </ion-button>
-
-
-              <ion-button fill="clear" size="small"
-                style="text-transform: none; margin-top: -80px;  margin-left: 220px; " 
-                routerLink="/directorio">
-                Cancelar
-                <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
-              </ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-toolbar>
-    </ion-footer>
-
-
-
-    <ion-footer class="ion-no-border" translucent>
-      <ion-toolbar color="light" style=" position: fixed; bottom: 0px; height: 48px;">
-        <ion-grid>
-          <ion-row>
-            <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" offset-md="4" offset-sm="4">
-              <ion-img src="assets/1.gif" style=" height:60px; display: block; width:400px;  margin-right: 20px; margin-top: -15px;"></ion-img>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-toolbar>
-    </ion-footer>
-
+    <app-buttons valueLinkCancel="/directorio" valueDisabled="{{ ! createDirectorio.valid}}"></app-buttons>
+    <app-footer></app-footer>
   </form>
 </ion-content>

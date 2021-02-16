@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ContactosEmergenciaService } from '../../../services/contactos-emergencia.service';
 import { ContactosEmergencia } from '../../../models/contactos-emergencia.model';
 import { ActionSheetController } from '@ionic/angular';
+import { UserData } from '../../../providers/user-data';
 
 @Component({
   selector: 'app-list',
@@ -12,8 +13,9 @@ export class ListPage implements OnInit {
 
   @Input() contacto:ContactosEmergencia;
   
-  constructor(public dataLocalContactosEmergenciaService : ContactosEmergenciaService,
-    private actionSheetCtrl: ActionSheetController) { }
+  constructor(public contactoService : ContactosEmergenciaService,
+              private actionSheetCtrl: ActionSheetController,
+              private userData:UserData) { }
 
   ngOnInit() {
   }
@@ -28,7 +30,20 @@ export class ListPage implements OnInit {
         cssClass: 'action-dark',
         handler: () => {
           console.log('Borrar contacto');
-          console.log(this.contacto);  
+          console.log(this.contacto);
+          if(this.contacto.id > 0 ){
+            this.contactoService.delete(this.contacto.id).subscribe((data) => {
+                if (data.status === 200) { console.log("eliminado correctamente"); this.userData.showToast('registro eliminado correctamente');}
+                else  this.userData.showToast('Error al eliminar registro');
+              },
+              (err) => {
+                  this.userData.showToast("Error al eliminar registro");                  
+              },
+              () => {}
+            );
+          }else{
+            //Se manda a eliminar de los registros que se tengan locales            
+          }
           /* this.dataLocalContactosEmergenciaService.borrarContactoEmergencia(this.contacto);           */
         }
       };

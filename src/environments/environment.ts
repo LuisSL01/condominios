@@ -121,6 +121,7 @@ export const environment = {
   coreApiBaseMarcaCatalog: '/marca', 
 
   coreApiBaseDeleteOperation: '/delete',
+  coreApiBaseEditOperation: '/edit',
   //app- avisos
   coreApiBaseAvisosAdministracionOperation: '/aviso',
   coreApiBasePublicacionOperation: '/publicacion',
@@ -163,9 +164,14 @@ export const environment = {
   coreApiGetPagoComprobanteListOperation: ':listByEmpresa',
   coreApiGetPagoComprobanteAgenteListOperation: ':listByEmpresaAndAgente',
 
+  //Contactos
   coreApiBaseContactoOperation: '/contacto',  
   coreApiGetContactoListOperation: ':listByEmpresa',
   
+  //Directorios
+  coreApiBaseDirectorioOperation: '/directorio',  
+
+  coreApiGetDirectorioListOperation: ':listByEmpresa',
 
 };
 

@@ -21,8 +21,6 @@ export class ContactosEmergenciaService {
 
   constructor(private storage: Storage,
               private http: HttpClient) {
-    /* this.cargarContactosEmergencia();
-    this.cargarContactosDefault(); */
   }
 
   save(contactoData: any): Observable<ApiResponse> {
@@ -39,56 +37,6 @@ export class ContactosEmergenciaService {
     console.log(this.baseUrl + this.contactoContext+ environment.coreApiGetContactoListOperation +"/"+idEmpresa+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):''));
     return this.http.get<ApiResponse>(this.baseUrl + this.contactoContext+ environment.coreApiGetContactoListOperation +"/"+idEmpresa+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):'')).pipe(share());
   }
-
-
-
-  cargarContactosDefault(){
-    console.log('cargando contactos default...');
-    this.contactos.push(this.addContactoDefault('Emergencias','911'));
-    this.contactos.push(this.addContactoDefault('Capufe','074'));
-    this.contactos.push(this.addContactoDefault('Ángeles Verdes','078'));
-    this.contactos.push(this.addContactoDefault('Cruz Roja','53 95 11 11'));
-    this.contactos.push(this.addContactoDefault('LOCATEL','56 58 11 11'));
-    this.contactos.push(this.addContactoDefault('Protección Civil','56 83 22 22'));
-    this.contactos.push(this.addContactoDefault('Denuncia Anónima','089'));
-    this.contactos.push(this.addContactoDefault('Incendios Forestales','55 54 06 12'));
-    this.contactos.push(this.addContactoDefault('Policía Federal','088'));
-    this.contactos.push(this.addContactoDefault('Fuga de agua','56 54 32 10'));
-    this.contactos.push(this.addContactoDefault('Fuga de gas','53 53 57 63'));
-  }
-
-  addContactoDefault(nombre:string, numero:string):any{
-
-    /* let contac = new ContactosEmergencia();
-    contac.id = this.dataLocalService.getNumeroNegativo() * -1;
-    contac.nombreCompleto =nombre;    
-    contac.telefono = numero;
-    return contac; */
-
-  }
-
-/*   construyeNombreEtiqueta(){
-    return this.nombreEtiqueta = this.dataLocalService.idempresa+'_adeudo';    
-  } */
-
-
-
-/*   guardarContactoEmergencia(contactoEmergencia: ContactosEmergencia) {
-    const existe = this.contactosEmergencia.find( con => con.id === contactoEmergencia.id );
-    if(! existe ){
-      contactoEmergencia.id = this.dataLocalService.getNumeroNegativo() * -1;
-      this.contactosEmergencia.unshift(contactoEmergencia);
-      this.storage.set(this.construyeNombreEtiqueta(), this.contactosEmergencia);
-      this.dataLocalService.presentToast('Contacto agregado.')
-
-    }
-  } */
-/* 
-  borrarContactoEmergencia(contactoEmergencia: ContactosEmergencia){
-    this.contactosEmergencia = this.contactosEmergencia.filter(con => con.id !== contactoEmergencia.id);
-    this.storage.set(this.construyeNombreEtiqueta(), this.contactosEmergencia);
-    this.dataLocalService.presentToast('Contacto borrado');
-  } */
 
   async getContactosFromStorage(idEmpresa:number) {
     const contacts = await this.storage.get(idEmpresa+this.nombreEtiqueta);
