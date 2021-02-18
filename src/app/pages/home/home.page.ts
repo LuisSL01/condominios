@@ -34,7 +34,18 @@ export class HomePage implements OnInit {
     private dataLocalService: DataLocalService,
     private modalCtrl: ModalController,
     private agenteService: AgenteService
-  ) {}
+  ) {
+
+    this.storage.get('userDetails').then((val) => {
+      if (val) {
+        this.showLoading();
+        this.userData.setConfigEmpresa();
+        this.router.navigate(['/inicio']);
+        this.showToast("Bienvenido " + JSON.parse(val).nombreCompleto);
+      }
+    });
+
+  }
 
   ngOnInit() {}
 
@@ -60,29 +71,11 @@ export class HomePage implements OnInit {
       loginPayload.username.toLowerCase() === "test1" &&
       loginPayload.password.toLowerCase() === "test1"
     ) {//Usuario admin prueba
-      window.localStorage.setItem("userDetails",JSON.stringify({ "username": "test1", "nombre": "Test1", "id": 4 }));
-      this.storage.set("userDetails",JSON.stringify({ "username": "test1", "nombre": "Test1", "id": 4 }));
-      
+      window.localStorage.setItem("userDetails",JSON.stringify({ "username": "test1", "nombreCompleto": "Test1", "id": 4 }));
+      this.storage.set("userDetails",JSON.stringify({ "username": "test1", "nombreCompleto": "Test1", "id": 4 }));      
       this.idAgente = 4;
-      this.buscarEmpresasAgente();
-      console.log("empresas: " + this.empresas);
+      this.buscarEmpresasAgente();      
       this.presentModalListEmpresas(); //Debo presentar el modal para seleccionar una empresa
-    } else if (
-      (loginPayload.username.toLowerCase() === "rcortes" &&
-        loginPayload.password.toLowerCase() === "rcortes") ||
-      (loginPayload.username.toLowerCase() === "eosorio" &&
-        loginPayload.password.toLowerCase() === "eosorio")
-    ) {//Usuarios de prueba
-      window.localStorage.setItem("userDetails",JSON.stringify({ "username": "test1", "nombre": "Test1", "id": 4 }));
-      this.storage.set("userDetails",JSON.stringify({ "username": "test1", "nombre": "Test1", "id": 4 }));
-      this.idAgente = 4;
-      this.buscarEmpresasAgente();
-      window.localStorage.setItem('empresaData', JSON.stringify({"nombre":this.empresas[0].nombre,"id":this.empresas[0].id}));
-      this.storage.set('empresaData', JSON.stringify({"nombre":this.empresas[0].nombre,"id":this.empresas[0].id}));
-      this.userData.setConfigEmpresa();
-
-      this.router.navigate(["/inicio"]);
-      this.showToast("Bienvenido a armonía residencial: " +loginPayload.username.toLowerCase());
     } else {
        this.authService.login(loginPayload).subscribe(data => {
          if (data.status === 200) {
@@ -91,20 +84,15 @@ export class HomePage implements OnInit {
            this.agenteService.getUserById(data.result.id).subscribe(userFull => {
             if (userFull.status === 200) {
               this.storage.set('userFull', userFull.result);
-              console.log('userFull.result.activo === false: ',(userFull.result.activo === false));              
               if(userFull.result.activo === false){
                 this.router.navigate(['/']);
-                this.showToast("El usuario " + data.result.nombreCompleto + ", no esta activo para la aplicación móvil");   
-              }else{
-                  //Aqui debo preguntar a cuantas empresas tiene acceso
-             console.log("data.result del login: "+data.result);                          
+                this.showToast("El usuario " + data.result.nombreCompleto + ", no se encuentra activo para la aplicación móvil");   
+              }else{//Aqui debo preguntar a cuantas empresas tiene acceso                          
              this.idAgente = data.result.id;
              let nombreAgente = data.result.nombreCompleto;
              this.authService.getListEmpresas(this.idAgente).subscribe(data => {
-              console.log("getListEmpresas: data: "+data);
               if (data.status === 200) {
                 this.empresas = data.result;
-                console.log("estatus200:" + this.empresas);
                 if(this.empresas.length == 1){//Debo redirecionar al inicio, solo hay una empresa
                 window.localStorage.setItem('empresaData', JSON.stringify({"nombre":this.empresas[0].nombre,"id":this.empresas[0].id}));
                 this.storage.set('empresaData', JSON.stringify({"nombre":this.empresas[0].nombre,"id":this.empresas[0].id}));                  

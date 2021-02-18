@@ -3,193 +3,75 @@
 <app-header titulo="Nuevo anuncio"></app-header>
 
 <ion-content>
-<!--   <form #formulario="ngForm" (ngSubmit)="save()">
-    <ion-list>
-      <ion-item>
-        <ion-label>
-          <ion-icon name="newspaper-outline" style="font-size:23px; color: #50c8ec;
-              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Título del anuncio
-        </ion-label>
-        <ion-input name="titulo" [(ngModel)]="anuncio.titulo" required>
-        </ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label>
-          <ion-icon name="create-outline" style="font-size:23px; color: #50c8ec;
-              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Descripción
-        </ion-label>
-
-        <ion-textarea rows="1" cols="1" name="descripcion" [(ngModel)]="anuncio.descripcion" required></ion-textarea>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">
-          <ion-icon name="cash-outline" style="font-size:23px; color: #50c8ec; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Precio
-        </ion-label>
-        <ion-input name="precio" type="number" [(ngModel)]="anuncio.precio" required>
-        </ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">
-          <ion-icon name="call-outline" style="font-size:23px; color: #50c8ec; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Teléfono
-        </ion-label>
-        <ion-input name="telefono" [(ngModel)]="anuncio.telefono">
-        </ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>
-          <ion-icon name="today-outline" style="font-size:23px; color: #50c8ec;
-              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Fecha de expiración
-        </ion-label>
-        <ion-datetime style="margin-bottom: -8px;" name="fechaVence" placeholder="Fecha vence"
-          displayFormat="DD/MM/YYYY" cancelText="Descartar" doneText="Aceptar"
-          [ngModel]="anuncio.fechaVence.toISOString()" (ionChange)="cambioFechaVence( $event )">
-        </ion-datetime>
-      </ion-item>
-      <ion-item>
-        <ion-label>
-          <ion-icon name="receipt-outline" style="font-size:23px; color: #50c8ec;
-              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Estatus
-        </ion-label>
-        <ion-toggle slot="end" name="estatus" [(ngModel)]="anuncio.estatus"></ion-toggle>
-      </ion-item>
-
-      <ion-item>
-        <ion-button fill="clear" size="small" (click)="camara()">
-          <ion-icon slot="start" name="camera-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
-
-        </ion-button>
-
-        <ion-button fill="clear" size="small" (click)="libreria()">
-          <ion-icon slot="start" name="image-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
-
-        </ion-button>
-      </ion-item>
-      <ion-item>
-        <ion-col size="3" *ngFor="let image of anuncio.imgs">
-          <ion-label>image</ion-label>
-          <ion-card>
-            <img [src]="image | imageSanitizer">
-          </ion-card>
-        </ion-col>
-      </ion-item>
-
-      <ion-item>
-        <ion-col size="3" *ngFor="let data of anuncio.data">
-          <ion-label>{{data.path}}</ion-label>
-          <ion-card>
-            <img [src]=" data.path | imageSanitizer">
-          </ion-card>
-        </ion-col>
-      </ion-item>
-    </ion-list>
-    <ion-footer class="ion-no-border" translucent>
-      <ion-toolbar color="light" style="position:fixed;  bottom:47px; height: 50px;">
-        <ion-grid>
-          <ion-row>
-            <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" offset-md="4" offset-sm="4">
-              <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
-
-              <ion-button fill="clear" size="small" type="submit" [disabled]="formulario.invalid"
-                style="text-transform: none; margin-left: 120px; margin-top: -40px;">Guardar
-                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #50c8ec;">
-                </ion-icon>
-              </ion-button>
-              <ion-button fill="clear" size="small"
-                style="text-transform: none; margin-top: -80px;  margin-left: 220px;" routerLink="/anuncios">Cancelar
-                <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
-              </ion-button>
-
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-toolbar>
-    </ion-footer>
-
-    <ion-footer class="ion-no-border" translucent>
-      <ion-toolbar color="light" style=" position: fixed; bottom: 0px; height: 48px;">
-        <ion-grid>
-          <ion-row>
-            <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" offset-md="4" offset-sm="4">
-              <ion-img src="assets/1.gif"
-                style=" height:60px; display: block; width:400px;  margin-right: 20px; margin-top: -15px;"></ion-img>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-toolbar>
-    </ion-footer>
-  </form> -->
 
   <form [formGroup]="createAnuncio"  (ngSubmit)="save()">
     <ion-list>
-      <ion-item>
-        <ion-label>
-          <ion-icon name="newspaper-outline" style="font-size:23px; color: #50c8ec;
-              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Título del anuncio
-        </ion-label>
-        <ion-input formControlName="titulo" >
-        </ion-input>
-      </ion-item>
-      <ion-label color="danger"
-        *ngIf="createAnuncio.controls.titulo.errors?.required && (createAnuncio.touched || createAnuncio.dirty)">* El
-        titulo es obligatorio </ion-label>
+      <div formGroupName="data">
+        
+        <ion-item>
+          <ion-label>
+            <ion-icon name="newspaper-outline" style="font-size:23px; color: #50c8ec;
+                margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Título del anuncio
+          </ion-label>
+          <ion-input formControlName="titulo" >
+          </ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-label>
-          <ion-icon name="create-outline" style="font-size:23px; color: #50c8ec;
-              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Descripción
-        </ion-label>
-
-        <ion-textarea  formControlName="descripcion"  rows="1" cols="1" ></ion-textarea>
-      </ion-item>
-      <ion-label color="danger"
-        *ngIf="createAnuncio.controls.descripcion.errors?.required && (createAnuncio.touched || createAnuncio.dirty)">
-        * La descripción es obligatorio </ion-label>
-      <ion-item>
-        <ion-label position="floating">
-          <ion-icon name="cash-outline" style="font-size:23px; color: #50c8ec; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Precio
-        </ion-label>
-        <ion-input formControlName="precio"  type="number" >
-        </ion-input>
-      </ion-item>
-      <ion-label color="danger"
-        *ngIf="createAnuncio.controls.precio.errors?.required && (createAnuncio.touched || createAnuncio.dirty)">
-        * El precio es obligatorio </ion-label>
-      <ion-item *ngIf="false" >
-        <ion-label position="floating">
-          <ion-icon name="call-outline" style="font-size:23px; color: #50c8ec; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Teléfono
-        </ion-label>
-        <ion-input formControlName="telefono">
-        </ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>
-          <ion-icon name="today-outline" style="font-size:23px; color: #50c8ec;
-              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Fecha de expiración
-        </ion-label>
-        <ion-datetime style="margin-bottom: -8px;" 
-        placeholder="Fecha vence"
-        displayFormat="DD/MM/YYYY" cancelText="Descartar" doneText="Aceptar"        
-        formControlName="fechaVence"
-        (ionChange)="cambioFechaVence( $event )">
-      </ion-datetime>
-
-        <!-- <ion-datetime style="margin-bottom: -8px;" name="fechaVence" placeholder="Fecha vence"
-          displayFormat="DD/MM/YYYY" cancelText="Descartar" doneText="Aceptar"
-          [ngModel]="anuncio.fechaVence.toISOString()" (ionChange)="cambioFechaVence( $event )">
-        </ion-datetime> -->
-      </ion-item>
-      <ion-item>
-        <ion-label>
-          <ion-icon name="receipt-outline" style="font-size:23px; color: #50c8ec;
-              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Estatus
-        </ion-label>
-        <ion-toggle formControlName="estatus" slot="end" ></ion-toggle>
-      </ion-item>
+        <div
+          *ngIf="createAnuncio.get('data').get('titulo').invalid && (createAnuncio.get('data').get('titulo').dirty || createAnuncio.get('data').get('titulo').touched)">
+          <div *ngIf="createAnuncio.get('data').get('titulo').errors['required']">
+            *El titulo es requerido.
+          </div>
+        </div>
+        
+  
+        <ion-item>
+          <ion-label>
+            <ion-icon name="create-outline" style="font-size:23px; color: #50c8ec;
+                margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Descripción
+          </ion-label>
+  
+          <ion-textarea  formControlName="descripcion"  rows="1" cols="1" ></ion-textarea>
+        </ion-item>
+        
+        
+        <ion-item>
+          <ion-label position="floating">
+            <ion-icon name="cash-outline" style="font-size:23px; color: #50c8ec; 
+                margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Precio
+          </ion-label>
+          <ion-input formControlName="precio"  type="number" >
+          </ion-input>
+        </ion-item>
+       
+        <ion-item *ngIf="false" >
+          <ion-label position="floating">
+            <ion-icon name="call-outline" style="font-size:23px; color: #50c8ec; 
+                margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Teléfono
+          </ion-label>
+          <ion-input formControlName="telefono">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <ion-icon name="today-outline" style="font-size:23px; color: #50c8ec;
+                margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Fecha de expiración
+          </ion-label>
+          <ion-datetime style="margin-bottom: -8px;" 
+          placeholder="Fecha vence"
+          displayFormat="DD/MM/YYYY" cancelText="Descartar" doneText="Aceptar"        
+          formControlName="fechaVence"
+          (ionChange)="cambioFechaVence( $event )">
+        </ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <ion-icon name="receipt-outline" style="font-size:23px; color: #50c8ec;
+                margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Estatus
+          </ion-label>
+          <ion-toggle formControlName="estatus" slot="end" ></ion-toggle>
+        </ion-item>
+      </div>
 
     
 
@@ -211,7 +93,7 @@
         </ion-col>
       </ion-item> -->
       <ion-item>
-        <ion-col size="3" *ngFor="let dat of data">          
+        <ion-col size="3" *ngFor="let dat of files">          
           <ion-card>            
             <img  src="{{pathBase64}}{{dat.base64}}">
           </ion-card>

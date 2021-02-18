@@ -31,40 +31,7 @@
     </ion-row>
   </ion-grid>
 
-  <!-- <ion-grid fixed *ngIf="anuncioService.anuncios.length > 0 ">
-    <ion-row>
-     <ion-col  size="12"
-         *ngFor="let pub of anuncioService.anuncios">
-         <ion-card>
-          <ion-card-header>
-            <ion-card-title>{{pub.titulo}}</ion-card-title>        
-            <ion-card-subtitle>
-              <span class="text-primary"> {{pub.tipo}}</span>
-              <div class="card-more">
-              </div>
-            </ion-card-subtitle>
-          </ion-card-header>
-          <ion-card-content>
-            {{pub.descripcion}}
-          </ion-card-content>
-          <ion-item>
-            <ion-slides pager="true" *ngIf="pub.data?.archivos.length > 1">
-              <ion-slide *ngFor="let img of pub.data.archivos" class="image-slide">              
-                <img  *ngIf="img.rutaS3"  src="{{pathS3}}{{img.rutaS3}}">
-                <img  *ngIf=" ! img.rutaS3"  src="{{pathBase64}}{{img.base64}}">
-              </ion-slide>
-            </ion-slides>
-              <ion-slides *ngIf="pub.data?.archivos.length === 1">
-                <ion-slide *ngFor="let img of pub.data.archivos" class="image-slide">          
-                  <img  *ngIf="img.rutaS3"  src="{{pathS3}}{{img.rutaS3}}">
-                  <img  *ngIf=" ! img.rutaS3"  src="{{pathBase64}}{{img.base64}}">
-                </ion-slide>
-            </ion-slides>  
-          </ion-item>
-        </ion-card>
-     </ion-col>
-   </ion-row>
-  </ion-grid> -->
+ 
   
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
     <ion-infinite-scroll-content
@@ -87,14 +54,3 @@
     </ion-grid>
   </ion-toolbar>
 </ion-footer>
-
- <!--  <ion-footer class="ion-no-border" translucent>
-  <ion-toolbar color="light" style="height: 50px;">
-    <ion-grid>
-      <ion-row>
-          <ion-img src="assets/1.gif" style=" height:60px; display: block; width:400px; margin-left: 20px; margin-top: -38px;"></ion-img>   
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-toolbar>
-</ion-footer>-->

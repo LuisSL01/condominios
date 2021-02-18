@@ -17,7 +17,8 @@ export const environment = {
 
   authServiceBaseUrl: 'http://192.168.137.1:8080',
   coreServiceBaseUrl: 'http://192.168.137.1:8081',
-  formsServiceBaseUrl: 'http://192.168.137.1:8082',
+  formsServiceBaseUrl: 'http://192.168.1.125:8082',
+
 
 
   /* authServiceBaseUrl: 'http://54.177.89.203:8080',
@@ -164,13 +165,19 @@ export const environment = {
   coreApiGetPagoComprobanteListOperation: ':listByEmpresa',
   coreApiGetPagoComprobanteAgenteListOperation: ':listByEmpresaAndAgente',
 
+   //Gasto
+   coreApiBaseGastoOperation: '/gasto',    
+   coreApiBaseGastoByEmpresaOperation: '/gastoByEmpresa',
+   coreApiBaseGastosOperation: '/gastos',
+   coreApiGetGastoListOperation: ':listByEmpresa',
+   coreApiGetGastoAgenteListOperation: ':listByEmpresaAndAgente',
+ 
   //Contactos
   coreApiBaseContactoOperation: '/contacto',  
   coreApiGetContactoListOperation: ':listByEmpresa',
   
   //Directorios
   coreApiBaseDirectorioOperation: '/directorio',  
-
   coreApiGetDirectorioListOperation: ':listByEmpresa',
 
 };

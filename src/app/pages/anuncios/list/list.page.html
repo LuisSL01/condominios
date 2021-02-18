@@ -2,10 +2,10 @@
 
 <ion-card lines="none">
   <ion-card-header>
-    <ion-card-title>{{anuncio.titulo}}</ion-card-title>
+    <ion-card-title>{{anuncio.data.titulo}}</ion-card-title>
 
     <ion-card-subtitle>
-      <span class="text-primary"> ${{anuncio.precio}} </span>
+      <span class="text-primary"> ${{anuncio.data.precio}} </span>
       <div class="card-more">
         <ion-button fill="clear" (click)="lanzarMenu()">
           <ion-icon slot="icon-only" color="primary" name="ellipsis-vertical-outline"></ion-icon>
@@ -17,34 +17,17 @@
   </ion-card-header>
 
   <ion-card-content>
-    {{anuncio.descripcion}}
+    {{anuncio.data.descripcion}}
   </ion-card-content>
 
- <!--  <ion-item>
-    <ion-slides pager="true" *ngIf="anuncio.imgs.length > 1">
-      <ion-slide *ngFor="let img of anuncio.imgs" class="image-slide">
-        <img [src]="img | imageSanitizer">
-      </ion-slide>
-    </ion-slides>
-    <ion-slides *ngIf="anuncio.imgs.length === 1">
-      <ion-slide *ngFor="let img of anuncio.imgs" class="image-slide">
-        <img [src]="img | imageSanitizer">
-      </ion-slide>
-      
-    </ion-slides>
-  </ion-item> -->
-  <ion-item>
-    <ion-slides pager="true" *ngIf="anuncio.data?.archivos.length > 1">
-      <ion-slide *ngFor="let img of anuncio.data.archivos" class="image-slide">      
+
+  <ion-item  >
+
+    <ion-slides pager="{{anuncio.files?.archivos.length > 1 ?true:false}}" >
+      <ion-slide *ngFor="let img of anuncio.files.archivos" class="image-slide">      
         <img  *ngIf="img.rutaS3"  src="{{pathS3}}{{img.rutaS3}}">
         <img  *ngIf=" ! img.rutaS3"  src="{{pathBase64}}{{img.base64}}">
       </ion-slide>
     </ion-slides>
-      <ion-slides *ngIf="anuncio.data?.archivos.length === 1">
-        <ion-slide *ngFor="let img of anuncio.data.archivos" class="image-slide">          
-          <img  *ngIf="img.rutaS3"  src="{{pathS3}}{{img.rutaS3}}">
-          <img  *ngIf=" ! img.rutaS3"  src="{{pathBase64}}{{img.base64}}">
-        </ion-slide>
-    </ion-slides>  
   </ion-item>
 </ion-card>

@@ -47,7 +47,10 @@ export class AppComponent implements OnInit{
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      //this.pushService.configuracionInicial()
+      console.log('iniciando configuracion inicial');
+      
+
+      this.pushService.configuracionInicial()
     });
   }
 }

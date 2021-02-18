@@ -46,13 +46,13 @@ export class SincronizarPage implements OnInit {
         const anuncioObj = {
           empresa: element.empresa,
           agenteCreador: element.agenteCreador,
-          titulo: element.titulo,
-          descripcion: element.descripcion,
-          precio: element.precio,
+          data : element.data,
+          /* descripcion: element.descripcion,
+          precio: element.precio, */
           tipo: element.tipo,
-          fechaVence: element.fechaVence,
-          data: {
-            archivos: element.data,
+          /* fechaVence: element.fechaVence, */
+          files: {
+            archivos: element.files,
           },
         };
         anunciosTemp.push(anuncioObj);

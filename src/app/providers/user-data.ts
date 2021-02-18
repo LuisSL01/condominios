@@ -12,8 +12,9 @@ export class UserData {
   HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
   empresa_id:number = 0;
   agente_id:number = 0;
-  nameImageEmpresa ="";
 
+
+  nameImageEmpresa ="";
   nombreCompleto:string ="";
 
   constructor(
@@ -114,6 +115,8 @@ export class UserData {
  
 
   setConfigEmpresa(){
+    console.log('setConfigEmpresa');
+    
     let empresa_id_temp =  JSON.parse(window.localStorage.getItem('empresaData')).id;//Recuperamos el id empresa de empresaData    
     if(empresa_id_temp === 7) {
       /* this.nameImageEmpresa = "esmeralda.png"; */
@@ -127,6 +130,7 @@ export class UserData {
       /* this.nameImageEmpresa = "sur.png"; */  
       this.nameImageEmpresa = "https://almacenamientonube.s3.us-west-1.amazonaws.com/Config/empresaId_12.png";
     }  
+
   }
 
   showToast(dataMessage: string) {
