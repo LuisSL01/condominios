@@ -6,6 +6,7 @@ import { BitacoraVisitaService } from '../../../services/bitacora-visita.service
 import { FormBuilder, Validators } from '@angular/forms';
 import { UserData } from '../../../providers/user-data';
 import { ArchivoVortexApp } from '../../../models/archivo-vortex.model';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 
 declare var window: any;
@@ -40,13 +41,24 @@ export class AddPage implements OnInit {
               private camera:Camera,
               private router:Router,
               private fb: FormBuilder,
-              private userData: UserData) { }
+              private userData: UserData,
+              private barcodeScanner: BarcodeScanner) { }
 
   ngOnInit() {
     console.log('en el ngoninit');
     
     this.idEmpresa = this.userData.getIdEmpresa();
     this.idAgente = this.userData.getIdAgente();
+  }
+
+  ionViewDidEnter(){
+    console.log('ionViewDidEnter');    
+    
+  }
+  ionViewWillEnter(){
+    console.log('ionViewWillEnter');
+    this.scanQR();
+    
   }
 
   getCameraOptions(): any {
@@ -91,7 +103,23 @@ export class AddPage implements OnInit {
 
   scanQR(){
     console.log('scanQR()');
+
+    console.log('deberia estar llamando al method');
     
+    
+
+
+
+
+    this.barcodeScanner.scan().then(barcodeData => {
+
+      
+      console.log('Barcode data', barcodeData);
+    }).catch(err => {
+
+
+      console.log('Error', err);
+    });
   }
   
   save() {

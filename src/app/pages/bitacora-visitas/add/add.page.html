@@ -13,8 +13,11 @@
         <ion-toggle slot="end" formControlName="visitaProgramada"></ion-toggle>
       </ion-item>
       <ion-item *ngIf=" createBitacoraVisita.value.visitaProgramada ">
-        <ion-button fill="clear" expand="block" size="small"
+        <ion-button fill="outline" expand="full"
+          size="small"
+          shape="round"
           style="text-transform: none;font-size:16px;margin-left: -4px; " (click)="scanQR()">
+          
           <ion-icon slot="start" name="qr-code-outline" style="font-size:23px; color: #50c8ec; margin-left: 1px;">
           </ion-icon>&nbsp;&nbsp;Escanear QR
         </ion-button>
