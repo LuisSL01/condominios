@@ -1,6 +1,15 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { OneSignal, OSNotification, OSNotificationPayload } from '@ionic-native/onesignal/ngx';
 import { Storage } from '@ionic/storage';
+
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { ApiResponse } from '../models/api-response.model';
+import { share } from 'rxjs/operators';
+import { Observable } from 'rxjs/index';
+import { Notificacion } from '../models/notificacion.model';
+import { UserData } from '../providers/user-data';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,12 +25,21 @@ export class PushService {
        } */
      ];
    
-     userId:string;
+  userId:string;
    
-     pushListener = new EventEmitter<OSNotificationPayload>();
+  pushListener = new EventEmitter<OSNotificationPayload>();
+
+  notificacion : Notificacion;
+  dataMapNotificacion: any = {};
+
+
+  baseUrl: string = environment.coreServiceBaseUrl;
+  notificacionContext: string = environment.coreApiBaseNotificacionOperation;  
 
   constructor(private oneSignal: OneSignal,
-            private storage: Storage) {}
+              private storage: Storage,
+              private userData: UserData,
+              private http: HttpClient) {}
 
   async getMensajes() {
     await this.cargarMensajes();
@@ -33,9 +51,8 @@ export class PushService {
     
     
 
-    //El primero es la ONESIGNAL APP ID
-    //443f2c44-d14e-456d-a9e2-3dab0afa3122
-    //Segundo argumento es el id del remitente de firebase    
+    //El primer valor es la ONESIGNAL APP ID -->443f2c44-d14e-456d-a9e2-3dab0afa3122
+    //El Segundo argumento es el id del remitente de firebase --> 800047039884
     this.oneSignal.startInit('443f2c44-d14e-456d-a9e2-3dab0afa3122', '800047039884');
 
     this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
@@ -43,8 +60,26 @@ export class PushService {
     this.oneSignal.handleNotificationReceived().subscribe((noti) => {
       // do something when notification is received
       console.log('Notificacion recibida ',noti);
+
+      this.notificacion = new Notificacion();
+      this.dataMapNotificacion = {};
+   
+      this.notificacion.empresa = this.userData.getIdEmpresa();
+      this.notificacion.agente = this.userData.getIdAgente();
+
+      this.dataMapNotificacion.body = noti.payload.body;
+      this.dataMapNotificacion.title = noti.payload.title;
+      this.dataMapNotificacion.additionalData = noti.payload.additionalData;
+      this.dataMapNotificacion.notificationID = noti.payload.notificationID;
+      this.dataMapNotificacion.open = false;
+
+      this.notificacion.data = this.dataMapNotificacion;
+
+      this.saveNotificacion(this.notificacion);
+
+
       this.notificacionRecibida(noti);
-      
+
     });
 
     this.oneSignal.handleNotificationOpened().subscribe( async(noti) => {
@@ -63,7 +98,47 @@ export class PushService {
 
   }
 
+  saveNotificacion(notificacionData: any){
+    this.save(notificacionData).subscribe((data) => {
+      console.log(data);
+      if (data.status === 200) {
+      } else {this.userData.showToast('Error al registrar llego otro status');}
+    },
+    (err) => {console.log(err);this.userData.showToast("Error: "+ err);
+    },() => {}
+  );  
+  }
+
+  updateNotificacion(notificacionData: any){
+    this.save(notificacionData).subscribe((data) => {
+      console.log(data);
+      if (data.status === 200) {
+      } else {this.userData.showToast('Error al registrar llego otro status');}
+    },
+    (err) => {console.log(err);this.userData.showToast("Error: "+ err);
+    },() => {}
+  );  
+  }
+
+
+  
+
+
+
+  save(notificacionData: any): Observable<ApiResponse> {
+    console.log('save notificacion:'+this.baseUrl + this.notificacionContext);
+    return this.http.post<ApiResponse>(this.baseUrl + this.notificacionContext, notificacionData).pipe(share());
+  }
+
+  
+  updateStatus(notificacionData: any): Observable<ApiResponse> {
+    console.log('save notificacion:'+this.baseUrl + this.notificacionContext);
+    return this.http.post<ApiResponse>(this.baseUrl + this.notificacionContext, notificacionData).pipe(share());
+  }
+
   async notificacionRecibida(noti: OSNotification){
+    console.log('notificacionRecibida', JSON.stringify(noti));
+    
     await this.cargarMensajes();
 
     const payload = noti.payload;

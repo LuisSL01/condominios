@@ -180,6 +180,11 @@ export const environment = {
   coreApiBaseDirectorioOperation: '/directorio',  
   coreApiGetDirectorioListOperation: ':listByEmpresa',
 
+  //Notificaciones
+  coreApiBaseNotificacionOperation: '/notificacion',  
+  coreApiGetNotificacionListOperation: ':listByEmpresa',
+  coreApiGetNotificacionListAgenteOperation: ':listByAgente',
+
 };
 
 /*

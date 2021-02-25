@@ -92,10 +92,11 @@ export class UserData {
   }
 
   getIdAgente(): number{    
-    if(this.agente_id === 0){
+    /* if(this.agente_id === 0){
       this.recuperaIdAgente();
     }
-    return this.agente_id = JSON.parse(window.localStorage.getItem('userDetails')).id;;
+    return this.agente_id = JSON.parse(window.localStorage.getItem('userDetails')).id;; */
+    return JSON.parse(window.localStorage.getItem('userDetails')).id;;
   }
 
   getIdEmpresa(): number{
