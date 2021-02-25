@@ -10,6 +10,7 @@ import { UserOptions } from "../../interfaces/user-option";
 import { UserData } from "../../providers/user-data";
 import { EmpresaPage } from "../empresa/empresa.page";
 import { AgenteService } from '../../services/agente.service';
+import { PushService } from '../../services/push.service';
 
 @Component({
   selector: "app-home",
@@ -33,7 +34,8 @@ export class HomePage implements OnInit {
     private router: Router,
     private dataLocalService: DataLocalService,
     private modalCtrl: ModalController,
-    private agenteService: AgenteService
+    private agenteService: AgenteService,
+    private pushService: PushService
   ) {
 
     this.storage.get('userDetails').then((val) => {
@@ -47,22 +49,30 @@ export class HomePage implements OnInit {
 
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   onLogin() {
     console.log("onLogin()");
     console.log("this.user:" + this.login.username);
     console.log("this.pass:" + this.login.password);
 
-    if(this.login.username === "" || this.login.password ===""){
+    if (this.login.username === "" || this.login.password === "") {
       this.showToast("Se necesita usuario y contraseña")
       return;
     }
+
+
+    const objAgente = {
+      dispositivoUuid: this.pushService.userId      
+    };
 
     const loginPayload = {
       username: this.login.username,
       password: this.login.password,
     };
+
+
+
     console.log("loginPayload: " + loginPayload);
     this.showLoading();
 
@@ -71,55 +81,75 @@ export class HomePage implements OnInit {
       loginPayload.username.toLowerCase() === "test1" &&
       loginPayload.password.toLowerCase() === "test1"
     ) {//Usuario admin prueba
-      window.localStorage.setItem("userDetails",JSON.stringify({ "username": "test1", "nombreCompleto": "Test1", "id": 4 }));
-      this.storage.set("userDetails",JSON.stringify({ "username": "test1", "nombreCompleto": "Test1", "id": 4 }));      
+      window.localStorage.setItem("userDetails", JSON.stringify({ "username": "test1", "nombreCompleto": "Test1", "id": 4 }));
+      this.storage.set("userDetails", JSON.stringify({ "username": "test1", "nombreCompleto": "Test1", "id": 4 }));
       this.idAgente = 4;
-      this.buscarEmpresasAgente();      
+      this.updateAgenteCore(this.idAgente , objAgente);
+
+      this.buscarEmpresasAgente();
       this.presentModalListEmpresas(); //Debo presentar el modal para seleccionar una empresa
     } else {
-       this.authService.login(loginPayload).subscribe(data => {
-         if (data.status === 200) {
-           window.localStorage.setItem('userDetails', JSON.stringify(data.result));
-           this.storage.set('userDetails', JSON.stringify(data.result));
-           this.agenteService.getUserById(data.result.id).subscribe(userFull => {
+      this.authService.login(loginPayload).subscribe(data => {
+        if (data.status === 200) {
+          window.localStorage.setItem('userDetails', JSON.stringify(data.result));
+          this.storage.set('userDetails', JSON.stringify(data.result));
+          this.agenteService.getUserById(data.result.id).subscribe(userFull => {
             if (userFull.status === 200) {
               this.storage.set('userFull', userFull.result);
-              if(userFull.result.activo === false){
+              if (userFull.result.activo === false) {
                 this.router.navigate(['/']);
-                this.showToast("El usuario " + data.result.nombreCompleto + ", no se encuentra activo para la aplicación móvil");   
-              }else{//Aqui debo preguntar a cuantas empresas tiene acceso                          
-             this.idAgente = data.result.id;
-             let nombreAgente = data.result.nombreCompleto;
-             this.authService.getListEmpresas(this.idAgente).subscribe(data => {
-              if (data.status === 200) {
-                this.empresas = data.result;
-                if(this.empresas.length == 1){//Debo redirecionar al inicio, solo hay una empresa
-                window.localStorage.setItem('empresaData', JSON.stringify({"nombre":this.empresas[0].nombre,"id":this.empresas[0].id}));
-                this.storage.set('empresaData', JSON.stringify({"nombre":this.empresas[0].nombre,"id":this.empresas[0].id}));                  
-                this.userData.setConfigEmpresa();
-                this.router.navigateByUrl('/inicio');
-                this.showToast("Bienvenido " + nombreAgente +" a armonía residencial");
-                }else if(this.empresas.length > 1){
-                  this.presentModalListEmpresas()//Debo presentar el modal para seleccionar una empresa
-                }else{
-                  console.log("Error al recuperar empresas del agente: ", nombreAgente);//Error al recuperar las empresas del user
-                }
+                this.showToast("El usuario " + data.result.nombreCompleto + ", no se encuentra activo para la aplicación móvil");
+              } else {//Aqui debo preguntar a cuantas empresas tiene acceso                          
+                this.idAgente = data.result.id;
+                let nombreAgente = data.result.nombreCompleto;
+                console.log("objAgente: " + objAgente);
+
+                this.updateAgenteCore(this.idAgente , objAgente);
+
+                this.authService.getListEmpresas(this.idAgente).subscribe(data => {
+                  if (data.status === 200) {
+                    this.empresas = data.result;
+                    if (this.empresas.length == 1) {//Debo redirecionar al inicio, solo hay una empresa
+                      window.localStorage.setItem('empresaData', JSON.stringify({ "nombre": this.empresas[0].nombre, "id": this.empresas[0].id }));
+                      this.storage.set('empresaData', JSON.stringify({ "nombre": this.empresas[0].nombre, "id": this.empresas[0].id }));
+                      this.userData.setConfigEmpresa();
+                      this.router.navigateByUrl('/inicio');
+                      this.showToast("Bienvenido " + nombreAgente + " a armonía residencial");
+                    } else if (this.empresas.length > 1) {
+                      this.presentModalListEmpresas()//Debo presentar el modal para seleccionar una empresa
+                    } else {
+                      console.log("Error al recuperar empresas del agente: ", nombreAgente);//Error al recuperar las empresas del user
+                    }
+                  }
+                }, err => {
+                  console.log('Error al buscar las empresas');
+                });
               }
-            }, err => {
-              console.log('Error al buscar las empresas');
-            });
-              }
-            }else{
-              console.log('Llego otro status al recuperar el usauario');                            
-            }            
+            } else {
+              console.log('Llego otro status al recuperar el usauario');
+            }
           });
-         }else{
+        } else {
           this.showToast("Error usuario o contraseña inválidos");
-         }
-       }, err => {
-         this.showToast("Error usuario o contraseña inválidos");
-       }); 
+        }
+      }, err => {
+        this.showToast("Error usuario o contraseña inválidos");
+      });
     }
+  }
+
+  
+  updateAgenteCore(id: number, datosForm: any) {
+    this.agenteService.updateUsuarioCore(id, datosForm).subscribe(data => {
+      console.log('data.result:: ', data.result);
+      if (data.status === 200) {        
+      } else {
+        this.userData.showToast('Error al actualizar uuid de usuario');        
+      }
+    }, err => {
+      console.log('error::', err);     
+    },
+      () => {});
   }
 
   buscarEmpresasAgente() {//Es para pruebas locales
@@ -214,7 +244,7 @@ export class HomePage implements OnInit {
     return await modal.present();
   }
 
-  
+
 
   showLoading() {
     this.load = this.loadingController
