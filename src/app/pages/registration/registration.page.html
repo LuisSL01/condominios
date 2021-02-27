@@ -43,6 +43,22 @@
 
     <ion-list>
 
+      <ion-item>
+        <ion-label>
+          <ion-icon name="person-outline" style="font-size:23px; color: #50c8ec; 
+              margin-bottom: -5px;
+          "></ion-icon>&nbsp;&nbsp;Nombre completo:
+        </ion-label>
+        <ion-input formControlName="nombreCompleto"></ion-input>
+      </ion-item>
+      <ion-label color="danger"
+        *ngIf="createAgente.controls.nombreCompleto.errors?.required && (createAgente.controls.nombreCompleto.touched || createAgente.controls.nombreCompleto.dirty)">*
+        El
+        nombre es obligatorio </ion-label>
+      <ion-label color="danger"
+        *ngIf="createAgente.controls.nombreCompleto.errors?.minlength && (createAgente.touched || createAgente.dirty)">*
+        El nombre tiene que tener al menos 4 caracteres.</ion-label>
+
       <ion-item>      
         <ion-label>
           <ion-icon name="person-outline" style="font-size:23px; color: #50c8ec; 
@@ -93,23 +109,7 @@
       <!-- <ion-label color="danger"
       *ngIf="createAgente.get('confirmarPassword').errors['mustMatch']">* La contraseña no coindice </ion-label> -->
 
-      <ion-item>
-        <ion-label>
-          <ion-icon name="person-outline" style="font-size:23px; color: #50c8ec; 
-              margin-bottom: -5px;
-          "></ion-icon>&nbsp;&nbsp;Nombre completo:
-        </ion-label>
-        <ion-input formControlName="nombreCompleto"></ion-input>
-      </ion-item>
-      <ion-label color="danger"
-        *ngIf="createAgente.controls.nombreCompleto.errors?.required && (createAgente.controls.nombreCompleto.touched || createAgente.controls.nombreCompleto.dirty)">*
-        El
-        nombre es obligatorio </ion-label>
-
-      
-      <ion-label color="danger"
-        *ngIf="createAgente.controls.nombreCompleto.errors?.minlength && (createAgente.touched || createAgente.dirty)">*
-        El nombre tiene que tener al menos 4 caracteres.</ion-label>
+    
 
       <ion-item>
         
@@ -119,7 +119,9 @@
           "></ion-icon>&nbsp;&nbsp;Celular:
         </ion-label>
         
-        <ion-input formControlName="celular"></ion-input>
+        <ion-input formControlName="celular"  ></ion-input>
+
+
       </ion-item>
 
       <ion-item>
@@ -134,7 +136,7 @@
       <ion-label color="danger"
         *ngIf="createAgente.controls.email.errors?.email && (createAgente.touched || createAgente.dirty)">* El email no es válido.</ion-label>
 
-      <div formGroupName="direccion">
+      <div formGroupName="direccion" *ngIf="false" >
         <ion-item>
           
           <ion-label>
@@ -204,26 +206,22 @@
 
         </ion-item>
 
-        <ion-item >
-          <!-- 
-         Aqui se listaran las empresas y podran ser seleccionadas para que el usuario pueda elegir a que 
-         empresa se quiera dar de alta
-        -->
         
-          
-          <ion-label>
-            <ion-icon name="leaf-outline" style="font-size:23px; color: #50c8ec; 
-                margin-bottom: -5px;
-            "></ion-icon>&nbsp;&nbsp;Residencia:
-          </ion-label>
-          <ion-select interface="action-sheet" cancelText="Cancelar" placeholder="Seleccionar" required
-            (ionChange)="cambioEmpresa($event)">
-            <ion-select-option *ngFor="let emp of empresas" [value]="emp.id">
-              {{ emp.id }}-{{ emp.alias }}-{{ emp.nombre}}
-            </ion-select-option>
-          </ion-select>
-        </ion-item>
       </div>
+
+      <ion-item >      
+        <ion-label>
+          <ion-icon name="leaf-outline" style="font-size:23px; color: #50c8ec; 
+              margin-bottom: -5px;
+          "></ion-icon>&nbsp;&nbsp;Residencia:
+        </ion-label>
+        <ion-select interface="action-sheet" cancelText="Cancelar" placeholder="Seleccionar" required
+          (ionChange)="cambioEmpresa($event)">
+          <ion-select-option *ngFor="let emp of empresas" [value]="emp.id">
+            {{ emp.id }}-{{ emp.alias }}-{{ emp.nombre}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
 
 
     </ion-list>

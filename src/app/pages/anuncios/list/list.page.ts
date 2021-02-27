@@ -3,6 +3,9 @@ import { AnuncioService } from '../../../services/anuncio.service';
 
 import { ActionSheetController, ToastController } from '@ionic/angular';
 import { Publicacion } from '../../../models/publicacion.model';
+import { RespuestaPublicacion } from '../../../models/respuesta-publicacion.model';
+import { UserData } from '../../../providers/user-data';
+import { Anuncio } from '../../../models/anuncio.model';
 
 @Component({
   selector: 'app-list',
@@ -18,9 +21,12 @@ export class ListPage implements OnInit {
   pathBase64: string = "data:image/jpeg;base64,";
 
 
+  respuesta:RespuestaPublicacion = new RespuestaPublicacion();
+
   constructor(public anuncioService: AnuncioService,
-    private actionSheetCtrl: ActionSheetController,
-    private toastr: ToastController,
+      private actionSheetCtrl: ActionSheetController,
+      private toastr: ToastController,
+      private userData: UserData
   ) { }
 
   ngOnInit() {
@@ -57,6 +63,55 @@ export class ListPage implements OnInit {
     const actionSheet = await this.actionSheetCtrl.create({
       buttons: [
         guardarBorrarBtn,
+        {
+          text: 'Reportar',
+          icon: 'alert-circle-outline',
+          cssClass: 'action-dark',
+          handler: () => {
+
+            this.respuesta.agenteCreador = this.userData.getIdAgente();
+            this.respuesta.nombreAgente = this.userData.getNombreCompleto();
+            this.respuesta.mensaje = "Se ha reportado el anuncio";
+
+            this.anuncioService.reportarAnuncio(this.anuncio.id, this.respuesta).subscribe(
+              (data) => {
+                console.log(data);        
+                if (data.status === 200) this.userData.showToast('Se ha reportado correctamente');                  
+                else console.log('Llego otro status al guardar respuesta');                
+              },
+              (err) => {
+                console.log(err);
+                this.userData.showToast('No se pudo guardar la respuesta, se guarda localmente');                
+              },
+              () => {}
+            );
+          }
+        },    
+        {
+          text: this.anuncio.estatus?'Inactivar':'Activar',
+          icon: (this.anuncio.estatus?'close-circle-outline':'checkmark-outline'),
+          cssClass: 'action-dark',
+          handler: () => {
+
+            const formData = new FormData();
+              formData.append("id_publicacion",   JSON.stringify(this.anuncio.id));
+              formData.append("status", JSON.stringify(!this.anuncio.estatus));
+
+        this.anuncioService.updateStatus(formData)
+        .subscribe(
+          (data) => {
+            if (data.status === 200) {
+              console.log('data: '+ data);                
+              this.showToast('Anuncio '+(!this.anuncio.estatus?"Activado":"Inactivado")+' correctamente');
+            } else {this.showToast('No se pudo actualizar el registro');
+            }
+          },
+          (err) => {
+            this.showToast('ERROR!, No se pudo actualizar el registro');
+          }
+        );
+          }
+        },
         {
           text: 'Cancelar',
           icon: 'close',

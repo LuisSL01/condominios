@@ -19,6 +19,12 @@ export class Publicacion{
     public data:any;    
     public tipo:string;//aviso, convocatoria, resolucion, anuncio    
     public respuestas:RespuestaApp;
+    public estatus:boolean; 
+
+    public nombreAgenteCreador:string;
+    public correoAgenteCreador:string;
+    public celularAgenteCreador:string;
+
 
     constructor(){
         this.fechaDeCreacion = new Date();        

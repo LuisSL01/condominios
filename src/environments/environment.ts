@@ -127,7 +127,9 @@ export const environment = {
   coreApiBaseAvisosAdministracionOperation: '/aviso',
   coreApiBasePublicacionOperation: '/publicacion',
   coreApiBasePublicacionRespuestaOperation: '/respuesta',  
+  coreApiBasePublicacionReporteOperation: '/reporte',  
   coreApiBasePublicacionesOperation: '/publicaciones',
+  coreApiUpdateStatusPublicacionOperation: 'updateStatus',
   coreApiBaseAnuncioOperation: '/anuncio',
   coreApiGetAnunciosListOperation: ':listByEmpresa',
 

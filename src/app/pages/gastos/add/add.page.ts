@@ -132,13 +132,13 @@ export class AddPage implements OnInit {
   guardarGastoLocalmente() {
     console.log('guardando Gasto localmente');    
     this.gasto.idempresa = this.idEmpresa;    
-    this.areaComun.nombre = this.createArea.value.nombre;
+   /*  this.areaComun.nombre = this.createArea.value.nombre;
     this.areaComun.descripcion = this.createArea.value.descripcion;
     this.areaComun.costo = this.createArea.value.costo;
     this.areaComun.codigoColor = this.createArea.value.codigoColor;
     this.areaComun.horaInicia = this.createArea.value.horaInicia;
     this.areaComun.horaTermina = this.createArea.value.horaTermina;
-    this.areaComun.data = this.data;
+    this.areaComun.data = this.data; */
     
     this.gastoService.saveLocal(this.gasto);
   }

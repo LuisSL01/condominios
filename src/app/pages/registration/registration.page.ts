@@ -9,6 +9,7 @@ import { Direccion } from '../../models/direccion.model';
 import { AgenteService } from '../../services/agente.service';
 import { EmpresaService } from '../../services/empresa.service';
 import { ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 
 
@@ -37,14 +38,15 @@ export class RegistrationPage implements OnInit {
     email: ['', Validators.email],
     celular: ['', null],
     fechaDeIngreso: [new Date(), Validators.required],
-    autoRegistro: [true, null],
+    
+    /* autoRegistro: [true, null],
     direccion: this.fb.group({
       calle: [null, null],
-      /* manzana: ['', Validators.required], */
       numeroExterior: ['', null],      
       numeroInterior: ['', null],
       asentamiento: [null, Validators.required]
-    })
+    }) */
+
   }
     ,
     {
@@ -59,6 +61,7 @@ export class RegistrationPage implements OnInit {
     private codigoPostalService: CodigoPostalService,
     private agenteService: AgenteService,
     private empresaService: EmpresaService,
+    private router: Router,
     private toastr: ToastController) {
     this.buscarEmpresas();
 
@@ -163,29 +166,31 @@ export class RegistrationPage implements OnInit {
 
   guardarDatos() {
     if(this.empresaSelected > 0){      
-          this.createAgente.value.direccion.asentamiento = this.asentamientoSelected;
+
+
+
+
+          /* this.createAgente.value.direccion.asentamiento = this.asentamientoSelected;
           this.createAgente.value.direccion.numeroExterior = this.createAgente.value.direccion.numeroExterior.toUpperCase();
+ */
           const agenteObj = {
             agente: {
-              rfc: 'RFC' + new Date().getTime()
-              , curp: 'CURP' + new Date().getTime()
-              , departamento: 'RESIDENTE'
+
+              /* 
+              rfc: 'RFC' + new Date().getTime(), 
+              curp: 'CURP' + new Date().getTime(), 
+              */
+
+              departamento: 'RESIDENTE'
               , direccion: this.createAgente.value.direccion
               , puesto: 'RESIDENTE'
               , subClasificacion: 'SIN SUBCLASIFICACION'
               , subDepartamento: 'SIN SUBDEPARTAMENTO'
               , telefono: this.createAgente.value.celular
-              , gerente: 4
 
-
-
-
+              /* , gerente: 4 */
 
               , activo:false
-
-
-
-
               /* , fechaDeNacimiento: '01/01/2020 00:00:00.100'
               , fechaDeIngreso: '01/01/2020 00:00:00.100' *///No es necesario
               , empresa: this.empresaSelected
@@ -199,7 +204,7 @@ export class RegistrationPage implements OnInit {
               , password: this.createAgente.value.password
               , autoRegistro: true
               , passwordExpirado: false
-               , perfil: {id : 2} 
+               , perfil: {id : 1} 
               /* , roles: selectedRoleIds */
             }
           };      
@@ -219,6 +224,10 @@ export class RegistrationPage implements OnInit {
                   if (data.status === 200) {
                     console.log('"data.result"', data.result);                    
                     this.showToast("agente asociado a empresa correctamente");
+
+                    
+                      this.router.navigate(["/home"]);
+                    
                   } else {
                     console.log('Llego otro status al asociar agente a empresa');              
                   }

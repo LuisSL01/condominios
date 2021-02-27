@@ -88,7 +88,7 @@ export class UserData {
     this.agente_id = JSON.parse(window.localStorage.getItem('userDetails')).id;//Recuperamos el id agente de userDetails      
   }
   recuperaNombreCompleto(){
-    this.nombreCompleto = JSON.parse(window.localStorage.getItem('userDetails')).nombre;//Recuperamos el nombre
+    this.nombreCompleto = JSON.parse(window.localStorage.getItem('userDetails')).nombreCompleto;//Recuperamos el nombre
   }
 
   getIdAgente(): number{    
@@ -107,10 +107,11 @@ export class UserData {
   }
 
   getNombreCompleto():string{
-    if(this.nombreCompleto.length ===0){
+    /* if(this.nombreCompleto.length ===0){
       this.recuperaNombreCompleto();
     }
-    return this.nombreCompleto;
+    return this.nombreCompleto; */
+    return JSON.parse(window.localStorage.getItem('userDetails')).nombreCompleto;
   }
 
  

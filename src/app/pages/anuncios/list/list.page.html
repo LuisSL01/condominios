@@ -11,18 +11,29 @@
           <ion-icon slot="icon-only" color="primary" name="ellipsis-vertical-outline"></ion-icon>
         </ion-button>
       </div>
-
     </ion-card-subtitle>
 
   </ion-card-header>
-
   <ion-card-content>
-    {{anuncio.data.descripcion}}
+    <ion-label color="tertiary">
+      <h3 color="light" *ngIf="anuncio.nombreAgenteCreador">{{anuncio.nombreAgenteCreador}}</h3>
+      <h3 *ngIf="anuncio.correoAgenteCreador">Mail. {{anuncio.correoAgenteCreador}}</h3>
+      <h3 *ngIf="anuncio.correoAgenteCreador">Cel. {{anuncio.celularAgenteCreador}}</h3>
+    </ion-label>
+
+    <ion-label >
+      <p>
+        {{anuncio.data.descripcion}}
+      </p>
+      
+    </ion-label>
   </ion-card-content>
 
 
-  <ion-item  >
 
+
+
+  <ion-item >
     <ion-slides pager="{{anuncio.files?.archivos.length > 1 ?true:false}}" >
       <ion-slide *ngFor="let img of anuncio.files.archivos" class="image-slide">      
         <img  *ngIf="img.rutaS3"  src="{{pathS3}}{{img.rutaS3}}">

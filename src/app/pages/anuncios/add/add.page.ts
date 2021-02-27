@@ -107,6 +107,7 @@ export class AddPage implements OnInit {
       agenteCreador: this.idAgente,
       data : this.createAnuncio.value.data,
       tipo: this.createAnuncio.value.tipo,
+      estatus:true,
       files: {
         archivos: [],//Se debe enviar vacio, ya que las imagenes se procesan por separado.
       },

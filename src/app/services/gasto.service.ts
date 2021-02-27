@@ -56,7 +56,7 @@ export class GastoService {
 
     saveLocal(gasto: Gasto) {
       gasto.idgasto = this.dataLocalService.getNumeroRandom() * -1;
-      this.storage.set(this.construyeNombreEtiqueta(), this.notificacionesLocales);
+     /*  this.storage.set(this.construyeNombreEtiqueta(), this.notificacionesLocales); */
       this.dataLocalService.presentToast('Notiificacion agregada localmente');      
     }
 

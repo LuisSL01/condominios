@@ -130,7 +130,7 @@ export class AgentePage implements OnInit {
     let guardarBorrarBtn;
     guardarBorrarBtn = {
       text: (status?'Inactivar':'Activar'),
-      icon: "trash",
+      icon: (status?'close-circle-outline':'checkmark-outline'),
       cssClass: "action-dark",
       handler: () => {        
         const formData = new FormData();
