@@ -32,6 +32,9 @@ export class RegistrationPage implements OnInit {
 
   createAgente = this.fb.group({//Esto para construir los formularios dinamicamente
     nombreCompleto: ['', [Validators.required, Validators.minLength(4)]],
+    apellidoPaterno: ['', null],
+    apellidoMaterno: ['', null],
+    sexo: ['', Validators.required],
     username: ['', [Validators.required, Validators.minLength(3)]],
     password: ['', Validators.required],
     confirmarPassword: ['', Validators.required],
@@ -75,74 +78,11 @@ export class RegistrationPage implements OnInit {
       {
         "id": 7,
         "nombre": "RINCON ESMERALDA",
-        "alias": "ESME",
-        "rfc": "ASDA232323ASS",
-        "urlPaginaWeb": "http://pruebaintegral.com",
-        "email": "prueba@integral.com",
-        "telefono": "5454322222",
-        "integrantes": 4,
-        "actividadEconomica": 11,
-        "direccion": {
-            "calle": "Otra Calle Inventada",
-            "numeroExterior": "5432",
-            "numeroInterior": "",
-            "asentamiento": {
-                "id": 66344,
-                "codigoPostal": "52105",
-                "colonia": "San Pedro",
-                "ciudad": "San Mateo Atenco",
-                "municipio": "San Mateo Atenco",
-                "estado": "México"
-            }
-        },
-        "configuracionEmpresa": {
-            "logoFondoClaro": "",
-            "logoFondoOscuro": "",
-            "ejercicioActual": 2020,
-            "mascaraCuentasContables": "9999-9999-9999-9999",
-            "mesDeTrabajo": 12,
-            "estructuraDeCuentas": "444400",
-            "usarPlanDePagos": false,
-            "usarDireccionDeEntrega": true,
-            "usarCasetasDeLinea": true,
-            "permitirSaldosNegativos": true
-        }
+        "alias": "ESME"     
     },
     {
         "id": 12,
-        "nombre": "EXPLANADA SUR",
-        "alias": "SUR",
-        "rfc": "ERES232323222",
-        "urlPaginaWeb": "http://tyv.com",
-        "email": "tyv@tyv.com",
-        "telefono": "4543225666",
-        "integrantes": 3,
-        "actividadEconomica": 11,
-        "direccion": {
-            "calle": "LKUNASNDA ASDAS",
-            "numeroExterior": "342",
-            "numeroInterior": "1",
-            "asentamiento": {
-                "id": 66659,
-                "codigoPostal": "52303",
-                "colonia": "El Carrizal",
-                "ciudad": "Desconocida",
-                "municipio": "Tenango del Valle",
-                "estado": "México"
-            }
-        },
-        "configuracionEmpresa": {
-            "logoFondoClaro": "",
-            "logoFondoOscuro": "",
-            "ejercicioActual": 2020,
-            "mascaraCuentasContables": "9999-9999-9999-9999",
-            "mesDeTrabajo": 12,
-            "estructuraDeCuentas": "444400",
-            "usarPlanDePagos": false,
-            "usarDireccionDeEntrega": true,
-            "usarCasetasDeLinea": true,
-            "permitirSaldosNegativos": true
-        }
+        "nombre": "EXPLANADA SUR"       
     }
   ];
 
@@ -167,9 +107,6 @@ export class RegistrationPage implements OnInit {
   guardarDatos() {
     if(this.empresaSelected > 0){      
 
-
-
-
           /* this.createAgente.value.direccion.asentamiento = this.asentamientoSelected;
           this.createAgente.value.direccion.numeroExterior = this.createAgente.value.direccion.numeroExterior.toUpperCase();
  */
@@ -181,8 +118,9 @@ export class RegistrationPage implements OnInit {
               curp: 'CURP' + new Date().getTime(), 
               */
 
-              departamento: 'RESIDENTE'
+              departamento: 'RESIDENTE'                
               , direccion: this.createAgente.value.direccion
+              
               , puesto: 'RESIDENTE'
               , subClasificacion: 'SIN SUBCLASIFICACION'
               , subDepartamento: 'SIN SUBDEPARTAMENTO'
