@@ -172,12 +172,9 @@ export const environment = {
   coreApiGetPagoComprobanteListOperation: ':listByEmpresa',
   coreApiGetPagoComprobanteAgenteListOperation: ':listByEmpresaAndAgente',
 
-   //Gasto
-   coreApiBaseGastoOperation: '/gasto',    
-   coreApiBaseGastoByEmpresaOperation: '/gastoByEmpresa',
-   coreApiBaseGastosOperation: '/gastos',
-   coreApiGetGastoListOperation: ':listByEmpresa',
-   coreApiGetGastoAgenteListOperation: ':listByEmpresaAndAgente',
+  //Gasto
+  coreApiBaseGastoOperation: '/gasto',
+  coreApiGetGastoListOperation: ':listByEmpresa',
  
   //Contactos
   coreApiBaseContactoOperation: '/contacto',  

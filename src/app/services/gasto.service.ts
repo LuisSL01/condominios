@@ -7,83 +7,88 @@ import { ApiResponse } from '../models/api-response.model';
 import { share } from 'rxjs/operators';
 import { Observable } from 'rxjs/index';
 import { environment } from 'src/environments/environment';
+import { UserData } from '../providers/user-data';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GastoService {
   
-  gastos:Gasto[]=[];
+  gastos:Gasto[] = [];
+  gastosLocales: Gasto[] = [];
 
   baseUrl: string = environment.coreServiceBaseUrl;
   gastoContext: string = environment.coreApiBaseGastoOperation
-  nombreEtiqueta = "_gasto";
+  nombreEtiquetaJson = "";
 
 
   constructor(private storage : Storage,
               private dataLocalService : DataLocalService,
-              private http: HttpClient) {}
+              private http: HttpClient,
+              private userData: UserData) {}
 
+  construyeNombreEtiqueta(){
+    return this.nombreEtiquetaJson =  this.userData.getIdEmpresa()  + "_gastos_local";
+  }
 
-    save(gastoData: any): Observable<ApiResponse> {
-      console.log('save gastoData: ' + this.baseUrl + this.gastoContext);
-      return this.http.post<ApiResponse>(this.baseUrl + this.gastoContext, gastoData).pipe(share());
+  saveLocal(gasto: Gasto) {
+    gasto.id = this.dataLocalService.getNumeroRandom() * -1;
+    this.gastosLocales.unshift(gasto);
+    this.storage.set(this.construyeNombreEtiqueta(), this.gastosLocales);
+    this.dataLocalService.presentToast('Gasto agregado localmente');      
+  }
+    
+  getGastos(idEmpresa: number, page: number, size: number, filters: string){
+    console.log(this.baseUrl + this.gastoContext + environment.coreApiGetGastoListOperation + "/" + idEmpresa + "?page=" + page + "&size=" + size + (filters ? ('&filters=' + filters) : ''));
+    return this.http.get<ApiResponse>(this.baseUrl + this.gastoContext+ environment.coreApiGetGastoListOperation + "/" + idEmpresa + "?page=" + page + "&size=" + size +(filters ? ('&filters=' + filters) : '')).pipe(share());
+  }
+
+  async getGastosFromStorage(idEmpresa: number){
+    console.log('getGastosFromStorage: ', idEmpresa + "_gastos"); 
+    const gastos = await this.storage.get(idEmpresa + "_gastos")
+    console.log('gastos: ' + gastos);
+    if(gastos){
+      this.gastos = gastos;
+    } else {
+      this.gastos = [];
     }
+  }
 
-    saveByEmpresa(idEmpresa: number, gastoData: any): Observable<ApiResponse> {
-      console.log('saveByEmpresa gastoData: ' + this.baseUrl + environment.coreApiBaseGastoByEmpresaOperation + "/" + idEmpresa);
-      return this.http.post<ApiResponse>(this.baseUrl + environment.coreApiBaseGastoByEmpresaOperation + "/" + idEmpresa, gastoData).pipe(share());
-    }
+  save(gastoData: any): Observable<ApiResponse> {
+    console.log('save gastoData: ' + this.baseUrl + this.gastoContext);
+    return this.http.post<ApiResponse>(this.baseUrl + this.gastoContext, gastoData).pipe(share());
+  }
 
-    delete(idGasto: number): Observable<ApiResponse> {
-      console.log('borrando registro gasto: ', this.baseUrl + this.gastoContext + environment.coreApiBaseDeleteOperation + "/" + idGasto );    
-      return this.http.delete<ApiResponse>(this.baseUrl + this.gastoContext + environment.coreApiBaseDeleteOperation + "/" + idGasto).pipe(share());
-    }
+  deleteLocal(gasto: Gasto){
+    this.gastosLocales = this.gastosLocales.filter(gas => gas.id !== gasto.id)
+    this.storage.set(this.construyeNombreEtiqueta(), this.gastosLocales);
+    this.dataLocalService.presentToast('Gasto borrado');
+  }
+   
+  delete(idGasto: number): Observable<ApiResponse> {
+    console.log('borrando registro gasto: ', this.baseUrl + this.gastoContext + environment.coreApiBaseDeleteOperation + "/" + idGasto );    
+    return this.http.delete<ApiResponse>(this.baseUrl + this.gastoContext + environment.coreApiBaseDeleteOperation + "/" + idGasto).pipe(share());
+  }
 
-    getAdeudos(idEmpresa: number, page: number, size: number, filters: string){
-      console.log(this.baseUrl + this.gastoContext + environment.coreApiGetGastoListOperation + "/" + idEmpresa + "?page=" + page + "&size=" + size + (filters ? ('&filters=' + filters) : ''));
-      return this.http.get<ApiResponse>(this.baseUrl + this.gastoContext+ environment.coreApiGetGastoListOperation + "/" + idEmpresa + "?page=" + page + "&size=" + size +(filters ? ('&filters=' + filters) : '')).pipe(share());
+  guardarGasto(gasto: Gasto){
+    const existe = this.gastos.find( gas => gas.id === gasto.id);
+    if(!existe){
+      gasto.id = this.dataLocalService.getNumeroNegativo() * -1;
+      this.gastos.unshift(gasto);
+      this.storage.set(this.construyeNombreEtiqueta(), this.gastos);
+      this.dataLocalService.presentToast('Gasto agregado');
     }
+  }
 
-    getAdeudosByEmpresaAndAgente(idEmpresa: number, idAgente: number){
-      console.log(this.baseUrl + this.gastoContext + environment.coreApiGetGastoAgenteListOperation + "/" + idEmpresa + "/" + idAgente);
-      return this.http.get<ApiResponse>(this.baseUrl + this.gastoContext + environment.coreApiGetGastoAgenteListOperation + "/" + idEmpresa + "/" + idAgente).pipe(share());
+  async cargarGastosLocales() {
+    console.log('cargando mis gastos');
+    const notTemp = await this.storage.get(this.construyeNombreEtiqueta());
+    if (notTemp) {
+      //Cuando viene != null se iguala al arreglo global
+      this.gastosLocales = notTemp;
+    }else{
+      this.gastosLocales = [];
     }
+  }
 
-    construyeNombreEtiqueta(){
-      return this.nombreEtiqueta = this.dataLocalService.idempresa + "_gasto";
-    }
-
-    saveLocal(gasto: Gasto) {
-      gasto.idgasto = this.dataLocalService.getNumeroRandom() * -1;
-     /*  this.storage.set(this.construyeNombreEtiqueta(), this.notificacionesLocales); */
-      this.dataLocalService.presentToast('Notiificacion agregada localmente');      
-    }
-
-    guardarGasto(gasto: Gasto){
-      const existe = this.gastos.find( gas => gas.idgasto === gasto.idgasto);
-      if(!existe){
-        gasto.idgasto = this.dataLocalService.getNumeroNegativo() * -1;
-        this.gastos.unshift(gasto);
-        this.storage.set(this.construyeNombreEtiqueta(), this.gastos);
-        this.dataLocalService.presentToast('Gasto agregado');
-      }
-    }
-
-    borrarGasto(gasto: Gasto){
-      this.gastos = this.gastos.filter(gas => gas.idgasto !== gasto.idgasto)
-      this.storage.set(this.construyeNombreEtiqueta(),this.gastos);
-      this.dataLocalService.presentToast('Gasto borrado');
-    }
-
-    async getGastosFromStorage(idEmpresa: number){
-      console.log('getGastosFromStorage: ', idEmpresa + this.nombreEtiqueta); 
-      const gastos = await this.storage.get(idEmpresa + this.nombreEtiqueta)
-      console.log('gastos: ' + gastos);
-      if(gastos){
-        this.gastos = gastos;
-      } else {
-        this.gastos = [];
-      }
-    }
 }
