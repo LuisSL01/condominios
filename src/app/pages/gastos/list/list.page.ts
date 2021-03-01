@@ -52,9 +52,7 @@ export class ListPage implements OnInit {
             console.log('Borrar gasto Localmente');
             console.log(this.gasto);  
             this.gastoService.deleteLocal(this.gasto);           
-          }    
-          this.router.navigate(['/avisos']);
-
+          }
         }
       };
 
