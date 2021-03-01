@@ -2,7 +2,11 @@
 
 <ion-card lines="none">
   <ion-card-header>
-    <ion-card-title>{{anuncio.data.titulo}}</ion-card-title>
+    <ion-card-title> <ion-label> 
+      <h1>{{anuncio.data.titulo}}</h1>  
+      <h2>{{anuncio.data.clasificacion}}</h2>
+    </ion-label>  
+    </ion-card-title>
 
     <ion-card-subtitle>
       <span class="text-primary"> ${{anuncio.data.precio}} </span>

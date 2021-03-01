@@ -7,6 +7,18 @@
   <form [formGroup]="createAnuncio"  (ngSubmit)="save()">
     <ion-list>
       <div formGroupName="data">
+        <ion-item>
+          <ion-label>
+            <ion-icon name="grid-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Clasificación
+          </ion-label>
+          <ion-select interface="popover"  placeholder="Seleccionar"  formControlName="clasificacion"
+            okText="Aceptar"
+            cancelText="Cancelar">
+            <ion-select-option value="Servicios">Servivcios</ion-select-option>
+            <ion-select-option value="Muebleria">Muebleria</ion-select-option>
+            <ion-select-option value="Otro">otro</ion-select-option>
+          </ion-select>  
+        </ion-item>
         
         <ion-item>
           <ion-label>

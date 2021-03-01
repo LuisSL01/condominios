@@ -154,6 +154,10 @@ const routes: Routes = [
   },  {
     path: 'notifications',
     loadChildren: () => import('./pages/notifications/notifications.module').then( m => m.NotificationsPageModule)
+  },
+  {
+    path: 'datos-interes',
+    loadChildren: () => import('./pages/datos-interes/datos-interes.module').then( m => m.DatosInteresPageModule)
   }
 
 

@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Datos de interés</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+
+  <ion-card>
+    <ion-item>
+      <ion-icon name="pin" slot="start"></ion-icon>
+      <ion-label>
+        <h2>Clima en:</h2>
+        <h1>{{climaData.name}}</h1>
+        <p>
+          {{myDate | date:'dd/MMM/yy h:mm a '}}
+        </p>
+        </ion-label>
+      
+      
+    </ion-item>
+  
+    <ion-card-content>
+      <ion-list>
+
+        <ion-item>
+          <ion-label>
+            <ion-icon name="sunny-outline" style="font-size:23px; color: #50c8ec; 
+            margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Desc.
+          </ion-label>
+          <ion-label>{{climaData.weather[0].description}}</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <ion-icon name="thermometer-outline" style="font-size:23px; color: #50c8ec; 
+            margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Temperatura
+          </ion-label>
+          <ion-label>{{climaData.main.temp}}</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <ion-icon name="flower-outline" style="font-size:23px; color: #50c8ec; 
+            margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Sensación
+          </ion-label>
+          <ion-label>{{climaData.main.feels_like}}</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <ion-icon name="remove-outline" style="font-size:23px; color: #50c8ec; 
+            margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Mín.
+          </ion-label>
+          <ion-label>{{climaData.main.temp_min}}</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <ion-icon name="add-outline" style="font-size:23px; color: #50c8ec; 
+            margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Máx
+          </ion-label>
+          <ion-label>{{climaData.main.temp_max}}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-footer>
+    <ion-toolbar color="light" style="position: fixed; bottom: 0px;">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" offset-md="4" offset-sm="4">
+            <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
+            <ion-button fill="clear" size="small" type="submit"
+              style="text-transform: none; margin-left: 120px; margin-top: -40px;">
+            </ion-button>
+            <ion-button fill="clear" size="small" style="text-transform: none; margin-top: -80px; 
+               margin-left: 220px;  " (click)="aceptar()">Aceptar
+              <ion-icon slot="start" name="close-circle-o
+                utline" style="font-size:23px; color: #50c8ec;"></ion-icon>
+
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </ion-toolbar>
+  </ion-footer>
+
+</ion-content>

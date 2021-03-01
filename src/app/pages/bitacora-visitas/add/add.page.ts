@@ -7,6 +7,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { UserData } from '../../../providers/user-data';
 import { ArchivoVortexApp } from '../../../models/archivo-vortex.model';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { VisitaService } from '../../../services/visita.service';
+import { Visita } from '../../../models/visita.model';
 
 
 declare var window: any;
@@ -20,6 +22,9 @@ declare var window: any;
 export class AddPage implements OnInit {
 
   registroVisita:BitacoraVisita = new BitacoraVisita();
+
+  visitaFound:Visita;
+
   enCamara:boolean;
 
   data: ArchivoVortexApp[] = new Array();
@@ -38,6 +43,7 @@ export class AddPage implements OnInit {
   pathBase64: string = "data:image/jpeg;base64,";
 
   constructor(private bitacoraVisitaService : BitacoraVisitaService,
+              private visitaService: VisitaService,
               private camera:Camera,
               private router:Router,
               private fb: FormBuilder,
@@ -102,24 +108,46 @@ export class AddPage implements OnInit {
   }
 
   scanQR(){
+    
     console.log('scanQR()');
-
-    console.log('deberia estar llamando al method');
-    
-    
-
-
-
-
+    console.log('deberia estar llamando al method');    
     this.barcodeScanner.scan().then(barcodeData => {
-
-      
       console.log('Barcode data', barcodeData);
+
+      this.buscaInfoVisita(barcodeData.text);
+
+
     }).catch(err => {
-
-
       console.log('Error', err);
     });
+  }
+
+  buscaInfoVisita(data_visita:string){
+    console.log("buscaInfoVisita");
+
+    this.visitaFound = null;
+    let x = atob(data_visita).split("|");
+
+    console.log(x[0]);
+    console.log(x[1]);
+
+    this.visitaService.getVisitaByIdAndUUID(x[0], x[1]).subscribe((data) => {
+
+      if (data.status === 200) { 
+        this.visitaFound = data.result;         
+      }else  this.userData.showToast('No se encontro el registro recuperar registro');
+    },
+    (err) => {
+        this.userData.showToast("Error en el servicio al recupera registro");                  
+    },
+    () => {}
+  );
+
+
+  }
+
+  generateQr(){
+    
   }
   
   save() {
@@ -130,7 +158,7 @@ export class AddPage implements OnInit {
     const bitacoraVisitaObj={
       empresa : this.idEmpresa,
       agenteCreador: this.idAgente,
-      visita : 2,
+      visita : this.visitaFound.id,
       nombreCompleto : this.createBitacoraVisita.value.nombreCompleto,
       conAuto : this.createBitacoraVisita.value.conAuto,
       placa : this.createBitacoraVisita.value.placa,

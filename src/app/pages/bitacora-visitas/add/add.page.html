@@ -23,6 +23,14 @@
         </ion-button>
       </ion-item>
 
+      <ion-item *ngIf="visitaFound">
+        <ion-label color="success">
+          <h2>Código creado por: {{visitaFound.nombreAgenteCreador}} </h2>
+          <h3>Fecha: {{visitaFound.fechaDeCreacion}}</h3>
+
+        </ion-label>
+      </ion-item>
+
       <ion-item>
         <ion-label>
           <ion-icon name="person-outline" style="font-size:23px; color: #50c8ec; 

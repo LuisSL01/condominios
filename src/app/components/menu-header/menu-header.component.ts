@@ -9,8 +9,6 @@ import { UserData } from '../../providers/user-data';
 export class MenuHeaderComponent implements OnInit {
 
   constructor(public userData: UserData) {
-    console.log('constructor de menu header component. '+ this.userData.nameImageEmpresa);
-    
   }
 
   ngOnInit() {

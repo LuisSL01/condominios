@@ -26,7 +26,9 @@ export class AddPage implements OnInit {
   createAnuncio = this.fb.group({
     //Esto para construir los formularios dinamicamente
     data: this.fb.group({
-      titulo: ["", [Validators.required]],
+      clasificacion: ["", [Validators.required]],
+      titulo: ["", [Validators.required]],      
+
       descripcion: ["", [Validators.required]],
       precio: ["", [Validators.required]],
       telefono: [""],    

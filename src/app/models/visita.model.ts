@@ -2,7 +2,7 @@ export class Visita{
     public id:number;
     public empresa:number;
     public nombreCompleto:string;
-    public idagenteCreo:number;    
+    public agenteCreador:number;    
     public tipoDeVisita:number;
     public duracionDeVisita:string;
     public fechaInicio:Date;
@@ -11,8 +11,12 @@ export class Visita{
     public visitaDiaria:Boolean;
     public pathQR:string;
     public fechaDeCreacion;
+    
 
     public diasVisita:number[];//Sunday is 0, Monday is 1, and so on.
+
+    public uuid:string;
+    public nombreAgenteCreador:string;
 
     constructor(){        
         this.conAcompaniantes = true;
