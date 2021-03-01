@@ -34,6 +34,7 @@ export class RegistrationPage implements OnInit {
     nombreCompleto: ['', [Validators.required, Validators.minLength(4)]],
     apellidoPaterno: ['', null],
     apellidoMaterno: ['', null],
+    sexo: ['', Validators.required],
     username: ['', [Validators.required, Validators.minLength(3)]],
     password: ['', Validators.required],
     confirmarPassword: ['', Validators.required],
@@ -117,8 +118,9 @@ export class RegistrationPage implements OnInit {
               curp: 'CURP' + new Date().getTime(), 
               */
 
-              departamento: 'RESIDENTE'
+              departamento: 'RESIDENTE'                
               , direccion: this.createAgente.value.direccion
+              
               , puesto: 'RESIDENTE'
               , subClasificacion: 'SIN SUBCLASIFICACION'
               , subDepartamento: 'SIN SUBDEPARTAMENTO'

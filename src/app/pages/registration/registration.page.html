@@ -1,43 +1,6 @@
 
 <app-header titulo="Crear cuenta"></app-header>
 <ion-content fullscreen>
-  <!-- <form>
-    <ion-item lines="full">
-      <ion-label position="floating"><ion-icon name="person-outline" style="font-size:23px; color: #50c8ec; 
-        margin-bottom: -5px;
-    "></ion-icon>&nbsp;Nombre</ion-label>
-      <ion-input type="text" required></ion-input>
-    </ion-item>
-
-    <ion-item lines="full">
-      <ion-label position="floating"><ion-icon name="pencil-outline" style="font-size:23px; color: #50c8ec; 
-        margin-bottom: -5px;
-    "></ion-icon>&nbsp;Apellidos</ion-label>
-      <ion-input type="text" required></ion-input>
-    </ion-item>
-
-    <ion-item lines="full">
-      <ion-label position="floating"><ion-icon name="at-outline" style="font-size:23px; color: #50c8ec; 
-        margin-bottom: -5px;
-    "></ion-icon>&nbsp;Cuenta de correo</ion-label>
-      <ion-input type="text" required></ion-input>
-    </ion-item>
-
-    <ion-item lines="full">
-      <ion-label position="floating"><ion-icon name="lock-closed-outline" style="font-size:23px; color: #50c8ec; 
-        margin-bottom: -5px;
-    "></ion-icon>&nbsp;Contraseña</ion-label>
-      <ion-input type="password" required></ion-input>
-    </ion-item>
-
-    <ion-row>
-      <ion-col>
-        <ion-button type="submit" color="secondary" expand="block">¡Regístrate!</ion-button>
-      </ion-col>
-    </ion-row>
-  </form> -->
-
-
 
   <form [formGroup]="createAgente" (ngSubmit)="guardarDatos()">
 
@@ -103,14 +66,7 @@
       <ion-label color="danger"
         *ngIf="createAgente.controls.confirmarPassword.errors?.required && (createAgente.controls.confirmarPassword.touched || createAgente.controls.confirmarPassword.dirty)">
         *La confirmación de contraseña es requerida </ion-label>
-        
-      
-
-      <!-- <ion-label color="danger"
-      *ngIf="createAgente.get('confirmarPassword').errors['mustMatch']">* La contraseña no coindice </ion-label> -->
-
-    
-
+              
       <ion-item>
         
         <ion-label>
@@ -155,21 +111,6 @@
             La dirección es requerida.
           </div>
         </div>
-<!-- 
-        <ion-item>
-          <ion-label>
-            <ion-icon name="home-outline" style="font-size:23px; color: #50c8ec; 
-                margin-bottom: -5px;
-            "></ion-icon>&nbsp;&nbsp;Manzana del domicilio:
-          </ion-label>
-          <ion-input type="text" formControlName="manzana" autocapitalize="characters" placeholder="ej: 38-B"></ion-input>
-        </ion-item>
-        <div color="danger"
-          *ngIf="createAgente.get('direccion').get('manzana').invalid && (createAgente.get('direccion').get('manzana').dirty || createAgente.get('direccion').get('manzana').touched)">
-          <ion-label color="danger" *ngIf="createAgente.get('direccion').get('manzana').errors['required']">
-            *La manzana del domicilio es requerida.
-          </ion-label>
-        </div> -->
 
         <ion-item>          
           <ion-label>
