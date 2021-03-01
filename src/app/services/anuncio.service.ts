@@ -86,6 +86,17 @@ export class AnuncioService {
     return this.http.delete<ApiResponse>(this.baseUrl + environment.coreApiBasePublicacionOperation +environment.coreApiBaseDeleteOperation + "/" + idPublicacion).pipe(share());
   }
 
+  reportarAnuncio(idAnuncio:number, reporte: any): Observable<ApiResponse> {
+    console.log('saveRespuesta:'+this.baseUrl + this.publicacionContext + environment.coreApiBasePublicacionReporteOperation+"/"+idAnuncio);
+    console.log('respuesta',reporte);
+    return this.http.post<ApiResponse>(this.baseUrl + this.publicacionContext + environment.coreApiBasePublicacionReporteOperation+'/'+idAnuncio, reporte).pipe(share());
+  } 
+  
+  updateStatus(data:FormData): Observable<ApiResponse> {
+    console.log('updateStatus: ', this.baseUrl + this.publicacionContext+':'+ environment.coreApiUpdateStatusPublicacionOperation );    
+    return this.http.patch<ApiResponse>(this.baseUrl + this.publicacionContext+':'+ environment.coreApiUpdateStatusPublicacionOperation ,data).pipe(share());    
+  }
+
   async cargarAnunciosLocales() {
     const anncios = await this.storage.get(this.construyeNombreEtiqueta())
     console.log('this.construyeNombreEtiqueta():'+this.construyeNombreEtiqueta());

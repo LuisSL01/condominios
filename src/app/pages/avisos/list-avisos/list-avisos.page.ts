@@ -127,7 +127,7 @@ export class ListAvisosPage implements OnInit {
     const modal = await this.modalCtlr.create({
       component: AddRespuestaPage,
     componentProps:{
-      titulo: this.aviso.titulo,
+      titulo: this.aviso.data.titulo,
       avisoPadre: this.aviso
     },
       cssClass: 'my-custom-class'
@@ -139,7 +139,7 @@ export class ListAvisosPage implements OnInit {
     const modal = await this.modalCtlr.create({
       component: RespuestasPage,
     componentProps:{
-      titulo: this.aviso.titulo,
+      titulo: this.aviso.data.titulo,
       respuestas: this.aviso.respuestas.respuestasPublicacion
     },
       cssClass: 'my-custom-class'

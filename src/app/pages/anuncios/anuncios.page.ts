@@ -3,7 +3,7 @@ import { AnuncioService } from "src/app/services/anuncio.service";
 import { Publicacion } from "../../models/publicacion.model";
 import { Storage } from "@ionic/storage";
 import { UserData } from "../../providers/user-data";
-import { IonInfiniteScroll } from "@ionic/angular";
+import { IonInfiniteScroll, ToastController } from '@ionic/angular';
 /* import { NetworkService } from '../../services/network.service'; */
 
 
@@ -27,10 +27,9 @@ export class AnunciosPage implements OnInit {
     public anuncioService: AnuncioService,
     private userData: UserData,
     private storage: Storage,
+    private toastCtrl: ToastController
     /* private networkService: NetworkService */
   ) {
-    console.log('en el constructor de anuncios page..');
-    
     this.idEmpresa = this.userData.getIdEmpresa();
   }
 
@@ -39,9 +38,25 @@ export class AnunciosPage implements OnInit {
     this.cargaAnunciosStorage();
   }
 
-  async cargaAnunciosStorage(){
-    console.log('cargaAnunciosStorage................');
+  ionViewWillEnter(){    
     
+    this.showToastAlert("Nota: Los anuncios son responsabilidad de quien lo crea.");
+  
+  }
+
+  showToastAlert(dataMessage: string){
+    this.toastCtrl.create({
+      message: dataMessage,
+      color:"warning",
+      duration: 2000
+    }).then((toastData) => {
+      toastData.present();
+    });
+  }
+
+
+
+  async cargaAnunciosStorage(){
     /* console.log('this.networkService.getCurrentNetworkStatus(): ',this.networkService.getCurrentNetworkStatus()); */
     
       /* console.log('recuperaAnunciosLocalStorage');     */

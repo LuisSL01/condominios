@@ -20,6 +20,7 @@ import { File } from '@ionic-native/file/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 
 import { OneSignal } from '@ionic-native/onesignal/ngx';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 
 
@@ -45,6 +46,7 @@ import { OneSignal } from '@ionic-native/onesignal/ngx';
     File,
     FileOpener,
     OneSignal,
+    BarcodeScanner,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

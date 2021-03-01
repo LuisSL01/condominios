@@ -49,6 +49,12 @@ export class VisitaService {
     return this.http.get<ApiResponse>(this.baseUrl + this.visitaContext+ environment.coreApiGetVisitaListOperation +"/"+idEmpresa+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):'')).pipe(share());
   }
 
+  getVisitaByIdAndUUID(id:string, uuid:string){
+    console.log('getVisitaByIdAndUUID');    
+    console.log(this.baseUrl + this.visitaContext+ environment.coreApiGetVisitaByIdAndUUIDOperation +"/"+id+"/"+uuid);
+    return this.http.get<ApiResponse>(this.baseUrl + this.visitaContext+ environment.coreApiGetVisitaByIdAndUUIDOperation +"/"+id+"/"+uuid).pipe(share());
+  }
+
 
 
   guardarVisita(visita: Visita) {

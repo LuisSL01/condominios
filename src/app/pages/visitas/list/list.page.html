@@ -13,9 +13,14 @@
   </ion-label> -->
   <ion-card>
     <ion-card-header>
-      <ion-card-title>  {{visita.nombreCompleto}} -  {{visita.fechaDeCreacion | date:'dd/MM/yyyy'}}</ion-card-title>
+      <ion-card-title>  
+        <ion-label color="success" ><h2>{{visita.nombreCompleto}}</h2>
+        <h3>Tipo: {{visita.tipoDeVisita}}</h3>
+        </ion-label>
+        
+        </ion-card-title>
       <ion-card-subtitle>
-        <span class="text-primary">   {{visita.tipoDeVisita}}</span>
+        <span class="text-primary">Visitan a:  {{visita.nombreAgenteCreador}}   </span>
         <div class="card-more">
           <ion-button fill="clear" (click)="lanzarMenu()">
             <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
@@ -24,7 +29,16 @@
       </ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
-      {{visita.duracionDeVisita}}
+
+      <ion-label>
+        <h2 *ngIf="visita.duracionDeVisita !== 'entre_fechas'">Duración: {{visita.duracionDeVisita}}</h2>
+        <h2 *ngIf="visita.duracionDeVisita === 'entre_fechas'" >Duración:  {{visita.fechaInicio | date:'dd/MMM/yy'}} - {{visita.fechaTermino | date:'dd/MMM/yy'}}   </h2>
+        <h2>Visita Diaria: {{visita.visitaDiaria?'Si':'No'}}</h2>
+        <h2>Acompañantes: {{visita.conAcompaniantes?'Si':'No'}}</h2>
+      
+      </ion-label>
+      
+
     </ion-card-content>
   </ion-card>
   

@@ -4,6 +4,7 @@ import { ConvocatoriaService } from '../../../services/convocatoria.service';
 import { ActionSheetController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Publicacion } from '../../../models/publicacion.model';
+import { UserData } from '../../../providers/user-data';
 
 @Component({
   selector: 'app-list',
@@ -15,9 +16,10 @@ export class ListPage implements OnInit {
   @Input() convocatoria: Publicacion;
 
 
-  constructor(public dataLocalConvocatoriaService: ConvocatoriaService,
+  constructor(public convocatoriaService: ConvocatoriaService,
       private actionSheetCtrl: ActionSheetController,    
-      private router: Router) {
+      private router: Router,
+      private userData: UserData) {
 
   }
 
@@ -33,8 +35,18 @@ export class ListPage implements OnInit {
       text: 'Borrar convocatoria',
       icon: 'trash',
       cssClass: 'action-dark',
-      handler: () => {
-        this.dataLocalConvocatoriaService.borrar(this.convocatoria);
+      handler: () => {        
+        if(this.convocatoria.id > 0){            
+          this.convocatoriaService.borrarConvocatoria(this.convocatoria.id).subscribe((data) => {
+              if (data.status === 200) this.userData.showToast('registro eliminado correctamente');                       
+              else this.userData.showToast("Error al eliminar registro");                                
+            },
+            (err) => {
+              console.log(err);                
+              this.userData.showToast("Error al eliminar registro");
+            },() => {}
+          );
+        }
       }
     };
 

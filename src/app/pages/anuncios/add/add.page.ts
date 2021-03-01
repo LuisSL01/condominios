@@ -20,24 +20,27 @@ export class AddPage implements OnInit {
   anuncio: Publicacion = new Publicacion();
   
   enCamara: boolean;
-  data: ArchivoVortexApp[] = new Array();
+  files: ArchivoVortexApp[] = new Array();
   /* dataTemp: ArchivoVortexApp[] = new Array();   */
 
   createAnuncio = this.fb.group({
     //Esto para construir los formularios dinamicamente
-    titulo: ["", [Validators.required]],
-    descripcion: ["", [Validators.required]],
-    precio: ["", [Validators.required]],
-    telefono: [""],
+    data: this.fb.group({
+      clasificacion: ["", [Validators.required]],
+      titulo: ["", [Validators.required]],      
+
+      descripcion: ["", [Validators.required]],
+      precio: ["", [Validators.required]],
+      telefono: [""],    
+      fechaVence: [new Date()],
+      estatus: [true]
+    }),  
     tipo: ["ANUNCIO"],
-    fechaVence: [new Date()],
-    estatus: [true],
   });
   idEmpresa: number;
   idAgente: number;
   pathBase64:string ="data:image/jpeg;base64,";
 
-  /* momentjs: any = moment; */
 
   constructor(
 
@@ -47,9 +50,7 @@ export class AddPage implements OnInit {
     private fb: FormBuilder,
     private toastr: ToastController,
     private userData: UserData
-  ) {
-    /* this.idEmpresa = JSON.parse(window.localStorage.getItem('empresaData')).id;//Recuperamos el id empresa de empresaData
-    this.idAgente = JSON.parse(window.localStorage.getItem('userDetails')).id;//Recuperamos el id agente de userDetails */
+  ) {    
   }
 
   ngOnInit() {
@@ -91,12 +92,9 @@ export class AddPage implements OnInit {
   async procesarImagen(options: CameraOptions) {
     this.camera.getPicture(options).then(
       (imageData) => {
-        /* console.log("imageData:" + imageData); */
-        /* const img = window.Ionic.WebView.convertFileSrc(imageData); */
-        /* const img = "data:image/jpeg;base64," + imageData; //Se agrega para que se muestren en la lista */
-        const title = this.createAnuncio.value.titulo + "_aviso.jpg";
-        /* this.dataTemp.push(new ArchivoVortexApp(img, title)); */
-        this.data.push(new ArchivoVortexApp(imageData, title)); //Se setea la imagen en base 64
+        
+        const title = this.createAnuncio.value.titulo + "_aviso.jpg";      
+        this.files.push(new ArchivoVortexApp(imageData, title)); //Se setea la imagen en base 64
       },
       (err) => {
         // Handle error
@@ -109,18 +107,16 @@ export class AddPage implements OnInit {
     const anuncioObj = {
       empresa: this.idEmpresa,
       agenteCreador: this.idAgente,
-      titulo: this.createAnuncio.value.titulo,
-      descripcion: this.createAnuncio.value.descripcion,
-      precio: this.createAnuncio.value.precio,      
+      data : this.createAnuncio.value.data,
       tipo: this.createAnuncio.value.tipo,
-      fechaVence: this.createAnuncio.value.fechaVence,
-      data: {
+      estatus:true,
+      files: {
         archivos: [],//Se debe enviar vacio, ya que las imagenes se procesan por separado.
       },
     };
-    const formData = new FormData(); //Esto no esta trabajanco chido...
+    const formData = new FormData();
     formData.append("data", JSON.stringify(anuncioObj));
-    formData.append("file", JSON.stringify(this.data));
+    formData.append("file", JSON.stringify(this.files));
     console.log("anuncio enviado: ", formData);
 
     //Se envia a guardar en el server
@@ -153,15 +149,17 @@ export class AddPage implements OnInit {
 
   guardarAnuncioLocalmente() {
     console.log('guardando anuncio localmente');    
-    this.anuncio.empresa = this.idEmpresa;
+
+/*     this.anuncio.empresa = this.idEmpresa;
     this.anuncio.agenteCreador = this.idAgente;
     this.anuncio.titulo = this.createAnuncio.value.titulo;
     this.anuncio.descripcion = this.createAnuncio.value.descripcion;
     this.anuncio.precio = this.createAnuncio.value.precio;
     this.anuncio.tipo = this.createAnuncio.value.tipo;
     this.anuncio.fechaVence = this.createAnuncio.value.fechaVence;
-    this.anuncio.data = this.data;
-    this.anuncioService.guardarAnuncioLocal(this.anuncio);
+    this.anuncio.files = this.files;
+    this.anuncioService.guardarAnuncioLocal(this.anuncio); */
+
   }
 
   showToast(dataMessage: string) {
@@ -176,6 +174,7 @@ export class AddPage implements OnInit {
   }
   cambioFechaVence(event) {
     console.log("cambio fecha vence: ", event);
-    this.anuncio.fechaVence = new Date(event.detail.value);
+    /* this.anuncio.fechaVence = new Date(event.detail.value); */
+    this.createAnuncio.value.data.fechaVence = new Date(event.detail.value);
   }
 }

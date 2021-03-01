@@ -3,6 +3,7 @@ import { VisitaService } from '../../../services/visita.service';
 import { Visita } from '../../../models/visita.model';
 import { ActionSheetController } from '@ionic/angular';
 import { UserData } from '../../../providers/user-data';
+import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner/ngx';
 
 @Component({
   selector: 'app-list',
@@ -13,9 +14,14 @@ export class ListPage implements OnInit {
 
   @Input() visita:Visita;
 
+  encodeDataVisita: any;
+  barcodeScannerOptions: BarcodeScannerOptions;
+
   constructor(public visitaService: VisitaService,
     private actionSheetCtrl: ActionSheetController,
-    private userData:UserData) { }
+    private userData:UserData,
+    private barcodeScanner: BarcodeScanner
+    ) { }
 
   ngOnInit() {
   }
@@ -49,11 +55,38 @@ export class ListPage implements OnInit {
       buttons: [
       guardarBorrarBtn,
       {
-        text: 'Compartir qr',
-        icon: 'share',        
+        text: 'Generar qr',
+        icon: 'qr-code-outline',        
         cssClass: 'action-dark',
         handler: () => {
+
+          this.barcodeScannerOptions = {
+            showTorchButton: true,
+            showFlipCameraButton: true
+          };
+
+          this.encodeDataVisita = this.visita.id+"|"+this.visita.uuid;
+          this.encodeDataVisita = btoa(this.encodeDataVisita);
+          
+
           console.log('Compartir qr');
+
+          console.log('Compartir qr2222');
+
+
+
+
+          this.barcodeScanner.encode(this.barcodeScanner.Encode.TEXT_TYPE, this.encodeDataVisita).then(encodedData => {
+            console.log('dentro de data');
+            
+              console.log('encodedData',encodedData);
+              this.encodeDataVisita = encodedData;
+            },(err) => {
+              console.log("Error occured : " + err);
+            }
+          );
+
+
         }
       },
       {

@@ -15,9 +15,10 @@ export const environment = {
   
   
 
-  authServiceBaseUrl: 'http://192.168.1.125:8080',
-  coreServiceBaseUrl: 'http://192.168.1.125:8081',
-  formsServiceBaseUrl: 'http://192.168.1.125:8082',
+  authServiceBaseUrl: 'http://192.168.80.107:8080',
+  coreServiceBaseUrl: 'http://192.168.80.107:8081',
+  formsServiceBaseUrl: 'http://192.168.80.107:8082',
+
 
 
   /* authServiceBaseUrl: 'http://54.177.89.203:8080',
@@ -126,7 +127,9 @@ export const environment = {
   coreApiBaseAvisosAdministracionOperation: '/aviso',
   coreApiBasePublicacionOperation: '/publicacion',
   coreApiBasePublicacionRespuestaOperation: '/respuesta',  
+  coreApiBasePublicacionReporteOperation: '/reporte',  
   coreApiBasePublicacionesOperation: '/publicaciones',
+  coreApiUpdateStatusPublicacionOperation: 'updateStatus',
   coreApiBaseAnuncioOperation: '/anuncio',
   coreApiGetAnunciosListOperation: ':listByEmpresa',
 
@@ -147,6 +150,7 @@ export const environment = {
   coreApiBaseVisitaOperation: '/visit',    
   coreApiBaseVisitasOperation: '/visitas',
   coreApiGetVisitaListOperation: ':listByEmpresa',
+  coreApiGetVisitaByIdAndUUIDOperation: ':findByUuid',
 
   //bitacora-visita
   coreApiBaseBitacoraVisitaOperation: '/bitacora-visit',      
@@ -175,6 +179,11 @@ export const environment = {
   //Directorios
   coreApiBaseDirectorioOperation: '/directorio',  
   coreApiGetDirectorioListOperation: ':listByEmpresa',
+
+  //Notificaciones
+  coreApiBaseNotificacionOperation: '/notificacion',  
+  coreApiGetNotificacionListOperation: ':listByEmpresa',
+  coreApiGetNotificacionListAgenteOperation: ':listByAgente',
 
 };
 

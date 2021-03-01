@@ -14,6 +14,8 @@ export class BitacoraVisita{
     public imgs:string[];//data
 
     public data:ArchivoVortexApp[];
+
+    public nombreAgenteVisita:string;
     
     constructor(){
         this.fechaDeCreacion = new Date();

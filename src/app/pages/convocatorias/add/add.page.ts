@@ -19,9 +19,13 @@ export class AddPage implements OnInit {
   manzanas: any[] =  [];
 
   createConvocatoria = this.fb.group({
-    destinatario: ["", [Validators.required]],
-    titulo: ["", [Validators.required]],
-    descripcion: ["", [Validators.required]],
+
+    data: this.fb.group({
+      destinatario: ["", [Validators.required]],
+      titulo: ["", [Validators.required]],
+      descripcion: ["", [Validators.required]]
+    }),  
+
     tipo: ["CONVOCATORIA"],
   });
 
@@ -60,11 +64,9 @@ export class AddPage implements OnInit {
     const resolucionObj ={
       empresa:this.idEmpresa,
       agenteCreador:this.idAgente,
-      titulo: this.createConvocatoria.value.titulo,
-      descripcion: this.createConvocatoria.value.descripcion,      
+      data: this.createConvocatoria.value.data,
       tipo: this.createConvocatoria.value.tipo,
-      destinatario: this.createConvocatoria.value.destinatario,
-      data: {
+      files: {
         archivos: [],
       }      
     };

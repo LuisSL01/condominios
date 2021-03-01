@@ -151,7 +151,15 @@ const routes: Routes = [
   {
     path: 'recibos',
     loadChildren: () => import('./pages/recibos/recibos.module').then( m => m.RecibosPageModule)
+  },  {
+    path: 'notifications',
+    loadChildren: () => import('./pages/notifications/notifications.module').then( m => m.NotificationsPageModule)
+  },
+  {
+    path: 'datos-interes',
+    loadChildren: () => import('./pages/datos-interes/datos-interes.module').then( m => m.DatosInteresPageModule)
   }
+
 
 
 

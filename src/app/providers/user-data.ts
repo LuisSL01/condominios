@@ -12,8 +12,9 @@ export class UserData {
   HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
   empresa_id:number = 0;
   agente_id:number = 0;
-  nameImageEmpresa ="";
 
+
+  nameImageEmpresa ="";
   nombreCompleto:string ="";
 
   constructor(
@@ -87,14 +88,15 @@ export class UserData {
     this.agente_id = JSON.parse(window.localStorage.getItem('userDetails')).id;//Recuperamos el id agente de userDetails      
   }
   recuperaNombreCompleto(){
-    this.nombreCompleto = JSON.parse(window.localStorage.getItem('userDetails')).nombre;//Recuperamos el nombre
+    this.nombreCompleto = JSON.parse(window.localStorage.getItem('userDetails')).nombreCompleto;//Recuperamos el nombre
   }
 
   getIdAgente(): number{    
-    if(this.agente_id === 0){
+    /* if(this.agente_id === 0){
       this.recuperaIdAgente();
     }
-    return this.agente_id = JSON.parse(window.localStorage.getItem('userDetails')).id;;
+    return this.agente_id = JSON.parse(window.localStorage.getItem('userDetails')).id;; */
+    return JSON.parse(window.localStorage.getItem('userDetails')).id;;
   }
 
   getIdEmpresa(): number{
@@ -105,15 +107,18 @@ export class UserData {
   }
 
   getNombreCompleto():string{
-    if(this.nombreCompleto.length ===0){
+    /* if(this.nombreCompleto.length ===0){
       this.recuperaNombreCompleto();
     }
-    return this.nombreCompleto;
+    return this.nombreCompleto; */
+    return JSON.parse(window.localStorage.getItem('userDetails')).nombreCompleto;
   }
 
  
 
   setConfigEmpresa(){
+    console.log('setConfigEmpresa');
+    
     let empresa_id_temp =  JSON.parse(window.localStorage.getItem('empresaData')).id;//Recuperamos el id empresa de empresaData    
     if(empresa_id_temp === 7) {
       /* this.nameImageEmpresa = "esmeralda.png"; */
@@ -127,6 +132,7 @@ export class UserData {
       /* this.nameImageEmpresa = "sur.png"; */  
       this.nameImageEmpresa = "https://almacenamientonube.s3.us-west-1.amazonaws.com/Config/empresaId_12.png";
     }  
+
   }
 
   showToast(dataMessage: string) {

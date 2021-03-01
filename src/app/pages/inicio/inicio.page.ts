@@ -8,6 +8,9 @@ import { Publicacion } from '../../models/publicacion.model';
 import { AnuncioService } from '../../services/anuncio.service';
 import { UserData } from '../../providers/user-data';
 import { Storage } from "@ionic/storage";
+import { DatosInteresService } from '../../services/datos-interes.service';
+import { ModalController } from "@ionic/angular";
+import { DatosInteresPage } from '../datos-interes/datos-interes.page';
 
 @Component({
   selector: 'app-inicio',
@@ -26,27 +29,68 @@ export class InicioPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   anunciosPage:number=0;
 
+  
+
 
   pathS3:string ="https://almacenamientonube.s3.us-west-1.amazonaws.com/";
   pathBase64:string ="data:image/jpeg;base64,";
+
+  climaData:any;
 
   constructor(private dataService: DataService,
               private menuCtrl: MenuController,
               public publicacionService : PublicacionService,
               private anuncioService : AnuncioService,
               private storage: Storage,
-              private userData:UserData) {
+              private userData:UserData,
+              private datosInteresService:DatosInteresService,
+              private modalCtrl: ModalController,) {
                 this.componentes = this.dataService.getMenuOpts();
 
                 /* this.publicaciones = this.publicacionService.publicaciones;
                   console.log('this.publicaciones:'+ this.publicaciones); */
-                  this.idEmpresa = this.userData.getIdEmpresa();
+               
      }
 
  
-  ngOnInit() {
-    /* this.cargarAnunciosLocalesStorage(); */
+  ngOnInit() {  
+
+    this.cargarDatosInteres();
+
+  }
+
+  ionViewWillEnter(){    
+    this.idEmpresa = this.userData.getIdEmpresa();
+
+    
     this.cargaAnunciosStorage();
+  }
+
+  cargarDatosInteres(){    
+      this.datosInteresService.getClimaByCoordenadas().subscribe((data) => {    
+            if (data.cod === 200) {
+              this.climaData = data;            
+              this.presentModalDatosInteres();            
+            } else {
+              console.log('Llego otro estatus al recupera clima');              
+            }
+          },
+          (err) => {
+            console.log(err);
+            console.log('Llego otro estatus al recupera clima');
+          }
+        );
+  }
+
+  async presentModalDatosInteres() {
+    const modal = await this.modalCtrl.create({
+      component: DatosInteresPage,
+      componentProps: {
+        climaData: this.climaData        
+      },
+      cssClass: "my-custom-class",
+    });
+    return await modal.present();
   }
 
   async cargaAnunciosStorage(){      
