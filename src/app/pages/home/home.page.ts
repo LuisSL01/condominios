@@ -63,7 +63,7 @@ export class HomePage implements OnInit {
 
 
     const objAgente = {
-      dispositivoUuid: this.pushService.userId      
+      /* dispositivoUuid: this.pushService.userId       */
     };
 
     const loginPayload = {
