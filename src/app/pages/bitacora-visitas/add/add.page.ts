@@ -6,7 +6,7 @@ import { BitacoraVisitaService } from '../../../services/bitacora-visita.service
 import { FormBuilder, Validators } from '@angular/forms';
 import { UserData } from '../../../providers/user-data';
 import { ArchivoVortexApp } from '../../../models/archivo-vortex.model';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+
 import { VisitaService } from '../../../services/visita.service';
 import { Visita } from '../../../models/visita.model';
 
@@ -48,7 +48,8 @@ export class AddPage implements OnInit {
               private router:Router,
               private fb: FormBuilder,
               private userData: UserData,
-              private barcodeScanner: BarcodeScanner) { }
+              
+              ) { }
 
   ngOnInit() {
     console.log('en el ngoninit');
@@ -111,7 +112,7 @@ export class AddPage implements OnInit {
     
     console.log('scanQR()');
     console.log('deberia estar llamando al method');    
-    this.barcodeScanner.scan().then(barcodeData => {
+ /*    this.barcodeScanner.scan().then(barcodeData => {
       console.log('Barcode data', barcodeData);
 
       this.buscaInfoVisita(barcodeData.text);
@@ -119,7 +120,7 @@ export class AddPage implements OnInit {
 
     }).catch(err => {
       console.log('Error', err);
-    });
+    }); */
   }
 
   buscaInfoVisita(data_visita:string){
