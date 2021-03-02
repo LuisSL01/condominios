@@ -35,6 +35,9 @@ export class RegistrationPage implements OnInit {
     apellidoPaterno: ['', null],
     apellidoMaterno: ['', null],
     sexo: ['', Validators.required],
+    fechaDeNacimiento: [new Date(), Validators.required],
+    ocupacion: ['', Validators.required],
+
     username: ['', [Validators.required, Validators.minLength(3)]],
     password: ['', Validators.required],
     confirmarPassword: ['', Validators.required],
@@ -104,6 +107,29 @@ export class RegistrationPage implements OnInit {
 
   }
 
+  cambioNumeroTelefono(event){
+    let phone:string = event.detail.value;        
+    if(phone.length <= 10){
+      this.createAgente.value.celular = phone;
+    }else{
+      this.showToast("El número celular no es valido, debe tener 10 digitos","danger")
+    }
+  }
+
+  cambioUsuario(event){
+    let user:string = event.detail.value;        
+    if(user.includes(" ")){
+      user = user.split(" ").join("");
+      this.createAgente.value.username = user;
+      console.log("this.createAgente.value.username", this.createAgente.value.username);      
+      this.showToast("No se permiten espacios en blanco en usuario","danger")
+    }else{
+      console.log('else');
+      
+      this.createAgente.value.username = user;
+    }
+  }
+
   guardarDatos() {
     if(this.empresaSelected > 0){      
 
@@ -111,29 +137,21 @@ export class RegistrationPage implements OnInit {
           this.createAgente.value.direccion.numeroExterior = this.createAgente.value.direccion.numeroExterior.toUpperCase();
  */
           const agenteObj = {
-            agente: {
-
-              /* 
-              rfc: 'RFC' + new Date().getTime(), 
-              curp: 'CURP' + new Date().getTime(), 
-              */
-
-              departamento: 'RESIDENTE'                
+            agente: {              
+                departamento: 'RESIDENTE'                
               , direccion: this.createAgente.value.direccion
-              
+              , apellidoPaterno: this.createAgente.value.apellidoPaterno
+					    , apellidoMaterno: this.createAgente.value.apellidoMaterno
+					    , sexo: this.createAgente.value.sexo
+              , ocupacion: this.createAgente.value.ocupacion              
               , puesto: 'RESIDENTE'
               , subClasificacion: 'SIN SUBCLASIFICACION'
               , subDepartamento: 'SIN SUBDEPARTAMENTO'
               , telefono: this.createAgente.value.celular
-
-              /* , gerente: 4 */
-
+              /* , fechaDeNacimiento: this.createAgente.value.fechaDeNacimiento + " 00:00:01.100 " */
               , activo:false
-              /* , fechaDeNacimiento: '01/01/2020 00:00:00.100'
-              , fechaDeIngreso: '01/01/2020 00:00:00.100' *///No es necesario
               , empresa: this.empresaSelected
               , gerenteActivo: true
-              /* , agenteCreador: 4 *///No es necesario
             },
             usuario: {
               username: this.createAgente.value.username
@@ -143,16 +161,15 @@ export class RegistrationPage implements OnInit {
               , autoRegistro: true
               , passwordExpirado: false
                , perfil: {id : 1} 
-              /* , roles: selectedRoleIds */
             }
           };      
           console.log('objetivo enviavo: ', agenteObj);
+
+          
+
           this.agenteService.registerUsuario(agenteObj).subscribe(data => {
             if (data.status === 200) {
               console.log('"data.result"', data.result);
-
-              //Aqui debo registrarlo a la lista de empresas.
-
               const formData = new FormData(); //Esto no esta trabajanco chido...
               formData.append("id_agente", data.result.id);
               formData.append("id_empresa", ""+this.empresaSelected);
@@ -161,11 +178,9 @@ export class RegistrationPage implements OnInit {
                 (data) => {
                   if (data.status === 200) {
                     console.log('"data.result"', data.result);                    
-                    this.showToast("agente asociado a empresa correctamente");
-
-                    
-                      this.router.navigate(["/home"]);
-                    
+                    this.showToast("agente asociado a empresa correctamente");  
+                    this.createAgente.reset();
+                    this.router.navigate(["/home"]);                    
                   } else {
                     console.log('Llego otro status al asociar agente a empresa');              
                   }
@@ -177,17 +192,8 @@ export class RegistrationPage implements OnInit {
                 () => {}
 
               );
-
               //Se envia a guardar en el server
-           
-
-           
-
-
-              console.log('registrado coreectamente');
               this.showToast('Usuario registrado correctamente');
-
-
             } else {              
               this.showToast('No se pudo registrar el usuario');
             }
@@ -254,10 +260,11 @@ export class RegistrationPage implements OnInit {
       this.createAgente.value.direccion.asentamiento); */
   }
   
-  showToast(dataMessage: string) {
+  showToast(dataMessage: string, color_str?:string) {
     this.toastr.create({
       message: dataMessage,
-      duration: 2000
+      duration: 2000,
+      color:color_str?color_str:null
     }).then((toastData) => {
       toastData.present();
     });

@@ -118,16 +118,18 @@ export class UserData {
 
   setConfigEmpresa(){
     console.log('setConfigEmpresa');
-    
-    let empresa_id_temp =  JSON.parse(window.localStorage.getItem('empresaData')).id;//Recuperamos el id empresa de empresaData    
-    if(empresa_id_temp === 7) {
-      /* this.nameImageEmpresa = "esmeralda.png"; */
-      this.nameImageEmpresa = "https://almacenamientonube.s3.us-west-1.amazonaws.com/Config/empresaId_7.png";
-    } 
-    else if (empresa_id_temp === 12 ) {
-      /* this.nameImageEmpresa = "sur.png"; */
-      this.nameImageEmpresa = "https://almacenamientonube.s3.us-west-1.amazonaws.com/Config/empresaId_12.png";
-    }
+    let empresa = JSON.parse(window.localStorage.getItem('empresaData'));
+    if(empresa){
+      let empresa_id_temp =  empresa.id;//Recuperamos el id empresa de empresaData    
+      if(empresa_id_temp === 7) {
+        /* this.nameImageEmpresa = "esmeralda.png"; */
+        this.nameImageEmpresa = "https://almacenamientonube.s3.us-west-1.amazonaws.com/Config/empresaId_7.png";
+      } 
+      else if (empresa_id_temp === 12 ) {
+        /* this.nameImageEmpresa = "sur.png"; */
+        this.nameImageEmpresa = "https://almacenamientonube.s3.us-west-1.amazonaws.com/Config/empresaId_12.png";
+      }
+    }   
     else {
       /* this.nameImageEmpresa = "sur.png"; */  
       this.nameImageEmpresa = "https://almacenamientonube.s3.us-west-1.amazonaws.com/Config/empresaId_12.png";
