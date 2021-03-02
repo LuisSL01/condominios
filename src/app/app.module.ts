@@ -19,7 +19,7 @@ import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx'; 
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 
-import { OneSignal } from '@ionic-native/onesignal/ngx';
+/* import { OneSignal } from '@ionic-native/onesignal/ngx'; */
 
 
 /* import { NgxMaskModule, IConfig } from 'ngx-mask' */
@@ -50,7 +50,7 @@ import { OneSignal } from '@ionic-native/onesignal/ngx';
     FileTransfer,
     File,
     FileOpener,
-    OneSignal,
+    /* OneSignal, */
     
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

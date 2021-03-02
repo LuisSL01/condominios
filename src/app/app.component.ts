@@ -50,7 +50,7 @@ export class AppComponent implements OnInit{
       console.log('iniciando configuracion inicial');
       
 
-      this.pushService.configuracionInicial()
+      /* this.pushService.configuracionInicial() */
     });
   }
 }
