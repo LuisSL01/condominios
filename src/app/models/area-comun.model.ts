@@ -15,7 +15,7 @@ export class AreaComun{
 
 
     /* public imgs:string[]; */
-    public data:ArchivoVortexApp[];
+    public data:ArchivoVortexApp;
 
     public diasDisponibles:number[];//Sunday is 0, Monday is 1, and so on.    
     constructor(){
@@ -26,6 +26,7 @@ export class AreaComun{
         this.horaTermina = new Date();
         /* this.imgs = Array(); */
         this.diasDisponibles = new Array();
+        this.data = new ArchivoVortexApp();
     }
 }
 
