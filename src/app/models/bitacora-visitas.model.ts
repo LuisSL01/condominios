@@ -1,5 +1,6 @@
 import { ArchivoVortexApp } from './archivo-vortex.model';
 export class BitacoraVisita{
+    
     public id:number;
     public empresa:number;
     public agenteCreo:number;

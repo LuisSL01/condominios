@@ -12,7 +12,7 @@ export class Gasto{
     */
     public data: any;
     public files: ArchivoVortexApp[];
-
+    
     public fechaDeCreacion:Date;
     public agenteCreador:number;
 

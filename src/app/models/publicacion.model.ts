@@ -15,7 +15,7 @@ export class Publicacion{
     public precio:number;
     public fechaVence:Date;
  */
-    public files:ArchivoVortexApp[];
+    public files:any[];
     public data:any;    
     public tipo:string;//aviso, convocatoria, resolucion, anuncio    
     public respuestas:RespuestaApp;

@@ -27,7 +27,7 @@ export class AddPage implements OnInit {
 
   enCamara:boolean;
 
-  data: ArchivoVortexApp[] = new Array();
+  data: any[] = new Array();
 
   createBitacoraVisita = this.fb.group({
     nombreCompleto: ["", [Validators.required]],

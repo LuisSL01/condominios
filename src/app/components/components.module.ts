@@ -8,6 +8,10 @@ import { MenuComponent } from './menu/menu.component';
 import { MenuHeaderComponent } from './menu-header/menu-header.component';
 import { FooterComponent } from './footer/footer.component';
 import { ButtonsComponent } from './buttons/buttons.component';
+import { AnuncioListComponent } from './anuncio-list/anuncio-list.component';
+
+
+
 
 
 
@@ -17,20 +21,24 @@ import { ButtonsComponent } from './buttons/buttons.component';
     MenuComponent,
     MenuHeaderComponent,
     FooterComponent,
-    ButtonsComponent
+    ButtonsComponent,
+    AnuncioListComponent
+    
   ],
   exports:[    
     HeaderComponent,
     MenuComponent,
     MenuHeaderComponent,
     FooterComponent,
-    ButtonsComponent
+    ButtonsComponent,    
+    AnuncioListComponent
   ],
   imports: [
     RouterModule,
     CommonModule,
     IonicModule,
-    PipesModule
+    PipesModule,
+    
   ]
 })
 export class ComponentsModule { }

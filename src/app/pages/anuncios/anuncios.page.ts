@@ -148,4 +148,7 @@ export class AnunciosPage implements OnInit {
     this.infiniteScroll.disabled = false;//Cada que se hace el refresh se habilita el componente infinite scroll
     this.getAnuncios(this.anunciosPage, 10, null, event);
   }
+  buscar(event){
+  
+  }
 }

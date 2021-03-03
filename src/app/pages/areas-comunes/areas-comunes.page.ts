@@ -118,4 +118,8 @@ export class AreasComunesPage implements OnInit {
     this.infiniteScroll.disabled = false;//Cada que se hace el refresh se habilita el componente infinite scroll
     this.getAreasComunes(this.areaComunPage, 10, null, event);
   }
+
+  buscar(event){
+  
+  }
 }

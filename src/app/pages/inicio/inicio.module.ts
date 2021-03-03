@@ -9,7 +9,6 @@ import { InicioPageRoutingModule } from './inicio-routing.module';
 import { InicioPage } from './inicio.page';
 import { ComponentsModule } from '../../components/components.module';
 import { PipesModule } from '../../pipes/pipes.module';
-import { ListPage } from '../anuncios/list/list.page';
 
 @NgModule({
   imports: [
@@ -19,7 +18,8 @@ import { ListPage } from '../anuncios/list/list.page';
     InicioPageRoutingModule,
     ComponentsModule,
     PipesModule
+    
   ],
-  declarations: [InicioPage, ListPage]
+  declarations: [InicioPage]
 })
 export class InicioPageModule {}
