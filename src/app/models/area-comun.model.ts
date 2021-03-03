@@ -17,7 +17,9 @@ export class AreaComun{
     /* public imgs:string[]; */
     public data:ArchivoVortexApp;
 
-    public diasDisponibles:number[];//Sunday is 0, Monday is 1, and so on.    
+    public diasDisponibles:number[];//Sunday is 0, Monday is 1, and so on.
+    
+        
     constructor(){
         console.log('im in constructor new area comun');
         this.disponibleTodosDias = true;
@@ -39,6 +41,9 @@ export class AreaComunReserva{
     public autorizado:boolean;
     
     public reserva:Reserva[];
+    public nombreAreaComun:string;
+    public nombreAgenteCreador:string;
+    
     constructor(){
         this.reserva = new Array();
     }

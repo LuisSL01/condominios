@@ -17,7 +17,7 @@ export class PagosComprobantes{
     public importeOriginal:number;
     public importePagado:number;
     public recargos:number;
-    public data:ArchivoVortexApp[];
+    public data:ArchivoVortexApp;
     public adeudo:number;
     public fechaAutorizo:Date;
     public agenteAutoriza:number;
@@ -29,6 +29,7 @@ export class PagosComprobantes{
 
 
     constructor(){
+        this.data = new ArchivoVortexApp();
         console.log('In the constructor ot Pagos comprobantes');
 
         /* this.imgs = Array(); */
