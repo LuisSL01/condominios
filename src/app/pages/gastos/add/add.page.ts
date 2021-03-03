@@ -7,6 +7,7 @@ import { ToastController } from '@ionic/angular';
 import { ArchivoVortexApp } from 'src/app/models/archivo-vortex.model';
 import { FormBuilder, Validators } from "@angular/forms";
 import { UserData } from '../../../providers/user-data';
+import { Archivo } from '../../../models/archivo-vortex.model';
 
 
 declare var window: any;
@@ -21,7 +22,7 @@ export class AddPage implements OnInit {
   gasto: Gasto = new Gasto();
   enCamara:boolean;
 
-  files: ArchivoVortexApp[] = new Array();
+  files: Archivo[] = new Array();
   
   idEmpresa: number;
   idAgente: number;
@@ -82,7 +83,7 @@ export class AddPage implements OnInit {
   procesarImagen(options: CameraOptions) {
     this.camera.getPicture(options).then((imageData) => {
       const title = this.createGasto.value.tipoGasto + "_gasto.jpg";
-      this.files.push(new ArchivoVortexApp(imageData, title)); //Se setea la imagen en base 64      
+      this.files.push(new Archivo(imageData, title)); //Se setea la imagen en base 64      
     }, (err) => {
       // Handle error
     });

@@ -11,6 +11,7 @@ import { AgenteService } from '../../../services/agente.service';
 import { AdeudoService } from '../../../services/adeudo.service';
 import { AdeudosPage } from '../../adeudos/adeudos.page';
 import { AdeudoPago } from '../../../models/adeudo-pago.model';
+import { Archivo } from '../../../models/archivo-vortex.model';
 
 declare var window: any;
 
@@ -24,7 +25,7 @@ export class AddPage implements OnInit {
   pago: PagosComprobantes = new PagosComprobantes();
   enCamara:boolean;
 
-  data: ArchivoVortexApp[] = new Array();
+  data: Archivo[] = new Array();
 
   createPagoComprobante = this.fb.group({
     
@@ -127,7 +128,7 @@ export class AddPage implements OnInit {
   procesarImagen(options: CameraOptions) {
     this.camera.getPicture(options).then((imageData) => {
       const title = this.createPagoComprobante.value.adeudoId+ "_pago_comprobante.jpg";
-      this.data.push(new ArchivoVortexApp(imageData, title));
+      this.data.push(new Archivo(imageData, title));
       /* const img = window.Ionic.WebView.convertFileSrc(imageData); */
       /* this.pago.imgs.push(img); */
     }, (err) => {

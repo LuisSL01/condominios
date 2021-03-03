@@ -5,7 +5,7 @@ import { BitacoraVisita } from '../../../models/bitacora-visitas.model';
 import { BitacoraVisitaService } from '../../../services/bitacora-visita.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { UserData } from '../../../providers/user-data';
-import { ArchivoVortexApp } from '../../../models/archivo-vortex.model';
+import { ArchivoVortexApp, Archivo } from '../../../models/archivo-vortex.model';
 
 import { VisitaService } from '../../../services/visita.service';
 import { Visita } from '../../../models/visita.model';
@@ -27,7 +27,7 @@ export class AddPage implements OnInit {
 
   enCamara:boolean;
 
-  data: any[] = new Array();
+  data: Archivo[] = new Array();
 
   createBitacoraVisita = this.fb.group({
     nombreCompleto: ["", [Validators.required]],
@@ -102,7 +102,7 @@ export class AddPage implements OnInit {
       /* const img = window.Ionic.WebView.convertFileSrc(imageData);
       this.registroVisita.imgs.push(img); */
       const title = this.createBitacoraVisita.value.nombreCompleto + "_bitacora-visita.jpg";        
-      this.data.push(new ArchivoVortexApp(imageData, title));
+      this.data.push(new Archivo(imageData, title));
     }, (err) => {
       // Handle error
     });

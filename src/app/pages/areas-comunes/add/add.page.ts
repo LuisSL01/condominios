@@ -3,7 +3,7 @@ import { AreaComun } from "../../../models/area-comun.model";
 import { AreaComunService } from '../../../services/area-comun.service';
 import { Camera, CameraOptions } from "@ionic-native/camera/ngx";
 import { Router } from "@angular/router";
-import { ArchivoVortexApp } from "../../../models/archivo-vortex.model";
+import { ArchivoVortexApp, Archivo } from '../../../models/archivo-vortex.model';
 import { FormBuilder, Validators } from "@angular/forms";
 import { UserData } from "../../../providers/user-data";
 
@@ -33,7 +33,7 @@ export class AddPage implements OnInit {
   areaComun: AreaComun = new AreaComun();
   enCamara: boolean;
 
-  data: ArchivoVortexApp[] = new Array();
+  data: Archivo[] = new Array();
 
   createArea = this.fb.group({
     //Esto para construir los formularios dinamicamente
@@ -104,7 +104,7 @@ export class AddPage implements OnInit {
       (imageData) => {
         /* const img = window.Ionic.WebView.convertFileSrc(imageData); */
         const title = this.createArea.value.titulo + "_area-comun.jpg";        
-        this.data.push(new ArchivoVortexApp(imageData, title));
+        this.data.push(new Archivo(imageData, title));
       },
       (err) => {
         // Handle error
@@ -211,7 +211,7 @@ export class AddPage implements OnInit {
     this.areaComun.codigoColor = this.createArea.value.codigoColor;
     this.areaComun.horaInicia = this.createArea.value.horaInicia;
     this.areaComun.horaTermina = this.createArea.value.horaTermina;
-    this.areaComun.data = this.data;
+    this.areaComun.data.archivos = this.data;
     
     this.areaComunService.saveLocal(this.areaComun);
   }
