@@ -182,5 +182,9 @@ export class InicioPage implements OnInit {
     this.menuCtrl.toggle();
   }
 
+  buscar(event){
+  
+  }
+
 }
 
