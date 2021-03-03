@@ -9,6 +9,7 @@ import { ArchivoVortexApp } from 'src/app/models/archivo-vortex.model';
 import { FormBuilder, Validators } from "@angular/forms";
 import { UserData } from '../../../providers/user-data';
 import { AgenteService } from '../../../services/agente.service';
+import { Archivo } from '../../../models/archivo-vortex.model';
 
 
 declare var window: any;
@@ -23,7 +24,7 @@ export class AddAvisosPage implements OnInit {
   notificacion: Publicacion = new Publicacion();
   enCamara: boolean;
 
-  files: ArchivoVortexApp[] = new Array();
+  files: Archivo[] = new Array();
   /* dataTemp: ArchivoVortexApp[] = new Array();   */
 
   manzanas: any[] =  [];
@@ -125,7 +126,8 @@ export class AddAvisosPage implements OnInit {
       /* const img = "data:image/jpeg;base64," + imageData; //Se agrega para que se muestren en la lista */
       const title = this.createNotificacion.value.titulo + "_notificacion.jpg";
       /* this.dataTemp.push(new ArchivoVortexApp(img, title)); */
-      this.files.push(new ArchivoVortexApp(imageData, title)); //Se setea la imagen en base 64      
+      /* this.files.push(new ArchivoVortexApp(imageData, title)); //Se setea la imagen en base 64       */
+      this.files.push(new Archivo(imageData, title)); //Se setea la imagen en base 64      
     }, (err) => {
       // Handle error
     });
