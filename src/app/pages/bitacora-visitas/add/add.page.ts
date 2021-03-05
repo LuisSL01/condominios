@@ -9,6 +9,7 @@ import { ArchivoVortexApp, Archivo } from '../../../models/archivo-vortex.model'
 
 import { VisitaService } from '../../../services/visita.service';
 import { Visita } from '../../../models/visita.model';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 
 declare var window: any;
@@ -48,7 +49,7 @@ export class AddPage implements OnInit {
               private router:Router,
               private fb: FormBuilder,
               private userData: UserData,
-              
+              private barcodeScanner: BarcodeScanner
               ) { }
 
   ngOnInit() {
@@ -112,7 +113,7 @@ export class AddPage implements OnInit {
     
     console.log('scanQR()');
     console.log('deberia estar llamando al method');    
- /*    this.barcodeScanner.scan().then(barcodeData => {
+    this.barcodeScanner.scan().then(barcodeData => {
       console.log('Barcode data', barcodeData);
 
       this.buscaInfoVisita(barcodeData.text);
@@ -120,7 +121,7 @@ export class AddPage implements OnInit {
 
     }).catch(err => {
       console.log('Error', err);
-    }); */
+    });
   }
 
   buscaInfoVisita(data_visita:string){
@@ -136,10 +137,10 @@ export class AddPage implements OnInit {
 
       if (data.status === 200) { 
         this.visitaFound = data.result;         
-      }else  this.userData.showToast('No se encontro el registro recuperar registro');
+      }else  this.userData.showToast('No se encontro el registro');
     },
     (err) => {
-        this.userData.showToast("Error en el servicio al recupera registro");                  
+        this.userData.showToast("Error en el servicio al recuperar registro");
     },
     () => {}
   );

@@ -40,6 +40,8 @@ export class PushService {
   }
 
   configuracionInicial(){
+
+    
     console.log('configuracionInicial()');
     
     

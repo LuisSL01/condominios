@@ -78,7 +78,7 @@ export class RegistrationPage implements OnInit {
   buscarEmpresas() {
     console.log('buscando empresas...');    
     this.empresas = [
-      {
+  /*     {
         "id": 7,
         "nombre": "RINCON ESMERALDA",
         "alias": "ESME"     
@@ -86,7 +86,17 @@ export class RegistrationPage implements OnInit {
     {
         "id": 12,
         "nombre": "EXPLANADA SUR"       
-    }
+    } */
+    {
+      "id": 32,
+      "nombre": "RINCON ESMERALDA",
+      "alias": "RINCON ESME"     
+  },
+  {
+      "id": 33,
+      "nombre": "EXPLANADA SUR",
+      "alias": "EXP SUR"
+  }
   ];
 
 

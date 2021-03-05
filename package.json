@@ -19,6 +19,7 @@
     "@angular/platform-browser": "~9.1.6",
     "@angular/platform-browser-dynamic": "~9.1.6",
     "@angular/router": "~9.1.6",
+    "@ionic-native/barcode-scanner": "^5.31.1",
     "@ionic-native/camera": "^5.28.0",
     "@ionic-native/core": "^5.0.7",
     "@ionic-native/file": "^5.30.0",
@@ -43,6 +44,7 @@
     "moment": "^2.27.0",
     "moment-timezone": "^0.5.31",
     "onesignal-cordova-plugin": "^2.11.3",
+    "phonegap-plugin-barcodescanner": "^8.1.0",
     "rxjs": "~6.5.1",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
@@ -99,7 +101,10 @@
       "cordova-plugin-file-opener2": {
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
       },
-      "onesignal-cordova-plugin": {}
+      "onesignal-cordova-plugin": {},
+      "phonegap-plugin-barcodescanner": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      }
     },
     "platforms": [
       "ios",

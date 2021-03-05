@@ -3,7 +3,7 @@ import { VisitaService } from '../../../services/visita.service';
 import { Visita } from '../../../models/visita.model';
 import { ActionSheetController } from '@ionic/angular';
 import { UserData } from '../../../providers/user-data';
-/* import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner/ngx'; */
+import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner/ngx';
 
 @Component({
   selector: 'app-list',
@@ -20,7 +20,7 @@ export class ListPage implements OnInit {
   constructor(public visitaService: VisitaService,
     private actionSheetCtrl: ActionSheetController,
     private userData:UserData,
-    /* private barcodeScanner: BarcodeScanner */
+    private barcodeScanner: BarcodeScanner
     ) { }
 
   ngOnInit() {
@@ -76,7 +76,7 @@ export class ListPage implements OnInit {
 
 
 
-       /*    this.barcodeScanner.encode(this.barcodeScanner.Encode.TEXT_TYPE, this.encodeDataVisita).then(encodedData => {
+          this.barcodeScanner.encode(this.barcodeScanner.Encode.TEXT_TYPE, this.encodeDataVisita).then(encodedData => {
             console.log('dentro de data');
             
               console.log('encodedData',encodedData);
@@ -84,7 +84,7 @@ export class ListPage implements OnInit {
             },(err) => {
               console.log("Error occured : " + err);
             }
-          ); */
+          );
 
 
         }

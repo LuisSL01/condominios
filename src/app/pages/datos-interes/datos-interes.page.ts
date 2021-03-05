@@ -9,6 +9,9 @@ import { ModalController } from '@ionic/angular';
 export class DatosInteresPage implements OnInit {
 
   @Input() climaData:any;
+  @Input() direccionData:any;
+  @Input() nombreEmpresa:string;
+  
 
   myDate:Date = new Date();
 

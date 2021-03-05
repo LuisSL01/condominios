@@ -20,11 +20,7 @@
     "name": "Boton pánico",
     "redirectTo": "/boton-panico"
   },
-  {
-    "icon": "call-outline",
-    "name": "Contactos de emergencia",
-    "redirectTo": "/contactos-emergencia"
-  },
+
   {
     "icon": "book-outline",
     "name": "Directorios",

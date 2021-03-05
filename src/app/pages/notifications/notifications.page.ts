@@ -15,10 +15,10 @@ export class NotificationsPage implements OnInit {
     private applicationRef: ApplicationRef) { }
 
   ngOnInit() {
-    /* this.pushService.pushListener.subscribe(noti => {
+    this.pushService.pushListener.subscribe(noti => {
       this.mensajes.unshift(noti);
       this.applicationRef.tick();//Con esto le decimos a angular que actve su ciclo de deteccion de cambios
-    }); */
+    });
   }
 
   async ionViewWillEnter() {
