@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { GastoService } from '../../services/gasto.service';
 import { UserData } from '../../providers/user-data';
-import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { File } from '@ionic-native/file/ngx';
-import { ArchivoVortexApp } from 'src/app/models/archivo-vortex.model';
+import { Archivo } from 'src/app/models/archivo-vortex.model';
 
 
 
@@ -17,7 +16,6 @@ export class RecibosPage implements OnInit {
 
   constructor(public gastoService: GastoService,
               private userData: UserData,
-              private previewAnyFile: PreviewAnyFile,
               private file: File,
               private fileOpener: FileOpener,) { }
 
@@ -29,10 +27,10 @@ export class RecibosPage implements OnInit {
     console.log("ir a por el PDF");
     
     
-    this.gastoService.getReportePDF(24).subscribe(
+    this.gastoService.getReportePDF(22).subscribe(
       (data) => {
         console.log(data);
-        var file_base64 : ArchivoVortexApp;
+        var file_base64 : Archivo;
         file_base64 = data.result;
         console.log(file_base64.base64)
         this.userData.showToast('PDF Generado!');
