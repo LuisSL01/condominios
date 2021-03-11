@@ -31,8 +31,11 @@ export class EmpresaPage implements OnInit {
   }  
 
   empresaSelected(empresa: any) {
-    window.localStorage.setItem('empresaData', JSON.stringify({"nombre":empresa.nombre,"id":empresa.id}));
-    this.storage.set('empresaData', JSON.stringify({"nombre":empresa.nombre,"id":empresa.id}));
+    /* window.localStorage.setItem('empresaData', JSON.stringify({"nombre":empresa.nombre,"id":empresa.id}));
+    this.storage.set('empresaData', JSON.stringify({"nombre":empresa.nombre,"id":empresa.id})); */
+    window.localStorage.setItem('empresaData', JSON.stringify(empresa));
+    this.storage.set('empresaData', JSON.stringify(empresa));
+
     this.userData.setConfigEmpresa();
     this.router.navigate(['/inicio']);        
     this.showToast("Bienvenido a armonía residencial: " + this.username);

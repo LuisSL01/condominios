@@ -9,12 +9,14 @@
     <ion-item>
       <ion-icon name="pin" slot="start"></ion-icon>
       <ion-label>
-        <h2>Clima en:</h2>
-        <h1>{{climaData.name}}</h1>
+        <!-- <h2>Clima en:</h2> -->
+        <h2>{{nombreEmpresa}}</h2>
+        <h2>{{direccionData.asentamiento.municipio}}, {{direccionData.asentamiento.estado}}</h2>
         <p>
           {{myDate | date:'dd/MMM/yy h:mm a '}}
         </p>
         </ion-label>
+
       
       
     </ion-item>

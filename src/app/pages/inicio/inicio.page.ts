@@ -36,6 +36,8 @@ export class InicioPage implements OnInit {
   pathBase64:string ="data:image/jpeg;base64,";
 
   climaData:any;
+  direccion:any;
+  nombreEmpresa:string;
 
   constructor(private dataService: DataService,
               private menuCtrl: MenuController,
@@ -55,19 +57,23 @@ export class InicioPage implements OnInit {
  
   ngOnInit() {  
 
+    this.direccion = this.userData.getDataDireccionEmpresa();
+    this.nombreEmpresa = this.userData.getNombreEmpresa();
+
     this.cargarDatosInteres();
 
   }
 
   ionViewWillEnter(){    
     this.idEmpresa = this.userData.getIdEmpresa();
-
-    
     this.cargaAnunciosStorage();
+    
+
   }
 
-  cargarDatosInteres(){    
-      this.datosInteresService.getClimaByCoordenadas().subscribe((data) => {    
+  cargarDatosInteres(){
+    if(this.direccion && this.direccion.asentamiento){
+      this.datosInteresService.getClimaByCoordenadas(this.direccion.asentamiento.codigoPostal).subscribe((data) => {    
             if (data.cod === 200) {
               this.climaData = data;            
               this.presentModalDatosInteres();            
@@ -80,13 +86,19 @@ export class InicioPage implements OnInit {
             console.log('Llego otro estatus al recupera clima');
           }
         );
+    }else{
+      console.log('No se pudo recuperar los datos de empresa');
+      
+    }    
   }
 
   async presentModalDatosInteres() {
     const modal = await this.modalCtrl.create({
       component: DatosInteresPage,
       componentProps: {
-        climaData: this.climaData        
+        climaData: this.climaData,
+        direccionData: this.direccion,
+        nombreEmpresa: this.nombreEmpresa        
       },
       cssClass: "my-custom-class",
     });
@@ -180,6 +192,10 @@ export class InicioPage implements OnInit {
 
   toogleMenu(){
     this.menuCtrl.toggle();
+  }
+
+  buscar(event){
+  
   }
 
 }

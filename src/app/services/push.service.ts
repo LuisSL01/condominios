@@ -1,5 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { OneSignal, OSNotification, OSNotificationPayload } from '@ionic-native/onesignal/ngx';
+ import { OneSignal, OSNotification, OSNotificationPayload } from '@ionic-native/onesignal/ngx';
 import { Storage } from '@ionic/storage';
 
 import { environment } from 'src/environments/environment';
@@ -9,21 +9,14 @@ import { share } from 'rxjs/operators';
 import { Observable } from 'rxjs/index';
 import { Notificacion } from '../models/notificacion.model';
 import { UserData } from '../providers/user-data';
-
+ 
 @Injectable({
   providedIn: 'root'
 })
 export class PushService {
 
-  
-  mensajes: OSNotificationPayload []= [
-    /*    {
-         notificationID:1,  
-         title:'Titulo de la push',
-         body:'Este es el body de la push',
-         date: new Date()
-       } */
-     ];
+
+  mensajes: OSNotificationPayload []= [];
    
   userId:string;
    
@@ -47,6 +40,8 @@ export class PushService {
   }
 
   configuracionInicial(){
+
+    
     console.log('configuracionInicial()');
     
     
@@ -170,5 +165,6 @@ async borrarMensajes(){
     await this.storage.clear();
     this.mensajes =[];
     this.guardarMensajes();
-}
+} 
+
 }

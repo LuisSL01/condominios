@@ -120,4 +120,8 @@ doRefresh(event) {
   this.infiniteScroll.disabled = false;//Cada que se hace el refresh se habilita el componente infinite scroll
   this.getNotificaciones(this.notificacionesPage, 10, null, event);
 }
+
+buscar(event){
+  
+}
 }

@@ -1,18 +1,16 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AnuncioService } from '../../../services/anuncio.service';
-
+import { Publicacion } from '../../models/publicacion.model';
+import { RespuestaPublicacion } from '../../models/respuesta-publicacion.model';
+import { AnuncioService } from '../../services/anuncio.service';
 import { ActionSheetController, ToastController } from '@ionic/angular';
-import { Publicacion } from '../../../models/publicacion.model';
-import { RespuestaPublicacion } from '../../../models/respuesta-publicacion.model';
-import { UserData } from '../../../providers/user-data';
-import { Anuncio } from '../../../models/anuncio.model';
+import { UserData } from '../../providers/user-data';
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.page.html',
-  styleUrls: ['./list.page.scss'],
+  selector: 'app-anuncio-list',
+  templateUrl: './anuncio-list.component.html',
+  styleUrls: ['./anuncio-list.component.scss'],
 })
-export class ListPage implements OnInit {
+export class AnuncioListComponent implements OnInit {
 
   @Input() anuncio: Publicacion;
 
@@ -24,14 +22,13 @@ export class ListPage implements OnInit {
   reporte:RespuestaPublicacion = new RespuestaPublicacion();
 
   constructor(public anuncioService: AnuncioService,
-      private actionSheetCtrl: ActionSheetController,
-      private toastr: ToastController,
-      private userData: UserData
-  ) { }
+    private actionSheetCtrl: ActionSheetController,
+    private toastr: ToastController,
+    private userData: UserData) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
+  
   async lanzarMenu() {
     let guardarBorrarBtn;
     guardarBorrarBtn = {
@@ -135,5 +132,6 @@ export class ListPage implements OnInit {
         toastData.present();
       });
   }
+
 
 }

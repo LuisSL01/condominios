@@ -1,4 +1,4 @@
-import { Component, OnInit, LOCALE_ID } from "@angular/core";
+import { Component, OnInit, LOCALE_ID, ViewChild } from '@angular/core';
 import { Anuncio } from "../../../models/anuncio.model";
 import { AnuncioService } from "../../../services/anuncio.service";
 import { Camera, CameraOptions } from "@ionic-native/camera/ngx";
@@ -8,8 +8,10 @@ import { Router } from "@angular/router";
 import { Publicacion } from "../../../models/publicacion.model";
 import { ArchivoVortexApp } from "src/app/models/archivo-vortex.model";
 import { FormBuilder, Validators } from "@angular/forms";
-import { ToastController } from "@ionic/angular";
+import { IonBackButton, ToastController } from "@ionic/angular";
 import { UserData } from "../../../providers/user-data";
+import { Archivo } from '../../../models/archivo-vortex.model';
+import { Location } from "@angular/common";
 
 @Component({
   selector: "app-add",
@@ -20,7 +22,8 @@ export class AddPage implements OnInit {
   anuncio: Publicacion = new Publicacion();
   
   enCamara: boolean;
-  files: ArchivoVortexApp[] = new Array();
+  /* files: ArchivoVortexApp[] = new Array(); */
+  files: Archivo[] = new Array();
   /* dataTemp: ArchivoVortexApp[] = new Array();   */
 
   createAnuncio = this.fb.group({
@@ -41,7 +44,7 @@ export class AddPage implements OnInit {
   idAgente: number;
   pathBase64:string ="data:image/jpeg;base64,";
 
-
+  
   constructor(
 
     private anuncioService: AnuncioService,
@@ -49,7 +52,8 @@ export class AddPage implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private toastr: ToastController,
-    private userData: UserData
+    private userData: UserData,
+    private location: Location
   ) {    
   }
 
@@ -94,7 +98,8 @@ export class AddPage implements OnInit {
       (imageData) => {
         
         const title = this.createAnuncio.value.titulo + "_aviso.jpg";      
-        this.files.push(new ArchivoVortexApp(imageData, title)); //Se setea la imagen en base 64
+        /* this.files.push(new ArchivoVortexApp(imageData, title)); //Se setea la imagen en base 64 */
+        this.files.push(new Archivo(imageData, title)); //Se setea la imagen en base 64
       },
       (err) => {
         // Handle error
@@ -102,7 +107,10 @@ export class AddPage implements OnInit {
     );
   }
   save() {
-    console.log(this.createAnuncio.value);
+    
+
+
+    
     /* this.anuncio.tipo = 'ANUNCIO'; */
     const anuncioObj = {
       empresa: this.idEmpresa,
@@ -126,8 +134,9 @@ export class AddPage implements OnInit {
           console.log('"data.result"', data.result);
           console.log("anuncio registrado correctamente");
           this.showToast("anuncio registrado correctamente");
-          /* this.guardarAnuncioLocalmente(); */
-          this.router.navigate(["/anuncios"]);
+          /* this.guardarAnuncioLocalmente(); */          
+          this.router.navigate(['/anuncios', { item: JSON.stringify(data.result)}]);  
+          /* this.location.back(); */
         } else {
           console.log('Llego otro status al guardar anuncio');
           this.guardarAnuncioLocalmente();

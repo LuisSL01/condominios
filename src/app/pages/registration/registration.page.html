@@ -1,4 +1,3 @@
-
 <app-header titulo="Crear cuenta"></app-header>
 <ion-content fullscreen>
 
@@ -15,20 +14,97 @@
         <ion-input formControlName="nombreCompleto"></ion-input>
       </ion-item>
       <ion-label color="danger"
-        *ngIf="createAgente.controls.nombreCompleto.errors?.required && (createAgente.controls.nombreCompleto.touched || createAgente.controls.nombreCompleto.dirty)">*
+        *ngIf="createAgente.controls.nombreCompleto.errors?.required && (createAgente.controls.nombreCompleto.touched || createAgente.controls.nombreCompleto.dirty)">
+        *
         El
         nombre es obligatorio </ion-label>
       <ion-label color="danger"
         *ngIf="createAgente.controls.nombreCompleto.errors?.minlength && (createAgente.touched || createAgente.dirty)">*
         El nombre tiene que tener al menos 4 caracteres.</ion-label>
 
-      <ion-item>      
+      <ion-item>
         <ion-label>
           <ion-icon name="person-outline" style="font-size:23px; color: #50c8ec; 
-              margin-bottom: -5px;
-          "></ion-icon>&nbsp;&nbsp;Usuario:
+                margin-bottom: -5px;
+            "></ion-icon>&nbsp;&nbsp;Ap. Paterno:
         </ion-label>
-        <ion-input formControlName="username" autocomplete="off"></ion-input>
+        <ion-input formControlName="apellidoPaterno"></ion-input>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-label>
+          <ion-icon name="person-outline" style="font-size:23px; color: #50c8ec; 
+                margin-bottom: -5px;
+            "></ion-icon>&nbsp;&nbsp;Ap. Materno:
+        </ion-label>
+        <ion-input formControlName="apellidoMaterno"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>
+          <ion-icon name="transgender-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;">
+          </ion-icon>&nbsp;&nbsp;Sexo
+        </ion-label>
+        <ion-select interface="popover" placeholder="Seleccionar" formControlName="sexo" okText="Aceptar"
+          cancelText="Cancelar">
+          <ion-select-option value="Masculino">Masculino</ion-select-option>
+          <ion-select-option value="Femenino">Femenino</ion-select-option>
+          <ion-select-option value="Otro">Otro</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-label>
+          <ion-icon name="today-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;">
+          </ion-icon>&nbsp;&nbsp;Fecha de nacimiento
+        </ion-label>
+        <ion-datetime style="margin-bottom: -8px;" placeholder="DD/MM/YYYY" displayFormat="DD/MM/YYYY"
+          cancelText="Descartar" doneText="Aceptar" formControlName="fechaDeNacimiento">
+        </ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>
+          <ion-icon name="tv-outline" style="font-size:23px; color: #50c8ec; 
+                margin-bottom: -5px;
+            "></ion-icon>&nbsp;&nbsp;Ocupación:
+        </ion-label>
+        <ion-input formControlName="ocupacion"></ion-input>
+      </ion-item>
+
+
+
+      <ion-item>
+        <ion-label>
+          <ion-icon name="mail-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
+          &nbsp;&nbsp;Celular:
+        </ion-label>
+        <ion-input (ionChange)="cambioNumeroTelefono( $event )" formControlName="celular"></ion-input>
+      </ion-item>
+
+
+
+      <ion-item>
+
+        <ion-label>
+          <ion-icon name="mail-outline" style="font-size:23px; color: #50c8ec; 
+              margin-bottom: -5px;
+          "></ion-icon>&nbsp;&nbsp;Email:
+        </ion-label>
+        <ion-input formControlName="email"></ion-input>
+      </ion-item>
+      <ion-label color="danger"
+        *ngIf="createAgente.controls.email.errors?.email && (createAgente.touched || createAgente.dirty)">* El email no
+        es válido.</ion-label>
+      <ion-item>
+        <ion-label>
+          <ion-icon name="person-outline" style="font-size:23px; color: #50c8ec; 
+                margin-bottom: -5px;
+            "></ion-icon>&nbsp;&nbsp;Usuario:
+        </ion-label>
+        <ion-input formControlName="username"  (ionChange)="cambioUsuario( $event )" ></ion-input>
       </ion-item>
       <ion-label color="danger"
         *ngIf="createAgente.controls.username.errors?.required && (createAgente.touched || createAgente.dirty)">* El
@@ -38,11 +114,10 @@
         usuario tiene que tener al menos 4 caracteres.</ion-label>
 
       <ion-item>
-        
         <ion-label>
           <ion-icon name="lock-closed" style="font-size:23px; color: #50c8ec; 
-              margin-bottom: -5px;
-          "></ion-icon>&nbsp;&nbsp;Contraseña:
+                margin-bottom: -5px;
+            "></ion-icon>&nbsp;&nbsp;Contraseña:
         </ion-label>
         <ion-input type="password" placeholder="Contraseña" formControlName="password" autocomplete="off"></ion-input>
       </ion-item>
@@ -50,58 +125,30 @@
         *ngIf="createAgente.controls.password.errors?.required && (createAgente.touched || createAgente.dirty)">* La
         contraseña es requerida </ion-label>
 
-     
-
-
-      <ion-item>      
+      <ion-item>
         <ion-label>
           <ion-icon name="lock-closed" style="font-size:23px; color: #50c8ec; 
-              margin-bottom: -5px;
-          "></ion-icon>&nbsp;&nbsp;Repetir Contraseña:
+                margin-bottom: -5px;
+            "></ion-icon>&nbsp;&nbsp;Repetir Contraseña:
         </ion-label>
 
         <ion-input type="password" placeholder="Repetir Contraseña" formControlName="confirmarPassword"
           autocomplete="off"></ion-input>
+
       </ion-item>
       <ion-label color="danger"
         *ngIf="createAgente.controls.confirmarPassword.errors?.required && (createAgente.controls.confirmarPassword.touched || createAgente.controls.confirmarPassword.dirty)">
         *La confirmación de contraseña es requerida </ion-label>
-              
-      <ion-item>
-        
-        <ion-label>
-          <ion-icon name="call-outline" style="font-size:23px; color: #50c8ec; 
-              margin-bottom: -5px;
-          "></ion-icon>&nbsp;&nbsp;Celular:
-        </ion-label>
-        
-        <ion-input formControlName="celular"  ></ion-input>
-
-
-      </ion-item>
-
-      <ion-item>
-        
-        <ion-label>
-          <ion-icon name="mail-outline" style="font-size:23px; color: #50c8ec; 
-              margin-bottom: -5px;
-          "></ion-icon>&nbsp;&nbsp;Email:
-        </ion-label>
-        <ion-input formControlName="email"></ion-input>
-      </ion-item>
-      <ion-label color="danger"
-        *ngIf="createAgente.controls.email.errors?.email && (createAgente.touched || createAgente.dirty)">* El email no es válido.</ion-label>
-
-      <div formGroupName="direccion" *ngIf="false" >
+      <div formGroupName="direccion" *ngIf="false">
         <ion-item>
-          
+
           <ion-label>
             <ion-icon name="home-outline" style="font-size:23px; color: #50c8ec; 
                 margin-bottom: -5px;
             "></ion-icon>&nbsp;&nbsp;Domicilio:
           </ion-label>
 
-         
+
           <ion-input type="text" class="form-control" formControlName="calle" id="calle" placeholder="Domicilio">
           </ion-input>
         </ion-item>
@@ -112,13 +159,14 @@
           </div>
         </div>
 
-        <ion-item>          
+        <ion-item>
           <ion-label>
             <ion-icon name="home-outline" style="font-size:23px; color: #50c8ec; 
                 margin-bottom: -5px;
             "></ion-icon>&nbsp;&nbsp;Código Postal:
           </ion-label>
-          <ion-input type="text" maxlength = "5" class="form-control" formControlName="asentamiento" placeholder="CP"></ion-input>
+          <ion-input type="text" maxlength="5" class="form-control" formControlName="asentamiento" placeholder="CP">
+          </ion-input>
         </ion-item>
         <div
           *ngIf="createAgente.get('direccion').get('asentamiento').invalid && (createAgente.get('direccion').get('asentamiento').dirty || createAgente.get('direccion').get('asentamiento').touched)">
@@ -126,13 +174,13 @@
             * El código postal es requerido
           </ion-label>
         </div>
-        
-            <ion-button (click)="validarCP()" expand="block"  shape="round">
-              Validar código postal
-            </ion-button>
-        
 
-        <ion-item >          
+        <ion-button (click)="validarCP()" expand="block" shape="round">
+          Validar código postal
+        </ion-button>
+
+
+        <ion-item>
           <ion-label>
             <ion-icon name="home-outline" style="font-size:23px; color: #50c8ec; 
                 margin-bottom: -5px;
@@ -147,10 +195,10 @@
 
         </ion-item>
 
-        
+
       </div>
 
-      <ion-item >      
+      <ion-item>
         <ion-label>
           <ion-icon name="leaf-outline" style="font-size:23px; color: #50c8ec; 
               margin-bottom: -5px;
@@ -159,7 +207,7 @@
         <ion-select interface="action-sheet" cancelText="Cancelar" placeholder="Seleccionar" required
           (ionChange)="cambioEmpresa($event)">
           <ion-select-option *ngFor="let emp of empresas" [value]="emp.id">
-            {{ emp.id }}-{{ emp.alias }}-{{ emp.nombre}}
+            {{ emp.nombre}}
           </ion-select-option>
         </ion-select>
       </ion-item>
@@ -167,48 +215,9 @@
 
     </ion-list>
 
-    <ion-footer class="ion-no-border" translucent>
-      <ion-toolbar color="light" style="position: static;  bottom:47px; height: 50px;">
-        <ion-grid>
-          <ion-row>
-            <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" offset-md="4" offset-sm="4">
-              <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
 
-              <ion-button fill="clear" size="small" type="submit" [disabled]="!createAgente.valid"
-                style="text-transform: none; margin-left: 120px; margin-top: -40px;">Guardar
-                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #50c8ec;">
-                </ion-icon>
-              </ion-button>
+    <app-buttons valueLinkCancel="/home" valueDisabled="{{ ! createAgente.valid}}"></app-buttons>
+    <app-footer></app-footer>
 
-
-              <ion-button fill="clear" size="small"
-                style="text-transform: none; margin-top: -80px;  margin-left: 220px;" routerLink="/home">Volver
-                <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
-              </ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-toolbar>
-    </ion-footer>
-
-
-    <ion-footer class="ion-no-border" translucent>
-      <ion-toolbar color="light" style=" position: static; bottom: 0px; height: 48px;">
-        <ion-grid>
-          <ion-row>
-            <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" offset-md="4" offset-sm="4">
-              <ion-img src="assets/1.gif"
-                style=" height:60px; display: block; width:400px;  margin-right: 20px; margin-top: -15px;"></ion-img>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-toolbar>
-    </ion-footer>
   </form>
-
-
-
-
-
-
 </ion-content>

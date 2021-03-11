@@ -11,13 +11,14 @@ export class Gasto{
     public formaPago:string;
     */
     public data: any;
-    public files: ArchivoVortexApp[];
-
+    public files: ArchivoVortexApp;
+    
     public fechaDeCreacion:Date;
     public agenteCreador:number;
 
     constructor(){
         console.log('In the constructor of gasto');
         this.fechaDeCreacion = new Date();
+        this.files = new ArchivoVortexApp();
     }
 }

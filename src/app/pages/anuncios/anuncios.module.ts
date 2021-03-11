@@ -8,7 +8,7 @@ import { AnunciosPageRoutingModule } from './anuncios-routing.module';
 
 import { AnunciosPage } from './anuncios.page';
 import { ComponentsModule } from '../../components/components.module';
-import { ListPage } from './list/list.page';
+
 import { PipesModule } from '../../pipes/pipes.module';
 
 
@@ -18,11 +18,13 @@ import { PipesModule } from '../../pipes/pipes.module';
     FormsModule,
     IonicModule,
     AnunciosPageRoutingModule,
+    
     ComponentsModule,
+
     PipesModule
     
   ],
   
-  declarations: [AnunciosPage, ListPage]
+  declarations: [AnunciosPage]
 })
 export class AnunciosPageModule {}

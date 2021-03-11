@@ -40,10 +40,12 @@ export class HomePage implements OnInit {
 
     this.storage.get('userDetails').then((val) => {
       if (val) {
-        this.showLoading();
-        this.userData.setConfigEmpresa();
-        this.router.navigate(['/inicio']);
-        this.showToast("Bienvenido " + JSON.parse(val).nombreCompleto);
+        if(val.id){
+          this.showLoading();
+          this.userData.setConfigEmpresa();
+          this.router.navigate(['/inicio']);
+          this.showToast("Bienvenido " + JSON.parse(val).nombreCompleto);
+        }        
       }
     });
 
@@ -63,7 +65,7 @@ export class HomePage implements OnInit {
 
 
     const objAgente = {
-      dispositivoUuid: this.pushService.userId      
+      /* dispositivoUuid: this.pushService.userId       */
     };
 
     const loginPayload = {
@@ -110,8 +112,16 @@ export class HomePage implements OnInit {
                   if (data.status === 200) {
                     this.empresas = data.result;
                     if (this.empresas.length == 1) {//Debo redirecionar al inicio, solo hay una empresa
-                      window.localStorage.setItem('empresaData', JSON.stringify({ "nombre": this.empresas[0].nombre, "id": this.empresas[0].id }));
-                      this.storage.set('empresaData', JSON.stringify({ "nombre": this.empresas[0].nombre, "id": this.empresas[0].id }));
+
+
+                      /* window.localStorage.setItem('empresaData', JSON.stringify({ "nombre": this.empresas[0].nombre, "id": this.empresas[0].id }));
+                      this.storage.set('empresaData', JSON.stringify({ "nombre": this.empresas[0].nombre, "id": this.empresas[0].id })); */
+
+                      window.localStorage.setItem('empresaData', JSON.stringify(this.empresas[0]));
+                      this.storage.set('empresaData', JSON.stringify(this.empresas[0]));
+
+
+
                       this.userData.setConfigEmpresa();
                       this.router.navigateByUrl('/inicio');
                       this.showToast("Bienvenido " + nombreAgente + " a armonía residencial");
@@ -157,77 +167,15 @@ export class HomePage implements OnInit {
     if (this.idAgente > 0) {
       this.empresas = [
         {
-          id: 7,
-          nombre: "RINCON ESMERALDA",
-          alias: "ESME",
-          rfc: "ASDA232323ASS",
-          urlPaginaWeb: "http://pruebaintegral.com",
-          email: "prueba@integral.com",
-          telefono: "5454322222",
-          integrantes: 4,
-          actividadEconomica: 11,
-          direccion: {
-            calle: "Otra Calle Inventada",
-            numeroExterior: "5432",
-            numeroInterior: "",
-            asentamiento: {
-              id: 66344,
-              codigoPostal: "52105",
-              colonia: "San Pedro",
-              ciudad: "San Mateo Atenco",
-              municipio: "San Mateo Atenco",
-              estado: "México",
-            },
-          },
-          configuracionEmpresa: {
-            logoFondoClaro: "",
-            logoFondoOscuro: "",
-            ejercicioActual: 2020,
-            mascaraCuentasContables: "9999-9999-9999-9999",
-            mesDeTrabajo: 12,
-            estructuraDeCuentas: "444400",
-            usarPlanDePagos: false,
-            usarDireccionDeEntrega: true,
-            usarCasetasDeLinea: true,
-            permitirSaldosNegativos: true,
-          },
-        },
-        {
-          id: 12,
-          nombre: "EXPLANADA SUR",
-          alias: "SUR",
-          rfc: "ERES232323222",
-          urlPaginaWeb: "http://tyv.com",
-          email: "tyv@tyv.com",
-          telefono: "4543225666",
-          integrantes: 3,
-          actividadEconomica: 11,
-          direccion: {
-            calle: "LKUNASNDA ASDAS",
-            numeroExterior: "342",
-            numeroInterior: "1",
-            asentamiento: {
-              id: 66659,
-              codigoPostal: "52303",
-              colonia: "El Carrizal",
-              ciudad: "Desconocida",
-              municipio: "Tenango del Valle",
-              estado: "México",
-            },
-          },
-          configuracionEmpresa: {
-            logoFondoClaro: "",
-            logoFondoOscuro: "",
-            ejercicioActual: 2020,
-            mascaraCuentasContables: "9999-9999-9999-9999",
-            mesDeTrabajo: 12,
-            estructuraDeCuentas: "444400",
-            usarPlanDePagos: false,
-            usarDireccionDeEntrega: true,
-            usarCasetasDeLinea: true,
-            permitirSaldosNegativos: true,
-          },
-        },
+          "id": 32,
+          "nombre": "RINCON ESMERALDA",
+          "alias": "RINCON ESME"     
+      },
+      {
+          "id": 33,
+          "nombre": "EXPLANADA SUR",
+          "alias": "EXP SUR"
+      }
       ];
     }
   }

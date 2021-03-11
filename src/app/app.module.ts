@@ -23,6 +23,8 @@ import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 
+/* import { NgxMaskModule, IConfig } from 'ngx-mask' */
+/* export const options: Partial<IConfig> | (() => Partial<IConfig>) = null; */
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,7 +33,11 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
      AppRoutingModule,
      ComponentsModule,
      HttpClientModule,
-     IonicStorageModule.forRoot()
+     IonicStorageModule.forRoot(),
+     
+
+
+     
     ],
 
   providers: [
@@ -47,6 +53,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
     FileOpener,
     OneSignal,
     BarcodeScanner,
+    
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

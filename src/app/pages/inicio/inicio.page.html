@@ -12,12 +12,12 @@
       <ion-label>No hay registros</ion-label>
     </ion-slide>
   </ion-slides>  
-
+  
   <ion-grid fixed *ngIf="anunciosList?.length > 0">    
     <ion-row>
       <ion-col size="12"
         *ngFor="let anuncio of anunciosList">
-        <app-list [anuncio]="anuncio"></app-list>
+        <app-anuncio-list [anuncio]="anuncio"></app-anuncio-list>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -26,7 +26,7 @@
     <ion-row>
       <ion-col size="12"
         *ngFor="let ann2 of anunciosListLocal">
-        <app-list [anuncio]="ann2"></app-list>
+        <app-anuncio-list [anuncio]="ann2"></app-anuncio-list>
       </ion-col>
     </ion-row>
   </ion-grid>

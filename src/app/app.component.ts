@@ -35,7 +35,8 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.componentes = this.dataService.getMenuOpts();
+    this.componentes = this.dataService.getMenuOpts();    
+    this.userData.retrieveBase64ToImageEmpresa();    
   }
 
   theme(){// Cuando se presiona el togle de tema oscuro entra a este metodo

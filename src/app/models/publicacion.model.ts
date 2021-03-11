@@ -15,7 +15,7 @@ export class Publicacion{
     public precio:number;
     public fechaVence:Date;
  */
-    public files:ArchivoVortexApp[];
+    public files:ArchivoVortexApp;
     public data:any;    
     public tipo:string;//aviso, convocatoria, resolucion, anuncio    
     public respuestas:RespuestaApp;
@@ -27,7 +27,8 @@ export class Publicacion{
 
 
     constructor(){
-        this.fechaDeCreacion = new Date();        
-        this.files = new Array();
+        this.fechaDeCreacion = new Date();     
+
+        this.files = new ArchivoVortexApp();
     }
 }

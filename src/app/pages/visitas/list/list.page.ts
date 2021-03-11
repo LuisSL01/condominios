@@ -15,7 +15,7 @@ export class ListPage implements OnInit {
   @Input() visita:Visita;
 
   encodeDataVisita: any;
-  barcodeScannerOptions: BarcodeScannerOptions;
+  /* barcodeScannerOptions: BarcodeScannerOptions; */
 
   constructor(public visitaService: VisitaService,
     private actionSheetCtrl: ActionSheetController,
@@ -60,10 +60,10 @@ export class ListPage implements OnInit {
         cssClass: 'action-dark',
         handler: () => {
 
-          this.barcodeScannerOptions = {
+    /*       this.barcodeScannerOptions = {
             showTorchButton: true,
             showFlipCameraButton: true
-          };
+          }; */
 
           this.encodeDataVisita = this.visita.id+"|"+this.visita.uuid;
           this.encodeDataVisita = btoa(this.encodeDataVisita);

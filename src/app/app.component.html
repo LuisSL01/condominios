@@ -6,7 +6,8 @@
       <ion-toolbar color="primary">
         <!--<ion-title>hola</ion-title>-->      
         <!-- <ion-img src="assets/{{userData.nameImageEmpresa}}" style="margin-right: 155px; height:50px;"></ion-img> -->
-        <ion-img src="{{userData.nameImageEmpresa}}" style="margin-right: 155px; height:50px;"></ion-img>
+        <!-- <ion-img src="{{userData.nameImageEmpresa}}" style="margin-right: 155px; height:50px;"></ion-img> -->
+        <ion-img src="{{userData.base64ImageEmpresa}}" style="margin-right: 155px; height:50px;"></ion-img>
       </ion-toolbar>
     </ion-header>
     <ion-content>
@@ -38,13 +39,13 @@
               Agentes
             </ion-label>
           </ion-item>
-          <ion-item routerLink="/notifications" detail>
+          <ion-item routerLink="/notifications" detail *ngIf="false">
             <ion-icon slot="start"  name="notifications-outline" color="medium"> </ion-icon>            
             <ion-label>
             Notificaciones
             </ion-label>
           </ion-item>
-          <ion-item routerLink="/sincronizar" detail>
+          <ion-item routerLink="/sincronizar" detail *ngIf="false">
             <ion-icon slot="start"  name="cloud-upload-outline" color="medium"> </ion-icon>
             <ion-label>
               Sincronizar

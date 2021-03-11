@@ -1,5 +1,3 @@
-
-
 <ion-card lines="none">
   <ion-card-header>
     <ion-card-title> <ion-label> 
@@ -7,7 +5,6 @@
       <h2>{{anuncio.data.clasificacion}}</h2>
     </ion-label>  
     </ion-card-title>
-
     <ion-card-subtitle>
       <span class="text-primary"> ${{anuncio.data.precio}} 
       <ion-label color="{{anuncio.estatus?'success':'danger'}}" >{{anuncio.estatus?'Activo':'Inactivo'}}</ion-label>  
@@ -26,15 +23,13 @@
       <h3 *ngIf="anuncio.correoAgenteCreador">Mail. {{anuncio.correoAgenteCreador}}</h3>
       <h3 *ngIf="anuncio.correoAgenteCreador">Cel. {{anuncio.celularAgenteCreador}}</h3>
     </ion-label>
-
     <ion-label >
       <p>
         {{anuncio.data.descripcion}}
-      </p>
-      
+      </p>      
     </ion-label>
   </ion-card-content>
-  
+    
   <ion-item >
     <ion-slides pager="{{anuncio.files?.archivos.length > 1 ?true:false}}" >
       <ion-slide *ngFor="let img of anuncio.files.archivos" class="image-slide">      
