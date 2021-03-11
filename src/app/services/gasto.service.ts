@@ -43,6 +43,11 @@ export class GastoService {
     return this.http.get<ApiResponse>(this.baseUrl + this.gastoContext+ environment.coreApiGetGastoListOperation + "/" + idEmpresa + "?page=" + page + "&size=" + size +(filters ? ('&filters=' + filters) : '')).pipe(share());
   }
 
+  getReportePDF(id: number){
+    console.log(this.baseUrl + this.gastoContext + ":getPdf/" + id);
+    return this.http.get<ApiResponse>(this.baseUrl + this.gastoContext + ":getPdf/" + id).pipe(share());
+  }
+
   async getGastosFromStorage(idEmpresa: number){
     console.log('getGastosFromStorage: ', idEmpresa + "_gastos"); 
     const gastos = await this.storage.get(idEmpresa + "_gastos")
