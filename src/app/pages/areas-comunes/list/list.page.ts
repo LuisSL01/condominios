@@ -3,6 +3,7 @@ import { AreaComunService } from '../../../services/area-comun.service';
 import { AreaComun } from '../../../models/area-comun.model';
 import { ActionSheetController, ToastController } from '@ionic/angular';
 import { UserData } from '../../../providers/user-data';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list',
@@ -20,10 +21,20 @@ export class ListPage implements OnInit {
   constructor(
               public areaComunService: AreaComunService,
               private actionSheetCtrl: ActionSheetController,
+              private router: Router,
               private userData:UserData) { }
 
   ngOnInit() {
   }
+
+  onRowSelected(){
+
+    console.log('onRowSelected');
+    console.log(this.areaComun);    
+    this.router.navigate(['/areas-comunes/add', { item: JSON.stringify(this.areaComun)}]);  
+
+  }
+
   async lanzarMenu() {
 
     let guardarBorrarBtn;

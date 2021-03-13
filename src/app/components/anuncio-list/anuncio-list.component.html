@@ -9,10 +9,20 @@
       <span class="text-primary"> ${{anuncio.data.precio}} 
       <ion-label color="{{anuncio.estatus?'success':'danger'}}" >{{anuncio.estatus?'Activo':'Inactivo'}}</ion-label>  
       </span>
+
+      
       <div class="card-more">
-        <ion-button fill="clear" (click)="lanzarMenu()">
-          <ion-icon slot="icon-only" color="primary" name="ellipsis-vertical-outline"></ion-icon>
-        </ion-button>
+
+        <ion-buttons slot="end">
+
+          <ion-button slot="end" (click)="onRowSelected()">
+            <ion-icon slot="icon-only" color="primary" name="create-outline"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" (click)="lanzarMenu()">
+            <ion-icon slot="icon-only" color="primary" name="ellipsis-vertical-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+
       </div>
     </ion-card-subtitle>
 
@@ -20,8 +30,20 @@
   <ion-card-content>
     <ion-label color="tertiary">
       <h3 color="light" *ngIf="anuncio.nombreAgenteCreador">{{anuncio.nombreAgenteCreador}}</h3>
-      <h3 *ngIf="anuncio.correoAgenteCreador">Mail. {{anuncio.correoAgenteCreador}}</h3>
-      <h3 *ngIf="anuncio.correoAgenteCreador">Cel. {{anuncio.celularAgenteCreador}}</h3>
+      <h3 *ngIf="anuncio.correoAgenteCreador" (click)="correoSelected()">Mail. {{anuncio.correoAgenteCreador}}
+        <ion-icon slot="icon-only" color="primary" name="mail-outline"></ion-icon>
+      </h3>
+      <!-- <h3 *ngIf="anuncio.celularAgenteCreador" (click)="chatSelected()">Cel. {{anuncio.celularAgenteCreador}}
+        <ion-icon slot="icon-only" color="primary" name="logo-whatsapp"></ion-icon>
+      </h3> -->
+      
+      <h3 *ngIf="anuncio.celularAgenteCreador" >        
+        <a href="https://wa.me/+52{{anuncio.celularAgenteCreador}}?text=Hola!,%20estoy%20interesado%20en%20tu%20anuncio%20{{anuncio.data.titulo}}" class="small-text"
+        style="color:rgb(150, 150, 150); font-size: 13px;"> Cel. {{anuncio.celularAgenteCreador}}
+          <ion-icon slot="icon-only" color="primary" name="logo-whatsapp"></ion-icon>
+      </a>
+
+      </h3>
     </ion-label>
     <ion-label >
       <p>

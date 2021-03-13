@@ -10,6 +10,7 @@ import { FooterComponent } from './footer/footer.component';
 import { ButtonsComponent } from './buttons/buttons.component';
 import { AnuncioListComponent } from './anuncio-list/anuncio-list.component';
 
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 
 
 
@@ -39,6 +40,9 @@ import { AnuncioListComponent } from './anuncio-list/anuncio-list.component';
     IonicModule,
     PipesModule,
     
+  ],
+  providers:[
+    EmailComposer
   ]
 })
 export class ComponentsModule { }

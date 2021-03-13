@@ -39,6 +39,9 @@ export class InicioPage implements OnInit {
   direccion:any;
   nombreEmpresa:string;
 
+  public fieldFilters:string[]=new Array();
+  totalPages:number = 0;
+
   constructor(private dataService: DataService,
               private menuCtrl: MenuController,
               public publicacionService : PublicacionService,
@@ -61,6 +64,7 @@ export class InicioPage implements OnInit {
     this.nombreEmpresa = this.userData.getNombreEmpresa();
 
     this.cargarDatosInteres();
+    this.cargaFiltrosTabla();    
 
   }
 
@@ -76,7 +80,7 @@ export class InicioPage implements OnInit {
       this.datosInteresService.getClimaByCoordenadas(this.direccion.asentamiento.codigoPostal).subscribe((data) => {    
             if (data.cod === 200) {
               this.climaData = data;            
-              this.presentModalDatosInteres();            
+              /* this.presentModalDatosInteres();        */     
             } else {
               console.log('Llego otro estatus al recupera clima');              
             }
@@ -119,19 +123,24 @@ export class InicioPage implements OnInit {
       .subscribe(
         (data) => {
           if (data.status === 200) {
-            if(eventRefresh){
-              this.anunciosList = [];
-            }            
-            console.log("data.result.content: ", data.result.content);
+            this.totalPages = data.result.totalPages;
             /* this.anunciosList.push(...data.result.content); */
-            if (eventInfinite) {
+            if (eventInfinite) {   
+              console.log('event infinite');
+              this.anunciosList.push(...data.result.content);            
               if (data.result.content.length === 0) {
                 eventInfinite.target.disabled = true;
                 eventInfinite.target.complete();
                 return;
               }
+              
+            }else{
+              console.log('else infinite');
+              
+              this.anunciosList = data.result.content;
             }
-            this.anunciosList.push(...data.result.content);            
+           
+            /* console.log("this.anunciosList", this.anunciosList); */
             this.storage.set(this.idEmpresa + "_anuncios", this.anunciosList);
             this.completeEvent(eventInfinite, eventRefresh);
           } else {
@@ -180,12 +189,21 @@ export class InicioPage implements OnInit {
 
   loadData(event) {//Desde el infinite scroll
     /* console.log("load data"); */
+    console.log("load data");
     this.anunciosPage++;
-    this.getAnuncios(this.anunciosPage, 10, event);
+    console.log(this.totalPages, "->", this.anunciosPage);
+    if (this.anunciosPage < this.totalPages)
+      this.getAnuncios(this.anunciosPage, 10, event);
+    else { //Significa que ya no hay datos por recuperar 
+      event.target.disabled = true;
+      event.target.complete();
+      return;
+    } 
   }
 
   doRefresh(event) {    
     this.anunciosPage = 0;
+    this.totalPages = 0;
     this.infiniteScroll.disabled = false;//Cada que se hace el refresh se habilita el componente infinite scroll
     this.getAnuncios(this.anunciosPage, 10, null, event);
   }
@@ -194,7 +212,36 @@ export class InicioPage implements OnInit {
     this.menuCtrl.toggle();
   }
 
+  isEmpty(str) {
+    return (!str || 0 === str.length);
+  }
+  cargaFiltrosTabla(){
+
+    this.fieldFilters.push("data_descripcion");
+    this.fieldFilters.push("data_titulo");
+    this.fieldFilters.push("data_clasificacion");
+    /* this.fieldFilters.push("estatus"); */
+
+      
+  }
+
   buscar(event){
+
+    if( ! this.isEmpty(event.detail.value)){
+
+      console.log(JSON.stringify(this.fieldFilters));
+      this.filters = "";
+      this.fieldFilters.forEach(item => this.filters += ''+item+':*'+ event.detail.value + '*,');
+      if(this.filters.endsWith(",")){
+        this.filters = this.filters.substring(0, this.filters.length -1 );
+      }    
+     }else{
+       console.log('la cadena viene vacia');
+       this.filters = "";
+     }
+     this.anunciosPage = 0;
+     this.infiniteScroll.disabled = false;//Cada que se hace el refresh se habilita el componente infinite scroll
+     this.getAnuncios(this.anunciosPage, 10, null, null);
   
   }
 

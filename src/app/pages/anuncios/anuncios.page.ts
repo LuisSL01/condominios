@@ -118,7 +118,6 @@ export class AnunciosPage implements OnInit {
           
           if (data.status === 200) {      
             this.totalPages = data.result.totalPages;
-            /* this.anunciosList.push(...data.result.content); */
             if (eventInfinite) {   
               console.log('event infinite');
               this.anunciosList.push(...data.result.content);            
@@ -195,7 +194,7 @@ export class AnunciosPage implements OnInit {
     } 
   }
 
-  doRefresh(event) {    
+  doRefresh(event) {
     this.anunciosPage = 0;
     this.totalPages = 0;
     this.infiniteScroll.disabled = false;//Cada que se hace el refresh se habilita el componente infinite scroll
@@ -207,8 +206,6 @@ export class AnunciosPage implements OnInit {
   }
 
   buscar(event){
-
-    console.log('buscar, '+ event.detail.value);
 
    if( ! this.isEmpty(event.detail.value)){
 

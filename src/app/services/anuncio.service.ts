@@ -66,6 +66,11 @@ export class AnuncioService {
     console.log('anuncioData',anuncioData);
     return this.http.post<ApiResponse>(this.baseUrl + this.publicacionContext, anuncioData).pipe(share());
   }
+
+  update(idPublicacion: number, publicacion: any) : Observable<ApiResponse> {
+    console.log('update directorio', this.baseUrl + this.publicacionContext + environment.coreApiBaseEditOperation+  "/" + idPublicacion);    
+    return this.http.patch<ApiResponse>(this.baseUrl + this.publicacionContext + environment.coreApiBaseEditOperation+  "/" + idPublicacion, publicacion).pipe(share());
+  }
     
   guardarAnuncios(listAnuncios: FormData): Observable<ApiResponse> {
     console.log('guardarAnuncios->sincronizando:'+this.baseUrl + environment.coreApiBasePublicacionesOperation);    

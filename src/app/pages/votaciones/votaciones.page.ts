@@ -44,7 +44,7 @@ export class VotacionesPage implements OnInit {
 
   getVotaciones(page: number, size: number, eventInfinite?, eventRefresh?) {
     this.votacionesService.getVotaciones(this.idEmpresa, page, size, this.filters)
-      .subscribe((data) => {          
+      .subscribe((data) => {
           if (data.status === 200) {
             if(eventRefresh){
               this.votacionesList = [];              

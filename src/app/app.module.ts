@@ -21,6 +21,7 @@ import { FileOpener } from '@ionic-native/file-opener/ngx';
 
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 
 
 /* import { NgxMaskModule, IConfig } from 'ngx-mask' */
@@ -53,7 +54,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
     FileOpener,
     OneSignal,
     BarcodeScanner,
-    
+    EmailComposer,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

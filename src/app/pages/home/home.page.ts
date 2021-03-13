@@ -143,7 +143,7 @@ export class HomePage implements OnInit {
           this.showToast("Error usuario o contraseña inválidos");
         }
       }, err => {
-        this.showToast("Error usuario o contraseña inválidos");
+        this.showToast("Error al comunicarse con el servidor");
       });
     }
   }

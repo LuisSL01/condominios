@@ -160,14 +160,11 @@ export class AddPage implements OnInit {
       console.log(err);this.userData.showToast("Error: "+ err);
     },
       () => {
-
       });
-
   }
 
   getDirtyFields() {
-    console.log('getDirtyFields');
-    
+    console.log('getDirtyFields');    
     Object.keys(this.createDirectorio['controls'].data['controls']).forEach(key => {
       if (this.createDirectorio.get('data').get(key).dirty) {
         this.directorioChangesForm.addControl(key, this.createDirectorio.get('data').get(key));

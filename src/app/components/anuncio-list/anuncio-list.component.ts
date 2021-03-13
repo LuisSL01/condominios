@@ -2,8 +2,12 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Publicacion } from '../../models/publicacion.model';
 import { RespuestaPublicacion } from '../../models/respuesta-publicacion.model';
 import { AnuncioService } from '../../services/anuncio.service';
-import { ActionSheetController, ToastController } from '@ionic/angular';
+import { ActionSheetController, ToastController, Platform } from '@ionic/angular';
 import { UserData } from '../../providers/user-data';
+import { Router } from '@angular/router';
+
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
+
 
 @Component({
   selector: 'app-anuncio-list',
@@ -14,19 +18,82 @@ export class AnuncioListComponent implements OnInit {
 
   @Input() anuncio: Publicacion;
 
+  
+  number:string= "5560732775";
+  linkW="https://wa.me/52"+this.number+"?text=hi";
+
 
   pathS3: string = "https://almacenamientonube.s3.us-west-1.amazonaws.com/";
   pathBase64: string = "data:image/jpeg;base64,";
 
-
+      
   reporte:RespuestaPublicacion = new RespuestaPublicacion();
-
+ 
   constructor(public anuncioService: AnuncioService,
     private actionSheetCtrl: ActionSheetController,
     private toastr: ToastController,
+    private router: Router,
+    private emailComposer: EmailComposer,
+    private platform:Platform,
     private userData: UserData) { }
 
   ngOnInit() {}
+
+
+
+
+  
+  onRowSelected(){
+    console.log('onRowSelected');
+    console.log(this.anuncio);    
+    this.router.navigate(['/anuncios/add', { item: JSON.stringify(this.anuncio)}]);  
+  }
+
+  correoSelected(){
+    console.log('corrreo selected');    
+    let email = {
+      to: this.anuncio.correoAgenteCreador,
+      /* cc: 'erika@mustermann.de', */
+      /* bcc: ['john@doe.com', 'jane@doe.com'], */
+      /* attachments: [
+        'file://img/logo.png',
+        'res://icon.png',
+        'base64:icon.png//iVBORw0KGgoAAAANSUhEUg...',
+        'file://README.pdf'
+      ], */
+      subject: 'Anuncio: '+ this.anuncio.data.titulo ,
+      body: 'Hola, vi tu anuncio Armonía Residencial y estoy interesado! ',
+      isHtml: true
+    }    
+    // Send a text message using default options
+    this.emailComposer.open(email);
+  }
+
+  chatSelected(){
+    console.log('log, se ha agregado el plugin....');    
+
+    
+    
+    /* console.log('link a abrir: ', "https://wa.me/52"+this.anuncio.celularAgenteCreador+"?text=Hola%20desde%20Armonía%20Residencial"); */
+    console.log('link a abrir: ', "whatsapp//send?phone="+this.anuncio.celularAgenteCreador+"?text=Hola%20desde%20Armonía%20Residencial"); 
+
+    /* window.open("https://wa.me/52"+this.anuncio.celularAgenteCreador+"?text=Hola%20desde%20Armonía%20Residencial");  */
+
+
+
+
+
+    window.open("whatsapp//send?phone="+this.anuncio.celularAgenteCreador+"?text=Hola%20desde%20Armonía%20Residencial"); 
+
+    //send?phone=
+    /* this.platform.ready().then(() => {
+    }); */
+
+
+
+
+   
+  }
 
   
   async lanzarMenu() {

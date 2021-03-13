@@ -7,7 +7,7 @@
   </ion-refresher>
 
   <ion-searchbar placeholder="Buscar" animated (ionChange)="buscar($event)"></ion-searchbar>  
-  <ion-slides class="emptyData" *ngIf="anunciosList?.length === 0 && anunciosListLocal?.length === 0">
+  <ion-slides class="emptyData" *ngIf="anunciosList?.length === 0">
     <ion-slide class="emptyData">
       <ion-label>No hay registros</ion-label>
     </ion-slide>
@@ -22,14 +22,14 @@
     </ion-row>
   </ion-grid>
   
-  <ion-grid fixed *ngIf="anunciosListLocal?.length > 0">    
+ <!--  <ion-grid fixed *ngIf="anunciosListLocal?.length > 0">    
     <ion-row>
       <ion-col size="12"
         *ngFor="let ann2 of anunciosListLocal">
         <app-anuncio-list [anuncio]="ann2"></app-anuncio-list>
       </ion-col>
     </ion-row>
-  </ion-grid>
+  </ion-grid> -->
 
  
   
@@ -42,15 +42,4 @@
 
 </ion-content>
 
-<ion-footer class="ion-no-border" translucent>
-  <ion-toolbar color="light" style="height: 48px;">
-    <ion-grid>
-      <ion-row>
-        <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" offset-md="4" offset-sm="4">
-          <ion-img src="assets/bee.png" style="height:17px; margin-left: -322px;  display:fixed;"></ion-img>
-          <a href="https://sites.google.com/erpvortex.com/publicidad/p%C3%A1gina-principal"><ion-img src="assets/1.gif" style=" height:60px; display: block; width:400px; margin-left: 28px; margin-top: -35px;"></ion-img></a>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-toolbar>
-</ion-footer>
+<app-footer></app-footer>

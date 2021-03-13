@@ -5,6 +5,19 @@
 <ion-content>
   <form  [formGroup]="createArea"  (ngSubmit)="save()">
     <ion-list>
+      
+
+      <div formGroupName="data">
+        <ion-item>
+          <ion-label>
+            <ion-icon name="pencil-outline" style="font-size:23px; color: #50c8ec; 
+            margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Nombre
+          </ion-label>
+          <ion-input formControlName="nombre">
+          </ion-input>
+        </ion-item>
+
+      
       <ion-item>
         <ion-label>
           <ion-icon name="pencil-outline" style="font-size:23px; color: #50c8ec; 
@@ -18,21 +31,15 @@
       </ion-select>
       </ion-item>
 
-      <ion-item>
-        <ion-label>
-          <ion-icon name="pencil-outline" style="font-size:23px; color: #50c8ec; 
-          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Nombre
-        </ion-label>
-        <ion-input formControlName="nombre">
-        </ion-input>
-      </ion-item>
+     
       <ion-item>
         <ion-label>
           <ion-icon name="create-outline" style="font-size:23px; color: #50c8ec;
           margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Descripción
         </ion-label>
-        <ion-textarea rows="1" cols="1" style="margin-top: -20px;" formControlName="descripcion"></ion-textarea>
+        <ion-textarea rows="2" cols="1" style="margin-top: -20px;" formControlName="descripcion"></ion-textarea>
       </ion-item>
+
       <ion-item>
         <ion-label>
           <ion-icon name="cash-outline" style="font-size:23px; color: #50c8ec; 
@@ -41,7 +48,7 @@
         <ion-input type="number" formControlName="costo">
         </ion-input>
       </ion-item>
-      <ion-item>
+      <ion-item *ngIf="false">
         <ion-label>
           <ion-icon name="color-palette-outline" style="font-size:23px; color: #50c8ec;
           margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Color
@@ -55,10 +62,18 @@
       <ion-item>
         <ion-label>
           <ion-icon name="calendar-outline" style="font-size:23px; color: #50c8ec;
-          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Disponibilidad
+          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Requiere reserva
         </ion-label>
+        <ion-toggle slot="end"  formControlName="requiereReserva" ></ion-toggle>
       </ion-item>
       <ion-item>
+        <ion-label>
+          <ion-icon name="chatbox-outline" style="font-size:23px; color: #50c8ec;
+          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Comentarios
+        </ion-label>
+        <ion-textarea rows="2" cols="1" style="margin-top: -20px;" formControlName="comentarios"></ion-textarea>
+      </ion-item>
+      <ion-item  >
         <ion-label>
           <ion-icon name="sunny-outline" style="font-size:23px; color: #50c8ec;
           margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;¿Cualquier día?
@@ -66,9 +81,7 @@
         <ion-toggle slot="end"  formControlName="disponibleTodosDias" ></ion-toggle>
       </ion-item>
 
-      <ion-list  *ngIf=" ! createArea.value.disponibleTodosDias">
-
-
+      <ion-list  *ngIf=" ! createArea.value.data.disponibleTodosDias">
         <ion-item *ngFor="let elem of dias">
           <ion-label>{{elem.name}}</ion-label>
           <ion-checkbox slot="end"   
@@ -87,7 +100,7 @@
         <ion-toggle slot="end" formControlName="disponibleTodasHoras"></ion-toggle>
       </ion-item>
 
-      <ion-item *ngIf=" ! createArea.value.disponibleTodasHoras" >
+      <ion-item *ngIf=" ! createArea.value.data.disponibleTodasHoras" >
         <ion-label>
           <ion-icon name="alarm-outline" style="font-size:23px; color: #50c8ec; 
           margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Hora de inicio
@@ -102,7 +115,7 @@
           >
         </ion-datetime>
       </ion-item>
-      <ion-item *ngIf=" ! createArea.value.disponibleTodasHoras">
+      <ion-item *ngIf=" ! createArea.value.data.disponibleTodasHoras">
         <ion-label>
           <ion-icon name="hourglass-outline" style="font-size:23px; color: #50c8ec;
           margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Hora de término
@@ -115,6 +128,7 @@
           (ionChange)="cambioHoraTermina($event)">
         </ion-datetime>
       </ion-item>
+    </div>
 
       <ion-item>
         <ion-button fill="clear" size="small" (click)="camara()">
@@ -126,7 +140,7 @@
         </ion-button>
       </ion-item>
       <ion-item>
-        <ion-col size="3" *ngFor="let dat of data">          
+        <ion-col size="3" *ngFor="let dat of files">          
           <ion-card>            
             <img  src="{{pathBase64}}{{dat.base64}}">
           </ion-card>

@@ -21,6 +21,10 @@ export class ListPage implements OnInit {
   ngOnInit() {
   }
 
+  onRowSelected(){
+    
+  }
+
   async lanzarMenu() {
 
     let borrarBtn;

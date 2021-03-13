@@ -4,10 +4,10 @@ import { AnuncioService } from "../../../services/anuncio.service";
 import { Camera, CameraOptions } from "@ionic-native/camera/ngx";
 
 declare var window: any;
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from '@angular/router';
 import { Publicacion } from "../../../models/publicacion.model";
 import { ArchivoVortexApp } from "src/app/models/archivo-vortex.model";
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { IonBackButton, ToastController } from "@ionic/angular";
 import { UserData } from "../../../providers/user-data";
 import { Archivo } from '../../../models/archivo-vortex.model';
@@ -26,12 +26,15 @@ export class AddPage implements OnInit {
   files: Archivo[] = new Array();
   /* dataTemp: ArchivoVortexApp[] = new Array();   */
 
+
+  pathS3: string = "https://almacenamientonube.s3.us-west-1.amazonaws.com/";
+
+
   createAnuncio = this.fb.group({
     //Esto para construir los formularios dinamicamente
     data: this.fb.group({
       clasificacion: ["", [Validators.required]],
       titulo: ["", [Validators.required]],      
-
       descripcion: ["", [Validators.required]],
       precio: ["", [Validators.required]],
       telefono: [""],    
@@ -43,6 +46,8 @@ export class AddPage implements OnInit {
   idEmpresa: number;
   idAgente: number;
   pathBase64:string ="data:image/jpeg;base64,";
+  edit:boolean = false;
+  anuncioChangesForm: FormGroup;
 
   
   constructor(
@@ -53,7 +58,8 @@ export class AddPage implements OnInit {
     private fb: FormBuilder,
     private toastr: ToastController,
     private userData: UserData,
-    private location: Location
+    private location: Location,
+    public activatedRoute: ActivatedRoute,
   ) {    
   }
 
@@ -62,6 +68,29 @@ export class AddPage implements OnInit {
     this.idAgente = this.userData.getIdAgente();
     console.log("this.idEmpresa: "+ this.idEmpresa);
     console.log("this.idAgente: "+ this.idAgente);
+
+    this.anuncio = JSON.parse(this.activatedRoute.snapshot.paramMap.get('item'));    
+    if(this.anuncio != null) this.prepareEdit();
+  }
+
+  
+  prepareEdit(){
+    console.log('prepareEdit');
+    this.edit = true;
+
+    this.createAnuncio = this.fb.group({
+      data: this.fb.group({
+        clasificacion: [this.anuncio.data.clasificacion],
+        titulo: [this.anuncio.data.titulo],  
+        descripcion: [this.anuncio.data.descripcion],
+        precio: [this.anuncio.data.precio],
+        telefono: [""],    
+        fechaVence: [this.anuncio.data.fechaVence],
+        estatus: [this.anuncio.data.estatus]
+      })      
+    });
+
+    this.files = this.anuncio.files.archivos;
   }
 
   getCameraOptions(): any {
@@ -106,11 +135,39 @@ export class AddPage implements OnInit {
       }
     );
   }
-  save() {
-    
 
+  getDirtyFields() {
+    console.log('getDirtyFields');    
+    Object.keys(this.createAnuncio['controls'].data['controls']).forEach(key => {
+      if (this.createAnuncio.get('data').get(key).dirty) {
+        this.anuncioChangesForm.addControl(key, this.createAnuncio.get('data').get(key));
+      }
+    });
+  }
+  editar(){
+    console.log('editar()...');
+    this.anuncioChangesForm = this.fb.group({});        
+    this.getDirtyFields();
+    console.log('anuncioChangesForm', JSON.stringify(this.anuncioChangesForm.value));
 
+    this.anuncioService.update(this.anuncio.id, this.anuncioChangesForm.value).subscribe(data => {
+      if (data.status === 200) {
+        
+        this.createAnuncio.markAsPristine();
+        this.userData.showToast('pub editado correctamente');
+        this.router.navigate(['/anuncios']);
+
+      } else {
+        this.userData.showToast('Error al editar registro, llego otro status');
+      }
+    }, err => {
+      console.log(err);this.userData.showToast("Error: "+ err);
+    },
+      () => {
+      });
     
+  }
+  nuevo(){
     /* this.anuncio.tipo = 'ANUNCIO'; */
     const anuncioObj = {
       empresa: this.idEmpresa,
@@ -147,11 +204,16 @@ export class AddPage implements OnInit {
         console.log(err);
         this.showToast("Error: "+ err);
         this.guardarAnuncioLocalmente();
-        this.router.navigate(["/anuncios"]);
-       
+        this.router.navigate(["/anuncios"]);       
       },
       () => {}
     );
+
+  }
+
+  save() {
+    if(this.edit) this.editar();
+    else this.nuevo();
     /*     this.anuncioService.guardarAnuncio(this.anuncio);
     this.router.navigate(['/anuncios']); */
   }
