@@ -98,6 +98,9 @@ export class HomePage implements OnInit {
           this.agenteService.getUserById(data.result.id).subscribe(userFull => {
             if (userFull.status === 200) {
               this.storage.set('userFull', userFull.result);
+              
+              this.userData.recibeDepartamento(userFull.result.departamento);
+
               if (userFull.result.activo === false) {
                 this.router.navigate(['/']);
                 this.showToast("El usuario " + data.result.nombreCompleto + ", no se encuentra activo para la aplicación móvil");
@@ -105,23 +108,18 @@ export class HomePage implements OnInit {
                 this.idAgente = data.result.id;
                 let nombreAgente = data.result.nombreCompleto;
                 console.log("objAgente: " + objAgente);
-
+                
                 this.updateAgenteCore(this.idAgente , objAgente);
 
                 this.authService.getListEmpresas(this.idAgente).subscribe(data => {
                   if (data.status === 200) {
                     this.empresas = data.result;
                     if (this.empresas.length == 1) {//Debo redirecionar al inicio, solo hay una empresa
-
-
                       /* window.localStorage.setItem('empresaData', JSON.stringify({ "nombre": this.empresas[0].nombre, "id": this.empresas[0].id }));
                       this.storage.set('empresaData', JSON.stringify({ "nombre": this.empresas[0].nombre, "id": this.empresas[0].id })); */
 
                       window.localStorage.setItem('empresaData', JSON.stringify(this.empresas[0]));
                       this.storage.set('empresaData', JSON.stringify(this.empresas[0]));
-
-
-
                       this.userData.setConfigEmpresa();
                       this.router.navigateByUrl('/inicio');
                       this.showToast("Bienvenido " + nombreAgente + " a armonía residencial");

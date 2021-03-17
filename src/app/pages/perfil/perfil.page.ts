@@ -19,20 +19,15 @@ export class PerfilPage implements OnInit {
 
   logOut(){
     console.log('log out');
-
     this.userData.logout().then(() => {
       this.storage.remove('empresaData');
       this.storage.remove('userDetails');
       this.storage.remove('userFull');
-
-
       window.localStorage.removeItem('empresaData');
       window.localStorage.removeItem('userDetails');
-
       this.userData.empresa_id = 0;
       this.userData.agente_id = 0;
       this.userData.nameImageEmpresa ="";
-
       return this.router.navigateByUrl('/home');
     });
 

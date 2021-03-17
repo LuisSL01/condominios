@@ -151,12 +151,10 @@ export class AddPage implements OnInit {
     console.log('anuncioChangesForm', JSON.stringify(this.anuncioChangesForm.value));
 
     this.anuncioService.update(this.anuncio.id, this.anuncioChangesForm.value).subscribe(data => {
-      if (data.status === 200) {
-        
+      if (data.status === 200) {        
         this.createAnuncio.markAsPristine();
-        this.userData.showToast('pub editado correctamente');
-        this.router.navigate(['/anuncios']);
-
+        this.createAnuncio.reset();
+        this.router.navigate(['/anuncios', { item: true}]); 
       } else {
         this.userData.showToast('Error al editar registro, llego otro status');
       }
@@ -192,7 +190,10 @@ export class AddPage implements OnInit {
           console.log("anuncio registrado correctamente");
           this.showToast("anuncio registrado correctamente");
           /* this.guardarAnuncioLocalmente(); */          
-          this.router.navigate(['/anuncios', { item: JSON.stringify(data.result)}]);  
+
+          /* this.router.navigate(['/anuncios', { item: JSON.stringify(data.result)}]);   */
+          this.router.navigate(['/anuncios', { item: true}]); 
+
           /* this.location.back(); */
         } else {
           console.log('Llego otro status al guardar anuncio');

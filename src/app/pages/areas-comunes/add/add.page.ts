@@ -183,9 +183,9 @@ export class AddPage implements OnInit {
     console.log('areaComunChangesForm', JSON.stringify(this.areaComunChangesForm.value));
     this.areaComunService.update(this.areaComun.id, this.areaComunChangesForm.value).subscribe(data => {
       if (data.status === 200) {
-        this.createArea.markAsPristine();
-        this.userData.showToast('area editado correctamente');
-        this.router.navigate(["/areas-comunes"]);
+        this.createArea.markAsPristine();      
+        this.createArea.reset();
+        this.router.navigate(["/areas-comunes", { item: true}]);
 
       } else {
         this.userData.showToast('Error al editar registro, llego otro status');
@@ -236,9 +236,9 @@ export class AddPage implements OnInit {
     this.areaComunService.save(formData).subscribe(
       (data) => {
         console.log(data);
-        if (data.status === 200) { 
-          this.userData.showToast('anuncio registrado correctamente');
-          this.redirecciona();
+        if (data.status === 200) {                     
+          this.createArea.reset();
+          this.router.navigate(["/areas-comunes", { item: true}]);
         } else {
           this.userData.showToast('Ocurrio un error al guardar');
           /* this.guardarAreaComunLocalmente();

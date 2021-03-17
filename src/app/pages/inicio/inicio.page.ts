@@ -80,7 +80,7 @@ export class InicioPage implements OnInit {
       this.datosInteresService.getClimaByCoordenadas(this.direccion.asentamiento.codigoPostal).subscribe((data) => {    
             if (data.cod === 200) {
               this.climaData = data;            
-              /* this.presentModalDatosInteres();        */     
+               this.presentModalDatosInteres(); 
             } else {
               console.log('Llego otro estatus al recupera clima');              
             }

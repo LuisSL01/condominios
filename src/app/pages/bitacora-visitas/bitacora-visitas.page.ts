@@ -4,6 +4,7 @@ import { BitacoraVisitaService } from '../../services/bitacora-visita.service';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { UserData } from '../../providers/user-data';
 import { Storage } from "@ionic/storage";
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -19,11 +20,13 @@ export class BitacoraVisitasPage implements OnInit {
   idEmpresa: number;
   filters: any;
   registrosVisitaPage: number = 0;
-
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+
+  public camposFiltros:string[]=new Array();
 
   constructor(public bitacoraVisitaService : BitacoraVisitaService,
               private userData: UserData,
+              public activatedRoute: ActivatedRoute,
               private storage: Storage,) {
     console.log('en el constructor de bitacora visitas 1');
    }
@@ -32,6 +35,23 @@ export class BitacoraVisitasPage implements OnInit {
 
     this.idEmpresa = this.userData.getIdEmpresa();
     this.cargarData();    
+    this.cargaFiltrosTabla();    
+  }
+
+  cargaFiltrosTabla(){
+    this.camposFiltros.push("data_nombreCompleto");
+    this.camposFiltros.push("data_placa");
+    this.camposFiltros.push("data_personasIngresan");
+    this.camposFiltros.push("data_observaciones");
+  }
+
+  ionViewDidEnter(){    
+    let value:boolean = JSON.parse(this.activatedRoute.snapshot.paramMap.get('item'));
+    if(value != null){
+      this.registrosVisitaPage = 0;
+      this.infiniteScroll.disabled = false;//Cada que se hace el refresh se habilita el componente infinite scroll
+      this.getRegistrosVisita(this.registrosVisitaPage, 10, null, null);
+    }
   }
 
   async cargarData() {
@@ -49,19 +69,18 @@ export class BitacoraVisitasPage implements OnInit {
   getRegistrosVisita(page: number, size: number, eventInfinite?, eventRefresh?) {
     this.bitacoraVisitaService.getBitacoraVisitas(this.idEmpresa, page, size, this.filters).subscribe((data) => {
           if (data.status === 200) {
-            if (eventRefresh) {
-              this.bitacoraRegistrosList = [];
-            }
+
             if (eventInfinite) {
+              this.bitacoraRegistrosList.push(...data.result.content);
               if (data.result.content.length === 0) {
                 eventInfinite.target.disabled = true;
                 eventInfinite.target.complete();
                 return;
-              }
+              }              
+            }else{                  
+              this.bitacoraRegistrosList = data.result.content;
             }
-            this.bitacoraRegistrosList.push(...data.result.content);
-            this.storage.set(this.idEmpresa + this.bitacoraVisitaService.nombreEtiqueta, this.bitacoraRegistrosList);
-            this.userData.showToast('recuperados correctamente');
+            this.storage.set(this.idEmpresa + this.bitacoraVisitaService.nombreEtiqueta, this.bitacoraRegistrosList);            
             this.completeEvent(eventInfinite, eventRefresh);
           } else {
             this.userData.showToast('error al recuperar registros');
@@ -99,21 +118,22 @@ export class BitacoraVisitasPage implements OnInit {
   }
 
   buscar( event ){
-    /* console.log('bitacoraAvisos.buscar()');
-    this.textoBuscar = event.detail.value;
-    this.bitacoraRegistrosList = this.dataLocalBitacoraVisitaService.bitacoraVisitas;
+    if (!this.isEmpty(event.detail.value)) {
+      console.log('campos buscar-->', JSON.stringify(this.camposFiltros));
+      this.filters = "";
+      this.camposFiltros.forEach(item => this.filters += '' + item + ':*' + event.detail.value + '*,');
+      if (this.filters.endsWith(",")) {
+        this.filters = this.filters.substring(0, this.filters.length - 1);
+      }
+    } else {
+      this.filters = "";
+    }
+    this.registrosVisitaPage = 0;
+    this.infiniteScroll.disabled = false;
+    this.getRegistrosVisita(this.registrosVisitaPage, 10, null, null);    
+  }
 
-    if(this.textoBuscar === ''){
-      return ;
-    }else{
-      this.textoBuscar = this.textoBuscar.toLowerCase();
-      this.bitacoraRegistrosList = this.bitacoraRegistrosList.filter(item => {
-        return (
-          (item.nombreCompleto.toLowerCase().includes(this.textoBuscar))
-          || (item.observaciones.toLowerCase().includes(this.textoBuscar))
-          );
-      }    
-      );      
-    }     */
+  isEmpty(str) {
+    return (!str || 0 === str.length);
   }
 }

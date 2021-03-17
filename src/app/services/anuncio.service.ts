@@ -67,8 +67,9 @@ export class AnuncioService {
     return this.http.post<ApiResponse>(this.baseUrl + this.publicacionContext, anuncioData).pipe(share());
   }
 
+
   update(idPublicacion: number, publicacion: any) : Observable<ApiResponse> {
-    console.log('update directorio', this.baseUrl + this.publicacionContext + environment.coreApiBaseEditOperation+  "/" + idPublicacion);    
+    console.log('update anuncio', this.baseUrl + this.publicacionContext + environment.coreApiBaseEditOperation+  "/" + idPublicacion);    
     return this.http.patch<ApiResponse>(this.baseUrl + this.publicacionContext + environment.coreApiBaseEditOperation+  "/" + idPublicacion, publicacion).pipe(share());
   }
     

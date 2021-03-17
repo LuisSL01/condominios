@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Camera , CameraOptions } from '@ionic-native/camera/ngx';
 import { BitacoraVisita } from '../../../models/bitacora-visitas.model';
 import { BitacoraVisitaService } from '../../../services/bitacora-visita.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { UserData } from '../../../providers/user-data';
 import { ArchivoVortexApp, Archivo } from '../../../models/archivo-vortex.model';
 
@@ -28,27 +28,33 @@ export class AddPage implements OnInit {
 
   enCamara:boolean;
 
-  data: Archivo[] = new Array();
+  files: Archivo[] = new Array();
 
   createBitacoraVisita = this.fb.group({
-    nombreCompleto: ["", [Validators.required]],
-    conAuto: [false,],
-    placa:["",],
-    personasIngresan: [1,],
-    observaciones: ["", []],
-    visitaProgramada: [true]    
+    data: this.fb.group({
+      nombreCompleto: ["", [Validators.required]],
+      conAuto: [false,],
+      placa:["",],
+      personasIngresan: [1,],
+      observaciones: ["", []],
+      visitaProgramada: [true]    
+    })
   });
+
+  bitacoraVisitaChangesForm: FormGroup;
 
   idEmpresa: number;
   idAgente: number;
   pathBase64: string = "data:image/jpeg;base64,";
-
+  abrirQR:boolean = true;
+  edit:boolean=false;
   constructor(private bitacoraVisitaService : BitacoraVisitaService,
               private visitaService: VisitaService,
               private camera:Camera,
               private router:Router,
               private fb: FormBuilder,
               private userData: UserData,
+              public activatedRoute: ActivatedRoute,
               private barcodeScanner: BarcodeScanner
               ) { }
 
@@ -57,15 +63,36 @@ export class AddPage implements OnInit {
     
     this.idEmpresa = this.userData.getIdEmpresa();
     this.idAgente = this.userData.getIdAgente();
+
+    this.registroVisita = JSON.parse(this.activatedRoute.snapshot.paramMap.get('item'));    
+    if(this.registroVisita != null) this.prepareEdit();
+    else this.registroVisita = new BitacoraVisita();
+  }
+
+  prepareEdit(){
+    this.abrirQR = false;
+    console.log('prepareEdit');
+    this.edit = true;
+
+    this.createBitacoraVisita = this.fb.group({
+      data: this.fb.group({
+        nombreCompleto: [this.registroVisita.data.nombreCompleto],
+        conAuto: [this.registroVisita.data.conAuto],
+        placa:[this.registroVisita.data.placa],
+        personasIngresan: [this.registroVisita.data.personasIngresan],
+        observaciones: [this.registroVisita.data.observaciones],
+        visitaProgramada: [this.registroVisita.data.visitaProgramada]
+      })
+    });
   }
 
   ionViewDidEnter(){
-    console.log('ionViewDidEnter');    
-    
+    console.log('ionViewDidEnter');        
   }
   ionViewWillEnter(){
     console.log('ionViewWillEnter');
-    this.scanQR();
+    if(this.abrirQR)
+      this.scanQR();
     
   }
 
@@ -103,22 +130,18 @@ export class AddPage implements OnInit {
       /* const img = window.Ionic.WebView.convertFileSrc(imageData);
       this.registroVisita.imgs.push(img); */
       const title = this.createBitacoraVisita.value.nombreCompleto + "_bitacora-visita.jpg";        
-      this.data.push(new Archivo(imageData, title));
+      this.files.push(new Archivo(imageData, title));
     }, (err) => {
       // Handle error
     });
   }
 
-  scanQR(){
-    
+  scanQR(){    
     console.log('scanQR()');
     console.log('deberia estar llamando al method');    
     this.barcodeScanner.scan().then(barcodeData => {
       console.log('Barcode data', barcodeData);
-
       this.buscaInfoVisita(barcodeData.text);
-
-
     }).catch(err => {
       console.log('Error', err);
     });
@@ -151,36 +174,62 @@ export class AddPage implements OnInit {
   generateQr(){
     
   }
-  
-  save() {
-    console.log('value: ');
-    console.log( this.createBitacoraVisita.value);
-    
 
+  editar(){
+    console.log('editar()...');
+
+    this.bitacoraVisitaChangesForm = this.fb.group({});        
+    this.getDirtyFields();
+
+    console.log('bitacoraVisitaChangesForm', JSON.stringify(this.bitacoraVisitaChangesForm.value));
+
+    this.bitacoraVisitaService.update(this.registroVisita.id, this.bitacoraVisitaChangesForm.value).subscribe(data => {
+      if (data.status === 200) {        
+        this.createBitacoraVisita.markAsPristine();
+        this.createBitacoraVisita.reset();
+        this.router.navigate(['/bitacora-visitas', { item: true}]); 
+
+      } else {
+        this.userData.showToast('Error al editar registro, llego otro status');
+      }
+    }, err => {
+      console.log(err);this.userData.showToast("Error: "+ err);
+    },
+      () => {
+      });
+  }
+
+  getDirtyFields() {
+    console.log('getDirtyFields');    
+    Object.keys(this.createBitacoraVisita['controls'].data['controls']).forEach(key => {
+      if (this.createBitacoraVisita.get('data').get(key).dirty) {
+        this.bitacoraVisitaChangesForm.addControl(key, this.createBitacoraVisita.get('data').get(key));
+      }
+    });
+  }
+  
+  nuevo(){
+
+    console.log('value: ');
+    console.log( this.createBitacoraVisita.value);    
     const bitacoraVisitaObj={
       empresa : this.idEmpresa,
       agenteCreador: this.idAgente,
-      visita : this.visitaFound.id,
-      nombreCompleto : this.createBitacoraVisita.value.nombreCompleto,
-      conAuto : this.createBitacoraVisita.value.conAuto,
-      placa : this.createBitacoraVisita.value.placa,
-      personasIngresan : this.createBitacoraVisita.value.personasIngresan,
-      observaciones: this.createBitacoraVisita.value.observaciones,
-      visitaProgramada : this.createBitacoraVisita.value.visitaProgramada,
-      data:{archivos:[]}
+      visita : (this.visitaFound === null ? null :this.visitaFound?.id),
+      data: this.createBitacoraVisita.value.data,
+      files:{archivos:[]}
     };
 
 
     const formData = new FormData();
     formData.append("data", JSON.stringify(bitacoraVisitaObj));
-    formData.append("file", JSON.stringify(this.data));
-
+    formData.append("file", JSON.stringify(this.files));
     this.bitacoraVisitaService.save(formData).subscribe(
       (data) => {
         console.log(data);
         if (data.status === 200) { 
-          this.userData.showToast('registro creado correctamente');
-          this.router.navigate(['/mis-visitas/bitacora-visitas']); 
+          this.userData.showToast('registro creado correctamente');          
+          this.router.navigate(['/bitacora-visitas', { item: true}]); 
         } else {                    
           this.userData.showToast('error al crear registro');
         }
@@ -191,11 +240,13 @@ export class AddPage implements OnInit {
       },
       () => {}
     );
+  }
+  
+  save() {
 
+    if(this.edit) this.editar();
+    else this.nuevo();
 
-   /*  console.log(this.registroVisita);
-    this.dataLocalBitacoraVisitaService.guardar(this.registroVisita);
-    this.router.navigate(['/mis-visitas/bitacora-visitas']); */
   }
 
 }

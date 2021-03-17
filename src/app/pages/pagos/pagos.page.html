@@ -11,7 +11,7 @@
       </ion-label>
     </ion-item>
 
-    <ion-item routerLink="validar-comprobantes" detail>
+    <ion-item routerLink="validar-comprobantes" detail  *ngIf="userData.administrador" >
       <ion-icon slot="start" name="checkbox-outline" color="medium"> </ion-icon>
       <ion-label>
         Validar comprobantes

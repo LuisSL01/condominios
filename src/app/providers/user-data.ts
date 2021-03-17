@@ -17,6 +17,7 @@ export class UserData {
   nameImageEmpresa ="";
   base64ImageEmpresa ="";
   nombreCompleto:string ="";
+  administrador:boolean =false;
 
   constructor(
     public storage: Storage,
@@ -133,7 +134,40 @@ export class UserData {
     return JSON.parse(window.localStorage.getItem('userDetails')).nombreCompleto;
   }
 
- 
+
+
+ async setConfigUser(){
+   console.log('setConfigUser');
+  const data = await  this.storage.get('userFull');
+    if (data) {
+      console.log('data', JSON.stringify(data));
+      
+      if(data.departamento){
+
+      console.log("val.departamento", data.departamento);
+        if(data.departamento === 'RESIDENTE'){
+          this.administrador = false;
+        }else{
+          this.administrador = true;
+        }        
+      }        
+    }  
+ }
+
+ recibeDepartamento(depto:string){
+   console.log("recibeDepartamento", depto);
+
+   if(depto === 'RESIDENTE'){
+    this.administrador = false;
+   }else{
+    this.administrador = true;
+   }
+   
+   console.log('this.administrador,'+ this.administrador);
+   
+
+ }
+
 
   setConfigEmpresa(){
     console.log('setConfigEmpresa');

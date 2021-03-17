@@ -14,7 +14,8 @@ export class BitacoraVisita{
     public visitaProgramada:boolean;
     public imgs:string[];//data
 
-    public data:ArchivoVortexApp;
+    public files:ArchivoVortexApp;
+    public data:any;
 
     public nombreAgenteVisita:string;
     
@@ -23,7 +24,7 @@ export class BitacoraVisita{
         this.conAuto = false;
         this.visitaProgramada = true;
         this.imgs = new Array();
-        this.data = new ArchivoVortexApp();
+        this.files = new ArchivoVortexApp();
     }
     
 }

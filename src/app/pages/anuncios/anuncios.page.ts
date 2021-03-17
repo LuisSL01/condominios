@@ -47,40 +47,26 @@ export class AnunciosPage implements OnInit {
   }
 
   ionViewDidEnter(){
-    console.log('uno ionViewDidEnter de ANUNCIOS  PAGE');
-    let ann:Publicacion = JSON.parse(this.activatedRoute.snapshot.paramMap.get('item'));
-    console.log('ann creado', JSON.stringify(ann));
-    if(ann != null){
-      console.log('antes', JSON.stringify(this.anunciosList));      
-      this.anunciosList.unshift(ann);
-      this.storage.set(this.idEmpresa + "_anuncios", this.anunciosList);
-      console.log('despues', JSON.stringify(this.anunciosList));      
+    console.log('uno ionViewDidEnter de ANUNCIOS  PAGE'); 
+    let value:boolean = JSON.parse(this.activatedRoute.snapshot.paramMap.get('item'));
+    if(value != null){
+      this.anunciosPage = 0;
+      this.infiniteScroll.disabled = false;//Cada que se hace el refresh se habilita el componente infinite scroll
+      this.getAnuncios(this.anunciosPage, 10, null, null);
     }
   }
-
-
+  
   cargaFiltrosTabla(){
-
     this.fieldFilters.push("data_descripcion");
     this.fieldFilters.push("data_titulo");
     this.fieldFilters.push("data_clasificacion");
     /* this.fieldFilters.push("estatus"); */
-
-      
   }
 
 
   ionViewWillEnter(){    
-
     console.log('se ejecuta dos');  
-
-    this.showToastAlert("Nota: Los anuncios son responsabilidad de quien lo crea.");
-    
-    
-    
-    
-
-  
+    this.showToastAlert("Nota: Los anuncios son responsabilidad de quien lo crea.");  
   }
 
 
@@ -112,10 +98,8 @@ export class AnunciosPage implements OnInit {
 
   getAnuncios(page: number, size: number, eventInfinite?, eventRefresh?) {
     /* this.anuncioService.getDataAnuncios(this.idEmpresa, this.anunciosPage, size, this.filters);     */
-    this.anuncioService.getAnuncios(this.idEmpresa, page, size, this.filters).subscribe(
-        (data) => {
-          console.log(data);
-          
+    this.anuncioService.getAnuncios(this.idEmpresa, page, size, this.filters).subscribe((data) => {
+          console.log(data);          
           if (data.status === 200) {      
             this.totalPages = data.result.totalPages;
             if (eventInfinite) {   
@@ -125,11 +109,9 @@ export class AnunciosPage implements OnInit {
                 eventInfinite.target.disabled = true;
                 eventInfinite.target.complete();
                 return;
-              }
-              
+              }              
             }else{
-              console.log('else infinite');
-              
+                 
               this.anunciosList = data.result.content;
             }
            

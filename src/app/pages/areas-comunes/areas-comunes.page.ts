@@ -4,6 +4,7 @@ import { AreaComun } from '../../models/area-comun.model';
 import { UserData } from '../../providers/user-data';
 import { Storage } from "@ionic/storage";
 import { IonInfiniteScroll } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-areas-comunes',
@@ -30,6 +31,7 @@ export class AreasComunesPage implements OnInit {
 
   constructor(public areaComunService: AreaComunService,
               private userData: UserData,
+              public activatedRoute: ActivatedRoute,
               private storage: Storage,) {
 
   }
@@ -40,6 +42,16 @@ export class AreasComunesPage implements OnInit {
     this.cargaFiltrosTabla();    
     /* this.cargarAnunciosLocalesStorage(this.idEmpresa); */
 
+  }
+
+  ionViewDidEnter(){
+    console.log('uno ionViewDidEnter de ANUNCIOS  PAGE'); 
+    let value:boolean = JSON.parse(this.activatedRoute.snapshot.paramMap.get('item'));
+    if(value != null){
+      this.areaComunPage = 0;
+      this.infiniteScroll.disabled = false;//Cada que se hace el refresh se habilita el componente infinite scroll
+      this.getAreasComunes(this.areaComunPage, 10, null, null);
+    }
   }
   
   cargaFiltrosTabla(){
@@ -66,15 +78,13 @@ export class AreasComunesPage implements OnInit {
           if (data.status === 200) {
             this.totalPages = data.result.totalPages;
             if (eventInfinite) {   
-              console.log('event infinite');
               this.areasList.push(...data.result.content);            
               if (data.result.content.length === 0) {
                 eventInfinite.target.disabled = true;
                 eventInfinite.target.complete();
                 return;
               }
-            }else{
-              console.log('else infinite');              
+            }else{              
               this.areasList = data.result.content;
             }
            

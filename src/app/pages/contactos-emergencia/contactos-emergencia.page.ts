@@ -26,7 +26,7 @@ export class ContactosEmergenciaPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
   constructor( public contactoService : ContactosEmergenciaService,
-               private userData: UserData,
+               public userData: UserData,
                private storage:Storage ) {
    }
 

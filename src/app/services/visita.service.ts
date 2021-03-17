@@ -37,6 +37,11 @@ export class VisitaService {
   save(visitaData: any): Observable<ApiResponse> {
     console.log('save visita:'+this.baseUrl + this.visitaContext);    
     return this.http.post<ApiResponse>(this.baseUrl + this.visitaContext, visitaData).pipe(share());
+  }
+
+  update(idVisita: number, visita: any) : Observable<ApiResponse> {
+    console.log('update visita', this.baseUrl + this.visitaContext + environment.coreApiBaseEditOperation+  "/" + idVisita);    
+    return this.http.patch<ApiResponse>(this.baseUrl + this.visitaContext + environment.coreApiBaseEditOperation+  "/" + idVisita, visita).pipe(share());
   } 
 
   delete(idVisita: number) : Observable<ApiResponse> {

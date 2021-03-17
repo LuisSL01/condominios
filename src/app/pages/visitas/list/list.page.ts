@@ -4,6 +4,8 @@ import { Visita } from '../../../models/visita.model';
 import { ActionSheetController } from '@ionic/angular';
 import { UserData } from '../../../providers/user-data';
 import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner/ngx';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-list',
@@ -20,10 +22,17 @@ export class ListPage implements OnInit {
   constructor(public visitaService: VisitaService,
     private actionSheetCtrl: ActionSheetController,
     private userData:UserData,
+    private router: Router,
+    
     private barcodeScanner: BarcodeScanner
     ) { }
 
   ngOnInit() {
+  }
+
+  onRowSelected(){
+    console.log(this.visita);
+    this.router.navigate(['/visitas/add', { item: JSON.stringify(this.visita)}]);  
   }
 
   async lanzarMenu() {
@@ -37,7 +46,20 @@ export class ListPage implements OnInit {
           console.log('Borrar visita');
           if(this.visita.id > 0 ){
             this.visitaService.delete(this.visita.id).subscribe((data) => {
-                if (data.status === 200) { console.log("eliminado correctamente"); this.userData.showToast('visita eliminada correctamente');}
+                if (data.status === 200) { 
+                  console.log("eliminado correctamente, redireccionando y limpiando el get .."); 
+                  this.userData.showToast('visita eliminada correctamente');
+
+                  
+                  this.router.navigate(['/visitas', { item: true, skipLocationChange: true}]);
+                  
+/*                   
+                  this.router.navigateByUrl('/visitas', {skipLocationChange: true}).then(() => {
+                    
+                  }); */
+
+                }
+                
                 else  this.userData.showToast('Error al eliminar registro');                
               },
               (err) => {
@@ -59,12 +81,10 @@ export class ListPage implements OnInit {
         icon: 'qr-code-outline',        
         cssClass: 'action-dark',
         handler: () => {
-
-    /*       this.barcodeScannerOptions = {
+          /*       this.barcodeScannerOptions = {
             showTorchButton: true,
             showFlipCameraButton: true
           }; */
-
           this.encodeDataVisita = this.visita.id+"|"+this.visita.uuid;
           this.encodeDataVisita = btoa(this.encodeDataVisita);
           
