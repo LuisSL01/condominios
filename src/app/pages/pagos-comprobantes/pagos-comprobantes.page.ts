@@ -4,6 +4,7 @@ import { PagosComprobantes } from '../../models/pagos-comprobantes.model';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { UserData } from '../../providers/user-data';
 import { Storage } from "@ionic/storage";
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-pagos-comprobantes',
@@ -21,9 +22,10 @@ export class PagosComprobantesPage implements OnInit {
   pagoComprobantePage: number = 0;
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-
+  public camposFiltros:string[]=new Array();
   constructor(public pagosComprobantesService: PagosComprobantesService,
               private userData:UserData,
+              public activatedRoute: ActivatedRoute,
               private storage: Storage,) {
 
     
@@ -32,6 +34,22 @@ export class PagosComprobantesPage implements OnInit {
   ngOnInit() {
     this.idEmpresa = this.userData.getIdEmpresa();
     this.cargaData();
+    this.cargaFiltrosTabla();
+  }
+
+  cargaFiltrosTabla(){
+    this.camposFiltros.push("data_formaPago");
+    
+  }
+  
+  ionViewDidEnter(){
+    console.log('uno ionViewDidEnter de visitas  PAGE');
+    let value:boolean = JSON.parse(this.activatedRoute.snapshot.paramMap.get('item'));
+    if(value != null){
+      this.pagoComprobantePage = 0;
+      this.infiniteScroll.disabled = false;//Cada que se hace el refresh se habilita el componente infinite scroll      
+      this.getPagosComprobantes(this.pagoComprobantePage, 10, null, null);
+    }
   }
 
   async cargaData(){
@@ -51,17 +69,17 @@ export class PagosComprobantesPage implements OnInit {
   getPagosComprobantes(page: number, size: number, eventInfinite?, eventRefresh?) {
     this.pagosComprobantesService.getPagosComprobantes(this.idEmpresa, page, size, this.filters).subscribe((data) => {
           if (data.status === 200) {
-            if(eventRefresh) this.pagoComprobanteList = [];
             if (eventInfinite) {
+              this.pagoComprobanteList.push(...data.result.content);
               if (data.result.content.length === 0) {
                 eventInfinite.target.disabled = true;
                 eventInfinite.target.complete();
                 return;
               }
-            }
-            this.pagoComprobanteList.push(...data.result.content)
-            this.storage.set(this.idEmpresa + this.pagosComprobantesService.nombreEtiqueta, this.pagoComprobanteList);
-            this.userData.showToast('recuperados correctamente');
+            }else{                      
+              this.pagoComprobanteList = data.result.content;
+            }                        
+            this.storage.set(this.idEmpresa + this.pagosComprobantesService.nombreEtiqueta, this.pagoComprobanteList);            
             this.completeEvent(eventInfinite, eventRefresh);
           } else {
             this.userData.showToast('error al recuperar registros');
@@ -99,26 +117,23 @@ export class PagosComprobantesPage implements OnInit {
   }
 
 
-  buscar( event ){
-
-    /* console.log('pagos comprobantes.buscar()');
-    this.textoBuscar = event.detail.value;
-    this.pagoComprobanteList = this.dataLocalPagosComprobantesService.pagosComprobantes;
-
-    if(this.textoBuscar === ''){
-      return ;
-    }else{
-      this.textoBuscar = this.textoBuscar.toLowerCase();  
-      this.pagoComprobanteList = this.pagoComprobanteList.filter(item => {
-        return (
-          (item.mesPago.toLowerCase().includes(this.textoBuscar))
-         || (item.formaPago.toLowerCase().includes(this.textoBuscar))
-          );
-      }    
-      );
-      console.log('despues de terminar el filter');
-    } */
-    
+  buscar( event ){    
+    if (!this.isEmpty(event.detail.value)) {
+      console.log('campos buscar-->', JSON.stringify(this.camposFiltros));
+      this.filters = "";
+      this.camposFiltros.forEach(item => this.filters += '' + item + ':*' + event.detail.value + '*,');
+      if (this.filters.endsWith(",")) {
+        this.filters = this.filters.substring(0, this.filters.length - 1);
+      }
+    } else {
+      this.filters = "";
+    }
+    this.pagoComprobantePage = 0;
+    this.infiniteScroll.disabled = false;
+    this.getPagosComprobantes(this.pagoComprobantePage, 10, null, null);
   }
 
+  isEmpty(str) {
+    return (!str || 0 === str.length);
+  }
 }

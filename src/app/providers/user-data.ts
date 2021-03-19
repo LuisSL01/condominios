@@ -22,7 +22,10 @@ export class UserData {
   constructor(
     public storage: Storage,
     private toastCtrl: ToastController
-  ) { }
+  ) {
+    
+
+   }
 
   hasFavorite(sessionName: string): boolean {
     return (this._favorites.indexOf(sessionName) > -1);
@@ -108,7 +111,7 @@ export class UserData {
     return JSON.parse(window.localStorage.getItem('empresaData')).id;
   }
 
-  getDataDireccionEmpresa():any{
+   getDataDireccionEmpresa():any{
     let empresa = JSON.parse(window.localStorage.getItem('empresaData'));
     if(empresa){
       return empresa.direccion;
@@ -195,9 +198,8 @@ export class UserData {
     if(empresa){
       if(empresa.configuracionEmpresa){
         this.base64ImageEmpresa = empresa.configuracionEmpresa.logoFondoClaro;
-      }
-      
-    }
+      }      
+    }    
   }
 
   showToast(dataMessage: string) {

@@ -23,6 +23,10 @@ export class ListPage implements OnInit {
 
   ngOnInit() { }
 
+  editRowSelected(){
+    this.router.navigate(['/gastos/add', { item: JSON.stringify(this.gasto)}]);
+  }
+
   	
   async lanzarMenu() {
 

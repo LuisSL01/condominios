@@ -1,34 +1,44 @@
 <ion-card lines="none">
   <ion-card-header>
-    <ion-card-title>{{gasto.tipoDeGasto}} - {{gasto.fechaDeCreacion  | date:'dd/MM/yyyy h:mm aaa'}}</ion-card-title>
-
+    <ion-card-title>
+      <ion-label>
+        <h2>{{gasto.data.tipoGasto}}</h2>
+        <h2>Fecha {{gasto.data.fechaGasto  | date:'dd/MM/yyyy'}}</h2>
+      </ion-label>
+      
+       </ion-card-title>
     <ion-card-subtitle>
-      <span class="text-primary"> {{gasto.data.formaPago}} $ {{gasto.data.cantidad}}</span>
+      <span class="text-primary"> 
+        <ion-label>
+          <h2>Cantidad: $ {{gasto.data.cantidad}}</h2>  
+          <h2>Método pago: {{gasto.data.formaPago}}</h2>
+        </ion-label>        
+      </span>
       <div class="card-more">
-        <ion-button fill="clear" (click)="lanzarMenu()">
-          <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
-        </ion-button>
+        <ion-buttons slot="end">
+          <ion-button slot="end" (click)="editRowSelected()">
+            <ion-icon slot="icon-only" color="primary" name="create-outline"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" (click)="lanzarMenu()">
+            <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+
       </div>
 
     </ion-card-subtitle>
   </ion-card-header>
-  <ion-card-content>
-    {{gasto.data.descripcion}}
+  <ion-card-content>        
+      {{gasto.data.descripcion}}
   </ion-card-content>
   
   <ion-item>
-    <ion-slides pager="true" *ngIf="gasto.files?.archivos.length > 1">
+    <ion-slides pager="{{gasto.files?.archivos.length > 1 ?true:false}}" >    
       <ion-slide *ngFor="let img of gasto.files.archivos" class="image-slide">      
         <img  *ngIf="img.rutaS3"  src="{{pathS3}}{{img.rutaS3}}">
         <img  *ngIf=" ! img.rutaS3"  src="{{pathBase64}}{{img.base64}}">
       </ion-slide>
-    </ion-slides>
-      <ion-slides *ngIf="gasto.files?.archivos.length === 1">
-        <ion-slide *ngFor="let img of gasto.files.archivos" class="image-slide">          
-          <img  *ngIf="img.rutaS3"  src="{{pathS3}}{{img.rutaS3}}">
-          <img  *ngIf=" ! img.rutaS3"  src="{{pathBase64}}{{img.base64}}">
-        </ion-slide>
-    </ion-slides>  
+    </ion-slides>      
   </ion-item>
 
 </ion-card>

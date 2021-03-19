@@ -2,16 +2,35 @@
   <ion-card-header>
     <ion-card-title>  {{encuesta.titulo}} </ion-card-title>
     <ion-card-subtitle>
-      <span class="text-primary"> Fecha termina: {{encuesta.fechaTermina  | date:'dd/MM/yyyy HH:mm a'}}</span>
+      <span class="text-primary">Termina el: {{encuesta.fechaTermina  | date:'dd/MM/yyyy HH:mm a'}}</span>
       <div class="card-more">
+        <ion-buttons slot="end">
+
+          <ion-button slot="end" (click)="editRowSelected()">
+            <ion-icon slot="icon-only" color="primary" name="create-outline"></ion-icon>
+          </ion-button>
+
+          <ion-button fill="clear" (click)="responderEncuesta()">
+            <ion-icon slot="icon-only"  name="share"></ion-icon>
+          </ion-button>
         <ion-button fill="clear" (click)="lanzarMenu()">
           <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
         </ion-button>
+        </ion-buttons>
       </div>
     </ion-card-subtitle>
   </ion-card-header>
   <ion-card-content>
-    {{encuesta.mensaje}}
+    <ion-label>
+      <h2>
+      {{encuesta.mensaje}}
+    </h2>
+    <h3>
+      Han respondido: {{encuesta.countRespuestas}}
+    </h3>
+  
+  </ion-label>
+    
   </ion-card-content>
 </ion-card>
 

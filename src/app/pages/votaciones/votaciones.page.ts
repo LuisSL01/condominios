@@ -4,6 +4,7 @@ import { Encuesta } from '../../models/votaciones.model';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { UserData } from '../../providers/user-data';
 import { Storage } from "@ionic/storage";
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -16,23 +17,43 @@ export class VotacionesPage implements OnInit {
   public votacionesList : Encuesta[]=[];
   idEmpresa: number;
   filters: any;
-  reservaPage: number = 0;
+  votacionPage: number = 0;
+
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+
+  public camposFiltros:string[]=new Array();
 
   constructor(public votacionesService: VotacionesService,
               private userData:UserData,
+              public activatedRoute: ActivatedRoute,
               private storage: Storage,) {
    }
 
   ngOnInit() {      
     this.idEmpresa = this.userData.getIdEmpresa();
     this.cargaData();
+    this.cargaFiltrosTabla();
+  }
+  
+  cargaFiltrosTabla(){
+    this.camposFiltros.push("root_titulo");
+    this.camposFiltros.push("root_mensaje");
+  }
+
+  ionViewDidEnter(){
+    console.log('uno ionViewDidEnter de votaciones');
+    let value:boolean = JSON.parse(this.activatedRoute.snapshot.paramMap.get('item'));
+    if(value != null){
+      this.votacionPage = 0;
+      this.infiniteScroll.disabled = false;//Cada que se hace el refresh se habilita el componente infinite scroll
+      this.getVotaciones(this.votacionPage, 10, null, null);
+    }
   }
 
   async cargaData(){
     await this.cargarVotacionesTemporalesStorage(this.idEmpresa);
     if (this.votacionesList.length == 0) {
-      this.getVotaciones(this.reservaPage, 10);
+      this.getVotaciones(this.votacionPage, 10);
     }
   }
   
@@ -46,19 +67,17 @@ export class VotacionesPage implements OnInit {
     this.votacionesService.getVotaciones(this.idEmpresa, page, size, this.filters)
       .subscribe((data) => {
           if (data.status === 200) {
-            if(eventRefresh){
-              this.votacionesList = [];              
-            }
             if (eventInfinite) {
+              this.votacionesList.push(...data.result.content);
               if (data.result.content.length === 0) {
                 eventInfinite.target.disabled = true;
                 eventInfinite.target.complete();
                 return;
-              }
+              }              
+            }else{           
+              this.votacionesList = data.result.content;
             }
-            this.votacionesList.push(...data.result.content)
             this.storage.set(this.idEmpresa + this.votacionesService.nombreEtiqueta, this.votacionesList);
-            this.userData.showToast('recuperados correctamente');
             this.completeEvent(eventInfinite, eventRefresh);            
           } else {
             this.userData.showToast('error al recuperar registros');
@@ -84,18 +103,36 @@ export class VotacionesPage implements OnInit {
   }
 
   loadData(event) {//Desde el infinite scroll
-    this.reservaPage ++;
-    this.getVotaciones(this.reservaPage, 10, event);
+    this.votacionPage ++;
+    this.getVotaciones(this.votacionPage, 10, event);
   }
 
   doRefresh(event) {
-    this.reservaPage = 0;
+    this.votacionPage = 0;
     this.infiniteScroll.disabled = false;//Cada que se hace el refresh se habilita el componente infinite scroll
-    this.getVotaciones(this.reservaPage, 10, null, event);
+    this.getVotaciones(this.votacionPage, 10, null, event);
   }
 
   
-  async buscar( event ){
+  buscar( event ){
+    if (!this.isEmpty(event.detail.value)) {
+      console.log('campos buscar-->', JSON.stringify(this.camposFiltros));
+      this.filters = "";
+      this.camposFiltros.forEach(item => this.filters += '' + item + ':*' + event.detail.value + '*,');
+      if (this.filters.endsWith(",")) {
+        this.filters = this.filters.substring(0, this.filters.length - 1);
+      }
+    } else {
+      this.filters = "";
+    }
+    this.votacionPage = 0;
+    this.infiniteScroll.disabled = false;
+    this.getVotaciones(this.votacionPage, 10, null, null);
+    
+  }
+
+  isEmpty(str) {
+    return (!str || 0 === str.length);
   }
 
 }

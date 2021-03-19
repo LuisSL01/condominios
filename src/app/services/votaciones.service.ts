@@ -41,6 +41,11 @@ export class VotacionesService{
     return this.http.post<ApiResponse>(this.baseUrl + this.votacionContext, votacionData).pipe(share());
   } 
 
+  update(idEncuesta: number, encuestaData: any) : Observable<ApiResponse> {
+    console.log('update votacion', this.baseUrl + this.votacionContext + environment.coreApiBaseEditOperation+  "/" + idEncuesta);    
+    return this.http.patch<ApiResponse>(this.baseUrl + this.votacionContext + environment.coreApiBaseEditOperation+  "/" + idEncuesta, encuestaData).pipe(share());
+  } 
+
   saveRespuesta(idVotacion:number, respuesta: any): Observable<ApiResponse> {
     console.log('saveRespuesta:'+this.baseUrl + this.votacionContext + environment.coreApiBaseVotacionRespuestaOperation+"/"+idVotacion);    
     return this.http.post<ApiResponse>(this.baseUrl + this.votacionContext + environment.coreApiBaseVotacionRespuestaOperation+'/'+idVotacion, respuesta).pipe(share());

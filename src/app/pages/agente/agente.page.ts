@@ -16,6 +16,7 @@ export class AgentePage implements OnInit {
   agentePage: number = 0;
 
   currentStatus:boolean;
+  public camposFiltros:string[]=new Array();
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
@@ -32,8 +33,19 @@ export class AgentePage implements OnInit {
   ngOnInit() {
     this.idEmpresa = JSON.parse(window.localStorage.getItem('empresaData')).id
     console.log('this.idempresa: '+ this.idEmpresa);
+   
     /* this.getAgentes(0,10); */
     this.cargaAgentesStorage();
+    this.cargaFiltrosTabla();
+  }
+
+  cargaFiltrosTabla(){    
+    this.camposFiltros.push("root_nombreCompleto");
+    this.camposFiltros.push("root_apellidoPaterno");
+    this.camposFiltros.push("root_apellidoMaterno");
+    this.camposFiltros.push("root_email");
+    this.camposFiltros.push("root_departamento");
+    
   }
 
   async cargaAgentesStorage() {
@@ -65,18 +77,17 @@ export class AgentePage implements OnInit {
       .subscribe(
         (data) => {
           if (data.status === 200) {
-            if (eventRefresh) {
-              this.agentesList = [];
-            }
+
             if (eventInfinite) {
+              this.agentesList.push(...data.result.content);
               if (data.result.content.length === 0) {
                 eventInfinite.target.disabled = true;
                 eventInfinite.target.complete();
                 return;
               }
+            }else{                      
+              this.agentesList = data.result.content;
             }
-            this.agentesList = data.result.content;
-            console.log("this.agentesList: " + this.agentesList);
             this.storage.set(this.idEmpresa + "_agentes", this.agentesList);
             this.completeEvent(eventInfinite, eventRefresh);
           } else {
@@ -101,7 +112,25 @@ export class AgentePage implements OnInit {
     }
   }
 
-  buscar(event) {}
+  buscar(event) {
+    if (!this.isEmpty(event.detail.value)) {
+      console.log('campos buscar-->', JSON.stringify(this.camposFiltros));
+      this.filters = "";
+      this.camposFiltros.forEach(item => this.filters += '' + item + ':*' + event.detail.value + '*,');
+      if (this.filters.endsWith(",")) {
+        this.filters = this.filters.substring(0, this.filters.length - 1);
+      }
+    } else {
+      this.filters = "";
+    }
+    this.agentePage = 0;
+    this.infiniteScroll.disabled = false;
+    this.getAgentes(this.agentePage, 10, null, null);    
+  }
+
+  isEmpty(str) {
+    return (!str || 0 === str.length);
+  }
 
   loadData(event) {//Desde el infinite scroll
     console.log("load data");
@@ -140,8 +169,11 @@ export class AgentePage implements OnInit {
         .subscribe(
           (data) => {
             if (data.status === 200) {
-              console.log('data: '+ data);                
+              
               this.showToast('Agente '+(!status?"Activado":"Inactivado")+' correctamente');
+              this.agentePage = 0;
+              this.infiniteScroll.disabled = false;
+              this.getAgentes(this.agentePage, 10, null, null);  
             } else {
               console.log("Llego otro status al actualizar el agentes " + data);
               this.showToast('No se pudo actualizar el agente');

@@ -57,27 +57,7 @@
           </ion-select-option>
         </ion-select>
       </ion-item>
-     <!--  <ion-item>
-
-        <ion-label>
-          <ion-icon name="calendar-outline" style="font-size:23px; color: #50c8ec; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Fecha Término
-        </ion-label>
-        <ion-datetime name="fechaTermina" style="margin-bottom: -8px;" displayFormat="DD/MM/YYYY" doneText="Aceptar"
-          cancelText="Cancelar" [ngModel]="encuesta.fechaTermina.toISOString()" (ionChange)="cambioFecha($event)">
-        </ion-datetime>
-
-      </ion-item>
-      <ion-item>
-        <ion-label>
-          <ion-icon name="alarm-outline" style="font-size:23px; color: #50c8ec; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Hora Término
-        </ion-label>
-        <ion-datetime name="horaTermina" displayFormat="HH:mm A" doneText="Aceptar" cancelText="Cancelar"
-          [ngModel]="encuesta.horaTermina.toISOString()" (ionChange)="cambioHora($event)">
-        </ion-datetime>
-
-      </ion-item> -->
+  
 
       <ion-list *ngFor="let pre of encuesta.preguntas; let i = index">
         <ion-item>
@@ -131,49 +111,13 @@
           <ion-icon slot="start" name="help-circle-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>&nbsp;&nbsp;Añadir pregunta
         </ion-button>
       </ion-item>
-
-
     
     </ion-list>
 
-       
-    <ion-footer class="ion-no-border" translucent>
-      <ion-toolbar color="light" style="position: static;  bottom:47px; height: 50px;">
-        <ion-grid>
-          <ion-row>
-            <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" offset-md="4" offset-sm="4">
-              <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
-
-              <ion-button fill="clear" size="small" type="submit" [disabled]="formulario.invalid"
-                style="text-transform: none; margin-left: 120px; margin-top: -40px;">Guardar
-                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #50c8ec;">
-                </ion-icon>
-              </ion-button>
+    <app-buttons valueLinkCancel="/votaciones" valueDisabled="{{formulario.invalid}}"></app-buttons>
 
 
-              <ion-button fill="clear" size="small"
-                style="text-transform: none; margin-top: -80px;  margin-left: 220px;"
-                routerLink="/asambleas/votaciones">Cancelar
-                <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
-              </ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-toolbar>
-    </ion-footer>
-
-    
-    <ion-footer class="ion-no-border" translucent>
-      <ion-toolbar color="light" style=" position: static; bottom: 0px; height: 48px;">
-        <ion-grid>
-          <ion-row>
-            <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" offset-md="4" offset-sm="4">
-              <ion-img src="assets/1.gif" style=" height:60px; display: block; width:400px;  margin-right: 20px; margin-top: -15px;"></ion-img>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-toolbar>
-    </ion-footer>
+    <app-footer></app-footer>
     
 
   </form>

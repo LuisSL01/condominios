@@ -3,6 +3,7 @@ import { AdeudoPago } from '../../../models/adeudo-pago.model';
 import { AdeudoService } from '../../../services/adeudo.service';
 import { ActionSheetController } from '@ionic/angular';
 import { UserData } from '../../../providers/user-data';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list',
@@ -15,9 +16,14 @@ export class ListPage implements OnInit {
   
   constructor(public adeudoService:AdeudoService,
               private actionSheetCtrl:ActionSheetController,
+              private router: Router,
               private userData:UserData) { }
 
   ngOnInit() {
+  }
+
+  editRowSelected(){        
+    this.router.navigate(['/adeudos/add', { item: JSON.stringify(this.adeudo)}]);
   }
 
   async lanzarMenu() {

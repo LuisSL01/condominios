@@ -4,6 +4,7 @@ import { Encuesta } from '../../../models/votaciones.model';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ResponderEncuestaPage } from '../responder-encuesta/responder-encuesta.page';
+import { UserData } from '../../../providers/user-data';
 
 @Component({
   selector: 'app-list',
@@ -14,12 +15,24 @@ export class ListPage implements OnInit {
 
   @Input() encuesta:Encuesta;
 
-  constructor(public dataLocalVotacionesService: VotacionesService,
+  constructor(public votacionService: VotacionesService,
     private actionSheetCtrl: ActionSheetController,
     private modalCtrl:ModalController,
+    private userData:UserData,
     private router:Router) { }
 
   ngOnInit() {
+  }
+
+  editRowSelected(){
+
+    console.log(this.encuesta);
+
+    this.router.navigate(['/votaciones/add', { item: JSON.stringify(this.encuesta)}]);      
+  }
+
+  responderEncuesta(){
+    this.presentModalRespoderEncuesta();
   }
 
   async lanzarMenu() {
@@ -31,14 +44,29 @@ export class ListPage implements OnInit {
         cssClass: 'action-dark',
         handler: () => {
           console.log('Borrar encuesta');
-          console.log(this.encuesta);  
-          this.dataLocalVotacionesService.borrarVotacion(this.encuesta);
+          console.log(this.encuesta);
+          if(this.encuesta.id > 0 ){
+            this.votacionService.delete(this.encuesta.id).subscribe((data) => {
+                if (data.status === 200) {
+                  this.userData.showToast('Eliminado correctamente');                
+                  this.router.navigate(['/votaciones', { item: true, skipLocationChange: true}]);
+                }
+                else  this.userData.showToast('Error al eliminar registro');                
+              },
+              (err) => {
+                  this.userData.showToast("Error al eliminar registro");                  
+              },
+              () => {}
+            );
+          }else{
+            this.votacionService.borrarVotacion(this.encuesta);
+          }
         }
       };
 
     const actionSheet = await this.actionSheetCtrl.create({
       buttons: [
-      {
+  /*     {
         text: 'Responder',
         icon: 'share',
         cssClass: 'action-dark',
@@ -46,7 +74,7 @@ export class ListPage implements OnInit {
           console.log('Responder');
           this.presentModalRespoderEncuesta();
       }
-      },
+      }, */
       guardarBorrarBtn,
       {
         text: 'Cancelar',
