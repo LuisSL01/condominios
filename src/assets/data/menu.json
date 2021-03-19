@@ -3,61 +3,64 @@
     "icon": "megaphone-outline",
     "name": "Anuncios",
     "redirectTo": "/anuncios"
-  },
+  , "valida": "false"},
   {
     "icon": "leaf-outline",
     "name": "Áreas comunes",
     "redirectTo": "/menu-areas-comunes"
-  },
+  , "valida": "false"},
   {
     "icon": "people-outline",
     "name": "Asambleas",
     "redirectTo": "/asambleas"
-  },
+  , "valida": "false"},
 
   {
     "icon": "warning-outline",
     "name": "Boton pánico",
     "redirectTo": "/boton-panico"
-  },
+  , "valida": "false"},
+  
   {
     "icon": "call-outline",
     "name": "Contactos de emergencia",
     "redirectTo": "/contactos-emergencia"
-  },
+  , "valida": "false"},
+
   {
     "icon": "book-outline",
     "name": "Directorios",
     "redirectTo": "/directorio"
-  },
+  , "valida": "false"},
   {
     "icon": "pricetags-outline",
     "name": "Gastos del residencial",
     "redirectTo": "/gastos"
-  },
+  , "valida": "true"},
   {
     "icon": "alert-circle-outline",
     "name": "Notificar a comunidad",
     "redirectTo": "/avisos"
-  },
+  , "valida": "false"},
   {
     "icon": "cash-outline",
     "name": "Pagos",
     "redirectTo": "/pagos"
-  },
+  , "valida": "false"},
   {
     "icon": "person-circle-outline",
     "name": "Perfil",
     "redirectTo": "/perfil"
-  },
+  , "valida": "false"},
   {
     "icon": "document-text-outline",    
     "name": "Reglamento",
     "redirectTo": "/reglamento"
-  },
+  , "valida": "false"},
   {
     "icon": "business-outline",
     "name": "Visitas",
     "redirectTo": "/mis-visitas"
+    , "valida": "false"
   }
 ]

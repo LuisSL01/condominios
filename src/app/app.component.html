@@ -4,9 +4,13 @@
   <ion-menu side="start" menuId="primerMenu" contentId="principal">
     <ion-header>
       <ion-toolbar color="primary">
+        
         <!--<ion-title>hola</ion-title>-->      
         <!-- <ion-img src="assets/{{userData.nameImageEmpresa}}" style="margin-right: 155px; height:50px;"></ion-img> -->
-        <ion-img src="{{userData.nameImageEmpresa}}" style="margin-right: 155px; height:50px;"></ion-img>
+        <!-- <ion-img src="{{userData.nameImageEmpresa}}" style="margin-right: 155px; height:50px;"></ion-img> -->
+        <!-- <ion-img src="{{userData.base64ImageEmpresa}}" style="margin-right: 155px; height:50px;"></ion-img> -->
+        
+        <ion-img src="{{userData.base64ImageEmpresa}}"  style="margin-right: 100px; height:50px;"></ion-img>
       </ion-toolbar>
     </ion-header>
     <ion-content>
@@ -19,32 +23,117 @@
             </ion-label>
           </ion-item>        
         </ion-menu-toggle>
-        <ion-menu-toggle *ngFor="let c of componentes | async">  
-          <ion-item [routerLink]="c.redirectTo" detail>
+       <!--  <ion-menu-toggle *ngFor="let c of componentes | async"> 
+          <ion-item [routerLink]="c.redirectTo" detail *ngIf="! ( c.valida && userData.administrador )">
             <ion-icon slot="start" [name]="c.icon" color="medium"> </ion-icon>
             <ion-label>
               {{c.name}}
             </ion-label>
           </ion-item>
-  
+        </ion-menu-toggle>   -->
+        <ion-menu-toggle > 
+          
+
+          <ion-item routerLink="/anuncios" detail>
+            <ion-icon slot="start"  name="megaphone-outline" color="medium"> </ion-icon>
+            <ion-label>
+              Anuncios
+            </ion-label>
+          </ion-item>
+          <ion-item routerLink="/menu-areas-comunes" detail>
+            <ion-icon slot="start"  name="leaf-outline" color="medium"> </ion-icon>
+            <ion-label>
+              Áreas comunes
+            </ion-label>
+          </ion-item>
+          <ion-item routerLink="/asambleas" detail>
+            <ion-icon slot="start"  name="people-outline" color="medium"> </ion-icon>
+            <ion-label>
+              Asambleas
+            </ion-label>
+          </ion-item>
+          <ion-item routerLink="/boton-panico" detail>
+            <ion-icon slot="start"  name="warning-outline" color="medium"> </ion-icon>
+            <ion-label>
+              Boton pánico
+            </ion-label>
+          </ion-item>
+
+          <ion-item routerLink="/contactos-emergencia" detail>
+            <ion-icon slot="start"  name="call-outline" color="medium"> </ion-icon>
+            <ion-label>
+              Contactos de emergencia
+            </ion-label>
+          </ion-item>
+          <ion-item routerLink="/directorio" detail>
+            <ion-icon slot="start"  name="book-outline" color="medium"> </ion-icon>
+            <ion-label>
+              Directorios
+            </ion-label>
+          </ion-item>
+          <ion-item routerLink="/gastos" detail *ngIf="userData.administrador" >
+            <ion-icon slot="start"  name="pricetags-outline" color="medium"> </ion-icon>
+            <ion-label>
+              Gastos del residencial
+            </ion-label>
+          </ion-item>
+          <ion-item routerLink="/avisos" detail>
+            <ion-icon slot="start"  name="alert-circle-outline" color="medium"> </ion-icon>
+            <ion-label>
+              Notificar a comunidad
+            </ion-label>
+          </ion-item>
+          <ion-item routerLink="/pagos" detail>
+            <ion-icon slot="start"  name="cash-outline" color="medium"> </ion-icon>
+            <ion-label>
+              Pagos
+            </ion-label>
+          </ion-item>
+          <ion-item routerLink="/perfil" detail>
+            <ion-icon slot="start"  name="person-circle-outline" color="medium"> </ion-icon>
+            <ion-label>
+              Perfil
+            </ion-label>
+          </ion-item>
+
+          <ion-item routerLink="/reglamento" detail>
+            <ion-icon slot="start"  name="document-text-outline" color="medium"> </ion-icon>
+            <ion-label>
+              Reglamento
+            </ion-label>
+          </ion-item>
+
+          <ion-item routerLink="/mis-visitas" detail>
+            <ion-icon slot="start"  name="business-outline" color="medium"> </ion-icon>
+            <ion-label>
+              Visitas
+            </ion-label>
+          </ion-item>
+
+          
+
+        
+         
+
         </ion-menu-toggle>  
+
         <ion-menu-toggle >
           <ion-item>
             <ion-label></ion-label>
           </ion-item>  
-          <ion-item routerLink="/agente" detail>
+          <ion-item routerLink="/agente" detail *ngIf="userData.administrador">
             <ion-icon slot="start"  name="people-outline" color="medium"> </ion-icon>
             <ion-label>
-              Agentes
+              Usuarios
             </ion-label>
           </ion-item>
-          <ion-item routerLink="/notifications" detail>
+          <ion-item routerLink="/notifications" detail *ngIf="false">
             <ion-icon slot="start"  name="notifications-outline" color="medium"> </ion-icon>            
             <ion-label>
             Notificaciones
             </ion-label>
           </ion-item>
-          <ion-item routerLink="/sincronizar" detail>
+          <ion-item routerLink="/sincronizar" detail *ngIf="false">
             <ion-icon slot="start"  name="cloud-upload-outline" color="medium"> </ion-icon>
             <ion-label>
               Sincronizar
@@ -57,6 +146,14 @@
             </ion-label>
             <ion-toggle (click)="theme()" [(ngModel)]="dark"></ion-toggle>            
           </ion-item>
+
+          <ion-item detail (click)="logOut()">
+            <ion-icon slot="start" name="log-out-outline" color="medium"> </ion-icon>
+            <ion-label>
+                Cerrar sesión
+            </ion-label>
+        </ion-item>
+
         </ion-menu-toggle>
       </ion-list>     
     </ion-content>

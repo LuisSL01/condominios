@@ -15,7 +15,7 @@
                 <ion-select interface="popover" placeholder="Seleccionar" formControlName="areaSelected"
                     okText="Aceptar" cancelText="Cancelar">
                     <ion-select-option *ngFor="let area of areasComunesList" [value]="area.id">
-                        {{ area.id}}-{{ area.nombre}}
+                        {{ area.data.nombre}}
                     </ion-select-option>
                 </ion-select>
             </ion-item>
@@ -45,7 +45,7 @@
                     <ion-icon name="alarm-outline" style="font-size:23px; color: #50c8ec; 
                   margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Hora de inicio
                 </ion-label>
-                <ion-datetime displayFormat="HH A" cancelText="Descartar" style="margin-bottom: -5px;"
+                <ion-datetime interface="action-sheet" displayFormat="HH A" cancelText="Descartar" style="margin-bottom: -5px;"
                     doneText="Aceptar" formControlName="horaInicia">
 
                 </ion-datetime>

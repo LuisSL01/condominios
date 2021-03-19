@@ -4,6 +4,7 @@ import { AreaComun } from '../../models/area-comun.model';
 import { UserData } from '../../providers/user-data';
 import { Storage } from "@ionic/storage";
 import { IonInfiniteScroll } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-areas-comunes',
@@ -23,11 +24,14 @@ export class AreasComunesPage implements OnInit {
   areaComunPage: number = 0;
 
   nombreEtiqueta = "_areas-comunes";
+  totalPages:number = 0; 
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+  public fieldFilters:string[]=new Array();
 
   constructor(public areaComunService: AreaComunService,
               private userData: UserData,
+              public activatedRoute: ActivatedRoute,
               private storage: Storage,) {
 
   }
@@ -35,9 +39,30 @@ export class AreasComunesPage implements OnInit {
   ngOnInit() {
     this.idEmpresa = this.userData.getIdEmpresa();
     this.cargaAreasComunesStorage();
-    this.cargarAnunciosLocalesStorage(this.idEmpresa);
+    this.cargaFiltrosTabla();    
+    /* this.cargarAnunciosLocalesStorage(this.idEmpresa); */
 
   }
+
+  ionViewDidEnter(){
+    console.log('uno ionViewDidEnter de ANUNCIOS  PAGE'); 
+    let value:boolean = JSON.parse(this.activatedRoute.snapshot.paramMap.get('item'));
+    if(value != null){
+      this.areaComunPage = 0;
+      this.infiniteScroll.disabled = false;//Cada que se hace el refresh se habilita el componente infinite scroll
+      this.getAreasComunes(this.areaComunPage, 10, null, null);
+    }
+  }
+  
+  cargaFiltrosTabla(){
+
+    this.fieldFilters.push("data_clasificacion");
+    this.fieldFilters.push("data_comentarios");
+    this.fieldFilters.push("data_descripcion");
+    this.fieldFilters.push("data_nombre");
+
+  }
+
 
   async cargaAreasComunesStorage() {
     await this.cargarAnunciosTemporalesStorage(this.idEmpresa);
@@ -46,26 +71,25 @@ export class AreasComunesPage implements OnInit {
     }
   }
 
-
-
   getAreasComunes(page: number, size: number, eventInfinite?, eventRefresh?) {
     this.areaComunService.getAreasComunes(this.idEmpresa, page, size, this.filters)
       .subscribe(
         (data) => {
           if (data.status === 200) {
-            if (eventRefresh) {
-              this.areasList = [];
-            }
-            if (eventInfinite) {
+            this.totalPages = data.result.totalPages;
+            if (eventInfinite) {   
+              this.areasList.push(...data.result.content);            
               if (data.result.content.length === 0) {
                 eventInfinite.target.disabled = true;
                 eventInfinite.target.complete();
                 return;
               }
+            }else{              
+              this.areasList = data.result.content;
             }
-            this.areasList.push(...data.result.content);
+           
+            /* console.log("this.anunciosList", this.anunciosList); */
             this.storage.set(this.idEmpresa + this.nombreEtiqueta, this.areasList);
-            this.userData.showToast('recuperados correctamente');
             this.completeEvent(eventInfinite, eventRefresh);
           } else {
             this.userData.showToast('error al recuperar registros');
@@ -117,5 +141,27 @@ export class AreasComunesPage implements OnInit {
     this.areaComunPage = 0;
     this.infiniteScroll.disabled = false;//Cada que se hace el refresh se habilita el componente infinite scroll
     this.getAreasComunes(this.areaComunPage, 10, null, event);
+  }
+
+
+  isEmpty(str) {
+    return (!str || 0 === str.length);
+  }
+
+  buscar(event){
+   if( ! this.isEmpty(event.detail.value)){
+    console.log('campos buscar-->',JSON.stringify(this.fieldFilters));
+    this.filters = "";
+    this.fieldFilters.forEach(item => this.filters += ''+item+':*'+ event.detail.value + '*,');
+    if(this.filters.endsWith(",")){
+      this.filters = this.filters.substring(0, this.filters.length -1 );
+    }    
+   }else{
+     this.filters = "";
+   }
+   this.areaComunPage = 0;
+   this.infiniteScroll.disabled = false;
+   this.getAreasComunes(this.areaComunPage, 10, null, null);
+  
   }
 }

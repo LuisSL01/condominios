@@ -15,13 +15,20 @@ export class Publicacion{
     public precio:number;
     public fechaVence:Date;
  */
-    public files:ArchivoVortexApp[];
+    public files:ArchivoVortexApp;
     public data:any;    
     public tipo:string;//aviso, convocatoria, resolucion, anuncio    
     public respuestas:RespuestaApp;
+    public estatus:boolean; 
+
+    public nombreAgenteCreador:string;
+    public correoAgenteCreador:string;
+    public celularAgenteCreador:string;
+
 
     constructor(){
-        this.fechaDeCreacion = new Date();        
-        this.files = new Array();
+        this.fechaDeCreacion = new Date();     
+
+        this.files = new ArchivoVortexApp();
     }
 }

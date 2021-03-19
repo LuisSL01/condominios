@@ -2,27 +2,40 @@
 
 <ion-card lines="none">
   <ion-card-header>
-    <ion-card-title>{{anuncio.data.titulo}}</ion-card-title>
+    <ion-card-title> <ion-label> 
+      <h1>{{anuncio.data.titulo}}</h1>  
+      <h2>{{anuncio.data.clasificacion}}</h2>
+    </ion-label>  
+    </ion-card-title>
 
     <ion-card-subtitle>
-      <span class="text-primary"> ${{anuncio.data.precio}} </span>
+      <span class="text-primary"> ${{anuncio.data.precio}} 
+      <ion-label color="{{anuncio.estatus?'success':'danger'}}" >{{anuncio.estatus?'Activo':'Inactivo'}}</ion-label>  
+      </span>
       <div class="card-more">
         <ion-button fill="clear" (click)="lanzarMenu()">
           <ion-icon slot="icon-only" color="primary" name="ellipsis-vertical-outline"></ion-icon>
         </ion-button>
       </div>
-
     </ion-card-subtitle>
 
   </ion-card-header>
-
   <ion-card-content>
-    {{anuncio.data.descripcion}}
+    <ion-label color="tertiary">
+      <h3 color="light" *ngIf="anuncio.nombreAgenteCreador">{{anuncio.nombreAgenteCreador}}</h3>
+      <h3 *ngIf="anuncio.correoAgenteCreador">Mail. {{anuncio.correoAgenteCreador}}</h3>
+      <h3 *ngIf="anuncio.correoAgenteCreador">Cel. {{anuncio.celularAgenteCreador}}</h3>
+    </ion-label>
+
+    <ion-label >
+      <p>
+        {{anuncio.data.descripcion}}
+      </p>
+      
+    </ion-label>
   </ion-card-content>
-
-
-  <ion-item  >
-
+  
+  <ion-item >
     <ion-slides pager="{{anuncio.files?.archivos.length > 1 ?true:false}}" >
       <ion-slide *ngFor="let img of anuncio.files.archivos" class="image-slide">      
         <img  *ngIf="img.rutaS3"  src="{{pathS3}}{{img.rutaS3}}">

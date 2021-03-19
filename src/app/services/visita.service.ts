@@ -37,6 +37,11 @@ export class VisitaService {
   save(visitaData: any): Observable<ApiResponse> {
     console.log('save visita:'+this.baseUrl + this.visitaContext);    
     return this.http.post<ApiResponse>(this.baseUrl + this.visitaContext, visitaData).pipe(share());
+  }
+
+  update(idVisita: number, visita: any) : Observable<ApiResponse> {
+    console.log('update visita', this.baseUrl + this.visitaContext + environment.coreApiBaseEditOperation+  "/" + idVisita);    
+    return this.http.patch<ApiResponse>(this.baseUrl + this.visitaContext + environment.coreApiBaseEditOperation+  "/" + idVisita, visita).pipe(share());
   } 
 
   delete(idVisita: number) : Observable<ApiResponse> {
@@ -47,6 +52,12 @@ export class VisitaService {
   getVisitas(idEmpresa: number, page: number, size: number, filters: string){
     console.log(this.baseUrl + this.visitaContext+ environment.coreApiGetVisitaListOperation +"/"+idEmpresa+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):''));
     return this.http.get<ApiResponse>(this.baseUrl + this.visitaContext+ environment.coreApiGetVisitaListOperation +"/"+idEmpresa+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):'')).pipe(share());
+  }
+
+  getVisitaByIdAndUUID(id:string, uuid:string){
+    console.log('getVisitaByIdAndUUID');    
+    console.log(this.baseUrl + this.visitaContext+ environment.coreApiGetVisitaByIdAndUUIDOperation +"/"+id+"/"+uuid);
+    return this.http.get<ApiResponse>(this.baseUrl + this.visitaContext+ environment.coreApiGetVisitaByIdAndUUIDOperation +"/"+id+"/"+uuid).pipe(share());
   }
 
 

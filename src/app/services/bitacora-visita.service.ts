@@ -28,9 +28,14 @@ export class BitacoraVisitaService {
               private http: HttpClient) {
    }
 
-   save(bitacoraVisitaData: FormData): Observable<ApiResponse> {
+  save(bitacoraVisitaData: FormData): Observable<ApiResponse> {
     console.log('save bitacora-comun:'+this.baseUrl + this.bitacoraVisitaContext);    
     return this.http.post<ApiResponse>(this.baseUrl + this.bitacoraVisitaContext, bitacoraVisitaData).pipe(share());
+  } 
+
+  update(idBitacoraVisita: number, bitacoraVisita: any) : Observable<ApiResponse> {
+    console.log('update bitacoravisita', this.baseUrl+this.bitacoraVisitaContext+environment.coreApiBaseEditOperation+"/"+idBitacoraVisita);    
+    return this.http.patch<ApiResponse>(this.baseUrl+this.bitacoraVisitaContext+environment.coreApiBaseEditOperation+"/"+idBitacoraVisita, bitacoraVisita).pipe(share());
   } 
   
   delete(idBitacoraVisita: number) : Observable<ApiResponse> {

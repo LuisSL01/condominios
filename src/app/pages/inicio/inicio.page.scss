@@ -1,0 +1,26 @@
+/* DOES NOT WORK - not specific enough */
+.modal-wrapper {
+    background: #222;
+  }
+  
+  /* Works - pass "my-custom-class" in cssClass to increase specificity */
+  .my-custom-class .modal-wrapper {
+    background: #222;
+  }
+  .my-custom-class .modal-wrapper {
+    background: #222;
+    width:90%;
+  }
+
+.dataInteres{
+    width: 80%;
+    height: 80%;
+}
+
+ion-slide {
+  width: 100% !important;
+}
+
+.swiper-wrapper {
+  width: min-content !important;
+}

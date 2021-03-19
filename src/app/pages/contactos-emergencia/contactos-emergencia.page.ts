@@ -4,6 +4,7 @@ import { ContactosEmergencia } from '../../models/contactos-emergencia.model';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { UserData } from '../../providers/user-data';
 import { Storage } from '@ionic/storage';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-contactos-emergencia',
@@ -24,16 +25,37 @@ export class ContactosEmergenciaPage implements OnInit {
   idNegativo = -1;
 
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+  public camposFiltros:string[]=new Array();
 
   constructor( public contactoService : ContactosEmergenciaService,
-               private userData: UserData,
+               public userData: UserData,
+               public activatedRoute: ActivatedRoute,
                private storage:Storage ) {
    }
 
   ngOnInit() {
     this.idEmpresa = this.userData.getIdEmpresa();
     this.cargaData();
-    this.cargarDataDefault();
+    this.cargaFiltrosTabla();    
+  }
+
+  cargaFiltrosTabla(){
+    this.camposFiltros.push("data_titulo");
+    this.camposFiltros.push("data_nombreCompleto");
+    this.camposFiltros.push("data_celular");
+    this.camposFiltros.push("data_telefono1");
+    this.camposFiltros.push("data_telefono2");
+    
+  }
+
+  ionViewDidEnter(){
+    console.log('uno ionViewDidEnter de visitas  PAGE');
+    let value:boolean = JSON.parse(this.activatedRoute.snapshot.paramMap.get('item'));
+    if(value != null){
+      this.contactoPage = 0;
+      this.infiniteScroll.disabled = false;//Cada que se hace el refresh se habilita el componente infinite scroll
+      this.getContactos(this.contactoPage, 10, null, null);
+    }
   }
 
   
@@ -79,21 +101,21 @@ export class ContactosEmergenciaPage implements OnInit {
     this.contactoService.getContactos(this.idEmpresa, page, size, this.filters).subscribe((data) => {
         console.log(data);        
           if (data.status === 200) {
-            if(eventRefresh) this.contactos = [];            
+
             if (eventInfinite) {
+              this.contactos.push(...data.result.content);
               if (data.result.content.length === 0) {
                 eventInfinite.target.disabled = true;
                 eventInfinite.target.complete();
                 return;
-              }
+              }              
+            }else{
+              this.contactos = data.result.content;
             }
-            this.contactos.push(...data.result.content)
-            this.storage.set(this.idEmpresa + this.contactoService.nombreEtiqueta, this.contactos);
-            this.userData.showToast('recuperados correctamente');
+            this.storage.set(this.idEmpresa + this.contactoService.nombreEtiqueta, this.contactos);            
             this.completeEvent(eventInfinite, eventRefresh);            
           } else {
-            this.userData.showToast('error al recuperar registros');
-            console.log(data.status);
+            this.userData.showToast('error al recuperar registros');            
             this.completeEvent(eventInfinite, eventRefresh);            
           }
         },
@@ -128,24 +150,23 @@ export class ContactosEmergenciaPage implements OnInit {
 
 
   buscar( event ){
-/*     console.log('contactoEmergencia.buscar()');    
-    this.textoBuscar = event.detail.value;
+    if (!this.isEmpty(event.detail.value)) {
+      console.log('campos buscar-->', JSON.stringify(this.camposFiltros));
+      this.filters = "";
+      this.camposFiltros.forEach(item => this.filters += '' + item + ':*' + event.detail.value + '*,');
+      if (this.filters.endsWith(",")) {
+        this.filters = this.filters.substring(0, this.filters.length - 1);
+      }
+    } else {
+      this.filters = "";
+    }
+    this.contactoPage = 0;
+    this.infiniteScroll.disabled = false;
+    this.getContactos(this.contactoPage,10,null, null);    
+  }
 
-    this.contactosList = this.dataLocalContactosEmergenciaService.contactos;
-
-    if(this.textoBuscar === ''){
-      return ;
-    }else{
-      this.textoBuscar = this.textoBuscar.toLowerCase();  
-      this.contactosList = this.contactosList.filter(item => {
-        return (
-          (item.titulo.toLowerCase().includes(this.textoBuscar))
-         || (item.nombreCompleto.toLowerCase().includes(this.textoBuscar))
-          );
-      }    
-      );
-      console.log('despues de terminar el filter');
-    } */
+  isEmpty(str) {
+    return (!str || 0 === str.length);
   }
 
 }

@@ -30,8 +30,7 @@ export class DirectorioService {
   }
 
   update(idDirectorio: number, directorio: any) : Observable<ApiResponse> {
-    console.log('update directorio', this.baseUrl + this.directorioContext + environment.coreApiBaseEditOperation+  "/" + idDirectorio);
-    
+    console.log('update directorio', this.baseUrl + this.directorioContext + environment.coreApiBaseEditOperation+  "/" + idDirectorio);    
     return this.http.patch<ApiResponse>(this.baseUrl + this.directorioContext + environment.coreApiBaseEditOperation+  "/" + idDirectorio, directorio).pipe(share());
   }
 

@@ -8,6 +8,9 @@ import { DataService } from './services/data.service';
 import { UserData } from './providers/user-data';
 import { Componente } from 'src/app/interfaces/interface';
 import { Observable } from 'rxjs';
+import { Storage } from '@ionic/storage';
+import { Router } from '@angular/router';
+
 
 
 @Component({
@@ -29,13 +32,17 @@ export class AppComponent implements OnInit{
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private pushService:PushService,
-    private dataService:DataService, public userData: UserData
+    private dataService:DataService, 
+    public userData: UserData,
+    private storage: Storage,
+    private router:Router
   ) {
     this.initializeApp();
   }
 
   ngOnInit() {
-    this.componentes = this.dataService.getMenuOpts();
+    this.componentes = this.dataService.getMenuOpts();    
+    this.userData.retrieveBase64ToImageEmpresa();    
   }
 
   theme(){// Cuando se presiona el togle de tema oscuro entra a este metodo
@@ -52,5 +59,21 @@ export class AppComponent implements OnInit{
 
       this.pushService.configuracionInicial()
     });
+  }
+
+  logOut(){
+    console.log('log out');
+    this.userData.logout().then(() => {
+      this.storage.remove('empresaData');
+      this.storage.remove('userDetails');
+      this.storage.remove('userFull');
+      window.localStorage.removeItem('empresaData');
+      window.localStorage.removeItem('userDetails');
+      this.userData.empresa_id = 0;
+      this.userData.agente_id = 0;
+      this.userData.nameImageEmpresa ="";
+      return this.router.navigateByUrl('/home');
+    });
+
   }
 }

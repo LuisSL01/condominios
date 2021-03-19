@@ -38,6 +38,11 @@ export class AreaComunService {
     return this.http.post<ApiResponse>(this.baseUrl + this.areaComunContext, areaComunData).pipe(share());
   } 
 
+  update(idArea: number, areaComun: any) : Observable<ApiResponse> {
+    console.log('update directorio', this.baseUrl + this.areaComunContext + environment.coreApiBaseEditOperation+  "/" + idArea);    
+    return this.http.patch<ApiResponse>(this.baseUrl + this.areaComunContext + environment.coreApiBaseEditOperation+  "/" + idArea, areaComun).pipe(share());
+  }
+
   saveReserva(areaComunReservaData: any): Observable<ApiResponse> {
       
     console.log('saveReserva:'+this.baseUrl + environment.coreApiBaseAreaComunReservaOperation);    

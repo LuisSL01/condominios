@@ -3,6 +3,7 @@ import { BitacoraVisita } from '../../../models/bitacora-visitas.model';
 import { BitacoraVisitaService } from '../../../services/bitacora-visita.service';
 import { ActionSheetController } from '@ionic/angular';
 import { UserData } from '../../../providers/user-data';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list',
@@ -18,10 +19,15 @@ export class ListPage implements OnInit {
 
   constructor(public bitacoraVisitaService : BitacoraVisitaService,
               public actionSheetCtrl : ActionSheetController,
+              private router: Router,
               private userData:UserData) {                
                }
 
   ngOnInit() {
+  }
+
+  onRowSelected(){
+    this.router.navigate(['/bitacora-visitas/add', { item: JSON.stringify(this.bitacora)}]);
   }
 
   async lanzarMenu() {

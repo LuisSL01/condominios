@@ -7,16 +7,16 @@
     <ion-item routerLink="pagos-comprobantes" detail>
       <ion-icon slot="start" name="cash-outline" color="medium"> </ion-icon>
       <ion-label>
-        Comprobantes
+        Comprobante de pago
       </ion-label>
     </ion-item>
 
-    <ion-item routerLink="validar-comprobantes" detail>
+  <!--   <ion-item routerLink="validar-comprobantes" detail  *ngIf="userData.administrador" >
       <ion-icon slot="start" name="checkbox-outline" color="medium"> </ion-icon>
       <ion-label>
         Validar comprobantes
       </ion-label>
-    </ion-item>
+    </ion-item> -->
 
     <ion-item routerLink="adeudos" detail>
       <ion-icon slot="start" name="trending-down-outline" color="medium"> </ion-icon>
@@ -25,7 +25,7 @@
       </ion-label>
     </ion-item>
 
-    <ion-item routerLink="cfdi" detail>
+    <ion-item  *ngIf="false" routerLink="cfdi" detail>
       <ion-icon slot="start" name="document-outline" color="medium"> </ion-icon>
       <ion-label>
         CFDIs Generación y consulta

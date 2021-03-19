@@ -31,6 +31,11 @@ export class AdeudoService {
     console.log('save adeudoData:'+this.baseUrl + this.adeudoContext);
     return this.http.post<ApiResponse>(this.baseUrl + this.adeudoContext, adeudoData).pipe(share());
   }
+
+  update(idAdeudo: number, adeudoData: any) : Observable<ApiResponse> {
+    console.log('update adeudo', this.baseUrl + this.adeudoContext + environment.coreApiBaseEditOperation+  "/" + idAdeudo);
+    return this.http.patch<ApiResponse>(this.baseUrl + this.adeudoContext + environment.coreApiBaseEditOperation+  "/" + idAdeudo, adeudoData).pipe(share());
+  }
    
   saveByEmpresa(idEmpresa:number, adeudoData: any): Observable<ApiResponse> {
     console.log('save saveByEmpresa:'+this.baseUrl + environment.coreApiBaseAdeudoByEmpresaOperation+"/"+idEmpresa);

@@ -54,6 +54,11 @@ export class AgenteService {
     return this.http.get<any>(this.baseUrl +this.agenteContext + '/list/' + idEmpresa).pipe(share());
   }
 
+  updateUsuarioCore(id: number, userData: any): Observable<ApiResponse> {
+    console.log('updateUsuarioCore', this.baseUrl + this.agenteContext + '/' + id, userData);
+    return this.http.patch<ApiResponse>(this.baseUrl + this.agenteContext + '/' + id, userData).pipe(share());
+  }
+
 
 
 

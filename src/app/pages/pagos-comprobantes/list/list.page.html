@@ -1,23 +1,45 @@
 <ion-card>
 
   <ion-card-header>
-    <ion-card-title  color="{{pagoComprobante.nombreEstatus.includes('POR AUTORIZAR') ?'danger':'success'}}"   >   {{pagoComprobante.nombreAgenteAdeudo}} - {{pagoComprobante.nombreEstatus}} </ion-card-title>
+    <ion-card-title  color="{{pagoComprobante.nombreEstatus.includes('AUTORIZADO') ?'success':'danger'}}"   >
+    
+      <ion-label>
+        <h2>{{pagoComprobante.nombreAgenteAdeudo}}</h2>
+        <h2>{{pagoComprobante.nombreEstatus}} </h2>
+      </ion-label>
+    </ion-card-title>
     <ion-card-subtitle>
-      <span class="text-primary">Monto original:  {{pagoComprobante.cantidadAdeudo}} </span>
+      <span class="text-primary" *ngIf="pagoComprobante.infoAdeudo">
+        <ion-label><h2>
+          Concepto:  {{pagoComprobante.infoAdeudo.concepto}}
+        </h2></ion-label>
+         
+      </span>
       <div class="card-more">
-        <ion-button fill="clear" (click)="lanzarMenu()">
-          <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
-        </ion-button>
+
+        <ion-buttons slot="end">
+          <ion-button slot="end" (click)="editRowSelected()">
+            <ion-icon slot="icon-only" color="primary" name="create-outline"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" (click)="lanzarMenu()">
+            <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
       </div>
     </ion-card-subtitle>
   </ion-card-header>
-  <ion-card-content>    
-    {{pagoComprobante.formaPago}}  ${{pagoComprobante.cantidadAdeudo}}
+  <ion-card-content *ngIf="pagoComprobante.infoAdeudo">   
+    <ion-label>
+      <h2>Forma de pago {{pagoComprobante.data.formaPago}}</h2>
+      <h2>Importe ${{pagoComprobante.infoAdeudo.cantidad}}</h2>
+      
+    </ion-label> 
+      
   </ion-card-content>  
   <ion-item>
 
-    <ion-slides pager="{{pagoComprobante.data?.archivos.length > 1?true:false}}">       
-      <ion-slide *ngFor="let img of pagoComprobante.data.archivos" class="image-slide">
+    <ion-slides pager="{{pagoComprobante.files?.archivos.length > 1?true:false}}">       
+      <ion-slide *ngFor="let img of pagoComprobante.files.archivos" class="image-slide">
         <img *ngIf="img.rutaS3" src="{{pathS3}}{{img.rutaS3}}">
         <img *ngIf=" ! img.rutaS3" src="{{pathBase64}}{{img.base64}}">
       </ion-slide>

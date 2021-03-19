@@ -8,6 +8,11 @@ import { MenuComponent } from './menu/menu.component';
 import { MenuHeaderComponent } from './menu-header/menu-header.component';
 import { FooterComponent } from './footer/footer.component';
 import { ButtonsComponent } from './buttons/buttons.component';
+import { AnuncioListComponent } from './anuncio-list/anuncio-list.component';
+
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
+
+
 
 
 
@@ -17,20 +22,27 @@ import { ButtonsComponent } from './buttons/buttons.component';
     MenuComponent,
     MenuHeaderComponent,
     FooterComponent,
-    ButtonsComponent
+    ButtonsComponent,
+    AnuncioListComponent
+    
   ],
   exports:[    
     HeaderComponent,
     MenuComponent,
     MenuHeaderComponent,
     FooterComponent,
-    ButtonsComponent
+    ButtonsComponent,    
+    AnuncioListComponent
   ],
   imports: [
     RouterModule,
     CommonModule,
     IonicModule,
-    PipesModule
+    PipesModule,
+    
+  ],
+  providers:[
+    EmailComposer
   ]
 })
 export class ComponentsModule { }

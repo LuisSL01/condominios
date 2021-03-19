@@ -1,5 +1,6 @@
 import { ArchivoVortexApp } from './archivo-vortex.model';
 export class BitacoraVisita{
+    
     public id:number;
     public empresa:number;
     public agenteCreo:number;
@@ -13,13 +14,17 @@ export class BitacoraVisita{
     public visitaProgramada:boolean;
     public imgs:string[];//data
 
-    public data:ArchivoVortexApp[];
+    public files:ArchivoVortexApp;
+    public data:any;
+
+    public nombreAgenteVisita:string;
     
     constructor(){
         this.fechaDeCreacion = new Date();
         this.conAuto = false;
         this.visitaProgramada = true;
         this.imgs = new Array();
+        this.files = new ArchivoVortexApp();
     }
     
 }

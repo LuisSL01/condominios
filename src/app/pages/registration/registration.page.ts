@@ -9,6 +9,7 @@ import { Direccion } from '../../models/direccion.model';
 import { AgenteService } from '../../services/agente.service';
 import { EmpresaService } from '../../services/empresa.service';
 import { ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 
 
@@ -31,20 +32,27 @@ export class RegistrationPage implements OnInit {
 
   createAgente = this.fb.group({//Esto para construir los formularios dinamicamente
     nombreCompleto: ['', [Validators.required, Validators.minLength(4)]],
+    apellidoPaterno: ['', null],
+    apellidoMaterno: ['', null],
+    sexo: ['', Validators.required],
+    fechaDeNacimiento: [new Date(), Validators.required],
+    ocupacion: ['', Validators.required],
+
     username: ['', [Validators.required, Validators.minLength(3)]],
     password: ['', Validators.required],
     confirmarPassword: ['', Validators.required],
     email: ['', Validators.email],
     celular: ['', null],
     fechaDeIngreso: [new Date(), Validators.required],
-    autoRegistro: [true, null],
+    
+    /* autoRegistro: [true, null],
     direccion: this.fb.group({
       calle: [null, null],
-      /* manzana: ['', Validators.required], */
       numeroExterior: ['', null],      
       numeroInterior: ['', null],
       asentamiento: [null, Validators.required]
-    })
+    }) */
+
   }
     ,
     {
@@ -59,6 +67,7 @@ export class RegistrationPage implements OnInit {
     private codigoPostalService: CodigoPostalService,
     private agenteService: AgenteService,
     private empresaService: EmpresaService,
+    private router: Router,
     private toastr: ToastController) {
     this.buscarEmpresas();
 
@@ -69,78 +78,25 @@ export class RegistrationPage implements OnInit {
   buscarEmpresas() {
     console.log('buscando empresas...');    
     this.empresas = [
-      {
+  /*     {
         "id": 7,
         "nombre": "RINCON ESMERALDA",
-        "alias": "ESME",
-        "rfc": "ASDA232323ASS",
-        "urlPaginaWeb": "http://pruebaintegral.com",
-        "email": "prueba@integral.com",
-        "telefono": "5454322222",
-        "integrantes": 4,
-        "actividadEconomica": 11,
-        "direccion": {
-            "calle": "Otra Calle Inventada",
-            "numeroExterior": "5432",
-            "numeroInterior": "",
-            "asentamiento": {
-                "id": 66344,
-                "codigoPostal": "52105",
-                "colonia": "San Pedro",
-                "ciudad": "San Mateo Atenco",
-                "municipio": "San Mateo Atenco",
-                "estado": "México"
-            }
-        },
-        "configuracionEmpresa": {
-            "logoFondoClaro": "",
-            "logoFondoOscuro": "",
-            "ejercicioActual": 2020,
-            "mascaraCuentasContables": "9999-9999-9999-9999",
-            "mesDeTrabajo": 12,
-            "estructuraDeCuentas": "444400",
-            "usarPlanDePagos": false,
-            "usarDireccionDeEntrega": true,
-            "usarCasetasDeLinea": true,
-            "permitirSaldosNegativos": true
-        }
+        "alias": "ESME"     
     },
     {
         "id": 12,
-        "nombre": "EXPLANADA SUR",
-        "alias": "SUR",
-        "rfc": "ERES232323222",
-        "urlPaginaWeb": "http://tyv.com",
-        "email": "tyv@tyv.com",
-        "telefono": "4543225666",
-        "integrantes": 3,
-        "actividadEconomica": 11,
-        "direccion": {
-            "calle": "LKUNASNDA ASDAS",
-            "numeroExterior": "342",
-            "numeroInterior": "1",
-            "asentamiento": {
-                "id": 66659,
-                "codigoPostal": "52303",
-                "colonia": "El Carrizal",
-                "ciudad": "Desconocida",
-                "municipio": "Tenango del Valle",
-                "estado": "México"
-            }
-        },
-        "configuracionEmpresa": {
-            "logoFondoClaro": "",
-            "logoFondoOscuro": "",
-            "ejercicioActual": 2020,
-            "mascaraCuentasContables": "9999-9999-9999-9999",
-            "mesDeTrabajo": 12,
-            "estructuraDeCuentas": "444400",
-            "usarPlanDePagos": false,
-            "usarDireccionDeEntrega": true,
-            "usarCasetasDeLinea": true,
-            "permitirSaldosNegativos": true
-        }
-    }
+        "nombre": "EXPLANADA SUR"       
+    } */
+    {
+      "id": 32,
+      "nombre": "RINCON ESMERALDA",
+      "alias": "RINCON ESME"     
+  },
+  {
+      "id": 33,
+      "nombre": "EXPLANADA SUR",
+      "alias": "EXP SUR"
+  }
   ];
 
 
@@ -161,36 +117,51 @@ export class RegistrationPage implements OnInit {
 
   }
 
+  cambioNumeroTelefono(event){
+    let phone:string = event.detail.value;        
+    if(phone.length <= 10){
+      this.createAgente.value.celular = phone;
+    }else{
+      this.showToast("El número celular no es valido, debe tener 10 digitos","danger")
+    }
+  }
+
+  cambioUsuario(event){
+    let user:string = event.detail.value;        
+    if(user.includes(" ")){
+      user = user.split(" ").join("");
+      this.createAgente.value.username = user;
+      console.log("this.createAgente.value.username", this.createAgente.value.username);      
+      this.showToast("No se permiten espacios en blanco en usuario","danger")
+    }else{
+      console.log('else');
+      
+      this.createAgente.value.username = user;
+    }
+  }
+
   guardarDatos() {
     if(this.empresaSelected > 0){      
-          this.createAgente.value.direccion.asentamiento = this.asentamientoSelected;
+
+          /* this.createAgente.value.direccion.asentamiento = this.asentamientoSelected;
           this.createAgente.value.direccion.numeroExterior = this.createAgente.value.direccion.numeroExterior.toUpperCase();
+ */
           const agenteObj = {
-            agente: {
-              rfc: 'RFC' + new Date().getTime()
-              , curp: 'CURP' + new Date().getTime()
-              , departamento: 'RESIDENTE'
+            agente: {              
+                departamento: 'RESIDENTE'                
               , direccion: this.createAgente.value.direccion
+              , apellidoPaterno: this.createAgente.value.apellidoPaterno
+					    , apellidoMaterno: this.createAgente.value.apellidoMaterno
+					    , sexo: this.createAgente.value.sexo
+              , ocupacion: this.createAgente.value.ocupacion              
               , puesto: 'RESIDENTE'
               , subClasificacion: 'SIN SUBCLASIFICACION'
               , subDepartamento: 'SIN SUBDEPARTAMENTO'
               , telefono: this.createAgente.value.celular
-              , gerente: 4
-
-
-
-
-
+              /* , fechaDeNacimiento: this.createAgente.value.fechaDeNacimiento + " 00:00:01.100 " */
               , activo:false
-
-
-
-
-              /* , fechaDeNacimiento: '01/01/2020 00:00:00.100'
-              , fechaDeIngreso: '01/01/2020 00:00:00.100' *///No es necesario
               , empresa: this.empresaSelected
               , gerenteActivo: true
-              /* , agenteCreador: 4 *///No es necesario
             },
             usuario: {
               username: this.createAgente.value.username
@@ -199,17 +170,16 @@ export class RegistrationPage implements OnInit {
               , password: this.createAgente.value.password
               , autoRegistro: true
               , passwordExpirado: false
-               , perfil: {id : 2} 
-              /* , roles: selectedRoleIds */
+               , perfil: {id : 1} 
             }
           };      
           console.log('objetivo enviavo: ', agenteObj);
+
+          
+
           this.agenteService.registerUsuario(agenteObj).subscribe(data => {
             if (data.status === 200) {
               console.log('"data.result"', data.result);
-
-              //Aqui debo registrarlo a la lista de empresas.
-
               const formData = new FormData(); //Esto no esta trabajanco chido...
               formData.append("id_agente", data.result.id);
               formData.append("id_empresa", ""+this.empresaSelected);
@@ -218,7 +188,9 @@ export class RegistrationPage implements OnInit {
                 (data) => {
                   if (data.status === 200) {
                     console.log('"data.result"', data.result);                    
-                    this.showToast("agente asociado a empresa correctamente");
+                    this.showToast("agente asociado a empresa correctamente");  
+                    this.createAgente.reset();
+                    this.router.navigate(["/home"]);                    
                   } else {
                     console.log('Llego otro status al asociar agente a empresa');              
                   }
@@ -230,17 +202,8 @@ export class RegistrationPage implements OnInit {
                 () => {}
 
               );
-
               //Se envia a guardar en el server
-           
-
-           
-
-
-              console.log('registrado coreectamente');
               this.showToast('Usuario registrado correctamente');
-
-
             } else {              
               this.showToast('No se pudo registrar el usuario');
             }
@@ -307,10 +270,11 @@ export class RegistrationPage implements OnInit {
       this.createAgente.value.direccion.asentamiento); */
   }
   
-  showToast(dataMessage: string) {
+  showToast(dataMessage: string, color_str?:string) {
     this.toastr.create({
       message: dataMessage,
-      duration: 2000
+      duration: 2000,
+      color:color_str?color_str:null
     }).then((toastData) => {
       toastData.present();
     });

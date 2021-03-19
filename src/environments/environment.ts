@@ -7,23 +7,27 @@ export const environment = {
   //  url: 'http://192.168.73.100:3000',
   // Endpoints para Gestión de Credenciales
 
-/*   
+   
+
+  
+
+
   authServiceBaseUrl: 'http://54.177.89.203:8080',
   coreServiceBaseUrl: 'http://54.177.89.203:8081',
-  formsServiceBaseUrl: 'http://54.177.89.203:8082',  */
+  formsServiceBaseUrl: 'http://54.177.89.203:8082',   
+
+
+  
  
   
-  
-
+/*
+ 
   authServiceBaseUrl: 'http://192.168.137.1:8080',
   coreServiceBaseUrl: 'http://192.168.137.1:8081',
-  formsServiceBaseUrl: 'http://192.168.1.125:8082',
+  formsServiceBaseUrl: 'http://192.168.137.1:8082',
 
+*/ 
 
-
-  /* authServiceBaseUrl: 'http://54.177.89.203:8080',
-  coreServiceBaseUrl: 'http://54.177.89.203:8081',
-  formsServiceBaseUrl: 'http://54.177.89.203:8082', */
 
   
   authApiGetUsersOperation: '/users/',
@@ -127,7 +131,9 @@ export const environment = {
   coreApiBaseAvisosAdministracionOperation: '/aviso',
   coreApiBasePublicacionOperation: '/publicacion',
   coreApiBasePublicacionRespuestaOperation: '/respuesta',  
+  coreApiBasePublicacionReporteOperation: '/reporte',  
   coreApiBasePublicacionesOperation: '/publicaciones',
+  coreApiUpdateStatusPublicacionOperation: 'updateStatus',
   coreApiBaseAnuncioOperation: '/anuncio',
   coreApiGetAnunciosListOperation: ':listByEmpresa',
 
@@ -148,6 +154,7 @@ export const environment = {
   coreApiBaseVisitaOperation: '/visit',    
   coreApiBaseVisitasOperation: '/visitas',
   coreApiGetVisitaListOperation: ':listByEmpresa',
+  coreApiGetVisitaByIdAndUUIDOperation: ':findByUuid',
 
   //bitacora-visita
   coreApiBaseBitacoraVisitaOperation: '/bitacora-visit',      
@@ -165,12 +172,9 @@ export const environment = {
   coreApiGetPagoComprobanteListOperation: ':listByEmpresa',
   coreApiGetPagoComprobanteAgenteListOperation: ':listByEmpresaAndAgente',
 
-   //Gasto
-   coreApiBaseGastoOperation: '/gasto',    
-   coreApiBaseGastoByEmpresaOperation: '/gastoByEmpresa',
-   coreApiBaseGastosOperation: '/gastos',
-   coreApiGetGastoListOperation: ':listByEmpresa',
-   coreApiGetGastoAgenteListOperation: ':listByEmpresaAndAgente',
+  //Gasto
+  coreApiBaseGastoOperation: '/gasto',
+  coreApiGetGastoListOperation: ':listByEmpresa',
  
   //Contactos
   coreApiBaseContactoOperation: '/contacto',  
@@ -179,6 +183,11 @@ export const environment = {
   //Directorios
   coreApiBaseDirectorioOperation: '/directorio',  
   coreApiGetDirectorioListOperation: ':listByEmpresa',
+
+  //Notificaciones
+  coreApiBaseNotificacionOperation: '/notificacion',  
+  coreApiGetNotificacionListOperation: ':listByEmpresa',
+  coreApiGetNotificacionListAgenteOperation: ':listByAgente',
 
 };
 

@@ -5,62 +5,76 @@
 <ion-content>
   <form [formGroup]="createBitacoraVisita" (ngSubmit)="save()">
     <ion-list>
-      <ion-item>
-        <ion-label>
-          <ion-icon name="calendar-outline" style="font-size:23px; color: #50c8ec; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Visita programada
-        </ion-label>
-        <ion-toggle slot="end" formControlName="visitaProgramada"></ion-toggle>
-      </ion-item>
-      <ion-item *ngIf=" createBitacoraVisita.value.visitaProgramada ">
-        <ion-button fill="clear" expand="block" size="small"
-          style="text-transform: none;font-size:16px;margin-left: -4px; " (click)="scanQR()">
-          <ion-icon slot="start" name="qr-code-outline" style="font-size:23px; color: #50c8ec; margin-left: 1px;">
-          </ion-icon>&nbsp;&nbsp;Escanear QR
-        </ion-button>
-      </ion-item>
+      <div formGroupName="data">
 
-      <ion-item>
-        <ion-label>
-          <ion-icon name="person-outline" style="font-size:23px; color: #50c8ec; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Nombre completo
-        </ion-label>
-        <ion-input formControlName="nombreCompleto">
-        </ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label>
-          <ion-icon name="car-sport-outline" style="font-size:23px; color: #50c8ec; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;¿Ingresa con auto?
-        </ion-label>
-        <ion-toggle slot="end" formControlName="conAuto"></ion-toggle>
-      </ion-item>
-
-      <ion-item *ngIf=" createBitacoraVisita.value.conAuto ">
-        <ion-label>
-          <ion-icon name="alert-circle-outline" style="font-size:23px; color: #50c8ec; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Placas de su auto
-        </ion-label>
-        <ion-input name="placa" formControlName="placa">
-        </ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label>
-          <ion-icon name="person-add-outline" style="font-size:23px; color: #50c8ec; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Personas ingresan
-        </ion-label>
-        <ion-input formControlName="personasIngresan" type="number">
-        </ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>
-          <ion-icon name="pencil-outline" style="font-size:23px; color: #50c8ec; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Observaciones
-        </ion-label>
-        <ion-textarea rows="1" cols="1" formControlName="observaciones"></ion-textarea>
-      </ion-item>
+        <ion-item>
+          <ion-label>
+            <ion-icon name="calendar-outline" style="font-size:23px; color: #50c8ec; 
+                margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Visita programada
+          </ion-label>
+          <ion-toggle slot="end" formControlName="visitaProgramada"></ion-toggle>
+        </ion-item>
+        <ion-item *ngIf=" createBitacoraVisita.value.data.visitaProgramada ">
+          <ion-button fill="outline" expand="full"
+            size="small"
+            shape="round"
+            style="text-transform: none;font-size:16px;margin-left: -4px; " (click)="scanQR()">
+            
+            <ion-icon slot="start" name="qr-code-outline" style="font-size:23px; color: #50c8ec; margin-left: 1px;">
+            </ion-icon>&nbsp;&nbsp;Escanear QR
+          </ion-button>
+        </ion-item>
+  
+        <ion-item *ngIf="visitaFound">
+          <ion-label color="success">
+            <h2>Código creado por: {{visitaFound.nombreAgenteCreador}} </h2>
+            <h3>Fecha: {{visitaFound.fechaDeCreacion}}</h3>
+  
+          </ion-label>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label>
+            <ion-icon name="person-outline" style="font-size:23px; color: #50c8ec; 
+                margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Nombre completo
+          </ion-label>
+          <ion-input formControlName="nombreCompleto">
+          </ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label>
+            <ion-icon name="car-sport-outline" style="font-size:23px; color: #50c8ec; 
+                margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;¿Ingresa con auto?
+          </ion-label>
+          <ion-toggle slot="end" formControlName="conAuto"></ion-toggle>
+        </ion-item>
+  
+        <ion-item *ngIf=" createBitacoraVisita.value.data.conAuto ">
+          <ion-label>
+            <ion-icon name="alert-circle-outline" style="font-size:23px; color: #50c8ec; 
+                margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Placas de su auto
+          </ion-label>
+          <ion-input name="placa" formControlName="placa">
+          </ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label>
+            <ion-icon name="person-add-outline" style="font-size:23px; color: #50c8ec; 
+                margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Personas ingresan
+          </ion-label>
+          <ion-input formControlName="personasIngresan" type="number">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <ion-icon name="pencil-outline" style="font-size:23px; color: #50c8ec; 
+                margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Observaciones
+          </ion-label>
+          <ion-textarea rows="1" cols="1" formControlName="observaciones"></ion-textarea>
+        </ion-item>
+      </div>
       <ion-item>
         <ion-button fill="clear" size="small" (click)="camara()">
           <ion-icon slot="start" name="camera-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
@@ -70,7 +84,7 @@
         </ion-button>
       </ion-item>
       <ion-item>
-        <ion-col size="3" *ngFor="let dat of data">
+        <ion-col size="3" *ngFor="let dat of files">
           <ion-card>
             <img src="{{pathBase64}}{{dat.base64}}">
           </ion-card>

@@ -82,5 +82,9 @@ export class AreaComunReservaPage implements OnInit {
     this.infiniteScroll.disabled = false;//Cada que se hace el refresh se habilita el componente infinite scroll
     this.getReservas(this.reservaPage, 10, null, event);
   }
+  
+  buscar(event){
+  
+  }
 
 }

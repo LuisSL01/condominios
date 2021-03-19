@@ -42,8 +42,11 @@ export class AnuncioService {
   }
 
   getAnuncios(idEmpresa: number, page: number, size: number, filters: string){
-    console.log(this.baseUrl +environment.coreApiBasePublicacionOperation + environment.coreApiGetAnunciosListOperation +"/"+idEmpresa+ "/ANUNCIO?page="+page+"&size="+size+"");
+    console.log('filters', filters);
+    
+    console.log(this.baseUrl +environment.coreApiBasePublicacionOperation + environment.coreApiGetAnunciosListOperation + '/' + idEmpresa + '/ANUNCIO?page=' + page + '&size=' + size + (filters ? ('&filters=' + filters):''));
     return this.http.get<ApiResponse>(this.baseUrl +environment.coreApiBasePublicacionOperation + environment.coreApiGetAnunciosListOperation + '/' + idEmpresa + '/ANUNCIO?page=' + page + '&size=' + size + (filters ? ('&filters=' + filters):'')).pipe(share());
+
   }
 
 
@@ -62,6 +65,12 @@ export class AnuncioService {
     console.log('guardarAnuncio:'+this.baseUrl + this.publicacionContext);
     console.log('anuncioData',anuncioData);
     return this.http.post<ApiResponse>(this.baseUrl + this.publicacionContext, anuncioData).pipe(share());
+  }
+
+
+  update(idPublicacion: number, publicacion: any) : Observable<ApiResponse> {
+    console.log('update anuncio', this.baseUrl + this.publicacionContext + environment.coreApiBaseEditOperation+  "/" + idPublicacion);    
+    return this.http.patch<ApiResponse>(this.baseUrl + this.publicacionContext + environment.coreApiBaseEditOperation+  "/" + idPublicacion, publicacion).pipe(share());
   }
     
   guardarAnuncios(listAnuncios: FormData): Observable<ApiResponse> {
@@ -84,6 +93,17 @@ export class AnuncioService {
   borrarAnuncio(idPublicacion: number) : Observable<ApiResponse> {
     console.log('borrando pub: ',this.baseUrl + environment.coreApiBasePublicacionOperation +environment.coreApiBaseDeleteOperation + "/" + idPublicacion );    
     return this.http.delete<ApiResponse>(this.baseUrl + environment.coreApiBasePublicacionOperation +environment.coreApiBaseDeleteOperation + "/" + idPublicacion).pipe(share());
+  }
+
+  reportarAnuncio(idAnuncio:number, reporte: any): Observable<ApiResponse> {
+    console.log('saveRespuesta:'+this.baseUrl + this.publicacionContext + environment.coreApiBasePublicacionReporteOperation+"/"+idAnuncio);
+    console.log('respuesta',reporte);
+    return this.http.post<ApiResponse>(this.baseUrl + this.publicacionContext + environment.coreApiBasePublicacionReporteOperation+'/'+idAnuncio, reporte).pipe(share());
+  } 
+  
+  updateStatus(data:FormData): Observable<ApiResponse> {
+    console.log('updateStatus: ', this.baseUrl + this.publicacionContext+':'+ environment.coreApiUpdateStatusPublicacionOperation );    
+    return this.http.patch<ApiResponse>(this.baseUrl + this.publicacionContext+':'+ environment.coreApiUpdateStatusPublicacionOperation ,data).pipe(share());    
   }
 
   async cargarAnunciosLocales() {

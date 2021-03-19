@@ -1,30 +1,57 @@
-<!-- 
-  <ion-label>
-    {{visita.nombre}}
-  </ion-label>
-  <ion-label>
-    {{visita.fechaCreacion | date:'dd/MM/yyyy'}}
-  </ion-label>
-  <ion-label>
-    {{visita.tipoVisita}}
-  </ion-label>
-  <ion-label>
-    {{visita.duracion}}
-  </ion-label> -->
+
   <ion-card>
     <ion-card-header>
-      <ion-card-title>  {{visita.nombreCompleto}} -  {{visita.fechaDeCreacion | date:'dd/MM/yyyy'}}</ion-card-title>
+      <ion-card-title>  
+        <ion-label color="success" ><h2>{{visita.data.nombreCompleto}}</h2>
+        <h3>Tipo: {{visita.data.tipoDeVisita}}</h3>
+        </ion-label>
+        
+        </ion-card-title>
       <ion-card-subtitle>
-        <span class="text-primary">   {{visita.tipoDeVisita}}</span>
+        <span class="text-primary">Visitan a:  {{visita.nombreAgenteCreador}}   </span>
         <div class="card-more">
-          <ion-button fill="clear" (click)="lanzarMenu()">
-            <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
-          </ion-button>
+
+          <ion-buttons slot="end">
+
+            <ion-button slot="end" (click)="onRowSelected()">
+              <ion-icon slot="icon-only" color="primary" name="create-outline"></ion-icon>
+            </ion-button>
+
+            <ion-button fill="clear" (click)="lanzarMenu()">
+              <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+
+          
         </div>
       </ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
-      {{visita.duracionDeVisita}}
+
+      <ion-label>
+        <h2 *ngIf="visita.data.duracionDeVisita !== 'entre_fechas'">Duración: {{visita.data.duracionDeVisita}}</h2>
+        <h2 *ngIf="visita.data.duracionDeVisita === 'entre_fechas'" >Duración:  {{visita.data.fechaInicio | date:'dd/MMM/yy'}} - {{visita.data.fechaTermino | date:'dd/MMM/yy'}}   </h2>
+        <h2>Visita Diaria: {{visita.data.visitaDiaria?'Si':'No'}}</h2>
+      </ion-label>
+
+      <ion-label *ngIf=" ! visita.data.visitaDiaria && visita.data?.dias " >
+        <h2>Dias de visita: </h2>
+        <h3 *ngIf="visita.data.dias.Domingo" >- Domingo</h3>
+        <h3 *ngIf="visita.data.dias.Lunes" >- Lunes</h3>
+        <h3 *ngIf="visita.data.dias.Martes" >- Martes</h3>        
+        <h3 *ngIf="visita.data.dias.Miercoles" >- Miércoles</h3>
+        <h3 *ngIf="visita.data.dias.Jueves" >- Jueves</h3>
+        <h3 *ngIf="visita.data.dias.Viernes" >- Viernes</h3>
+        <h3 *ngIf="visita.data.dias.Sabado" >- Sábado</h3> 
+      </ion-label>
+
+      
+      
+        
+
+      
+      
+
     </ion-card-content>
   </ion-card>
   

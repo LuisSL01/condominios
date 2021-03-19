@@ -21,7 +21,6 @@ export class AuthService {
     console.log('login: '+this.baseUrl + environment.authApiGetTokenOperation);    
     return this.http.post<ApiResponse>(this.baseUrl + environment.authApiGetTokenOperation, loginPayload).pipe(share());
   }
-
   
   getListEmpresas(idAgente: number): Observable<ApiResponse> {//Recupera las empresas del usuario
     console.log("getListEmpresas: "+this.baseUrlCore + environment.coreApiBaseAgenteOperation + environment.coreApiGetEmpresasAgente + "/" + idAgente);
@@ -32,9 +31,5 @@ export class AuthService {
     window.localStorage.removeItem('userDetails');
     window.localStorage.removeItem('userConfig');
   }
-
-
-  
-g
     
 }

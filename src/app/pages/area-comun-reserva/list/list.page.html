@@ -4,9 +4,17 @@
     <ion-card-subtitle>
       <span class="text-primary">{{reserva.nombreAgenteCreador}} </span>
       <div class="card-more">
-        <ion-button fill="clear" (click)="lanzarMenu()">
-          <ion-icon slot="icon-only" color="primary" name="ellipsis-vertical-outline"></ion-icon>
-        </ion-button>
+
+        <ion-buttons slot="end">
+          <ion-button slot="end" (click)="onRowSelected()">
+            <ion-icon slot="icon-only" color="primary" name="create-outline"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" (click)="lanzarMenu()">
+            <ion-icon slot="icon-only" color="primary" name="ellipsis-vertical-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+
+        
       </div>
     </ion-card-subtitle>
   </ion-card-header>
@@ -16,8 +24,6 @@
 
       <ion-col *ngIf="res.diaCompleto" size="6">Fecha: {{res.fecha | date:'dd/MM/yyyy '}} </ion-col>
       <ion-col *ngIf="res.diaCompleto" size="6"> Todo el dia </ion-col>
-
-
       <ion-col *ngIf="! res.diaCompleto" size="6">Fecha {{res.fecha | date:'dd/MM/yyyy '}} </ion-col>
       <ion-col *ngIf="! res.diaCompleto" size="6"> Hora: {{res.horaInicia}} - {{res.horaTermina}} </ion-col>
 

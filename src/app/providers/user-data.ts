@@ -15,12 +15,17 @@ export class UserData {
 
 
   nameImageEmpresa ="";
+  base64ImageEmpresa ="";
   nombreCompleto:string ="";
+  administrador:boolean =false;
 
   constructor(
     public storage: Storage,
     private toastCtrl: ToastController
-  ) { }
+  ) {
+    
+
+   }
 
   hasFavorite(sessionName: string): boolean {
     return (this._favorites.indexOf(sessionName) > -1);
@@ -88,14 +93,15 @@ export class UserData {
     this.agente_id = JSON.parse(window.localStorage.getItem('userDetails')).id;//Recuperamos el id agente de userDetails      
   }
   recuperaNombreCompleto(){
-    this.nombreCompleto = JSON.parse(window.localStorage.getItem('userDetails')).nombre;//Recuperamos el nombre
+    this.nombreCompleto = JSON.parse(window.localStorage.getItem('userDetails')).nombreCompleto;//Recuperamos el nombre
   }
 
   getIdAgente(): number{    
-    if(this.agente_id === 0){
+    /* if(this.agente_id === 0){
       this.recuperaIdAgente();
     }
-    return this.agente_id = JSON.parse(window.localStorage.getItem('userDetails')).id;;
+    return this.agente_id = JSON.parse(window.localStorage.getItem('userDetails')).id;; */
+    return JSON.parse(window.localStorage.getItem('userDetails')).id;;
   }
 
   getIdEmpresa(): number{
@@ -105,32 +111,95 @@ export class UserData {
     return JSON.parse(window.localStorage.getItem('empresaData')).id;
   }
 
-  getNombreCompleto():string{
-    if(this.nombreCompleto.length ===0){
-      this.recuperaNombreCompleto();
+   getDataDireccionEmpresa():any{
+    let empresa = JSON.parse(window.localStorage.getItem('empresaData'));
+    if(empresa){
+      return empresa.direccion;
     }
-    return this.nombreCompleto;
   }
 
- 
+  getNombreEmpresa():string{
+
+
+    
+    let empresa = JSON.parse(window.localStorage.getItem('empresaData'));
+    if(empresa){
+      return empresa.nombre;
+    }
+
+  }
+
+  getNombreCompleto():string{
+    /* if(this.nombreCompleto.length ===0){
+      this.recuperaNombreCompleto();
+    }
+    return this.nombreCompleto; */
+    return JSON.parse(window.localStorage.getItem('userDetails')).nombreCompleto;
+  }
+
+
+
+ async setConfigUser(){
+   console.log('setConfigUser');
+  const data = await  this.storage.get('userFull');
+    if (data) {
+      console.log('data', JSON.stringify(data));
+      
+      if(data.departamento){
+
+      console.log("val.departamento", data.departamento);
+        if(data.departamento === 'RESIDENTE'){
+          this.administrador = false;
+        }else{
+          this.administrador = true;
+        }        
+      }        
+    }  
+ }
+
+ recibeDepartamento(depto:string){
+   console.log("recibeDepartamento", depto);
+
+   if(depto === 'RESIDENTE'){
+    this.administrador = false;
+   }else{
+    this.administrador = true;
+   }
+   
+   console.log('this.administrador,'+ this.administrador);
+   
+
+ }
+
 
   setConfigEmpresa(){
     console.log('setConfigEmpresa');
-    
-    let empresa_id_temp =  JSON.parse(window.localStorage.getItem('empresaData')).id;//Recuperamos el id empresa de empresaData    
-    if(empresa_id_temp === 7) {
-      /* this.nameImageEmpresa = "esmeralda.png"; */
-      this.nameImageEmpresa = "https://almacenamientonube.s3.us-west-1.amazonaws.com/Config/empresaId_7.png";
-    } 
-    else if (empresa_id_temp === 12 ) {
-      /* this.nameImageEmpresa = "sur.png"; */
-      this.nameImageEmpresa = "https://almacenamientonube.s3.us-west-1.amazonaws.com/Config/empresaId_12.png";
-    }
+    this.retrieveBase64ToImageEmpresa();
+/* 
+    let empresa = JSON.parse(window.localStorage.getItem('empresaData'));
+    if(empresa){
+      let empresa_id_temp =  empresa.id;//Recuperamos el id empresa de empresaData    
+      if(empresa_id_temp === 7) {
+        this.nameImageEmpresa = "https://almacenamientonube.s3.us-west-1.amazonaws.com/Config/empresaId_7.png";
+      } 
+      else if (empresa_id_temp === 12 ) {
+        this.nameImageEmpresa = "https://almacenamientonube.s3.us-west-1.amazonaws.com/Config/empresaId_12.png";
+      }
+    }   
     else {
-      /* this.nameImageEmpresa = "sur.png"; */  
       this.nameImageEmpresa = "https://almacenamientonube.s3.us-west-1.amazonaws.com/Config/empresaId_12.png";
-    }  
+    }   */
 
+  }
+
+  retrieveBase64ToImageEmpresa(){
+    console.log('retrieveBase64ToImageEmpresa');    
+    let empresa = JSON.parse(window.localStorage.getItem('empresaData'));
+    if(empresa){
+      if(empresa.configuracionEmpresa){
+        this.base64ImageEmpresa = empresa.configuracionEmpresa.logoFondoClaro;
+      }      
+    }    
   }
 
   showToast(dataMessage: string) {

@@ -10,6 +10,7 @@ import { UserOptions } from "../../interfaces/user-option";
 import { UserData } from "../../providers/user-data";
 import { EmpresaPage } from "../empresa/empresa.page";
 import { AgenteService } from '../../services/agente.service';
+import { PushService } from '../../services/push.service';
 
 @Component({
   selector: "app-home",
@@ -33,36 +34,47 @@ export class HomePage implements OnInit {
     private router: Router,
     private dataLocalService: DataLocalService,
     private modalCtrl: ModalController,
-    private agenteService: AgenteService
+    private agenteService: AgenteService,
+    private pushService: PushService
   ) {
 
     this.storage.get('userDetails').then((val) => {
       if (val) {
-        this.showLoading();
-        this.userData.setConfigEmpresa();
-        this.router.navigate(['/inicio']);
-        this.showToast("Bienvenido " + JSON.parse(val).nombreCompleto);
+        if(val.id){
+          this.showLoading();
+          this.userData.setConfigEmpresa();
+          this.router.navigate(['/inicio']);
+          this.showToast("Bienvenido " + JSON.parse(val).nombreCompleto);
+        }        
       }
     });
 
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   onLogin() {
     console.log("onLogin()");
     console.log("this.user:" + this.login.username);
     console.log("this.pass:" + this.login.password);
 
-    if(this.login.username === "" || this.login.password ===""){
+    if (this.login.username === "" || this.login.password === "") {
       this.showToast("Se necesita usuario y contraseña")
       return;
     }
+
+
+    const objAgente = {
+      /* dispositivoUuid: this.pushService.userId       */
+    };
 
     const loginPayload = {
       username: this.login.username,
       password: this.login.password,
     };
+
+
+
     console.log("loginPayload: " + loginPayload);
     this.showLoading();
 
@@ -71,55 +83,81 @@ export class HomePage implements OnInit {
       loginPayload.username.toLowerCase() === "test1" &&
       loginPayload.password.toLowerCase() === "test1"
     ) {//Usuario admin prueba
-      window.localStorage.setItem("userDetails",JSON.stringify({ "username": "test1", "nombreCompleto": "Test1", "id": 4 }));
-      this.storage.set("userDetails",JSON.stringify({ "username": "test1", "nombreCompleto": "Test1", "id": 4 }));      
+      window.localStorage.setItem("userDetails", JSON.stringify({ "username": "test1", "nombreCompleto": "Test1", "id": 4 }));
+      this.storage.set("userDetails", JSON.stringify({ "username": "test1", "nombreCompleto": "Test1", "id": 4 }));
       this.idAgente = 4;
-      this.buscarEmpresasAgente();      
+      this.updateAgenteCore(this.idAgente , objAgente);
+
+      this.buscarEmpresasAgente();
       this.presentModalListEmpresas(); //Debo presentar el modal para seleccionar una empresa
     } else {
-       this.authService.login(loginPayload).subscribe(data => {
-         if (data.status === 200) {
-           window.localStorage.setItem('userDetails', JSON.stringify(data.result));
-           this.storage.set('userDetails', JSON.stringify(data.result));
-           this.agenteService.getUserById(data.result.id).subscribe(userFull => {
+      this.authService.login(loginPayload).subscribe(data => {
+        if (data.status === 200) {
+          window.localStorage.setItem('userDetails', JSON.stringify(data.result));
+          this.storage.set('userDetails', JSON.stringify(data.result));
+          this.agenteService.getUserById(data.result.id).subscribe(userFull => {
             if (userFull.status === 200) {
               this.storage.set('userFull', userFull.result);
-              if(userFull.result.activo === false){
+              
+              this.userData.recibeDepartamento(userFull.result.departamento);
+
+              if (userFull.result.activo === false) {
                 this.router.navigate(['/']);
-                this.showToast("El usuario " + data.result.nombreCompleto + ", no se encuentra activo para la aplicación móvil");   
-              }else{//Aqui debo preguntar a cuantas empresas tiene acceso                          
-             this.idAgente = data.result.id;
-             let nombreAgente = data.result.nombreCompleto;
-             this.authService.getListEmpresas(this.idAgente).subscribe(data => {
-              if (data.status === 200) {
-                this.empresas = data.result;
-                if(this.empresas.length == 1){//Debo redirecionar al inicio, solo hay una empresa
-                window.localStorage.setItem('empresaData', JSON.stringify({"nombre":this.empresas[0].nombre,"id":this.empresas[0].id}));
-                this.storage.set('empresaData', JSON.stringify({"nombre":this.empresas[0].nombre,"id":this.empresas[0].id}));                  
-                this.userData.setConfigEmpresa();
-                this.router.navigateByUrl('/inicio');
-                this.showToast("Bienvenido " + nombreAgente +" a armonía residencial");
-                }else if(this.empresas.length > 1){
-                  this.presentModalListEmpresas()//Debo presentar el modal para seleccionar una empresa
-                }else{
-                  console.log("Error al recuperar empresas del agente: ", nombreAgente);//Error al recuperar las empresas del user
-                }
+                this.showToast("El usuario " + data.result.nombreCompleto + ", no se encuentra activo para la aplicación móvil");
+              } else {//Aqui debo preguntar a cuantas empresas tiene acceso                          
+                this.idAgente = data.result.id;
+                let nombreAgente = data.result.nombreCompleto;
+                console.log("objAgente: " + objAgente);
+                
+                this.updateAgenteCore(this.idAgente , objAgente);
+
+                this.authService.getListEmpresas(this.idAgente).subscribe(data => {
+                  if (data.status === 200) {
+                    this.empresas = data.result;
+                    if (this.empresas.length == 1) {//Debo redirecionar al inicio, solo hay una empresa
+                      /* window.localStorage.setItem('empresaData', JSON.stringify({ "nombre": this.empresas[0].nombre, "id": this.empresas[0].id }));
+                      this.storage.set('empresaData', JSON.stringify({ "nombre": this.empresas[0].nombre, "id": this.empresas[0].id })); */
+
+                      window.localStorage.setItem('empresaData', JSON.stringify(this.empresas[0]));
+                      this.storage.set('empresaData', JSON.stringify(this.empresas[0]));
+                      this.userData.setConfigEmpresa();
+                      this.router.navigateByUrl('/inicio');
+                      this.showToast("Bienvenido " + nombreAgente + " a armonía residencial");
+                    } else if (this.empresas.length > 1) {
+                      this.presentModalListEmpresas()//Debo presentar el modal para seleccionar una empresa
+                    } else {
+                      console.log("Error al recuperar empresas del agente: ", nombreAgente);//Error al recuperar las empresas del user
+                    }
+                  }
+                }, err => {
+                  console.log('Error al buscar las empresas');
+                });
               }
-            }, err => {
-              console.log('Error al buscar las empresas');
-            });
-              }
-            }else{
-              console.log('Llego otro status al recuperar el usauario');                            
-            }            
+            } else {
+              console.log('Llego otro status al recuperar el usauario');
+            }
           });
-         }else{
-          this.showToast("Error usuario o contraseña inválidos");
-         }
-       }, err => {
-         this.showToast("Error usuario o contraseña inválidos");
-       }); 
+        } else {
+          this.showToast("Error 1, usuario o contraseña inválidos");
+        }
+      }, err => {
+        this.showToast("Error 2, usuario o contraseña inválidos");
+      });
     }
+  }
+
+  
+  updateAgenteCore(id: number, datosForm: any) {
+    this.agenteService.updateUsuarioCore(id, datosForm).subscribe(data => {
+      console.log('data.result:: ', data.result);
+      if (data.status === 200) {        
+      } else {
+        this.userData.showToast('Error al actualizar uuid de usuario');        
+      }
+    }, err => {
+      console.log('error::', err);     
+    },
+      () => {});
   }
 
   buscarEmpresasAgente() {//Es para pruebas locales
@@ -127,77 +165,15 @@ export class HomePage implements OnInit {
     if (this.idAgente > 0) {
       this.empresas = [
         {
-          id: 7,
-          nombre: "RINCON ESMERALDA",
-          alias: "ESME",
-          rfc: "ASDA232323ASS",
-          urlPaginaWeb: "http://pruebaintegral.com",
-          email: "prueba@integral.com",
-          telefono: "5454322222",
-          integrantes: 4,
-          actividadEconomica: 11,
-          direccion: {
-            calle: "Otra Calle Inventada",
-            numeroExterior: "5432",
-            numeroInterior: "",
-            asentamiento: {
-              id: 66344,
-              codigoPostal: "52105",
-              colonia: "San Pedro",
-              ciudad: "San Mateo Atenco",
-              municipio: "San Mateo Atenco",
-              estado: "México",
-            },
-          },
-          configuracionEmpresa: {
-            logoFondoClaro: "",
-            logoFondoOscuro: "",
-            ejercicioActual: 2020,
-            mascaraCuentasContables: "9999-9999-9999-9999",
-            mesDeTrabajo: 12,
-            estructuraDeCuentas: "444400",
-            usarPlanDePagos: false,
-            usarDireccionDeEntrega: true,
-            usarCasetasDeLinea: true,
-            permitirSaldosNegativos: true,
-          },
-        },
-        {
-          id: 12,
-          nombre: "EXPLANADA SUR",
-          alias: "SUR",
-          rfc: "ERES232323222",
-          urlPaginaWeb: "http://tyv.com",
-          email: "tyv@tyv.com",
-          telefono: "4543225666",
-          integrantes: 3,
-          actividadEconomica: 11,
-          direccion: {
-            calle: "LKUNASNDA ASDAS",
-            numeroExterior: "342",
-            numeroInterior: "1",
-            asentamiento: {
-              id: 66659,
-              codigoPostal: "52303",
-              colonia: "El Carrizal",
-              ciudad: "Desconocida",
-              municipio: "Tenango del Valle",
-              estado: "México",
-            },
-          },
-          configuracionEmpresa: {
-            logoFondoClaro: "",
-            logoFondoOscuro: "",
-            ejercicioActual: 2020,
-            mascaraCuentasContables: "9999-9999-9999-9999",
-            mesDeTrabajo: 12,
-            estructuraDeCuentas: "444400",
-            usarPlanDePagos: false,
-            usarDireccionDeEntrega: true,
-            usarCasetasDeLinea: true,
-            permitirSaldosNegativos: true,
-          },
-        },
+          "id": 32,
+          "nombre": "RINCON ESMERALDA",
+          "alias": "RINCON ESME"     
+      },
+      {
+          "id": 33,
+          "nombre": "EXPLANADA SUR",
+          "alias": "EXP SUR"
+      }
       ];
     }
   }
@@ -214,7 +190,7 @@ export class HomePage implements OnInit {
     return await modal.present();
   }
 
-  
+
 
   showLoading() {
     this.load = this.loadingController

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Encuesta } from '../../../models/votaciones.model';
 import { VotacionesService } from '../../../services/votaciones.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { EncuestaPregunta } from '../../../models/encuesta-pregunta.model';
 import { EncuestaPreguntaOpcion } from '../../../models/encuesta-pregunta-opcion.model';
 import { UserData } from '../../../providers/user-data';
@@ -25,10 +25,12 @@ export class AddPage implements OnInit {
 
   idEmpresa: number;
   idAgente: number;
+  edit:boolean = false;
 
 
   constructor(private votacionService: VotacionesService,
     private router: Router,
+    public activatedRoute: ActivatedRoute,
     private userData: UserData) {
 
   }
@@ -36,7 +38,16 @@ export class AddPage implements OnInit {
   ngOnInit() {
     this.idEmpresa = this.userData.getIdEmpresa();
     this.idAgente = this.userData.getIdAgente();
+
+    this.encuesta = JSON.parse(this.activatedRoute.snapshot.paramMap.get('item'));    
+    if(this.encuesta != null) this.prepareEdit();
+    else this.encuesta = new Encuesta();
     this.rellenaTime();
+  }
+
+  prepareEdit(){
+    console.log('prepareEdit');
+    this.edit = true;
   }
 
   rellenaTime() {
@@ -98,15 +109,23 @@ export class AddPage implements OnInit {
   }
 
   save() {
+    if(this.edit) this.editar();
+    else this.nuevo();
+  }
+
+  nuevo(){
     let fechaTerminaEncuesta = new Date();
     console.log(fechaTerminaEncuesta);
     fechaTerminaEncuesta.setDate(fechaTerminaEncuesta.getDate() + this.diaSelected);
     fechaTerminaEncuesta.setHours(fechaTerminaEncuesta.getHours() + this.horaSelected);
     fechaTerminaEncuesta.setMinutes(fechaTerminaEncuesta.getMinutes() + this.minSelected);
-
-    let dateStr = fechaTerminaEncuesta.getFullYear() + '-' + (fechaTerminaEncuesta.getMonth() + 1) + '-' + fechaTerminaEncuesta.getDate() + ' ' + fechaTerminaEncuesta.getHours() + ':' + fechaTerminaEncuesta.getMinutes();
-    console.log(dateStr);
-
+    let numMes:string = "0";
+    if(fechaTerminaEncuesta.getMonth() < 10){
+      numMes = "0"+(fechaTerminaEncuesta.getMonth()+1); 
+    }else{
+      numMes = ""+(fechaTerminaEncuesta.getMonth()+1);
+    }
+    let dateStr = fechaTerminaEncuesta.getFullYear() + '-' + numMes + '-' + fechaTerminaEncuesta.getDate() + ' ' + fechaTerminaEncuesta.getHours() + ':' + fechaTerminaEncuesta.getMinutes();
     const votacionObj = {
       empresa: this.idEmpresa,
       agenteCreador: this.idAgente,
@@ -120,17 +139,44 @@ export class AddPage implements OnInit {
     this.votacionService.save(votacionObj).subscribe((data) => {
       console.log(data);
       if (data.status === 200) {
-        this.userData.showToast('anuncio registrado correctamente');
-        this.router.navigate(["/votaciones"]);
+        this.router.navigate(['/votaciones', { item: true}]); 
       } else this.userData.showToast('error al registrar encuesta');
     },
       (err) => {
         this.userData.showToast("Error: " + err);
       }, () => { }
     );
+  }
+  editar(){
+      
+    let fechaTerminaEncuesta = new Date();    
+    fechaTerminaEncuesta.setDate(fechaTerminaEncuesta.getDate() + this.diaSelected);
+    fechaTerminaEncuesta.setHours(fechaTerminaEncuesta.getHours() + this.horaSelected);
+    fechaTerminaEncuesta.setMinutes(fechaTerminaEncuesta.getMinutes() + this.minSelected);
+    let numMes:string = "0";
+    if(fechaTerminaEncuesta.getMonth() < 10){
+      numMes = "0"+(fechaTerminaEncuesta.getMonth()+1); 
+    }else{
+      numMes = ""+(fechaTerminaEncuesta.getMonth()+1);
+    }
+    let dateStr = fechaTerminaEncuesta.getFullYear() + '-' + numMes + '-' + fechaTerminaEncuesta.getDate() + ' ' + fechaTerminaEncuesta.getHours() + ':' + fechaTerminaEncuesta.getMinutes();
+    console.log(dateStr);
 
-    /* this.dataLocalVotacionesService.guardarVotacion(this.encuesta);
-    this.router.navigate(['/asambleas/votaciones']); */
-
+    const votacionObj = {
+      titulo: this.encuesta.titulo,
+      mensaje: this.encuesta.mensaje,      
+      fechaTermina: dateStr
+    };
+    console.log('objeto enviado: ' + JSON.stringify(votacionObj));
+    this.votacionService.update(this.encuesta.id, votacionObj).subscribe((data) => {
+      console.log(data);
+      if (data.status === 200) {
+        this.router.navigate(['/votaciones', { item: true}]); 
+      } else this.userData.showToast('error al editar encuesta');
+    },
+      (err) => {
+        this.userData.showToast("Error: " + err);
+      }, () => { }
+    );
   }
 }

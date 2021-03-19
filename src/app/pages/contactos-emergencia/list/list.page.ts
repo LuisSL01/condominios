@@ -3,6 +3,8 @@ import { ContactosEmergenciaService } from '../../../services/contactos-emergenc
 import { ContactosEmergencia } from '../../../models/contactos-emergencia.model';
 import { ActionSheetController } from '@ionic/angular';
 import { UserData } from '../../../providers/user-data';
+import { CallNumber } from '@ionic-native/call-number/ngx';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list',
@@ -15,9 +17,25 @@ export class ListPage implements OnInit {
   
   constructor(public contactoService : ContactosEmergenciaService,
               private actionSheetCtrl: ActionSheetController,
-              private userData:UserData) { }
+              private userData:UserData,
+              private router: Router,
+              private callNumber: CallNumber) { }
 
   ngOnInit() {
+  }
+
+  editRowSelected(){
+    console.log('editRowSelected');
+    console.log(this.contacto);    
+    this.router.navigate(['/contactos-emergencia/add', { item: JSON.stringify(this.contacto)}]);  
+  }
+
+  callSelected(number:string){    
+    console.log('call, '+ number);    
+    this.callNumber.callNumber(number, true).then(res =>
+       console.log('Launched dialer!', res))
+    .catch(err => 
+      console.log('Error launching dialer', err));
   }
 
   	

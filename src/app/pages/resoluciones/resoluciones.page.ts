@@ -100,5 +100,9 @@ export class ResolucionesPage implements OnInit {
     this.infiniteScroll.disabled = false;//Cada que se hace el refresh se habilita el componente infinite scroll
     this.getResoluciones(this.resolucionPage, 10, null, event);
   }
+  
+  buscar(event){
+  
+  }
 
 }

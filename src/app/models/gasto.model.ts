@@ -1,17 +1,24 @@
+import { ArchivoVortexApp } from './archivo-vortex.model';
+
 export class Gasto{
-    public idgasto:number;
-    public idempresa:number;
-    public tipoGasto:string;
+    public id:number;
+    public empresa:number;
+    public tipoDeGasto:string;
+
+    /*
     public cantidad:number;
     public descripcion:string;
     public formaPago:string;
-    public fechaGasto:Date;
-    public idagenteCrea:number;
-    public imgs:string[];
+    */
+    public data: any;
+    public files: ArchivoVortexApp;
+    
+    public fechaDeCreacion:Date;
+    public agenteCreador:number;
 
     constructor(){
         console.log('In the constructor of gasto');
-        this.fechaGasto = new Date();
-        this.imgs = Array();
+        this.fechaDeCreacion = new Date();
+        this.files = new ArchivoVortexApp();
     }
 }

@@ -8,6 +8,9 @@ import { Publicacion } from '../../models/publicacion.model';
 import { AnuncioService } from '../../services/anuncio.service';
 import { UserData } from '../../providers/user-data';
 import { Storage } from "@ionic/storage";
+import { DatosInteresService } from '../../services/datos-interes.service';
+import { ModalController } from "@ionic/angular";
+import { DatosInteresPage } from '../datos-interes/datos-interes.page';
 
 @Component({
   selector: 'app-inicio',
@@ -26,27 +29,91 @@ export class InicioPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   anunciosPage:number=0;
 
+  
+
 
   pathS3:string ="https://almacenamientonube.s3.us-west-1.amazonaws.com/";
   pathBase64:string ="data:image/jpeg;base64,";
+
+  climaData:any;
+  direccion:any;
+  nombreEmpresa:string;
+
+  public fieldFilters:string[]=new Array();
+  totalPages:number = 0;
+  myDate:Date = new Date();
+
+  mostrarDataInteres:boolean=true;
 
   constructor(private dataService: DataService,
               private menuCtrl: MenuController,
               public publicacionService : PublicacionService,
               private anuncioService : AnuncioService,
               private storage: Storage,
-              private userData:UserData) {
+              private userData:UserData,
+              private datosInteresService:DatosInteresService,
+              private modalCtrl: ModalController,) {
                 this.componentes = this.dataService.getMenuOpts();
 
                 /* this.publicaciones = this.publicacionService.publicaciones;
                   console.log('this.publicaciones:'+ this.publicaciones); */
-                  this.idEmpresa = this.userData.getIdEmpresa();
+               
      }
 
  
-  ngOnInit() {
-    /* this.cargarAnunciosLocalesStorage(); */
-    this.cargaAnunciosStorage();
+  ngOnInit() {  
+    this.direccion = this.userData.getDataDireccionEmpresa();
+    this.nombreEmpresa = this.userData.getNombreEmpresa();    
+    this.cargaFiltrosTabla();    
+  }
+
+  ionViewWillEnter(){    
+    this.idEmpresa = this.userData.getIdEmpresa();
+    this.cargarDatosInteres();
+    this.cargaAnunciosStorage();    
+  }
+  async cargarDatosInteres(){
+    console.log('climaData-antes', this.climaData);    
+    await this.cargarDataClima();
+    console.log('climaData-terminando', this.climaData);
+  }
+
+
+
+  cargarDataClima(){
+    if(this.direccion && this.direccion.asentamiento){
+      this.datosInteresService.getClimaByCoordenadas(this.direccion.asentamiento.codigoPostal).subscribe((data) => {    
+            if (data.cod === 200) {
+              console.log('devolviendo el data con 200', JSON.stringify(data));
+              
+              this.climaData = data;
+               /* this.presentModalDatosInteres();  */
+            } else {
+              console.log('Llego otro estatus al recupera clima');              
+            }
+          },
+          (err) => {
+            console.log(err);
+            console.log('Llego otro estatus al recupera clima');
+          }
+        );
+    }else{
+      console.log('No se pudo recuperar los datos de empresa');
+      
+    }    
+  }
+
+  async presentModalDatosInteres() {
+    const modal = await this.modalCtrl.create({
+      component: DatosInteresPage,
+      componentProps: {
+        climaData: this.climaData,
+        direccionData: this.direccion,
+        nombreEmpresa: this.nombreEmpresa        
+      },
+      cssClass: "my-custom-class",
+    });
+    return await modal.present();
   }
 
   async cargaAnunciosStorage(){      
@@ -63,19 +130,24 @@ export class InicioPage implements OnInit {
       .subscribe(
         (data) => {
           if (data.status === 200) {
-            if(eventRefresh){
-              this.anunciosList = [];
-            }            
-            console.log("data.result.content: ", data.result.content);
+            this.totalPages = data.result.totalPages;
             /* this.anunciosList.push(...data.result.content); */
-            if (eventInfinite) {
+            if (eventInfinite) {   
+              console.log('event infinite');
+              this.anunciosList.push(...data.result.content);            
               if (data.result.content.length === 0) {
                 eventInfinite.target.disabled = true;
                 eventInfinite.target.complete();
                 return;
               }
+              
+            }else{
+              console.log('else infinite');
+              
+              this.anunciosList = data.result.content;
             }
-            this.anunciosList.push(...data.result.content);            
+           
+            /* console.log("this.anunciosList", this.anunciosList); */
             this.storage.set(this.idEmpresa + "_anuncios", this.anunciosList);
             this.completeEvent(eventInfinite, eventRefresh);
           } else {
@@ -124,18 +196,62 @@ export class InicioPage implements OnInit {
 
   loadData(event) {//Desde el infinite scroll
     /* console.log("load data"); */
+    console.log("load data");
     this.anunciosPage++;
-    this.getAnuncios(this.anunciosPage, 10, event);
+    console.log(this.totalPages, "->", this.anunciosPage);
+    if (this.anunciosPage < this.totalPages)
+      this.getAnuncios(this.anunciosPage, 10, event);
+    else { //Significa que ya no hay datos por recuperar 
+      event.target.disabled = true;
+      event.target.complete();
+      return;
+    } 
   }
 
   doRefresh(event) {    
     this.anunciosPage = 0;
+    this.totalPages = 0;
     this.infiniteScroll.disabled = false;//Cada que se hace el refresh se habilita el componente infinite scroll
     this.getAnuncios(this.anunciosPage, 10, null, event);
   }
 
   toogleMenu(){
     this.menuCtrl.toggle();
+  }
+
+  isEmpty(str) {
+    return (!str || 0 === str.length);
+  }
+  cargaFiltrosTabla(){
+
+    this.fieldFilters.push("data_descripcion");
+    this.fieldFilters.push("data_titulo");
+    this.fieldFilters.push("data_clasificacion");
+    /* this.fieldFilters.push("estatus"); */
+
+      
+  }
+
+  buscar(event){
+
+    if( ! this.isEmpty(event.detail.value)){
+      this.mostrarDataInteres = false;
+
+      console.log(JSON.stringify(this.fieldFilters));
+      this.filters = "";
+      this.fieldFilters.forEach(item => this.filters += ''+item+':*'+ event.detail.value + '*,');
+      if(this.filters.endsWith(",")){
+        this.filters = this.filters.substring(0, this.filters.length -1 );
+      }    
+     }else{
+      this.mostrarDataInteres = true;
+       console.log('la cadena viene vacia');
+       this.filters = "";
+     }
+     this.anunciosPage = 0;
+     this.infiniteScroll.disabled = false;//Cada que se hace el refresh se habilita el componente infinite scroll
+     this.getAnuncios(this.anunciosPage, 10, null, null);
+  
   }
 
 }

@@ -11,6 +11,8 @@ import { ComponentsModule } from '../../components/components.module';
 
 
 
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -18,7 +20,8 @@ import { ComponentsModule } from '../../components/components.module';
     IonicModule,
     ReactiveFormsModule,
     RegistrationPageRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+
   ],
   declarations: [RegistrationPage]
 })

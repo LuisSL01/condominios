@@ -1,13 +1,28 @@
 <ion-card lines="none">
   <ion-card-header>
-    <ion-card-title>{{bitacora.nombreCompleto}}</ion-card-title>
+
+    <ion-card-title>
+      <ion-label>
+        <h1>{{bitacora.data.nombreCompleto}}</h1>
+        <h3>Fecha ingreso: {{bitacora.fechaDeCreacion }}</h3>
+      </ion-label>      
+      </ion-card-title>
 
     <ion-card-subtitle>
-      <span class="text-primary"> {{bitacora.fechaDeCreacion }} </span>
+      <span class="text-primary">
+        <ion-label color="success" *ngIf="bitacora.nombreAgenteVisita" > Visita a: {{bitacora.nombreAgenteVisita}}</ion-label>
+        <ion-label color="warning" *ngIf=" ! bitacora.nombreAgenteVisita" > No fue visita programada</ion-label>        
+        </span>
       <div class="card-more">
-        <ion-button fill="clear" (click)="lanzarMenu()">
-          <ion-icon slot="icon-only" color="primary" name="ellipsis-vertical-outline"></ion-icon>
-        </ion-button>
+        <ion-buttons slot="end">
+
+          <ion-button slot="end" (click)="onRowSelected()">
+            <ion-icon slot="icon-only" color="primary" name="create-outline"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" (click)="lanzarMenu()">
+            <ion-icon slot="icon-only" color="primary" name="ellipsis-vertical-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
       </div>
 
     </ion-card-subtitle>
@@ -15,43 +30,24 @@
   </ion-card-header>
 
   <ion-card-content>
-    {{bitacora.observaciones}}
+
+    <ion-label>
+      <h2>Con auto: {{bitacora.data.conAuto?'Si':'No'}}</h2>
+      <h2>Personas que ingresan: {{bitacora.data.personasIngresan}}</h2>
+      <p>
+        {{bitacora.data.observaciones}}
+      </p>
+    </ion-label>
+
   </ion-card-content>
 
   <ion-item>
-    <ion-slides pager="true" *ngIf="bitacora.data?.archivos.length > 1">
-      <ion-slide *ngFor="let img of bitacora.data.archivos" class="image-slide">
-        <!-- <label >{{pathS3}}{{img.rutaS3}} </label> -->
-        <!-- <label >{{pathS3}}{{img.rutaS3}}</label> -->
+    <ion-slides pager="{{bitacora.files?.archivos.length > 1 ?true:false}}" >    
+      <ion-slide *ngFor="let img of bitacora.files.archivos" class="image-slide">        
         <img  *ngIf="img.rutaS3"  src="{{pathS3}}{{img.rutaS3}}">
         <img  *ngIf=" ! img.rutaS3"  src="{{pathBase64}}{{img.base64}}">
       </ion-slide>
-    </ion-slides>
-      <ion-slides *ngIf="bitacora.data?.archivos.length === 1">
-        <ion-slide *ngFor="let img of bitacora.data.archivos" class="image-slide">          
-          <img  *ngIf="img.rutaS3"  src="{{pathS3}}{{img.rutaS3}}">
-          <img  *ngIf=" ! img.rutaS3"  src="{{pathBase64}}{{img.base64}}">
-        </ion-slide>
-    </ion-slides>  
+    </ion-slides>      
   </ion-item>
-<!--   <ion-item>
-
-    <ion-slides pager="true" *ngIf="bitacora.imgs.length > 1">
-
-      <ion-slide *ngFor="let img of bitacora.imgs" class="image-slide">
-        <img [src]="img | imageSanitizer">
-      </ion-slide>
-
-    </ion-slides>
-
-    <ion-slides *ngIf="bitacora.imgs.length === 1">
-
-      <ion-slide *ngFor="let img of bitacora.imgs" class="image-slide">
-        <img [src]="img | imageSanitizer">
-      </ion-slide>
-
-    </ion-slides>
-
-  </ion-item> -->
 </ion-card>
  

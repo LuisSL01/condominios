@@ -7,6 +7,18 @@
   <form [formGroup]="createAnuncio"  (ngSubmit)="save()">
     <ion-list>
       <div formGroupName="data">
+        <ion-item>
+          <ion-label>
+            <ion-icon name="grid-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Clasificación
+          </ion-label>
+          <ion-select interface="popover"  placeholder="Seleccionar"  formControlName="clasificacion"
+            okText="Aceptar"
+            cancelText="Cancelar">
+            <ion-select-option value="Servicios">Servicios</ion-select-option>
+            <ion-select-option value="Muebleria">Muebleria</ion-select-option>
+            <ion-select-option value="Otro">otro</ion-select-option>
+          </ion-select>  
+        </ion-item>
         
         <ion-item>
           <ion-label>
@@ -31,7 +43,7 @@
                 margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Descripción
           </ion-label>
   
-          <ion-textarea  formControlName="descripcion"  rows="1" cols="1" ></ion-textarea>
+          <ion-textarea  formControlName="descripcion"  rows="3" cols="1" ></ion-textarea>
         </ion-item>
         
         
@@ -52,7 +64,7 @@
           <ion-input formControlName="telefono">
           </ion-input>
         </ion-item>
-        <ion-item>
+        <ion-item *ngIf="false" >
           <ion-label>
             <ion-icon name="today-outline" style="font-size:23px; color: #50c8ec;
                 margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Fecha de expiración
@@ -64,7 +76,7 @@
           (ionChange)="cambioFechaVence( $event )">
         </ion-datetime>
         </ion-item>
-        <ion-item>
+        <ion-item *ngIf="false" >
           <ion-label>
             <ion-icon name="receipt-outline" style="font-size:23px; color: #50c8ec;
                 margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Estatus
@@ -72,9 +84,6 @@
           <ion-toggle formControlName="estatus" slot="end" ></ion-toggle>
         </ion-item>
       </div>
-
-    
-
 
       <ion-item>
         <ion-button fill="clear" size="small" (click)="camara()">
@@ -95,7 +104,8 @@
       <ion-item>
         <ion-col size="3" *ngFor="let dat of files">          
           <ion-card>            
-            <img  src="{{pathBase64}}{{dat.base64}}">
+            <img *ngIf=" !editar"  src="{{pathBase64}}{{dat.base64}}">            
+            <img  *ngIf=" editar "  src="{{pathS3}}{{dat.rutaS3}}">
           </ion-card>
         </ion-col>
       </ion-item>

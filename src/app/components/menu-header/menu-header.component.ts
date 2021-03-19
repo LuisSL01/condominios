@@ -8,10 +8,34 @@ import { UserData } from '../../providers/user-data';
 })
 export class MenuHeaderComponent implements OnInit {
 
-  constructor(public userData: UserData) {             
+  
+
+  constructor(public userData: UserData) {
   }
 
   ngOnInit() {
+    this.userData.retrieveBase64ToImageEmpresa();    
   }
+
+
+
+  ionViewWillEnter(){
+
+    console.log('ionViewWillEnter de menu header component');
+
+  }
+
+
+
+
+
+  ionViewDidEnter(){
+
+
+    console.log('ionViewDidEnter de menu header component');
+
+  }
+
+
 
 }
