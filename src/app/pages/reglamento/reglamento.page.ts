@@ -34,11 +34,11 @@ export class ReglamentoPage implements OnInit {
 
   ngOnInit() {
     console.log('en el ngoninit de reglamento..');
-    
+
     this.idEmpresa = this.userData.getIdEmpresa();
 
-    console.log('this.idEmpresa: '+ this.idEmpresa);
-    
+    console.log('this.idEmpresa: ' + this.idEmpresa);
+
   }
 
   //Creamos la instancia del fileTransfer a transfer con un voley.
@@ -59,26 +59,29 @@ export class ReglamentoPage implements OnInit {
   } */
 
 
-  subirReglamento(){
+  subirReglamento() {
 
-    if(this.platform.is('ios')){    
-      
-this.filePicker.pickFile()
-.then(uri => console.log(uri))
-.catch(err => console.log('Error', err));  
+    if (this.platform.is('ios')) {
 
+      this.filePicker.pickFile()
+        .then(uri => console.log(uri))
+        .catch(err => console.log('Error', err));
+    }
+    else {
+      console.log('is in android');
+      console.log('subirReglamento');
+      this.fileChooser.open()
+        .then((uri) =>{
+          console.log(uri)
 
-  }
-  else{
-    console.log('is in android');
-    console.log('subirReglamento');    
-    this.fileChooser.open()
-    .then(uri => 
-      console.log(uri))
-    .catch(e => 
-      console.log(e));
+        },
+        (err) => {         
+        }
+        )          
+        .catch(e =>
+          console.log(e));
       // run android code
-  }
+    }
 
   }
 
@@ -88,7 +91,7 @@ this.filePicker.pickFile()
     const fileTransfer: FileTransferObject = this.transfer.create();
     const url = 'https://almacenamientonube.s3.us-west-1.amazonaws.com/Config/reglamento_empresaId_' + this.idEmpresa + '.pdf';
     console.log('url:', url);
-    
+
     const nameFile = 'reglamento_' + this.idEmpresa + '.pdf';
     const nameFolder = "ArmoniaResidencial/";
     if (this.platform.is('cordova')) {
