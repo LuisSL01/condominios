@@ -2,14 +2,101 @@
 
 <app-header titulo="Mis datos"></app-header>
 <ion-content fullscreen>
-    <ion-list *ngIf="false">
+    <form [formGroup]="createAgente" (ngSubmit)="guardarDatos()">
 
-        <ion-item detail (click)="logOut()">
-            <ion-icon slot="start" name="log-out-outline" color="medium"> </ion-icon>
-            <ion-label>
-                Cerrar sesión
-            </ion-label>
-        </ion-item>
+        <ion-list>
 
-    </ion-list>
+            <ion-item>
+                <ion-label>
+                    <ion-icon name="person-outline" style="font-size:23px; color: #50c8ec; 
+                        margin-bottom: -5px;
+                    "></ion-icon>&nbsp;&nbsp;Nombre completo:
+                </ion-label>
+                <ion-input formControlName="nombreCompleto"></ion-input>
+            </ion-item>
+            <ion-label color="danger"
+            *ngIf="createAgente.controls.nombreCompleto.errors?.required && (createAgente.controls.nombreCompleto.touched || createAgente.controls.nombreCompleto.dirty)">
+            *
+            El
+            nombre es obligatorio </ion-label>
+            <ion-label color="danger"
+            *ngIf="createAgente.controls.nombreCompleto.errors?.minlength && (createAgente.touched || createAgente.dirty)">*
+            El nombre tiene que tener al menos 4 caracteres.</ion-label>
+
+            <ion-item>
+                <ion-label>
+                    <ion-icon name="person-outline" style="font-size:23px; color: #50c8ec; 
+                        margin-bottom: -5px;
+                    "></ion-icon>&nbsp;&nbsp;Ap. Paterno:
+                </ion-label>
+                <ion-input formControlName="apellidoPaterno"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>
+                    <ion-icon name="person-outline" style="font-size:23px; color: #50c8ec; 
+                        margin-bottom: -5px;
+                    "></ion-icon>&nbsp;&nbsp;Ap. Materno:
+                </ion-label>
+                <ion-input formControlName="apellidoMaterno"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>
+                    <ion-icon name="transgender-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;">
+                    </ion-icon>&nbsp;&nbsp;Sexo
+                </ion-label>
+                <ion-select interface="popover" placeholder="Seleccionar" formControlName="sexo" okText="Aceptar"
+                    cancelText="Cancelar">
+                    <ion-select-option value="Masculino">Masculino</ion-select-option>
+                    <ion-select-option value="Femenino">Femenino</ion-select-option>
+                    <ion-select-option value="Otro">Otro</ion-select-option>
+                </ion-select>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>
+                    <ion-icon name="today-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;">
+                    </ion-icon>&nbsp;&nbsp;Fecha de nacimiento
+                </ion-label>
+                <ion-datetime style="margin-bottom: -8px;" placeholder="DD/MM/YYYY" displayFormat="DD/MM/YYYY"
+                    cancelText="Descartar" doneText="Aceptar" formControlName="fechaDeNacimiento">
+                </ion-datetime>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>
+                    <ion-icon name="tv-outline" style="font-size:23px; color: #50c8ec; 
+                        margin-bottom: -5px;
+                    "></ion-icon>&nbsp;&nbsp;Ocupación:
+                </ion-label>
+                <ion-input formControlName="ocupacion"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>
+                    <ion-icon name="mail-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
+                    &nbsp;&nbsp;Celular:
+                </ion-label>
+                <ion-input (ionChange)="cambioNumeroTelefono( $event )" formControlName="telefono"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>
+                    <ion-icon name="mail-outline" style="font-size:23px; color: #50c8ec; 
+                        margin-bottom: -5px;
+                    "></ion-icon>&nbsp;&nbsp;Email:
+                </ion-label>
+                <ion-input formControlName="email"></ion-input>
+            </ion-item>
+            <ion-label color="danger"
+            *ngIf="createAgente.controls.email.errors?.email && (createAgente.touched || createAgente.dirty)">* El email no
+            es válido.</ion-label>
+
+        </ion-list>
+    
+        <app-buttons valueLinkCancel="/inicio" valueDisabled="{{ ! createAgente.valid}}"></app-buttons>
+        <app-footer></app-footer>
+    
+    </form>
 </ion-content>

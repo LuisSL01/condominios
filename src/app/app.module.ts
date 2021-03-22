@@ -25,6 +25,8 @@ import { EmailComposer } from '@ionic-native/email-composer/ngx';
 
 import { CallNumber } from '@ionic-native/call-number/ngx';
 
+import { DatePipe } from '@angular/common';
+
 
 /* import { NgxMaskModule, IConfig } from 'ngx-mask' */
 /* export const options: Partial<IConfig> | (() => Partial<IConfig>) = null; */
@@ -58,6 +60,7 @@ import { CallNumber } from '@ionic-native/call-number/ngx';
     BarcodeScanner,
     EmailComposer,
     CallNumber,
+    DatePipe,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
