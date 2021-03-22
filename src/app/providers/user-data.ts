@@ -192,12 +192,12 @@ export class UserData {
 
   }
 
-  retrieveBase64ToImageEmpresa(){
+  async retrieveBase64ToImageEmpresa(){
     console.log('retrieveBase64ToImageEmpresa');    
-    let empresa = JSON.parse(window.localStorage.getItem('empresaData'));
+    let empresa = await JSON.parse(window.localStorage.getItem('empresaData'));
     if(empresa){
       if(empresa.configuracionEmpresa){
-        this.base64ImageEmpresa = empresa.configuracionEmpresa.logoFondoClaro;
+        this.base64ImageEmpresa ='https://almacenamientonube.s3.us-west-1.amazonaws.com/'+empresa.configuracionEmpresa.logoFondoClaro.rutaS3;
       }      
     }    
   }
