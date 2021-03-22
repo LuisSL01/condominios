@@ -22,7 +22,7 @@ export class PerfilPage implements OnInit {
     private agenteService: AgenteService,
     private toastr: ToastController,
     private datePipe: DatePipe) {
-      this.getUsuario();
+      
   }
 
   createAgente = this.fb.group({//Esto para construir los formularios dinamicamente
@@ -38,8 +38,12 @@ export class PerfilPage implements OnInit {
 
   agenteChangesForm: FormGroup; 
     
-  ngOnInit() {  
-    this.traerAgente();
+  ngOnInit() {      
+  }
+
+  ionViewDidEnter(){
+    console.log('uno ionViewDidEnter de Perfil'); 
+    this.getUsuario();
   }
 
   traerAgente(){
@@ -56,10 +60,10 @@ export class PerfilPage implements OnInit {
     });
   }
 
-  getUsuario() {
+  async getUsuario() {
     console.log('getUsuario');
     console.log("this.idAgente: " + this.userData.getIdAgente());
-    this.agenteService.getUserById(this.userData.getIdAgente()).subscribe( data => {
+    await this.agenteService.getUserById(this.userData.getIdAgente()).subscribe( data => {
       console.log(data);
       if (data.status === 200) {
 
@@ -71,19 +75,20 @@ export class PerfilPage implements OnInit {
           } else {
             data.result.fechaDeNacimiento = fechaNac;
           }
-          const formattedDate  = this.datePipe.transform(data.result.fechaDeNacimiento, 'yyyy-MM-dd HH:mm:ss');
-          console.log('transform', formattedDate);
+          /* const formattedDate  = this.datePipe.transform(data.result.fechaDeNacimiento, 'yyyy-MM-dd HH:mm:ss');
+          console.log('transform', formattedDate); */
 
           this.createAgente = this.fb.group({
             nombreCompleto: [data.result.nombreCompleto],
             apellidoPaterno: [data.result.apellidoPaterno],  
             apellidoMaterno: [data.result.apellidoMaterno],
             sexo: [data.result.sexo],
-            fechaDeNacimiento: [formattedDate],
+            /* fechaDeNacimiento: [formattedDate], */
             ocupacion: [data.result.ocupacion],
             email: [data.result.email],    
             telefono: [data.result.telefono]    
           });
+          
       } else {
         this.showToast('No se lograron recuperar tus datos en este momento');
         this.router.navigate(['/inicio']); 
