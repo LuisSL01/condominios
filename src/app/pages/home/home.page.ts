@@ -138,10 +138,10 @@ export class HomePage implements OnInit {
             }
           });
         } else {
-          this.showToast("Error usuario o contraseña inválidos");
+          this.showToast("Error 1, usuario o contraseña inválidos");
         }
       }, err => {
-        this.showToast("Error al comunicarse con el servidor");
+        this.showToast("Error 2, usuario o contraseña inválidos");
       });
     }
   }

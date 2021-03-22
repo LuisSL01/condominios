@@ -19,10 +19,17 @@
 
         <ion-card>
           <ion-card-header>
-            <ion-card-title color="{{agente.activo?'success':'danger'}}" >{{agente.nombreCompleto}} - {{agente.departamento}}</ion-card-title>
+            <ion-card-title color="{{agente.activo?'success':'danger'}}" > {{agente.departamento}}</ion-card-title>
 
             <ion-card-subtitle  color="{{agente.activo?'success':'danger'}}"   >
-              <span class="text-primary">{{agente.email}}</span>
+              <span class="text-primary">
+                <ion-label>
+                  <h2>{{agente.nombreCompleto}} {{agente.apellidoPaterno}} {{agente.apellidoMaterno}} </h2>
+                  <h3>{{agente.email}}</h3>
+                  
+                </ion-label>
+                
+                </span>
               <div class="card-more">
                 <ion-button fill="clear" (click)="lanzarMenu(agente.id, agente.activo)">
                   <ion-icon slot="icon-only" color="primary" name="ellipsis-vertical-outline"></ion-icon>
@@ -32,7 +39,7 @@
             </ion-card-subtitle>
           </ion-card-header>
 
-          <ion-card-content color="{{agente.activo?'success':'danger'}}"   >
+          <ion-card-content  >
             Activo: {{agente.activo ? 'SI':'NO'}}
           </ion-card-content>
 

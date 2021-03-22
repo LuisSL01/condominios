@@ -9,35 +9,33 @@ margin-left: -20px;
 <ion-content>
   <form [formGroup]="createGasto" (ngSubmit)="save()">
     <ion-list>
-
-      <ion-item>
-        <ion-label>
-          <ion-icon name="alarm-outline" style="font-size:23px; color: #50c8ec; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Fecha
-        </ion-label>
-        <ion-datetime style="margin-bottom: -8px;" displayFormat="DD/MM/YYYY"
-          cancelText="Descartar" doneText="Aceptar" formControlName="fechaGasto"
-          (ionChange)="cambioFecha($event)">
-        </ion-datetime>
-      </ion-item>
-
-      <ion-item>
-        <ion-label>
-          <ion-icon name="receipt-outline" style="font-size:23px; color: #50c8ec; 
-              margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Tipo de registro
-        </ion-label>
-        <ion-select formControlName="tipoGasto"  okText="Aceptar"
-          interface="popover"
-          cancelText="Cancelar">
-          <ion-select-option value="Gasto general">Gasto general</ion-select-option>
-          <ion-select-option value="Vigilancia">Vigilancia</ion-select-option>
-          <ion-select-option value="Jardineria">Jardinería</ion-select-option>
-          <ion-select-option value="Limpieza">Limpieza</ion-select-option>
-          <ion-select-option value="Mantenimiento general">Mantenimiento general</ion-select-option>
-        </ion-select>
-      </ion-item>
-
       <div formGroupName="data">
+        <ion-item>
+          <ion-label>
+            <ion-icon name="alarm-outline" style="font-size:23px; color: #50c8ec; 
+                margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Fecha
+          </ion-label>
+          <ion-datetime style="margin-bottom: -8px;" displayFormat="DD/MM/YYYY"
+            cancelText="Descartar" doneText="Aceptar" formControlName="fechaGasto"
+            (ionChange)="cambioFecha($event)"
+            >
+          </ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <ion-icon name="receipt-outline" style="font-size:23px; color: #50c8ec; 
+                margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Tipo de registro
+          </ion-label>
+          <ion-select formControlName="tipoGasto"  okText="Aceptar"
+            interface="popover"
+            cancelText="Cancelar">
+            <ion-select-option value="Gasto general">Gasto general</ion-select-option>
+            <ion-select-option value="Vigilancia">Vigilancia</ion-select-option>
+            <ion-select-option value="Jardineria">Jardinería</ion-select-option>
+            <ion-select-option value="Limpieza">Limpieza</ion-select-option>
+            <ion-select-option value="Mantenimiento general">Mantenimiento general</ion-select-option>
+          </ion-select>
+        </ion-item>
         <ion-item>
           <ion-label>
             <ion-icon name="calculator-outline" style="font-size:23px; color: #50c8ec; 

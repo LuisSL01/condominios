@@ -6,7 +6,81 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-searchbar placeholder="Buscar" animated (ionChange)="buscar($event)"></ion-searchbar>  
+  <ion-searchbar placeholder="Buscar" animated (ionChange)="buscar($event)"></ion-searchbar> 
+
+  <ion-slides  *ngIf="mostrarDataInteres" >
+    <ion-slide >      
+        <ion-col size="12">          
+          <ion-card >
+            <ion-item>
+              <ion-icon name="pin" slot="start"></ion-icon>
+              <ion-label>
+                <!-- <h2>Clima en:</h2> -->
+                <h2>{{nombreEmpresa}}</h2>
+                <h2>{{direccion.asentamiento.municipio}}, {{direccion.asentamiento.estado}}</h2>
+                <p>
+                  {{myDate | date:'dd/MMM/yy'}}
+                </p>
+                </ion-label>
+            </ion-item>
+          
+            <ion-card-content *ngIf="climaData" >
+              <ion-list>
+        
+                <ion-item>
+                  <ion-label>
+                    <ion-icon name="sunny-outline" style="font-size:23px; color: #50c8ec; 
+                    margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Desc.
+                  </ion-label>
+                  <ion-label>{{climaData.weather[0].description}}</ion-label>
+                  
+                </ion-item>
+        
+                <ion-item>
+                  <ion-label>
+                    <ion-icon name="thermometer-outline" style="font-size:23px; color: #50c8ec; 
+                    margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Temperatura
+                  </ion-label>
+                  <ion-label>{{climaData.main.temp}} °C</ion-label>
+                  
+                </ion-item>
+        
+                <ion-item>
+                  <ion-label>
+                    <ion-icon name="flower-outline" style="font-size:23px; color: #50c8ec; 
+                    margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Sensación
+                  </ion-label>
+                  <ion-label>{{climaData.main.feels_like}}</ion-label>
+                  
+                </ion-item>
+        
+                <ion-item>
+                  <ion-label>
+                    <ion-icon name="remove-outline" style="font-size:23px; color: #50c8ec; 
+                    margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Mín.
+                  </ion-label>
+                  <ion-label>{{climaData.main.temp_min}}</ion-label>
+                  
+                </ion-item>
+        
+                <ion-item>
+                  <ion-label>
+                    <ion-icon name="add-outline" style="font-size:23px; color: #50c8ec; 
+                    margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Máx.
+                  </ion-label>
+                  <ion-label>{{climaData.main.temp_max}}</ion-label>
+                  
+                </ion-item>
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      
+    </ion-slide>
+  </ion-slides>  
+ 
+
+  
   <ion-slides class="emptyData" *ngIf="anunciosList?.length === 0">
     <ion-slide class="emptyData">
       <ion-label>No hay registros</ion-label>

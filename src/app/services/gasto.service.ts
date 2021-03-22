@@ -64,6 +64,13 @@ export class GastoService {
     return this.http.post<ApiResponse>(this.baseUrl + this.gastoContext, gastoData).pipe(share());
   }
 
+
+  
+  update(idGasto: number, gastoData: any) : Observable<ApiResponse> {
+    console.log('update gasto', this.baseUrl + this.gastoContext + environment.coreApiBaseEditOperation+  "/" + idGasto);
+    return this.http.patch<ApiResponse>(this.baseUrl+this.gastoContext+environment.coreApiBaseEditOperation+  "/" + idGasto, gastoData).pipe(share());
+  }
+
   deleteLocal(gasto: Gasto){
     this.gastosLocales = this.gastosLocales.filter(gas => gas.id !== gasto.id)
     this.storage.set(this.construyeNombreEtiqueta(), this.gastosLocales);

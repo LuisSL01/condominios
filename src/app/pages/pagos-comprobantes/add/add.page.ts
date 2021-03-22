@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 import { PagosComprobantesService } from '../../../services/pagos-comprobantes.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { PagosComprobantes } from '../../../models/pagos-comprobantes.model';
 import { ArchivoVortexApp } from 'src/app/models/archivo-vortex.model';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { UserData } from '../../../providers/user-data';
 import { AgenteService } from '../../../services/agente.service';
 import { AdeudoService } from '../../../services/adeudo.service';
@@ -25,13 +25,13 @@ export class AddPage implements OnInit {
   pago: PagosComprobantes = new PagosComprobantes();
   enCamara:boolean;
 
-  data: Archivo[] = new Array();
+  files: Archivo[] = new Array();
 
-  createPagoComprobante = this.fb.group({
-    
-    adeudoId:["",[Validators.required]],
-    formaPago:["",[Validators.required]]
-
+  createPagoComprobante = this.fb.group({    
+    adeudoId:["",[Validators.required]],    
+    data: this.fb.group({
+      formaPago:["",[Validators.required]],
+    })
   });
 
   idEmpresa: number;
@@ -41,6 +41,8 @@ export class AddPage implements OnInit {
   agentes: any[] =  [];
   adeudos: AdeudoPago[] =[];
   agenteSelectedId:number;
+  edit:boolean = false;
+  pagoComprobanteChangesForm: FormGroup;
 
   constructor(private pagosComprobantesService: PagosComprobantesService,
     private camera: Camera,
@@ -48,12 +50,27 @@ export class AddPage implements OnInit {
     private fb: FormBuilder,
     private userData: UserData,
     private agenteService: AgenteService,
+    public activatedRoute: ActivatedRoute,
     private adeudoService: AdeudoService) { }
 
   ngOnInit() {
     this.idEmpresa = this.userData.getIdEmpresa();
     this.idAgente = this.userData.getIdAgente();
+    
+    this.pago = JSON.parse(this.activatedRoute.snapshot.paramMap.get('item'));    
+    if(this.pago != null) this.prepareEdit();
+    else this.pago = new PagosComprobantes();
+
     this.buscarAgentes();
+  }
+
+  prepareEdit(){
+    this.edit = true;
+    this.createPagoComprobante = this.fb.group({
+      data: this.fb.group({
+        formaPago:[this.pago.data.formaPago]
+      })
+    });
   }
 
   buscarAgentes(){
@@ -128,7 +145,7 @@ export class AddPage implements OnInit {
   procesarImagen(options: CameraOptions) {
     this.camera.getPicture(options).then((imageData) => {
       const title = this.createPagoComprobante.value.adeudoId+ "_pago_comprobante.jpg";
-      this.data.push(new Archivo(imageData, title));
+      this.files.push(new Archivo(imageData, title));
       /* const img = window.Ionic.WebView.convertFileSrc(imageData); */
       /* this.pago.imgs.push(img); */
     }, (err) => {
@@ -137,29 +154,34 @@ export class AddPage implements OnInit {
   }
 
   save(){
-    console.log(this.createPagoComprobante.value);
+    if(this.edit) this.editar();
+    else this.nuevo();       
+  }
 
+  nuevo(){
+    console.log(this.createPagoComprobante.value);
     const pagoComprobanteObj={
       empresa : this.idEmpresa,
-      agenteCreador: this.idAgente,
+      agenteCreador: this.idAgente,            
       status : 1,//por autorizar
-      formaPago : this.createPagoComprobante.value.formaPago,
+      data: this.createPagoComprobante.value.data,
+      /* formaPago : this.createPagoComprobante.value.formaPago, */
       adeudo: this.createPagoComprobante.value.adeudoId,
-      data:{archivos:[]}
+      files:{archivos:[]}
     };
 
 
     const formData = new FormData();
     formData.append("data", JSON.stringify(pagoComprobanteObj));
-    formData.append("file", JSON.stringify(this.data));
+    formData.append("file", JSON.stringify(this.files));
     
     console.log('objeto enviado: '+  JSON.stringify(pagoComprobanteObj));
 
     this.pagosComprobantesService.save(formData).subscribe((data) => {
         console.log(data);
         if (data.status === 200) {
-          this.userData.showToast('comprobante de pago registrado correctamente');
-          this.router.navigate(['/pagos/pagos-comprobantes']);
+          this.userData.showToast('comprobante de pago registrado correctamente');          
+          this.router.navigate(['/pagos-comprobantes', { item: true}]);
         } else {
           this.userData.showToast('Error al registrar el comprobante, llego otro status');          
         }
@@ -169,9 +191,33 @@ export class AddPage implements OnInit {
       },
       () => {}
     );
-    /* this.dataLocalPagosComprobantesService.guardarPagoComprobante(this.pago);     
-    this.router.navigate(['/pagos/pagos-comprobantes']);
-    */
+  }
+  editar(){
+    console.log('editar()...');    
+    this.pagoComprobanteChangesForm = this.fb.group({});
+    this.getDirtyFields();
+    console.log('pagoComprobanteChangesForm', JSON.stringify(this.pagoComprobanteChangesForm.value));
+    this.pagosComprobantesService.update(this.pago.id, this.pagoComprobanteChangesForm.value).subscribe(data => {
+      if (data.status === 200) {
+        this.createPagoComprobante.reset();
+        this.userData.showToast('editado correctamente');
+        this.router.navigate(['/pagos-comprobantes', { item: true}]);
+      } else {
+        this.userData.showToast('Error al editar registro, llego otro status');
+      }
+    }, err => {
+      console.log(err);this.userData.showToast("Error: "+ err);
+    },
+      () => {
+      });
+  }
+
+  getDirtyFields() {    
+    Object.keys(this.createPagoComprobante['controls'].data['controls']).forEach(key => {
+      if (this.createPagoComprobante.get('data').get(key).dirty) {
+        this.pagoComprobanteChangesForm.addControl(key, this.createPagoComprobante.get('data').get(key));
+      }
+    });
   }
 
 }

@@ -5,6 +5,7 @@ import { EncuestaPregunta } from '../../../models/encuesta-pregunta.model';
 import { EncuestaPreguntaRespuesta } from '../../../models/encuesta-pregunta-respuesta.model';
 import { VotacionesService } from '../../../services/votaciones.service';
 import { UserData } from '../../../providers/user-data';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-opciones-pregunta',
@@ -27,6 +28,7 @@ export class OpcionesPreguntaPage implements OnInit {
 
   constructor(private modalCtrl: ModalController,
               private votacionesService: VotacionesService,
+              private router: Router,
               private userData:UserData) {
     console.log('this.idOpcionSelected: ', this.idOpcionSelected);
   }
@@ -56,29 +58,28 @@ export class OpcionesPreguntaPage implements OnInit {
 
     if (this.existeRespuesta) {
         respuesta.id = this.respuestaEncuesta.id;//Solo si existe se recupera su id
-
         this.votacionesService.editRespuesta(this.votacionId, respuesta).subscribe((data) => {
           console.log(data);
-          if (data.status === 200) {                    
+          if (data.status === 200) {
             this.userData.showToast('Respuesta editada correctamente');
             this.modalCtrl.dismiss();
+            this.router.navigate(['/votaciones', { item: true}]); 
+            console.log('ya deberia haberme redireccionado a la otra pagina');
           } else this.userData.showToast('No se pudo editar la respuesta');            
         },
         (err) => {console.log(err);this.userData.showToast('No se pudo guardar la respuesta'); },
         () => {}
       );
 
-    /*   this.respuestaEncuesta.idOpcion = this.idOpcionSelected;
-      this.votacionesService.editarRespuestaEncuesta();
-      console.log('respuesta guardada exitosamente'); */
     } else {
-
-     
       this.votacionesService.saveRespuesta(this.votacionId, respuesta).subscribe((data) => {
           console.log(data);        
           if (data.status === 200) {                    
             this.userData.showToast('Respuesta agregada correctamente');
+            console.log('deberia estar redireccionando al inicio');
             this.modalCtrl.dismiss();
+            this.router.navigate(['/votaciones', { item: true}]); 
+            console.log('ya deberia haberme redireccionado a la otra pagina');
           } else this.userData.showToast('No se pudo guardar la respuesta, se guarda localmente');            
         },
         (err) => {

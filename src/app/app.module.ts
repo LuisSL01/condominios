@@ -24,6 +24,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
 
 import { CallNumber } from '@ionic-native/call-number/ngx';
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import { IOSFilePicker } from '@ionic-native/file-picker/ngx';//ocupado para la plataforma ios
 
 import { DatePipe } from '@angular/common';
 
@@ -61,6 +63,8 @@ import { DatePipe } from '@angular/common';
     EmailComposer,
     CallNumber,
     DatePipe,
+    FileChooser,
+    IOSFilePicker,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

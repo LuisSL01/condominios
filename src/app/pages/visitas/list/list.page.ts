@@ -33,6 +33,7 @@ export class ListPage implements OnInit {
   onRowSelected(){
     console.log(this.visita);
     this.router.navigate(['/visitas/add', { item: JSON.stringify(this.visita)}]);  
+    
   }
 
   async lanzarMenu() {
@@ -46,20 +47,10 @@ export class ListPage implements OnInit {
           console.log('Borrar visita');
           if(this.visita.id > 0 ){
             this.visitaService.delete(this.visita.id).subscribe((data) => {
-                if (data.status === 200) { 
-                  console.log("eliminado correctamente, redireccionando y limpiando el get .."); 
+                if (data.status === 200) {                   
                   this.userData.showToast('visita eliminada correctamente');
-
-                  
                   this.router.navigate(['/visitas', { item: true, skipLocationChange: true}]);
-                  
-/*                   
-                  this.router.navigateByUrl('/visitas', {skipLocationChange: true}).then(() => {
-                    
-                  }); */
-
-                }
-                
+                }                
                 else  this.userData.showToast('Error al eliminar registro');                
               },
               (err) => {

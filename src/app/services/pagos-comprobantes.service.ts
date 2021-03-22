@@ -42,6 +42,11 @@ export class PagosComprobantesService {
     return this.http.post<ApiResponse>(this.baseUrl + this.pagoComprobanteContext, pagoComprobanteData).pipe(share());
   } 
 
+  update(idPagoComprobante: number, pagoComprobanteData: any) : Observable<ApiResponse> {
+    console.log('update pago comprobante', this.baseUrl + this.pagoComprobanteContext + environment.coreApiBaseEditOperation+  "/" + idPagoComprobante);
+    return this.http.patch<ApiResponse>(this.baseUrl+this.pagoComprobanteContext+environment.coreApiBaseEditOperation+  "/" + idPagoComprobante, pagoComprobanteData).pipe(share());
+  }
+
   delete(id: number) : Observable<ApiResponse> {
     console.log('borrando pago comprobante: ',this.baseUrl + this.pagoComprobanteContext +environment.coreApiBaseDeleteOperation + "/" + id );    
     return this.http.delete<ApiResponse>(this.baseUrl + this.pagoComprobanteContext + environment.coreApiBaseDeleteOperation + "/" + id).pipe(share());

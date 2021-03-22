@@ -22,7 +22,10 @@ export class UserData {
   constructor(
     public storage: Storage,
     private toastCtrl: ToastController
-  ) { }
+  ) {
+    
+
+   }
 
   hasFavorite(sessionName: string): boolean {
     return (this._favorites.indexOf(sessionName) > -1);
@@ -108,7 +111,7 @@ export class UserData {
     return JSON.parse(window.localStorage.getItem('empresaData')).id;
   }
 
-  getDataDireccionEmpresa():any{
+   getDataDireccionEmpresa():any{
     let empresa = JSON.parse(window.localStorage.getItem('empresaData'));
     if(empresa){
       return empresa.direccion;
@@ -189,15 +192,14 @@ export class UserData {
 
   }
 
-  retrieveBase64ToImageEmpresa(){
+  async retrieveBase64ToImageEmpresa(){
     console.log('retrieveBase64ToImageEmpresa');    
-    let empresa = JSON.parse(window.localStorage.getItem('empresaData'));
+    let empresa = await JSON.parse(window.localStorage.getItem('empresaData'));
     if(empresa){
       if(empresa.configuracionEmpresa){
-        this.base64ImageEmpresa = empresa.configuracionEmpresa.logoFondoClaro;
-      }
-      
-    }
+        this.base64ImageEmpresa ='https://almacenamientonube.s3.us-west-1.amazonaws.com/'+empresa.configuracionEmpresa.logoFondoClaro.rutaS3;
+      }      
+    }    
   }
 
   showToast(dataMessage: string) {

@@ -41,6 +41,9 @@ export class InicioPage implements OnInit {
 
   public fieldFilters:string[]=new Array();
   totalPages:number = 0;
+  myDate:Date = new Date();
+
+  mostrarDataInteres:boolean=true;
 
   constructor(private dataService: DataService,
               private menuCtrl: MenuController,
@@ -59,28 +62,32 @@ export class InicioPage implements OnInit {
 
  
   ngOnInit() {  
-
     this.direccion = this.userData.getDataDireccionEmpresa();
-    this.nombreEmpresa = this.userData.getNombreEmpresa();
-
-    this.cargarDatosInteres();
+    this.nombreEmpresa = this.userData.getNombreEmpresa();    
     this.cargaFiltrosTabla();    
-
   }
 
   ionViewWillEnter(){    
     this.idEmpresa = this.userData.getIdEmpresa();
-    this.cargaAnunciosStorage();
-    
-
+    this.cargarDatosInteres();
+    this.cargaAnunciosStorage();    
+  }
+  async cargarDatosInteres(){
+    console.log('climaData-antes', this.climaData);    
+    await this.cargarDataClima();
+    console.log('climaData-terminando', this.climaData);
   }
 
-  cargarDatosInteres(){
+
+
+  cargarDataClima(){
     if(this.direccion && this.direccion.asentamiento){
       this.datosInteresService.getClimaByCoordenadas(this.direccion.asentamiento.codigoPostal).subscribe((data) => {    
             if (data.cod === 200) {
-              this.climaData = data;            
-               this.presentModalDatosInteres(); 
+              console.log('devolviendo el data con 200', JSON.stringify(data));
+              
+              this.climaData = data;
+               /* this.presentModalDatosInteres();  */
             } else {
               console.log('Llego otro estatus al recupera clima');              
             }
@@ -228,6 +235,7 @@ export class InicioPage implements OnInit {
   buscar(event){
 
     if( ! this.isEmpty(event.detail.value)){
+      this.mostrarDataInteres = false;
 
       console.log(JSON.stringify(this.fieldFilters));
       this.filters = "";
@@ -236,6 +244,7 @@ export class InicioPage implements OnInit {
         this.filters = this.filters.substring(0, this.filters.length -1 );
       }    
      }else{
+      this.mostrarDataInteres = true;
        console.log('la cadena viene vacia');
        this.filters = "";
      }

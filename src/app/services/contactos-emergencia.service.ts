@@ -28,6 +28,11 @@ export class ContactosEmergenciaService {
     return this.http.post<ApiResponse>(this.baseUrl + this.contactoContext, contactoData).pipe(share());
   }
 
+  update(idContacto: number, contacto: any) : Observable<ApiResponse> {
+    console.log('update contacto', this.baseUrl+this.contactoContext+environment.coreApiBaseEditOperation+"/"+idContacto);
+    return this.http.patch<ApiResponse>(this.baseUrl+this.contactoContext+environment.coreApiBaseEditOperation+"/"+idContacto, contacto).pipe(share());
+  } 
+
   delete(idContacto: number) : Observable<ApiResponse> {
     console.log('borrando registro: ',this.baseUrl + this.contactoContext +environment.coreApiBaseDeleteOperation + "/" + idContacto );    
     return this.http.delete<ApiResponse>(this.baseUrl + this.contactoContext + environment.coreApiBaseDeleteOperation + "/" + idContacto).pipe(share());
