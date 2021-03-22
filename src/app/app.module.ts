@@ -27,6 +27,8 @@ import { CallNumber } from '@ionic-native/call-number/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { IOSFilePicker } from '@ionic-native/file-picker/ngx';//ocupado para la plataforma ios
 
+import { DatePipe } from '@angular/common';
+
 
 /* import { NgxMaskModule, IConfig } from 'ngx-mask' */
 /* export const options: Partial<IConfig> | (() => Partial<IConfig>) = null; */
@@ -60,6 +62,7 @@ import { IOSFilePicker } from '@ionic-native/file-picker/ngx';//ocupado para la 
     BarcodeScanner,
     EmailComposer,
     CallNumber,
+    DatePipe,
     FileChooser,
     IOSFilePicker,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
