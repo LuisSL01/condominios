@@ -11,6 +11,7 @@ import { UserData } from "../../providers/user-data";
 import { EmpresaPage } from "../empresa/empresa.page";
 import { AgenteService } from '../../services/agente.service';
 import { PushService } from '../../services/push.service';
+import { isEmpty } from 'rxjs/operators';
 
 @Component({
   selector: "app-home",
@@ -65,7 +66,7 @@ export class HomePage implements OnInit {
 
 
     const objAgente = {
-      /* dispositivoUuid: this.pushService.userId       */
+      dispositivoUuid: this.pushService.userId      
     };
 
     const loginPayload = {
@@ -86,7 +87,13 @@ export class HomePage implements OnInit {
       window.localStorage.setItem("userDetails", JSON.stringify({ "username": "test1", "nombreCompleto": "Test1", "id": 4 }));
       this.storage.set("userDetails", JSON.stringify({ "username": "test1", "nombreCompleto": "Test1", "id": 4 }));
       this.idAgente = 4;
-      this.updateAgenteCore(this.idAgente , objAgente);
+
+      if( ! this.isEmpty(objAgente.dispositivoUuid)){
+        console.log('debo ir actualizar el uuid');
+        
+        this.updateAgenteCore(this.idAgente , objAgente);
+      }
+      
 
       this.buscarEmpresasAgente();
       this.presentModalListEmpresas(); //Debo presentar el modal para seleccionar una empresa
@@ -100,15 +107,14 @@ export class HomePage implements OnInit {
               this.storage.set('userFull', userFull.result);
               
               this.userData.recibeDepartamento(userFull.result.departamento);
-
+              let nombreCOmpleto = userFull.result.nombreCompleto +" "+ userFull.result.apellidoPaterno +" " +  userFull.result.apellidoMaterno;
               if (userFull.result.activo === false) {
                 this.router.navigate(['/']);
-                this.showToast("El usuario " + data.result.nombreCompleto + ", no se encuentra activo para la aplicación móvil");
+                this.showToast("El usuario " + nombreCOmpleto + ", no se encuentra activo para la aplicación móvil");
               } else {//Aqui debo preguntar a cuantas empresas tiene acceso                          
                 this.idAgente = data.result.id;
-                let nombreAgente = data.result.nombreCompleto;
-                console.log("objAgente: " + objAgente);
                 
+                console.log("objAgente: " + objAgente);                
                 this.updateAgenteCore(this.idAgente , objAgente);
 
                 this.authService.getListEmpresas(this.idAgente).subscribe(data => {
@@ -122,11 +128,11 @@ export class HomePage implements OnInit {
                       this.storage.set('empresaData', JSON.stringify(this.empresas[0]));
                       this.userData.setConfigEmpresa();
                       this.router.navigateByUrl('/inicio');
-                      this.showToast("Bienvenido " + nombreAgente + " a armonía residencial");
+                      this.showToast("Bienvenido " + nombreCOmpleto + " a Armonía Residencial");
                     } else if (this.empresas.length > 1) {
                       this.presentModalListEmpresas()//Debo presentar el modal para seleccionar una empresa
                     } else {
-                      console.log("Error al recuperar empresas del agente: ", nombreAgente);//Error al recuperar las empresas del user
+                      console.log("Error al recuperar empresas del agente: ", nombreCOmpleto);//Error al recuperar las empresas del user
                     }
                   }
                 }, err => {
@@ -146,11 +152,15 @@ export class HomePage implements OnInit {
     }
   }
 
+  isEmpty(str) {
+    return (!str || 0 === str.length);
+  }
+
   
   updateAgenteCore(id: number, datosForm: any) {
     this.agenteService.updateUsuarioCore(id, datosForm).subscribe(data => {
       console.log('data.result:: ', data.result);
-      if (data.status === 200) {        
+      if (data.status === 200) {
       } else {
         this.userData.showToast('Error al actualizar uuid de usuario');        
       }

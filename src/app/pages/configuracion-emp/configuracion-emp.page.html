@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>configuracion-emp</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-list>
+    <ion-item>
+      <ion-label>¿Aplican torres?</ion-label>
+      <ion-checkbox [(ngModel)]="aplicaTorres" (ionChange)="cambiaAplicaTorre()" > </ion-checkbox>
+    </ion-item>
+  <br>  
+    <ion-button (click)="guardarInfoEmpresa()" expand="block" shape="round">
+      Guardar
+    </ion-button>
+  <br>
+    <ion-item *ngIf="aplicaTorres" >
+      <ion-label>
+        <ion-icon name="leaf-outline" style="font-size:23px; color: #50c8ec; 
+            margin-bottom: -5px;
+        "></ion-icon>&nbsp;&nbsp;Torre:
+      </ion-label>
+      <ion-select  interface="popover"  [(ngModel)]="torreSelected" okText="Aceptar" cancelText="Cancelar" 
+      (ionChange)="cambioTorre()" >
+          <ion-select-option *ngFor="let tt of torres" [value]="tt"> {{ tt.data.nombre}} </ion-select-option>
+      </ion-select>
+
+      <ion-button fill="clear" (click)="addTorre()">
+          <ion-icon   style="font-size:23px; color: #50c8ec; 
+          margin-bottom: -5px; "slot="icon-only" name="add-circle-outline"></ion-icon>
+      </ion-button> 
+    </ion-item>
+
+    <br>
+    
+    <ion-item  >
+      <ion-label>
+        <ion-icon name="leaf-outline" style="font-size:23px; color: #50c8ec; 
+            margin-bottom: -5px;
+        "></ion-icon>&nbsp;&nbsp;Departamento:
+      </ion-label>
+      <ion-select  interface="popover"  okText="Aceptar" cancelText="Cancelar">
+          <ion-select-option *ngFor="let tt of departamentos" [value]="tt"> {{ tt.data.nombre}} </ion-select-option>
+      </ion-select>
+      <ion-button fill="clear" (click)="addDepartamento()">
+          <ion-icon   style="font-size:23px; color: #50c8ec; 
+          margin-bottom: -5px; "slot="icon-only" name="add-circle-outline"></ion-icon>
+      </ion-button> 
+    </ion-item>
+    
+  </ion-list>
+</ion-content>
