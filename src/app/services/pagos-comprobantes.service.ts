@@ -57,6 +57,11 @@ export class PagosComprobantesService {
     return this.http.get<ApiResponse>(this.baseUrl + this.pagoComprobanteContext+ environment.coreApiGetPagoComprobanteListOperation +"/"+idEmpresa+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):'')).pipe(share());
   }
 
+  getPagosComprobantesPorAgente(idEmpresa: number, idAgente:number, page: number, size: number, filters: string){
+    console.log(this.baseUrl+this.pagoComprobanteContext+":listByAgente/"+idEmpresa+"/"+idAgente+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):''));
+    return this.http.get<ApiResponse>(this.baseUrl+this.pagoComprobanteContext+":listByAgente/"+idEmpresa+"/"+idAgente+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):'')).pipe(share());
+  }
+
   updateStatus(data:FormData): Observable<ApiResponse> {
     console.log('updateStatusPagoComprobante: ', this.baseUrl + this.pagoComprobanteContext + '/updateStatus' );
     return this.http.patch<ApiResponse>(this.baseUrl + this.pagoComprobanteContext + '/updateStatus' ,data).pipe(share());    

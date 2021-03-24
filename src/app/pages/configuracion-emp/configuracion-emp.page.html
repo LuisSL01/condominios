@@ -6,6 +6,12 @@
 
 <ion-content fullscreen>
   <ion-list>
+    <ion-list-header color="primary">
+      <ion-label> 
+        <h2>Configuración</h2>
+        </ion-label>
+    </ion-list-header>
+
     <ion-item>
       <ion-label>¿Aplican torres?</ion-label>
       <ion-checkbox [(ngModel)]="aplicaTorres" (ionChange)="cambiaAplicaTorre()" > </ion-checkbox>

@@ -101,7 +101,7 @@ export class UserData {
       this.recuperaIdAgente();
     }
     return this.agente_id = JSON.parse(window.localStorage.getItem('userDetails')).id;; */
-    return JSON.parse(window.localStorage.getItem('userDetails')).id;;
+    return JSON.parse(window.localStorage.getItem('userDetails')).id;
   }
 
   getIdEmpresa(): number{
@@ -110,6 +110,8 @@ export class UserData {
     } */
     return JSON.parse(window.localStorage.getItem('empresaData')).id;
   }
+
+  
 
   getAplicaTorres():boolean{
     return JSON.parse(window.localStorage.getItem('empresaData')).aplicaTorres;
@@ -159,6 +161,10 @@ export class UserData {
         }        
       }        
     }  
+    
+    console.log('setConfigUser', this.administrador);
+
+    
  }
 
  recibeDepartamento(depto:string){

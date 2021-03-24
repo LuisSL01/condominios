@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UserData } from '../../providers/user-data';
+import { Storage } from "@ionic/storage";
 
 @Component({
   selector: 'app-datos-empresa',
@@ -7,9 +9,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DatosEmpresaPage implements OnInit {
 
-  constructor() { }
+  empData:any = [];
 
-  ngOnInit() {
+  constructor(private userData:UserData,
+              private storage: Storage,) { }
+
+  ngOnInit() {    
+    this.recuperaDataEmpresa();
   }
+
+  async recuperaDataEmpresa(){
+    /* console.log('recuperaDataEmpresa');     */
+    const data = await this.storage.get('empresaData');
+    /* console.log('data',data); */
+    if(data){
+      this.empData = JSON.parse(data);
+    }
+    /* console.log(this.empData); */    
+  }
+  ionViewDidEnter(){
+    /* console.log('ionViewDidEnter');     */        
+  }  
 
 }

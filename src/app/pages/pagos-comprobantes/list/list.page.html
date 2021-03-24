@@ -29,9 +29,10 @@
     </ion-card-subtitle>
   </ion-card-header>
   <ion-card-content *ngIf="pagoComprobante.infoAdeudo">   
-    <ion-label>
-      <h2>Forma de pago {{pagoComprobante.data.formaPago}}</h2>
+    <ion-label>      
       <h2>Importe ${{pagoComprobante.infoAdeudo.cantidad}}</h2>
+      <h2>Forma de pago {{pagoComprobante.data.formaPago}}</h2>
+      <h3 *ngIf="pagoComprobante.data.descripcionFormaPago">Desc. forma pago{{pagoComprobante.data.descripcionFormaPago}}</h3>
       
     </ion-label> 
       

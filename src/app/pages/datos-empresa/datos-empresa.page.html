@@ -4,33 +4,44 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content fullscreen>
 
   <ion-list>
+    <ion-list-header color="primary">
+      <ion-label> 
+        <h2>Datos de contacto</h2>
+        </ion-label>
+    </ion-list-header>
     <ion-item>
       <ion-label>
-        <ion-icon name="mail-outline" style="font-size:23px; color: #50c8ec; 
-            margin-bottom: -5px;
-        "></ion-icon>&nbsp;&nbsp;Correo:
-      </ion-label>
-      <ion-label>admin-explanada@grupoerve.com</ion-label>      
+        <ion-icon name="mail-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
+        &nbsp;&nbsp;Correo:
+      </ion-label> 
+      <ion-label class="ion-text-wrap">{{empData.email}}</ion-label>     
     </ion-item>
-  <br>
   <ion-item>
     <ion-label>
-      <ion-icon name="mail-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
-      &nbsp;&nbsp;Telefono:
+      <ion-icon name="call-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
+        &nbsp;&nbsp;Teléfono:
     </ion-label>
-    <ion-label>771-295-9292</ion-label>
+    <ion-label>{{empData.telefono}}</ion-label>      
   </ion-item>
-  <br>
+  
   <ion-item>
-    <ion-label>
-      <ion-icon name="mail-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
-      &nbsp;&nbsp;Dirección:
+    <ion-label >
+      <ion-icon name="home-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
+        &nbsp;&nbsp;Direccion:
     </ion-label>
-    <ion-label>Camino Real de la Plata 338, Zona Plateada, Pachuca, Hidalgo</ion-label>
+    <ion-label class="ion-text-wrap" *ngIf="empData?.direccion" >
+    {{empData.direccion.calle}}, {{empData.direccion.asentamiento.colonia}}, CP:
+    {{empData.direccion.asentamiento.codigoPostal}}, {{empData.direccion.asentamiento.ciudad}},
+    {{empData.direccion.asentamiento.estado}}    
+
+    </ion-label>
   </ion-item>
+
+  
+  
 
   </ion-list>
   

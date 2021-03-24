@@ -34,7 +34,7 @@
 
 
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="userData.administrador">
     <ion-fab-button routerLink="/adeudos/add">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>

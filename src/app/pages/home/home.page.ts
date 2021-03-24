@@ -106,7 +106,7 @@ export class HomePage implements OnInit {
             if (userFull.status === 200) {
               this.storage.set('userFull', userFull.result);
               
-              this.userData.recibeDepartamento(userFull.result.departamento);
+              /* this.userData.recibeDepartamento(userFull.result.departamento); */
               let nombreCOmpleto = userFull.result.nombreCompleto +" "+ userFull.result.apellidoPaterno +" " +  userFull.result.apellidoMaterno;
               if (userFull.result.activo === false) {
                 this.router.navigate(['/']);
@@ -127,6 +127,7 @@ export class HomePage implements OnInit {
                       window.localStorage.setItem('empresaData', JSON.stringify(this.empresas[0]));
                       this.storage.set('empresaData', JSON.stringify(this.empresas[0]));
                       this.userData.setConfigEmpresa();
+                      this.userData.setConfigUser();
                       this.router.navigateByUrl('/inicio');
                       this.showToast("Bienvenido " + nombreCOmpleto + " a Armonía Residencial");
                     } else if (this.empresas.length > 1) {
