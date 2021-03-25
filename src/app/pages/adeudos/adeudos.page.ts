@@ -17,6 +17,7 @@ export class AdeudosPage implements OnInit {
   public adeudos: AdeudoPago[] =[];
 
   idEmpresa: number;
+  idAgente: number;
   filters: any;
   adeudoPage: number = 0;
 
@@ -32,7 +33,8 @@ export class AdeudosPage implements OnInit {
 
   ngOnInit() {
     this.idEmpresa = this.userData.getIdEmpresa();
-    this.cargaData();
+    this.idAgente = this.userData.getIdAgente();
+    
     this.cargaFiltrosTabla();
   }
 
@@ -50,15 +52,17 @@ export class AdeudosPage implements OnInit {
       this.adeudoPage = 0;
       this.infiniteScroll.disabled = false;//Cada que se hace el refresh se habilita el componente infinite scroll
       this.getAdeudos(this.adeudoPage, 10, null, null);      
+    }else{
+      this.cargaData();
     }
   }
 
   
   async cargaData(){
-    await this.cargarDataTemporalStorage(this.idEmpresa);
-    if (this.adeudos.length == 0) {
+    /* await this.cargarDataTemporalStorage(this.idEmpresa);
+    if (this.adeudos.length == 0) { */
       this.getAdeudos(this.adeudoPage, 10);
-    }
+    /* } */
   }
 
   async cargarDataTemporalStorage(idEmpresa: number) {
@@ -68,8 +72,37 @@ export class AdeudosPage implements OnInit {
 
   getAdeudos(page: number, size: number, eventInfinite?, eventRefresh?) {
     console.log('getAdeudos');
-    
-    this.adeudoService.getAdeudos(this.idEmpresa, page, size, this.filters)
+    if(this.userData.administrador){//Si es administrador puede ver todos los adeudos
+      this.adeudoService.getAdeudos(this.idEmpresa, page, size, this.filters)
+        .subscribe((data) => {
+          console.log(data);        
+            if (data.status === 200) {
+              if (eventInfinite) {
+                this.adeudos.push(...data.result.content);
+                if (data.result.content.length === 0) {
+                  eventInfinite.target.disabled = true;
+                  eventInfinite.target.complete();
+                  return;
+                }
+              }else{                      
+                this.adeudos = data.result.content;
+              }
+              this.storage.set(this.idEmpresa + this.adeudoService.nombreEtiqueta, this.adeudos);            
+              this.completeEvent(eventInfinite, eventRefresh);
+            } else {
+              this.userData.showToast('error al recuperar registros');
+              console.log(data.status);
+              this.completeEvent(eventInfinite, eventRefresh);            
+            }
+          },
+          (err) => {
+            this.userData.showToast('error al recuperar registros');
+            console.log(err);
+            this.completeEvent(eventInfinite, eventRefresh);
+          }
+        );
+    }else{
+      this.adeudoService.getAdeudosPorAgente(this.idEmpresa, this.idAgente, page, size, this.filters)
       .subscribe((data) => {
         console.log(data);        
           if (data.status === 200) {
@@ -97,6 +130,10 @@ export class AdeudosPage implements OnInit {
           this.completeEvent(eventInfinite, eventRefresh);
         }
       );
+
+
+    }
+
   }
 
   completeEvent(eventInfinite?, eventRefresh?){

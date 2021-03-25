@@ -72,10 +72,8 @@ export class InicioPage implements OnInit {
     this.cargarDatosInteres();
     this.cargaAnunciosStorage();    
   }
-  async cargarDatosInteres(){
-    console.log('climaData-antes', this.climaData);    
-    await this.cargarDataClima();
-    console.log('climaData-terminando', this.climaData);
+  async cargarDatosInteres(){    
+    await this.cargarDataClima();    
   }
 
 
@@ -84,8 +82,6 @@ export class InicioPage implements OnInit {
     if(this.direccion && this.direccion.asentamiento){
       this.datosInteresService.getClimaByCoordenadas(this.direccion.asentamiento.codigoPostal).subscribe((data) => {    
             if (data.cod === 200) {
-              console.log('devolviendo el data con 200', JSON.stringify(data));
-              
               this.climaData = data;
                /* this.presentModalDatosInteres();  */
             } else {

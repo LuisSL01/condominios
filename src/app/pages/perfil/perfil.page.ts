@@ -67,7 +67,10 @@ export class PerfilPage implements OnInit {
       console.log(data);
       if (data.status === 200) {
 
-          const fechaNac = new Date(data.result.fechaDeNacimiento);
+        if( ! data.result.fechaDeNacimiento){
+          data.result.fechaDeNacimiento = new Date();
+        }
+      /*     const fechaNac = new Date(data.result.fechaDeNacimiento);
           console.log(fechaNac);
 
           if (fechaNac.getFullYear() === null || fechaNac.getMonth() === null || fechaNac.getDate() === null){
@@ -75,15 +78,18 @@ export class PerfilPage implements OnInit {
           } else {
             data.result.fechaDeNacimiento = fechaNac;
           }
-          /* const formattedDate  = this.datePipe.transform(data.result.fechaDeNacimiento, 'yyyy-MM-dd HH:mm:ss');
-          console.log('transform', formattedDate); */
+ */
+          console.log(data.result.fechaDeNacimiento);
+            
+          const formattedDate  = this.datePipe.transform(data.result.fechaDeNacimiento, 'yyyy-MM-dd ');
+          console.log('transform', formattedDate);
 
           this.createAgente = this.fb.group({
             nombreCompleto: [data.result.nombreCompleto],
             apellidoPaterno: [data.result.apellidoPaterno],  
             apellidoMaterno: [data.result.apellidoMaterno],
             sexo: [data.result.sexo],
-            /* fechaDeNacimiento: [formattedDate], */
+            fechaDeNacimiento: [formattedDate],
             ocupacion: [data.result.ocupacion],
             email: [data.result.email],    
             telefono: [data.result.telefono]    

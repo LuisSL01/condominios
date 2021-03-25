@@ -27,5 +27,12 @@ export class EmpresaService {
     console.log('saveReglamentoPDF: ' + this.baseUrl + this.empresaContext + "/" + idEmpresa + "/reglamento");
     return this.http.post<ApiResponse>(this.baseUrl + this.empresaContext + "/" + idEmpresa + "/reglamento", reglamentoData).pipe(share());
   }
+  update(data:FormData): Observable<ApiResponse> {
+    console.log('update empresa: ', this.baseUrl + this.empresaContext);    
+    return this.http.patch<ApiResponse>(this.baseUrl + this.empresaContext ,data).pipe(share());    
+  }
+
+
+
 
 }

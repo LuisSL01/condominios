@@ -4,7 +4,7 @@
 
   <form [formGroup]="createPagoComprobante"  (ngSubmit)="save()" >
     <ion-list>
-      <ion-item *ngIf=" ! edit">
+      <ion-item *ngIf=" (!edit) && (userData.administrador) " >
         <ion-label>
           <ion-icon name="person-outline" style="font-size:23px; color: #50c8ec; 
           margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Agente
@@ -37,7 +37,15 @@
             <ion-select-option value="efectivo">Efectivo</ion-select-option>
             <ion-select-option value="cheque">Cheque</ion-select-option>
             <ion-select-option value="transferencia">Transferencia</ion-select-option>
+            <ion-select-option value="otro">Otro</ion-select-option>
           </ion-select>
+        </ion-item>
+        <ion-item  *ngIf="createPagoComprobante.value.data.formaPago === 'otro'">
+          <ion-label position="floating">
+            <ion-icon name="create-outline" style="font-size:23px; color: #50c8ec; 
+            margin-bottom: -5px;"></ion-icon>&nbsp;Descripción</ion-label>        
+          <ion-textarea rows="2" cols="1" 
+          formControlName="descripcionFormaPago"></ion-textarea>   
         </ion-item>
       </div>
 

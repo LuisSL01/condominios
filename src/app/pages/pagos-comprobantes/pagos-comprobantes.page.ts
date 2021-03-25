@@ -18,6 +18,7 @@ export class PagosComprobantesPage implements OnInit {
   public pagoComprobanteList : PagosComprobantes[] =[];
   
   idEmpresa: number;
+  idAgente: number;
   filters: any;
   pagoComprobantePage: number = 0;
 
@@ -33,7 +34,7 @@ export class PagosComprobantesPage implements OnInit {
 
   ngOnInit() {
     this.idEmpresa = this.userData.getIdEmpresa();
-    this.cargaData();
+    this.idAgente = this.userData.getIdAgente();    
     this.cargaFiltrosTabla();
   }
 
@@ -49,14 +50,19 @@ export class PagosComprobantesPage implements OnInit {
       this.pagoComprobantePage = 0;
       this.infiniteScroll.disabled = false;//Cada que se hace el refresh se habilita el componente infinite scroll      
       this.getPagosComprobantes(this.pagoComprobantePage, 10, null, null);
+    }else{
+      this.cargaData();
     }
   }
 
   async cargaData(){
-    console.log('cargaData()');
-    
-    await this.cargarDataTemporalStorage(this.idEmpresa);
-    if (this.pagoComprobanteList.length == 0) {
+    console.log('cargaData()');    
+    if(this.userData.administrador){
+      await this.cargarDataTemporalStorage(this.idEmpresa);
+      if (this.pagoComprobanteList.length == 0) {
+        this.getPagosComprobantes(this.pagoComprobantePage, 10);
+      }
+    }else{
       this.getPagosComprobantes(this.pagoComprobantePage, 10);
     }
   }
@@ -67,32 +73,63 @@ export class PagosComprobantesPage implements OnInit {
   }
 
   getPagosComprobantes(page: number, size: number, eventInfinite?, eventRefresh?) {
-    this.pagosComprobantesService.getPagosComprobantes(this.idEmpresa, page, size, this.filters).subscribe((data) => {
-          if (data.status === 200) {
-            if (eventInfinite) {
-              this.pagoComprobanteList.push(...data.result.content);
-              if (data.result.content.length === 0) {
-                eventInfinite.target.disabled = true;
-                eventInfinite.target.complete();
-                return;
+
+    if(this.userData.administrador){//Si es administrador puede ver todos los adeudos
+          this.pagosComprobantesService.getPagosComprobantes(this.idEmpresa, page, size, this.filters).subscribe((data) => {
+                if (data.status === 200) {
+                  if (eventInfinite) {
+                    this.pagoComprobanteList.push(...data.result.content);
+                    if (data.result.content.length === 0) {
+                      eventInfinite.target.disabled = true;
+                      eventInfinite.target.complete();
+                      return;
+                    }
+                  }else{                      
+                    this.pagoComprobanteList = data.result.content;
+                  }                        
+                  this.storage.set(this.idEmpresa + this.pagosComprobantesService.nombreEtiqueta, this.pagoComprobanteList);            
+                  this.completeEvent(eventInfinite, eventRefresh);
+                } else {
+                  this.userData.showToast('error al recuperar registros');
+                  console.log(data.status);
+                  this.completeEvent(eventInfinite, eventRefresh);            
+                }
+              },
+              (err) => {
+                this.userData.showToast('error al recuperar registros');
+                console.log(err);
+                this.completeEvent(eventInfinite, eventRefresh);
               }
-            }else{                      
-              this.pagoComprobanteList = data.result.content;
-            }                        
-            this.storage.set(this.idEmpresa + this.pagosComprobantesService.nombreEtiqueta, this.pagoComprobanteList);            
-            this.completeEvent(eventInfinite, eventRefresh);
-          } else {
-            this.userData.showToast('error al recuperar registros');
-            console.log(data.status);
-            this.completeEvent(eventInfinite, eventRefresh);            
-          }
-        },
-        (err) => {
-          this.userData.showToast('error al recuperar registros');
-          console.log(err);
+            );
+    }else{
+      this.pagosComprobantesService.getPagosComprobantesPorAgente(this.idEmpresa, this.idAgente, page, size, this.filters).subscribe((data) => {
+        if (data.status === 200) {
+          if (eventInfinite) {
+            this.pagoComprobanteList.push(...data.result.content);
+            if (data.result.content.length === 0) {
+              eventInfinite.target.disabled = true;
+              eventInfinite.target.complete();
+              return;
+            }
+          }else{                      
+            this.pagoComprobanteList = data.result.content;
+          }                        
+          this.storage.set(this.idEmpresa + this.pagosComprobantesService.nombreEtiqueta, this.pagoComprobanteList);            
           this.completeEvent(eventInfinite, eventRefresh);
+        } else {
+          this.userData.showToast('error al recuperar registros');
+          console.log(data.status);
+          this.completeEvent(eventInfinite, eventRefresh);            
         }
-      );
+      },
+      (err) => {
+        this.userData.showToast('error al recuperar registros');
+        console.log(err);
+        this.completeEvent(eventInfinite, eventRefresh);
+      }
+    );
+    }
+
   }
 
   completeEvent(eventInfinite?, eventRefresh?){
