@@ -52,6 +52,13 @@ export class AdeudoService {
     return this.http.get<ApiResponse>(this.baseUrl + this.adeudoContext+ environment.coreApiGetAdeudoListOperation +"/"+idEmpresa+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):'')).pipe(share());
   }
 
+
+  
+  getAdeudosPorAgente(idEmpresa: number, idAgente:number, page: number, size: number, filters: string){
+    console.log(this.baseUrl + this.adeudoContext+":listByAgente/"+idEmpresa+"/"+idAgente+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):''));
+    return this.http.get<ApiResponse>(this.baseUrl + this.adeudoContext+":listByAgente/"+idEmpresa+"/"+idAgente+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):'')).pipe(share());
+  }
+
   
   getAdeudosByEmpresaAndAgente(idEmpresa: number, idAgente:number){
     console.log(this.baseUrl + this.adeudoContext+ environment.coreApiGetAdeudoAgenteListOperation +"/"+idEmpresa+"/"+idAgente);

@@ -31,7 +31,7 @@
     <ion-label color="tertiary">
       <h3 color="light" *ngIf="anuncio.nombreAgenteCreador">{{anuncio.nombreAgenteCreador}}</h3>
       <h3 *ngIf="anuncio.correoAgenteCreador" (click)="correoSelected()">Mail. {{anuncio.correoAgenteCreador}}
-        <ion-icon slot="icon-only" color="primary" name="mail-outline"></ion-icon>
+        <ion-icon slot="end" color="primary" name="mail-outline"></ion-icon>
       </h3>
       <!-- <h3 *ngIf="anuncio.celularAgenteCreador" (click)="chatSelected()">Cel. {{anuncio.celularAgenteCreador}}
         <ion-icon slot="icon-only" color="primary" name="logo-whatsapp"></ion-icon>
@@ -40,7 +40,7 @@
       <h3 *ngIf="anuncio.celularAgenteCreador" >        
         <a href="https://wa.me/+52{{anuncio.celularAgenteCreador}}?text=Hola!,%20estoy%20interesado%20en%20tu%20anuncio%20{{anuncio.data.titulo}}" class="small-text"
         style="color:rgb(150, 150, 150); font-size: 13px;"> Cel. {{anuncio.celularAgenteCreador}}
-          <ion-icon slot="icon-only" color="primary" name="logo-whatsapp"></ion-icon>
+          <ion-icon slot="end" color="primary" name="logo-whatsapp"></ion-icon>
       </a>
 
       </h3>

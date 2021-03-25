@@ -31,6 +31,7 @@ export class AddPage implements OnInit {
     adeudoId:["",[Validators.required]],    
     data: this.fb.group({
       formaPago:["",[Validators.required]],
+      descripcionFormaPago:["",],
     })
   });
 
@@ -60,15 +61,27 @@ export class AddPage implements OnInit {
     this.pago = JSON.parse(this.activatedRoute.snapshot.paramMap.get('item'));    
     if(this.pago != null) this.prepareEdit();
     else this.pago = new PagosComprobantes();
-
-    this.buscarAgentes();
+    
+    
   }
+
+  ionViewDidEnter(){
+    console.log('this.userData.administrador', this.userData.administrador);    
+    if(this.userData.administrador){
+      this.buscarAgentes();
+    }else{
+      this.agenteSelectedId = this.idAgente;
+      this.buscarAdeudosAgente();
+    }
+  }
+ 
 
   prepareEdit(){
     this.edit = true;
     this.createPagoComprobante = this.fb.group({
       data: this.fb.group({
-        formaPago:[this.pago.data.formaPago]
+        formaPago:[this.pago.data.formaPago],
+        descripcionFormaPago:[this.pago.data.descripcionFormaPago]
       })
     });
   }
@@ -97,8 +110,7 @@ export class AddPage implements OnInit {
 
   buscarAdeudosAgente(){
     console.log('buscarAdeudosAgente');    
-    this.adeudoService.getAdeudosByEmpresaAndAgente(this.userData.getIdEmpresa(), 
-    this.agenteSelectedId).subscribe((data) => {
+    this.adeudoService.getAdeudosByEmpresaAndAgente(this.userData.getIdEmpresa(), this.agenteSelectedId).subscribe((data) => {
       if (data.status === 200) {
         console.log('Adeudos recuperados correctamente'); 
         this.adeudos = data.result;

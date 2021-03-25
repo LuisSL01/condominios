@@ -8,8 +8,18 @@
                 <ion-icon name="pencil-outline" style="font-size:23px; color: #50c8ec;  margin-bottom: -5px;">
                 </ion-icon>&nbsp;&nbsp;Reglamento
             </ion-label>
-            <ion-button (click)="downloadDoc()" expand="block" fill="clear" shape="round">
-                Descargar/Ver
+        </ion-item>
+        <ion-item>
+            <ion-button 
+                (click)="subirReglamento()"
+                color="primary" expand="block">Cargar Reglamento
+            </ion-button>
+        </ion-item>
+        
+        <ion-item> 
+            <ion-button 
+                (click)="verReglamento()"
+                color="primary" expand="block">Ver Reglamento
             </ion-button>
         </ion-item>
     </ion-list>
