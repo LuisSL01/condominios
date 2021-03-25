@@ -8,6 +8,10 @@ import { Platform } from '@ionic/angular';
 import { UserData } from '../../providers/user-data';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { IOSFilePicker } from '@ionic-native/file-picker/ngx';
+import { FilePath } from '@ionic-native/file-path/ngx';
+import { Base64 } from '@ionic-native/base64/ngx';
+import { Archivo } from '../../models/archivo-vortex.model';
+import { EmpresaService } from '../../services/empresa.service';
 
 
 @Component({
@@ -21,12 +25,16 @@ export class ReglamentoPage implements OnInit {
   idEmpresa: number;
 
   constructor(
-    private transfer: FileTransfer, private file: File,
+    private transfer: FileTransfer, 
+    private file: File,
     private fileopen: FileOpener,
     private platform: Platform,
     private userData: UserData,
     private fileChooser: FileChooser,
-    private filePicker: IOSFilePicker
+    private filePicker: IOSFilePicker,
+    private filePath: FilePath,
+    private base64: Base64,
+    private empresaService: EmpresaService
   ) {
     /* this.fileTransfer = this.transfer.create(); */
   }
@@ -60,27 +68,70 @@ export class ReglamentoPage implements OnInit {
 
 
   subirReglamento() {
-
     if (this.platform.is('ios')) {
-
       this.filePicker.pickFile()
-        .then(uri => console.log(uri))
-        .catch(err => console.log('Error', err));
-    }
-    else {
+        .then((uri) => {
+          this.filePath.resolveNativePath(uri)
+          .then(filePath => {
+            this.base64.encodeFile(filePath).then((base64File: string) => {
+              base64File = base64File.substring(base64File.lastIndexOf(',') + 1, base64File.length)
+              const files: Archivo[] = new Array();
+              files.push(new Archivo(base64File, "reglamento_" + this.idEmpresa + ".pdf"));
+              const formData = new FormData();
+              formData.append("file", JSON.stringify(files));
+              this.empresaService.saveReglamentoPDF(formData, this.idEmpresa).subscribe(
+                (data) => {
+                  console.log(data);
+                  if(data.status === 200){          
+                    //this.router.navigate(['/reglamento']);    
+                    alert('Reglamento cargado correctamente')      
+                  } else {
+                    alert('Problema al cargar el reglamento')   
+                  }
+                }, (err) =>{
+                  this.userData.showToast("Error C: " + err);
+                }, () => {}
+              );
+            }, (err) => {
+              alert("Error E: " + err);
+            });
+          })
+          .catch(err => alert(err));
+        })
+        .catch(err => alert('Error F' + err));
+    } else {
       console.log('is in android');
       console.log('subirReglamento');
-      this.fileChooser.open()
+      this.fileChooser.open({ "mime": "application/pdf" })
         .then((uri) =>{
-          console.log(uri)
-
-        },
-        (err) => {         
-        }
-        )          
-        .catch(e =>
-          console.log(e));
-      // run android code
+          this.filePath.resolveNativePath(uri)
+          .then(filePath => {
+            this.base64.encodeFile(filePath).then((base64File: string) => {
+              base64File = base64File.substring(base64File.lastIndexOf(',') + 1, base64File.length)
+              const files: Archivo[] = new Array();
+              files.push(new Archivo(base64File, "reglamento_" + this.idEmpresa + ".pdf"));
+              const formData = new FormData();
+              formData.append("file", JSON.stringify(files));
+              this.empresaService.saveReglamentoPDF(formData, this.idEmpresa).subscribe(
+                (data) => {
+                  console.log(data);
+                  if(data.status === 200){          
+                    //this.router.navigate(['/reglamento']);    
+                    alert('Reglamento cargado correctamente')      
+                  } else {
+                    alert('Problema al cargar el reglamento')   
+                  }
+                }, (err) =>{
+                  this.userData.showToast("Error C: " + err);
+                }, () => {}
+              );
+            }, (err) => {
+              alert("Error E: " + err);
+            });
+          })
+          .catch(err => alert(err));
+          }, (err) => {}
+        ).catch(e => alert('Error F' + e));
     }
 
   }
@@ -141,6 +192,33 @@ export class ReglamentoPage implements OnInit {
       document.body.removeChild(link);
       link = null;
     }
+  }
+
+  verReglamento(){
+    this.empresaService.getEmpresaById(this.idEmpresa).subscribe(
+      (data) => {
+        var file : Archivo;
+        file = data.result.configuracionEmpresa.reglamento;
+        if(file === null){
+          alert("No hay reglamento cargado");
+        } else {
+          const fileTransfer: FileTransferObject =  this.transfer.create();    
+          //const url = 'https://almacenamientonube.s3.us-west-1.amazonaws.com/Config/reglamento_empresaId_7.pdf';
+          const url = 'https://almacenamientonube.s3.us-west-1.amazonaws.com/' + file.rutaS3;
+          fileTransfer.download(url, this.file.dataDirectory + 'reglamento.pdf').then((entry) => {
+            const entryUrl = entry.toURL();
+            console.log('download complete: ' + entryUrl);
+            this.fileopen.open(entryUrl, 'application/pdf');
+          }, (error) => {
+            console.log('error: '+error);      
+          }); 
+        }      
+      }, (err) =>{
+        console.log(err);
+        this.userData.showToast("Error: " + err);
+      }, () => {}
+    );
+ 
   }
 
 }

@@ -19,5 +19,13 @@ export class EmpresaService {
     return this.http.get<ApiResponse>(this.baseUrl + this.empresaContext + environment.coreApiActividadEconomicaEmpresaOperation + "/" + actividadEconomica).pipe(share());
   }
 
+  getEmpresaById(idEmpresa: number) : Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.baseUrl + this.empresaContext + "/" + idEmpresa).pipe(share());
+  }
+
+  saveReglamentoPDF(reglamentoData: any, idEmpresa: number): Observable<ApiResponse> {
+    console.log('saveReglamentoPDF: ' + this.baseUrl + this.empresaContext + "/" + idEmpresa + "/reglamento");
+    return this.http.post<ApiResponse>(this.baseUrl + this.empresaContext + "/" + idEmpresa + "/reglamento", reglamentoData).pipe(share());
+  }
 
 }

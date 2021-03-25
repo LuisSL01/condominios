@@ -11,21 +11,21 @@ export const environment = {
 
   
 
-
+/*
   authServiceBaseUrl: 'http://54.177.89.203:8080',
   coreServiceBaseUrl: 'http://54.177.89.203:8081',
   formsServiceBaseUrl: 'http://54.177.89.203:8082',   
-
+*/
 
   
  
   
 
-/*
+
   authServiceBaseUrl: 'http://192.168.80.104:8080',
-  coreServiceBaseUrl: 'http://192.168.80.104:8081',
+  coreServiceBaseUrl: 'http://192.168.2.132:8081',
   formsServiceBaseUrl: 'http://192.168.80.104:8082',
-*/ 
+
 
 
 
