@@ -1,6 +1,114 @@
-<app-menu-header></app-menu-header>
-<app-header titulo="Reservas"></app-header>
+
+<!-- 
+  <app-menu-header></app-menu-header>
+<app-header titulo="Reservas"></app-header> 
+-->
+
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button color="light" menu="primerMenu"></ion-menu-button>
+    </ion-buttons>
+    <ion-title></ion-title>        
+    <ion-img src="{{userData.base64ImageEmpresa}}" style="margin-right: 100px; height:50px;"></ion-img>
+  </ion-toolbar>
+
+  <ion-toolbar color="secondary">
+    <ion-title>Reservas</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button  class="button" text="" icon="chevron-back-circle-outline" defaultHref="/"  ></ion-back-button>             
+    </ion-buttons>
+    <ion-buttons slot="end">      
+      <ion-button (click)="openCalModal()">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+        
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content fullscreen>
+
+  <ion-item>
+    <ion-label>
+        <ion-icon name="pencil-outline" style="font-size:23px; color: #50c8ec; 
+        margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Seleccione area
+    </ion-label>
+
+    <ion-select interface="popover" placeholder="Seleccionar" 
+        okText="Aceptar" cancelText="Cancelar">
+        <ion-select-option *ngFor="let area of areasComunesList" [value]="area.id">
+            {{ area.data.nombre}}
+        </ion-select-option>
+    </ion-select>
+</ion-item>
+
+  <ion-segment [(ngModel)]="calendar.mode">
+    <ion-segment-button value="month">
+      <ion-label>Month</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="week">
+      <ion-label>Week</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="day">
+      <ion-label>Day</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-row>
+    <ion-col size="6">
+      <ion-button (click)="createRandomEvents()" expand="block" fill="outline">
+        Add random events
+      </ion-button>
+    </ion-col>
+    <ion-col size="6">
+      <ion-button (click)="removeEvents()" expand="block" fill="outline">
+        Remove all events
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <!-- Move back one screen of the slides -->
+    <ion-col size="2">
+      <ion-button fill="clear" (click)="back()">
+        <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-col>
+ 
+    <ion-col size="8" class="ion-text-center">
+      <h2>{{ viewTitle }}</h2>
+    </ion-col>
+ 
+    <!-- Move forward one screen of the slides -->
+    <ion-col size="2">
+      <ion-button fill="clear" (click)="next()">
+        <ion-icon name="arrow-forward" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <calendar
+    [eventSource]="eventSource"
+    [calendarMode]="calendar.mode"
+    [currentDate]="calendar.currentDate"    
+    (onTitleChanged)="onViewTitleChanged($event)"
+    [monthviewDisplayEventTemplate]="foo"
+  >
+  </calendar>
+  <ng-template #foo let-view="view" let-row="row" let-col="col">
+    <div [class.with-event]="view.dates[row*7+col].events.length">
+      {{view.dates[row*7+col].label}}
+      <!-- <div class="indicator-container">
+        <div class="event-indicator" *ngFor="let e of view.dates[row*7+col].events"></div>
+      </div> -->
+    </div>
+  </ng-template>
+
+
+  <!--Termina lo del calendario-->
+
+
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
@@ -26,7 +134,7 @@
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
 
 
-  <ion-fab-button routerLink="/area-comun-reserva/add">
+  <ion-fab-button  (click)="openCalModal()" > 
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>
   </ion-fab>

@@ -49,6 +49,7 @@
     "cordova-plugin-headercolor": "^1.0.0",
     "cordova-plugin-network-information": "^2.0.2",
     "cordova-sqlite-storage": "^5.0.1",
+    "ionic2-calendar": "^0.6.7",
     "moment": "^2.27.0",
     "moment-timezone": "^0.5.31",
     "onesignal-cordova-plugin": "^2.11.3",
