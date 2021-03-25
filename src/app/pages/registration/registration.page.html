@@ -78,7 +78,7 @@
 
       <ion-item>
         <ion-label>
-          <ion-icon name="mail-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
+          <ion-icon name="call-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
           &nbsp;&nbsp;Celular:
         </ion-label>
         <ion-input (ionChange)="cambioNumeroTelefono( $event )" formControlName="celular"></ion-input>
@@ -139,64 +139,7 @@
       <ion-label color="danger"
         *ngIf="createAgente.controls.confirmarPassword.errors?.required && (createAgente.controls.confirmarPassword.touched || createAgente.controls.confirmarPassword.dirty)">
         *La confirmación de contraseña es requerida </ion-label>
-      <div formGroupName="direccion" *ngIf="false">
-        <ion-item>
-
-          <ion-label>
-            <ion-icon name="home-outline" style="font-size:23px; color: #50c8ec; 
-                margin-bottom: -5px;
-            "></ion-icon>&nbsp;&nbsp;Domicilio:
-          </ion-label>
-
-
-          <ion-input type="text" class="form-control" formControlName="calle" id="calle" placeholder="Domicilio">
-          </ion-input>
-        </ion-item>
-        <div
-          *ngIf="createAgente.get('direccion').get('calle').invalid && (createAgente.get('direccion').get('calle').dirty || createAgente.get('direccion').get('calle').touched)">
-          <div *ngIf="createAgente.get('direccion').get('calle').errors['required']">
-            La dirección es requerida.
-          </div>
-        </div>
-
-        <ion-item>
-          <ion-label>
-            <ion-icon name="home-outline" style="font-size:23px; color: #50c8ec; 
-                margin-bottom: -5px;
-            "></ion-icon>&nbsp;&nbsp;Código Postal:
-          </ion-label>
-          <ion-input type="text" maxlength="5" class="form-control" formControlName="asentamiento" placeholder="CP">
-          </ion-input>
-        </ion-item>
-        <div
-          *ngIf="createAgente.get('direccion').get('asentamiento').invalid && (createAgente.get('direccion').get('asentamiento').dirty || createAgente.get('direccion').get('asentamiento').touched)">
-          <ion-label color="danger" *ngIf="createAgente.get('direccion').get('asentamiento').errors['required']">
-            * El código postal es requerido
-          </ion-label>
-        </div>
-
-        <ion-button (click)="validarCP()" expand="block" shape="round">
-          Validar código postal
-        </ion-button>
-
-
-        <ion-item>
-          <ion-label>
-            <ion-icon name="home-outline" style="font-size:23px; color: #50c8ec; 
-                margin-bottom: -5px;
-            "></ion-icon>&nbsp;&nbsp;Asentamiento:
-          </ion-label>
-          <ion-select interface="action-sheet" cancelText="Cancelar" placeholder="Seleccionar" required
-            (ionChange)="cambioAsentamiento($event)">
-            <ion-select-option *ngFor="let asento of asentamientos" [value]="asento">
-              {{ asento.colonia }}-{{ asento.municipio}}--{{asento.estado}}
-            </ion-select-option>
-          </ion-select>
-
-        </ion-item>
-
-
-      </div>
+      
 
       <ion-item>
         <ion-label>
@@ -206,18 +149,71 @@
         </ion-label>
         <ion-select interface="action-sheet" cancelText="Cancelar" placeholder="Seleccionar" required
           (ionChange)="cambioEmpresa($event)">
-          <ion-select-option *ngFor="let emp of empresas" [value]="emp.id">
+          <ion-select-option *ngFor="let emp of empresas" [value]="emp">
             {{ emp.nombre}}
           </ion-select-option>
         </ion-select>
       </ion-item>
 
+      <ion-item  *ngIf="empresaSelected?.configuracionEmpresa.aplicaTorres">
+        <ion-label>
+          <ion-icon name="leaf-outline" style="font-size:23px; color: #50c8ec; 
+              margin-bottom: -5px;
+          "></ion-icon>&nbsp;&nbsp;Torre:
+        </ion-label>
+        <ion-select  interface="popover" okText="Aceptar" cancelText="Cancelar" 
+        (ionChange)="cambioTorre($event)" >
+            <ion-select-option *ngFor="let tt of torres" [value]="tt"> {{ tt.data.nombre}} </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item >
+        <ion-label>
+          <ion-icon name="leaf-outline" style="font-size:23px; color: #50c8ec; 
+              margin-bottom: -5px;
+          "></ion-icon>&nbsp;&nbsp;Departamento:
+        </ion-label>
+        <ion-select  interface="popover"  okText="Aceptar" cancelText="Cancelar"
+        (ionChange)="cambioDepto($event)" >
+            <ion-select-option *ngFor="let tt of departamentos" [value]="tt"> {{ tt.data.nombre}} </ion-select-option>
+        </ion-select>        
+      </ion-item>
+
 
     </ion-list>
 
+    
+    
+    
+  
+    <ion-footer class="ion-no-border" translucent>
+      <ion-toolbar color="light" style=" height: 50px;">
+        <ion-grid>
+          <ion-row>
+    
+            <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" offset-md="4" offset-sm="4">
+              <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
+              
+              <ion-button fill="clear" size="small" routerLink="/home"
+                style="text-transform: none; margin-left: 120px; margin-top: -40px;">Cancelar
+                <ion-icon slot="start" name="close-circle-outline" style="font-size:23px; color:#50c8ec;"></ion-icon>
+              </ion-button>
+    
 
-    <app-buttons valueLinkCancel="/home" valueDisabled="{{ ! createAgente.valid}}"></app-buttons>
-    <app-footer></app-footer>
+
+
+              <ion-button fill="clear" size="small" style="text-transform: none; margin-top: -80px;  margin-left: 220px;" type="submit" disabled="{{! createAgente.valid}}">
+                Guardar            
+                <ion-icon slot="start" name="checkmark-circle-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
+              </ion-button>
+    
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-toolbar>
+    </ion-footer>
+    
 
   </form>
+  
 </ion-content>

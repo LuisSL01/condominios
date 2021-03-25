@@ -3,4 +3,28 @@
 <app-header titulo="Alerta"></app-header>
 <ion-content fullscreen>
 
+    <section>
+        
+        <br>
+        <ion-button (click)="enviarTodos()"   shape="round"expand="block">  Notificar a todos
+            <ion-icon slot="end" color="primary" name="people-outline"></ion-icon>
+        </ion-button>
+      </section>
+      <section>        
+        <br>
+        <ion-button (click)="enviarAdmin()" shape="round"  expand="block"> Solo administración
+            <ion-icon slot="end" color="primary" name="people-outline"></ion-icon>
+        </ion-button>
+      </section>
+
+      <section>        
+        <br>
+        <ion-button  expand="block"  shape="round" routerLink="/contactos-emergencia" >Abrir números de emergencia
+            <ion-icon slot="icon-only" color="primary" name="warning-outline"></ion-icon>
+        </ion-button>
+      </section>
+
+      
+
+
 </ion-content>

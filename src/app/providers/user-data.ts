@@ -23,7 +23,8 @@ export class UserData {
     public storage: Storage,
     private toastCtrl: ToastController
   ) {
-    
+
+    this.setConfigUser();
 
    }
 
@@ -101,7 +102,7 @@ export class UserData {
       this.recuperaIdAgente();
     }
     return this.agente_id = JSON.parse(window.localStorage.getItem('userDetails')).id;; */
-    return JSON.parse(window.localStorage.getItem('userDetails')).id;;
+    return JSON.parse(window.localStorage.getItem('userDetails')).id;
   }
 
   getIdEmpresa(): number{
@@ -109,6 +110,12 @@ export class UserData {
       this.recuperaIdEmpresa();
     } */
     return JSON.parse(window.localStorage.getItem('empresaData')).id;
+  }
+
+  
+
+  getAplicaTorres():boolean{
+    return JSON.parse(window.localStorage.getItem('empresaData')).aplicaTorres;
   }
 
    getDataDireccionEmpresa():any{
@@ -143,7 +150,7 @@ export class UserData {
    console.log('setConfigUser');
   const data = await  this.storage.get('userFull');
     if (data) {
-      console.log('data', JSON.stringify(data));
+      /* console.log('data', JSON.stringify(data)); */
       
       if(data.departamento){
 
@@ -155,6 +162,10 @@ export class UserData {
         }        
       }        
     }  
+
+    console.log('setConfigUser', this.administrador);
+
+    
  }
 
  recibeDepartamento(depto:string){
@@ -192,12 +203,12 @@ export class UserData {
 
   }
 
-  retrieveBase64ToImageEmpresa(){
+  async retrieveBase64ToImageEmpresa(){
     console.log('retrieveBase64ToImageEmpresa');    
-    let empresa = JSON.parse(window.localStorage.getItem('empresaData'));
+    let empresa = await JSON.parse(window.localStorage.getItem('empresaData'));
     if(empresa){
       if(empresa.configuracionEmpresa){
-        this.base64ImageEmpresa = empresa.configuracionEmpresa.logoFondoClaro;
+        this.base64ImageEmpresa ='https://almacenamientonube.s3.us-west-1.amazonaws.com/'+empresa.configuracionEmpresa.logoFondoClaro.rutaS3;
       }      
     }    
   }

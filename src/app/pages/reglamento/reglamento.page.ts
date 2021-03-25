@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 /* import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 */
 import { File } from '@ionic-native/file/ngx';
-
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { Platform } from '@ionic/angular';
 import { UserData } from '../../providers/user-data';
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import { IOSFilePicker } from '@ionic-native/file-picker/ngx';
+
 
 @Component({
   selector: 'app-reglamento',
@@ -19,11 +21,12 @@ export class ReglamentoPage implements OnInit {
   idEmpresa: number;
 
   constructor(
-    private transfer: FileTransfer
-    , private file: File,
+    private transfer: FileTransfer, private file: File,
     private fileopen: FileOpener,
     private platform: Platform,
-    private userData: UserData
+    private userData: UserData,
+    private fileChooser: FileChooser,
+    private filePicker: IOSFilePicker
   ) {
     /* this.fileTransfer = this.transfer.create(); */
   }
@@ -31,11 +34,11 @@ export class ReglamentoPage implements OnInit {
 
   ngOnInit() {
     console.log('en el ngoninit de reglamento..');
-    
+
     this.idEmpresa = this.userData.getIdEmpresa();
 
-    console.log('this.idEmpresa: '+ this.idEmpresa);
-    
+    console.log('this.idEmpresa: ' + this.idEmpresa);
+
   }
 
   //Creamos la instancia del fileTransfer a transfer con un voley.
@@ -56,13 +59,39 @@ export class ReglamentoPage implements OnInit {
   } */
 
 
+  subirReglamento() {
+
+    if (this.platform.is('ios')) {
+
+      this.filePicker.pickFile()
+        .then(uri => console.log(uri))
+        .catch(err => console.log('Error', err));
+    }
+    else {
+      console.log('is in android');
+      console.log('subirReglamento');
+      this.fileChooser.open()
+        .then((uri) =>{
+          console.log(uri)
+
+        },
+        (err) => {         
+        }
+        )          
+        .catch(e =>
+          console.log(e));
+      // run android code
+    }
+
+  }
+
 
   downloadDoc() {
     console.log('downloadDoc');
     const fileTransfer: FileTransferObject = this.transfer.create();
     const url = 'https://almacenamientonube.s3.us-west-1.amazonaws.com/Config/reglamento_empresaId_' + this.idEmpresa + '.pdf';
     console.log('url:', url);
-    
+
     const nameFile = 'reglamento_' + this.idEmpresa + '.pdf';
     const nameFolder = "ArmoniaResidencial/";
     if (this.platform.is('cordova')) {

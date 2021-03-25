@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { Observable, of } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
+/* import { Observable, of } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators'; */
 import { MustMatch } from '../../shared/must-match.validator';
 import { CodigoPostalService } from '../../services/codigo-postal.service';
-import { ApiResponse } from '../../models/api-response.model';
-import { Direccion } from '../../models/direccion.model';
+/* import { ApiResponse } from '../../models/api-response.model';
+import { Direccion } from '../../models/direccion.model'; */
 import { AgenteService } from '../../services/agente.service';
 import { EmpresaService } from '../../services/empresa.service';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { TorreService } from '../../services/torre.service';
+import { DepartamentoService } from '../../services/departamento.service';
 
 
 
@@ -26,7 +28,9 @@ export class RegistrationPage implements OnInit {
   searchFailed: boolean = true;
   asentamientoSelected: any;
 
-  empresaSelected: number;
+  empresaSelected: any;
+  torreSelected:any;
+  departamentoSelected:any;
 
 
 
@@ -61,6 +65,9 @@ export class RegistrationPage implements OnInit {
   );
   asentamientos: any[] = [];
   empresas: any[] =  [];
+
+  torres: any[] = [];
+  departamentos: any[] = [];
   
   //Se inyecta en el constructor para armar los formularios reactivos..
   constructor(private fb: FormBuilder,
@@ -68,25 +75,22 @@ export class RegistrationPage implements OnInit {
     private agenteService: AgenteService,
     private empresaService: EmpresaService,
     private router: Router,
+    private torreService: TorreService,
+    private departamentoService: DepartamentoService,
     private toastr: ToastController) {
-    this.buscarEmpresas();
+    
 
 
   }
   ngOnInit() {
+
+    this.buscarEmpresas();
+
   }
   buscarEmpresas() {
     console.log('buscando empresas...');    
-    this.empresas = [
-  /*     {
-        "id": 7,
-        "nombre": "RINCON ESMERALDA",
-        "alias": "ESME"     
-    },
-    {
-        "id": 12,
-        "nombre": "EXPLANADA SUR"       
-    } */
+/*     this.empresas = [
+
     {
       "id": 32,
       "nombre": "RINCON ESMERALDA",
@@ -97,14 +101,14 @@ export class RegistrationPage implements OnInit {
       "nombre": "EXPLANADA SUR",
       "alias": "EXP SUR"
   }
-  ];
+  ]; */
 
 
 
-  /*   this.empresaService.filterEmpresasByActividadEconomica(11).subscribe(data => {
+    this.empresaService.filterEmpresasByActividadEconomica(11).subscribe(data => {
       if (data.status === 200) {
         console.log('"data.result"', data.result);
-        console.log(data.message);
+        console.log(JSON.stringify(data.message));
         this.empresas = data.result;
       } else {
         console.log('Llego otro status');
@@ -113,7 +117,7 @@ export class RegistrationPage implements OnInit {
     },
       err => {
         console.log(err);
-      }); */
+      });
 
   }
 
@@ -141,7 +145,7 @@ export class RegistrationPage implements OnInit {
   }
 
   guardarDatos() {
-    if(this.empresaSelected > 0){      
+    if(this.empresaSelected){      
 
           /* this.createAgente.value.direccion.asentamiento = this.asentamientoSelected;
           this.createAgente.value.direccion.numeroExterior = this.createAgente.value.direccion.numeroExterior.toUpperCase();
@@ -160,8 +164,10 @@ export class RegistrationPage implements OnInit {
               , telefono: this.createAgente.value.celular
               /* , fechaDeNacimiento: this.createAgente.value.fechaDeNacimiento + " 00:00:01.100 " */
               , activo:false
-              , empresa: this.empresaSelected
+              , empresa: this.empresaSelected.id
               , gerenteActivo: true
+              , departamentoAC: this.departamentoSelected.id
+
             },
             usuario: {
               username: this.createAgente.value.username
@@ -176,13 +182,14 @@ export class RegistrationPage implements OnInit {
           console.log('objetivo enviavo: ', agenteObj);
 
           
+          
 
           this.agenteService.registerUsuario(agenteObj).subscribe(data => {
             if (data.status === 200) {
               console.log('"data.result"', data.result);
               const formData = new FormData(); //Esto no esta trabajanco chido...
               formData.append("id_agente", data.result.id);
-              formData.append("id_empresa", ""+this.empresaSelected);
+              formData.append("id_empresa", ""+this.empresaSelected.id);
               console.log("objeto enviado: ", formData);
               this.agenteService.addAgenteToEmpresa(formData).subscribe(
                 (data) => {
@@ -290,6 +297,68 @@ export class RegistrationPage implements OnInit {
     console.log('cambio empresa');
     console.log('event', event);
     this.empresaSelected = event.detail.value;
+    if(this.empresaSelected && this.empresaSelected.configuracionEmpresa){
+      if(this.empresaSelected.configuracionEmpresa.aplicaTorres){
+        this.getDataTorre();
+      }else{
+        this.getDataDepartamento();
+      }
+    }
+    
+  }
+
+  async getDataTorre() {
+    console.log('getDataTorree');
+    await this.torreService.getTorresFull(this.empresaSelected.id).subscribe((data) => {
+      console.log(data);
+      if (data.status === 200) {
+        this.torres = data.result;
+      } else {
+        this.showToast('error al recuperar registros de torre' + data.status);
+      }
+    },
+      (err) => {
+        this.showToast('error al recuperar registros de torre');
+      }
+    );
+  }
+
+  async getDataDepartamento() {
+    console.log('getDataDepartamento');
+    if (this.empresaSelected.configuracionEmpresa.aplicaTorres) {
+      if (this.torreSelected) {
+        await this.departamentoService.getDepartamentosPorTorre(this.torreSelected.id).subscribe((data) => {
+          console.log(data);
+          if (data.status === 200) this.departamentos = data.result;
+          else this.showToast('error al recuperar registros');
+        },
+          (err) => { this.showToast('error al recuperar registros'); }
+        );
+      } else {
+        this.showToast('Debe seleccionar una torre para listar los departamentos');
+      }
+    } else {
+      await this.departamentoService.getDepartamentosPorEmpresa(this.empresaSelected.id).subscribe((data) => {
+        console.log(data);
+        if (data.status === 200) this.departamentos = data.result;
+        else this.showToast('error al recuperar registros: '+ data.status);
+      },
+        (err) => { this.showToast('error al recuperar registros'); }
+      );
+    }
+
+  }
+
+  cambioTorre(event){
+    this.torreSelected = event.detail.value;
+    console.log('cambio depto'+ JSON.stringify(this.torreSelected));
+    this.getDataDepartamento();
+    
+  }
+  cambioDepto(event){
+    
+    this.departamentoSelected = event.detail.value;
+    console.log('cambio depto'+ JSON.stringify(this.departamentoSelected));
   }
 
   compareWithFn = (e1, e2) => {//No funciono la implementacion

@@ -151,13 +151,30 @@ const routes: Routes = [
   {
     path: 'recibos',
     loadChildren: () => import('./pages/recibos/recibos.module').then( m => m.RecibosPageModule)
-  },  {
+  },
+  {
     path: 'notifications',
     loadChildren: () => import('./pages/notifications/notifications.module').then( m => m.NotificationsPageModule)
   },
   {
     path: 'datos-interes',
     loadChildren: () => import('./pages/datos-interes/datos-interes.module').then( m => m.DatosInteresPageModule)
+  },
+  {
+    path: 'administracion',
+    loadChildren: () => import('./pages/administracion/administracion.module').then( m => m.AdministracionPageModule)
+  },
+  {
+    path: 'configuracion-emp',
+    loadChildren: () => import('./pages/configuracion-emp/configuracion-emp.module').then( m => m.ConfiguracionEmpPageModule)
+  },
+  {
+    path: 'datos-empresa',
+    loadChildren: () => import('./pages/datos-empresa/datos-empresa.module').then( m => m.DatosEmpresaPageModule)
+  },
+  {
+    path: 'extra',
+    loadChildren: () => import('./pages/extra/extra.module').then( m => m.ExtraPageModule)
   }
 
 

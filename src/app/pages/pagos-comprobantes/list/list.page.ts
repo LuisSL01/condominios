@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { PagosComprobantesService } from '../../../services/pagos-comprobantes.service';
 import { PagosComprobantes } from '../../../models/pagos-comprobantes.model';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 import { UserData } from '../../../providers/user-data';
 import { Router } from '@angular/router';
 
@@ -21,6 +21,7 @@ export class ListPage implements OnInit {
 
   constructor(public pagosComprobantesService: PagosComprobantesService,
               private actionSheetCtrl: ActionSheetController,
+              public alertController: AlertController,
               private router: Router,
               private userData:UserData) { }
 
@@ -61,53 +62,119 @@ export class ListPage implements OnInit {
         }
       };
 
-    const actionSheet = await this.actionSheetCtrl.create({
-      buttons: [
-      guardarBorrarBtn,
-      {
-        text: 'Autorizar',
-        icon: 'checkmark-done-circle-outline',        
-        cssClass: 'action-dark',
-        handler: () => {
-          console.log('aplicar pago clicked');
-          this.updateStatus('AUTORIZADO');
-        }
-      },
-      {
-        text: 'Rechazar',
-        icon: 'remove-circle-outline',
-        cssClass: 'action-dark',
-        handler: () => {
-          console.log('rechazar pago clicked');
-          this.updateStatus('RECHAZADA');
-        }
-      },
-      {
-        text: 'Cancelar',
-        icon: 'close',
-        role: 'cancel',
-        cssClass: 'action-dark',
-        handler: () => {
-          console.log('Cancel clicked');
-        }
-      },
-      {
-        text: 'Cancelar',
-        icon: 'close',
-        role: 'cancel',
-        cssClass: 'action-dark',
-        handler: () => {
-          console.log('Cancel clicked');
-        }
-      }]
-    });
-    await actionSheet.present();
+      
+
+
+
+      console.log('this.userData.administrador', this.userData.administrador);
+
+      
+      if(this.userData.administrador){
+        
+        const actionSheet = await this.actionSheetCtrl.create({
+          buttons: [
+          guardarBorrarBtn,
+          {
+            text: 'Autorizar',
+            icon: 'checkmark-done-circle-outline',        
+            cssClass: 'action-dark',
+            handler: () => {
+              console.log('aplicar pago clicked');
+              this.updateStatus('AUTORIZADO');
+            }
+          },
+          {
+            text: 'Rechazar',
+            icon: 'remove-circle-outline',
+            cssClass: 'action-dark',
+            handler: () => {
+              this.presentAlertPagoRechazado();
+            }
+          },
+          {
+            text: 'Cancelar',
+            icon: 'close',
+            role: 'cancel',
+            cssClass: 'action-dark',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          }
+          ]
+        });
+        await actionSheet.present();
+
+      }else{
+     
+        const actionSheet = await this.actionSheetCtrl.create({
+          buttons: [
+          guardarBorrarBtn,
+          {
+            text: 'Cancelar',
+            icon: 'close',
+            role: 'cancel',
+            cssClass: 'action-dark',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          }
+          ]
+        });
+        await actionSheet.present();
+      }
+
+    
   }
 
-  updateStatus(nombreStatus:string){
+  async presentAlertPagoRechazado() {
+    const alert = await this.alertController.create({
+      cssClass: 'alertHeader',
+      header: 'Confirmar!',
+      message: 'El comprobante de pago será rechazado',
+      inputs: [
+        {
+          name: 'comentarios',
+          type: 'text',
+          placeholder: 'Comentarios'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Guardar',
+          handler: (alertData) => {
+
+            console.log('rechazar pago clicked');
+              this.updateStatus('RECHAZADA', alertData.comentarios);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  updateStatus(nombreStatus:string, _comentarios?:string){
+    let dataMap={};
+
     const formData = new FormData();
     formData.append("id", JSON.stringify(this.pagoComprobante.id));
     formData.append("status", nombreStatus);
+
+    //Hacer pruebas, el map no se puede enviar
+    /* if(_comentarios){
+      dataMap={
+        comentarios:_comentarios
+      };
+      formData.append("dataMap", JSON.stringify(dataMap));      
+    } */
+
     this.pagosComprobantesService.updateStatus(formData).subscribe(
       (data) => {
         if (data.status === 200){

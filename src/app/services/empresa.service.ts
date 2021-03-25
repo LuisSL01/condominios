@@ -19,5 +19,12 @@ export class EmpresaService {
     return this.http.get<ApiResponse>(this.baseUrl + this.empresaContext + environment.coreApiActividadEconomicaEmpresaOperation + "/" + actividadEconomica).pipe(share());
   }
 
+  update(data:FormData): Observable<ApiResponse> {
+    console.log('update empresa: ', this.baseUrl + this.empresaContext);    
+    return this.http.patch<ApiResponse>(this.baseUrl + this.empresaContext ,data).pipe(share());    
+  }
+
+
+
 
 }
