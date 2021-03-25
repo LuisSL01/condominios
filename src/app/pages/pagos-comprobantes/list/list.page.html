@@ -33,14 +33,17 @@
       <h2>Importe ${{pagoComprobante.infoAdeudo.cantidad}}</h2>
       <h2>Forma de pago {{pagoComprobante.data.formaPago}}</h2>
       <h3 *ngIf="pagoComprobante.data.descripcionFormaPago">Desc. forma pago{{pagoComprobante.data.descripcionFormaPago}}</h3>
-      
+      <br>
+
+      <h2 *ngIf="pagoComprobante.data.comentarios" >Comentarios: {{pagoComprobante.data.comentarios}}</h2>
+
     </ion-label> 
       
   </ion-card-content>  
   <ion-item>
 
     <ion-slides pager="{{pagoComprobante.files?.archivos.length > 1?true:false}}">       
-      <ion-slide *ngFor="let img of pagoComprobante.files.archivos" class="image-slide">
+      <ion-slide *ngFor="let img of pagoComprobante.files?.archivos" class="image-slide">
         <img *ngIf="img.rutaS3" src="{{pathS3}}{{img.rutaS3}}">
         <img *ngIf=" ! img.rutaS3" src="{{pathBase64}}{{img.base64}}">
       </ion-slide>

@@ -44,8 +44,8 @@ export class GastoService {
   }
 
   getReportePDF(id: number){
-    console.log(this.baseUrl + this.gastoContext + ":getPdf/" + id);
-    return this.http.get<ApiResponse>(this.baseUrl + this.gastoContext + ":getPdf/" + id).pipe(share());
+    console.log(this.baseUrl +"/reporte/reciboPago:getPdf/"+id);
+    return this.http.get<ApiResponse>(this.baseUrl +"/reporte/reciboPago:getPdf/"+id).pipe(share());
   }
 
   async getGastosFromStorage(idEmpresa: number){

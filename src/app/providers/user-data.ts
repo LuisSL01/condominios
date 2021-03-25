@@ -23,7 +23,8 @@ export class UserData {
     public storage: Storage,
     private toastCtrl: ToastController
   ) {
-    
+
+    this.setConfigUser();
 
    }
 
@@ -149,7 +150,7 @@ export class UserData {
    console.log('setConfigUser');
   const data = await  this.storage.get('userFull');
     if (data) {
-      console.log('data', JSON.stringify(data));
+      /* console.log('data', JSON.stringify(data)); */
       
       if(data.departamento){
 
@@ -161,7 +162,7 @@ export class UserData {
         }        
       }        
     }  
-    
+
     console.log('setConfigUser', this.administrador);
 
     

@@ -72,10 +72,8 @@ export class InicioPage implements OnInit {
     this.cargarDatosInteres();
     this.cargaAnunciosStorage();    
   }
-  async cargarDatosInteres(){
-    console.log('climaData-antes', this.climaData);    
-    await this.cargarDataClima();
-    console.log('climaData-terminando', this.climaData);
+  async cargarDatosInteres(){    
+    await this.cargarDataClima();    
   }
 
 

@@ -57,6 +57,11 @@ export class PagosComprobantesService {
     return this.http.get<ApiResponse>(this.baseUrl + this.pagoComprobanteContext+ environment.coreApiGetPagoComprobanteListOperation +"/"+idEmpresa+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):'')).pipe(share());
   }
 
+  getTodosPagosComprobantesPorAgente(idEmpresa: number, idAgente:number){
+    console.log(this.baseUrl + this.pagoComprobanteContext+ environment.coreApiGetPagoComprobanteAgenteListOperation +"/"+idEmpresa+"/"+idAgente);
+    return this.http.get<ApiResponse>(this.baseUrl + this.pagoComprobanteContext+ environment.coreApiGetPagoComprobanteAgenteListOperation +"/"+idEmpresa+"/"+idAgente).pipe(share());
+  }
+
   getPagosComprobantesPorAgente(idEmpresa: number, idAgente:number, page: number, size: number, filters: string){
     console.log(this.baseUrl+this.pagoComprobanteContext+":listByAgente/"+idEmpresa+"/"+idAgente+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):''));
     return this.http.get<ApiResponse>(this.baseUrl+this.pagoComprobanteContext+":listByAgente/"+idEmpresa+"/"+idAgente+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):'')).pipe(share());
