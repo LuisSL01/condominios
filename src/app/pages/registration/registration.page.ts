@@ -12,6 +12,7 @@ import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { TorreService } from '../../services/torre.service';
 import { DepartamentoService } from '../../services/departamento.service';
+import { PushService } from '../../services/push.service';
 
 
 
@@ -75,6 +76,7 @@ export class RegistrationPage implements OnInit {
     private agenteService: AgenteService,
     private empresaService: EmpresaService,
     private router: Router,
+    private pushService: PushService,
     private torreService: TorreService,
     private departamentoService: DepartamentoService,
     private toastr: ToastController) {
@@ -181,7 +183,9 @@ export class RegistrationPage implements OnInit {
           };      
           console.log('objetivo enviavo: ', agenteObj);
 
-          
+          const objAgente = {
+            dispositivoUuid: this.pushService.userId      
+          };
           
 
           this.agenteService.registerUsuario(agenteObj).subscribe(data => {
@@ -191,11 +195,17 @@ export class RegistrationPage implements OnInit {
               formData.append("id_agente", data.result.id);
               formData.append("id_empresa", ""+this.empresaSelected.id);
               console.log("objeto enviado: ", formData);
+              let idAgente = data.result.id;
               this.agenteService.addAgenteToEmpresa(formData).subscribe(
                 (data) => {
                   if (data.status === 200) {
                     console.log('"data.result"', data.result);                    
                     this.showToast("agente asociado a empresa correctamente");  
+
+                    if( ! this.isEmpty(objAgente.dispositivoUuid)){
+                      console.log('debo ir actualizar el uuid');
+                      this.agenteService.updateAgenteCore(idAgente , objAgente);
+                    }
                     this.createAgente.reset();
                     this.router.navigate(["/home"]);                    
                   } else {
@@ -225,6 +235,11 @@ export class RegistrationPage implements OnInit {
     }else{
       this.showToast('necesario selecccionar una residencia');
     }
+  }
+
+  
+  isEmpty(str) {
+    return (!str || 0 === str.length);
   }
 
   validarCP() {

@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { ApiResponse } from '../models/api-response.model';
 import { HttpClient } from '@angular/common/http';
 import { share } from 'rxjs/operators';
+import { ToastController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class AgenteService {
   baseUrlAuth: string = environment.authServiceBaseUrl;
   agenteContext: string = environment.coreApiBaseAgenteOperation;  
   
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,
+              private toastCtrl: ToastController) { }
 
   registerUsuario(userData: any): Observable<ApiResponse> {
     console.log('registerUsuario:'+this.baseUrlAuth + environment.authApiRegisterAgenteOperation);
@@ -57,6 +59,28 @@ export class AgenteService {
   updateUsuarioCore(id: number, userData: any): Observable<ApiResponse> {
     console.log('updateUsuarioCore', this.baseUrl + this.agenteContext + '/' + id, userData);
     return this.http.patch<ApiResponse>(this.baseUrl + this.agenteContext + '/' + id, userData).pipe(share());
+  }
+
+  updateAgenteCore(id: number, datosForm: any) {
+    this.updateUsuarioCore(id, datosForm).subscribe(data => {
+      console.log('data.result:: ', data.result);
+      if (data.status === 200) {
+      } else {
+        this.showToast('No se logro actualizar el uuid de usuario');
+      }
+    }, err => {
+      console.log('error::', err);     
+    },
+      () => {});
+  }
+
+  showToast(dataMessage: string) {
+    this.toastCtrl.create({
+      message: dataMessage,
+      duration: 2000
+    }).then((toastData) => {
+      toastData.present();
+    });
   }
 
 

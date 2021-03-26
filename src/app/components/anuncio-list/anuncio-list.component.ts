@@ -70,29 +70,9 @@ export class AnuncioListComponent implements OnInit {
   }
 
   chatSelected(){
-    console.log('log, se ha agregado el plugin....');    
-
-    
-    
-    /* console.log('link a abrir: ', "https://wa.me/52"+this.anuncio.celularAgenteCreador+"?text=Hola%20desde%20Armonía%20Residencial"); */
+    console.log('log, se ha agregado el plugin....');
     console.log('link a abrir: ', "whatsapp//send?phone="+this.anuncio.celularAgenteCreador+"?text=Hola%20desde%20Armonía%20Residencial"); 
-
-    /* window.open("https://wa.me/52"+this.anuncio.celularAgenteCreador+"?text=Hola%20desde%20Armonía%20Residencial");  */
-
-
-
-
-
-    window.open("whatsapp//send?phone="+this.anuncio.celularAgenteCreador+"?text=Hola%20desde%20Armonía%20Residencial"); 
-
-    //send?phone=
-    /* this.platform.ready().then(() => {
-    }); */
-
-
-
-
-   
+    window.open("whatsapp//send?phone="+this.anuncio.celularAgenteCreador+"?text=Hola%20desde%20Armonía%20Residencial");    
   }
 
   
