@@ -114,6 +114,7 @@ export class AddPage implements OnInit {
   }
 
   nuevo(){
+
     let fechaTerminaEncuesta = new Date();
     console.log(fechaTerminaEncuesta);
     fechaTerminaEncuesta.setDate(fechaTerminaEncuesta.getDate() + this.diaSelected);
@@ -126,6 +127,7 @@ export class AddPage implements OnInit {
       numMes = ""+(fechaTerminaEncuesta.getMonth()+1);
     }
     let dateStr = fechaTerminaEncuesta.getFullYear() + '-' + numMes + '-' + fechaTerminaEncuesta.getDate() + ' ' + fechaTerminaEncuesta.getHours() + ':' + fechaTerminaEncuesta.getMinutes();
+    
     const votacionObj = {
       empresa: this.idEmpresa,
       agenteCreador: this.idAgente,
