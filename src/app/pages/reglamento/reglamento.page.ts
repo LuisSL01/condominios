@@ -199,7 +199,7 @@ export class ReglamentoPage implements OnInit {
       (data) => {
         var file : Archivo;
         file = data.result.configuracionEmpresa.reglamento;
-        if(file === null){
+        if(file == null){
           alert("No hay reglamento cargado");
         } else {
           const fileTransfer: FileTransferObject =  this.transfer.create();    
