@@ -1,11 +1,22 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>extra</ion-title>
-  </ion-toolbar>
+  <ion-toolbar></ion-toolbar>
 </ion-header>
 
-<ion-content>
-
-  <ion-label>Soy dato extra</ion-label>
-
+<ion-content fullscreen>
+  <ion-list>
+    <ion-list-header color="primary">
+      <ion-label> 
+        <h2>Formato de Construcción</h2>
+      </ion-label>
+    </ion-list-header>
+    <br>  
+    <ion-button (click)="cargarFormato()" expand="block" shape="round">
+      Cargar Nuevo Formato
+    </ion-button>
+    <br>
+    <ion-button (click)="verFormato()" expand="block" shape="round">
+      Visualizar Formato
+    </ion-button>
+  </ion-list>
 </ion-content>
+
