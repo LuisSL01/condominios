@@ -72,7 +72,7 @@ export class RecibosPage implements OnInit {
           fetch('data:application/pdf;base64,' + file_base64.base64, { method: "GET" })
             .then(res => res.blob())
             .then(blob => {
-              this.file.writeFile(this.file.externalApplicationStorageDirectory, 'Recibo.pdf', blob, { replace: true })
+              this.file.writeFile(this.file.cacheDirectory, 'Recibo.pdf', blob, { replace: true })
                 .then(res => {
                   this.fileOpener.open(
                     res.toInternalURL(),
