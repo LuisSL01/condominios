@@ -10,7 +10,7 @@
       </ion-label>
     </ion-list-header>
     <br>  
-    <ion-button (click)="cargarFormato()" expand="block" shape="round">
+    <ion-button (click)="cargarFormato()" expand="block" shape="round" *ngIf="userData.administracion">
       Cargar Nuevo Formato
     </ion-button>
     <br>

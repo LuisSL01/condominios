@@ -37,6 +37,7 @@ export class ExtraPage implements OnInit {
   }
 
   cargarFormato() {
+    this.userData.showToast("Cargando formato, por favor espere...");
     if (this.platform.is('ios')) {
       this.filePicker.pickFile()
         .then((uri) => {
@@ -105,6 +106,7 @@ export class ExtraPage implements OnInit {
   }
 
   verFormato(){
+    this.userData.showToast("Descargando pdf, por favor espere...");
     this.empresaService.getEmpresaById(this.idEmpresa).subscribe(
       (data) => {
         var file : Archivo;

@@ -12,7 +12,7 @@
           >
             <ion-icon  slot="icon-only" color="primary" name="create-outline"></ion-icon>
           </ion-button>
-          <ion-button  (click)="lanzarMenu()">
+          <ion-button  (click)="lanzarMenu()" *ngIf="userData.administrador">
             <ion-icon   slot="icon-only" color="primary" name="ellipsis-vertical-outline"></ion-icon>
           </ion-button>
         </ion-buttons>

@@ -49,16 +49,7 @@ export class ListPage implements OnInit {
       };
 
     const actionSheet = await this.actionSheetCtrl.create({
-      buttons: [
-        {
-          text: 'editar directorio',
-          icon: 'trash',
-          cssClass: 'action-dark',
-          handler: () => {
-            console.log('estoy en editar');
-            
-          }
-        },
+      buttons: [   
       btnEliminar,
       {
         text: 'Cancelar',

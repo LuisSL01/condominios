@@ -6,6 +6,7 @@ import { AddRespuestaPage } from '../add-respuesta/add-respuesta.page';
 import { Router } from '@angular/router';
 import { RespuestasPage } from '../respuestas/respuestas.page';
 import { Publicacion } from '../../../models/publicacion.model';
+import { UserData } from '../../../providers/user-data';
 
 @Component({
   selector: 'app-list-avisos',
@@ -27,6 +28,7 @@ export class ListAvisosPage implements OnInit {
 
   constructor(public avisoService:AvisoService,
           private actionSheetCtrl: ActionSheetController,
+          private userData:UserData,
           private modalCtlr: ModalController,
           private toastCtrl: ToastController,
           private router: Router) { }
@@ -76,37 +78,73 @@ export class ListAvisosPage implements OnInit {
         }
       };
 
-    const actionSheet = await this.actionSheetCtrl.create({
-      buttons: [
+
+      let bttns =[];
+      if(this.userData.administrador){
+bttns = [
         
+  {
+    text: 'Ver respuestas ('+tamanioRespuestas+')',
+    icon: 'share',
+    cssClass: 'action-dark',
+    handler: () => {
+      console.log('Ver respuestas');     
+      this.presentModalRespuestas();
+  }
+},
+  {
+    text: 'Responder',
+    icon: 'share',
+    cssClass: 'action-dark',
+    handler: () => {
+      console.log('Responder');
+      this.presentModalCreateRespuesta();
+  }
+},
+guardarBorrarBtn,
+{
+  text: 'Cancelar',
+  icon: 'close',
+  role: 'cancel',
+  cssClass: 'action-dark',
+  handler: () => {
+    console.log('Cancel clicked');
+  }
+}];
+      }else{
+        bttns = [
+        
+          {
+            text: 'Ver respuestas ('+tamanioRespuestas+')',
+            icon: 'share',
+            cssClass: 'action-dark',
+            handler: () => {
+              console.log('Ver respuestas');     
+              this.presentModalRespuestas();
+          }
+        },
+          {
+            text: 'Responder',
+            icon: 'share',
+            cssClass: 'action-dark',
+            handler: () => {
+              console.log('Responder');
+              this.presentModalCreateRespuesta();
+          }
+        },
         {
-          text: 'Ver respuestas ('+tamanioRespuestas+')',
-          icon: 'share',
+          text: 'Cancelar',
+          icon: 'close',
+          role: 'cancel',
           cssClass: 'action-dark',
           handler: () => {
-            console.log('Ver respuestas');     
-            this.presentModalRespuestas();
-        }
-      },
-        {
-          text: 'Responder',
-          icon: 'share',
-          cssClass: 'action-dark',
-          handler: () => {
-            console.log('Responder');
-            this.presentModalCreateRespuesta();
-        }
-      },
-      guardarBorrarBtn,
-      {
-        text: 'Cancelar',
-        icon: 'close',
-        role: 'cancel',
-        cssClass: 'action-dark',
-        handler: () => {
-          console.log('Cancel clicked');
-        }
-      }]
+            console.log('Cancel clicked');
+          }
+        }];
+      }
+
+    const actionSheet = await this.actionSheetCtrl.create({
+      buttons: bttns
     });
 
     await actionSheet.present();

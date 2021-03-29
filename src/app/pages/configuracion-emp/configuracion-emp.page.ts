@@ -39,19 +39,21 @@ export class ConfiguracionEmpPage implements OnInit {
 
   ngOnInit() {
     this.idEmpresa = this.userData.getIdEmpresa();
-    this.aplicaTorres = this.userData.getAplicaTorres();
+    
 
   }
 
   ionViewDidEnter() {
+    this.findConfig();
+  }
+
+  async findConfig(){
+    this.aplicaTorres = await  this.userData.getAplicaTorres();
     if(this.aplicaTorres){
       this.getDataTorre();
     }else{
       this.getDataDepartamento();
     }
-      
-
-    
   }
 
 

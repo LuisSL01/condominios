@@ -11,7 +11,7 @@
           <ion-button slot="end" (click)="editRowSelected()" fill="clear">
             <ion-icon slot="icon-only" color="primary" name="create-outline"></ion-icon>
           </ion-button>
-          <ion-button fill="clear" (click)="lanzarMenu()">
+          <ion-button fill="clear" (click)="lanzarMenu()" *ngIf="userData.administrador" >
             <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
           </ion-button> 
         </ion-buttons>

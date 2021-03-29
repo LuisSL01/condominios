@@ -2,7 +2,12 @@
   <ion-card-header>
     <ion-card-title>  {{encuesta.titulo}} </ion-card-title>
     <ion-card-subtitle>
-      <span class="text-primary">Termina el: {{encuesta.fechaTermina  | date:'dd/MM/yyyy HH:mm a'}}</span>
+      <span class="text-primary">
+        <ion-label><h3>
+          Fin: {{encuesta.fechaTermina  | date:'dd/MM/yy HH:mm a'}}
+        </h3></ion-label>
+        
+        </span>
       <div class="card-more">
         <ion-buttons slot="end">
 
@@ -13,7 +18,7 @@
           <ion-button fill="clear" (click)="responderEncuesta()">
             <ion-icon slot="icon-only"  name="share"></ion-icon>
           </ion-button>
-        <ion-button fill="clear" (click)="lanzarMenu()">
+        <ion-button fill="clear" (click)="lanzarMenu()" *ngIf="userData.administrador" >
           <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
         </ion-button>
         </ion-buttons>

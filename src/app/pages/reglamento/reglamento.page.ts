@@ -195,6 +195,7 @@ export class ReglamentoPage implements OnInit {
   }
 
   verReglamento(){
+    this.userData.showToast("Descargando pdf, por favor espere...");
     this.empresaService.getEmpresaById(this.idEmpresa).subscribe(
       (data) => {
         var file : Archivo;
