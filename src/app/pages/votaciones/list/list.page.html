@@ -11,7 +11,7 @@
       <div class="card-more">
         <ion-buttons slot="end">
 
-          <ion-button slot="end" (click)="editRowSelected()">
+          <ion-button slot="end" (click)="editRowSelected()" *ngIf="userData.administrador" >
             <ion-icon slot="icon-only" color="primary" name="create-outline"></ion-icon>
           </ion-button>
 

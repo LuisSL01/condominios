@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Publicacion } from '../../../models/publicacion.model';
 import { AvisoService } from '../../../services/aviso.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ArchivoVortexApp } from 'src/app/models/archivo-vortex.model';
@@ -40,11 +40,14 @@ export class AddAvisosPage implements OnInit {
     tipo: ["NOTIFICACION"],
   });
 
+  notificacionChangesForm: FormGroup;
+
 
   idEmpresa: number;
   idAgente: number;
 
   pathBase64:string ="data:image/jpeg;base64,";
+  edit: boolean = false;
 
   //Inyectamos el servicio de data local.
 
@@ -54,6 +57,7 @@ export class AddAvisosPage implements OnInit {
   constructor(private notificacionService: AvisoService,
     private agenteService: AgenteService,
     private toastr: ToastController,
+    public activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private camera: Camera,
     private router: Router,
@@ -64,9 +68,25 @@ export class AddAvisosPage implements OnInit {
     this.buscarManzanas();
     this.idEmpresa = this.userData.getIdEmpresa();
     this.idAgente = this.userData.getIdAgente();
-    console.log('this.idEmpresa: '+ this.idEmpresa);
+
+    
+    this.notificacion = JSON.parse(this.activatedRoute.snapshot.paramMap.get('item'));
+    if (this.notificacion != null) this.prepareEdit();
+    else this.notificacion = new Publicacion();
 
 
+  }
+  prepareEdit() {
+    console.log('prepareEdit');
+    this.edit = true; 
+    this.createNotificacion = this.fb.group({
+      data: this.fb.group({
+        destinatario: [this.notificacion.data.destinatario],
+        titulo: [this.notificacion.data.titulo],
+        descripcion: [this.notificacion.data.descripcion]
+      }),
+      tipo: ["NOTIFICACION"],
+    });
   }
 
   buscarManzanas(){
@@ -134,8 +154,10 @@ export class AddAvisosPage implements OnInit {
   }
 
   save() {
- 
-    console.log(this.createNotificacion.value);
+    if (this.edit) this.editar();
+    else this.nuevo();
+  }
+  nuevo(){    
     const notificacionObj ={
       empresa:this.idEmpresa,
       agenteCreador:this.idAgente,
@@ -151,37 +173,49 @@ export class AddAvisosPage implements OnInit {
 
     const formData = new FormData(); //Esto no esta trabajanco chido...
     formData.append("data", JSON.stringify(notificacionObj));
-    formData.append("file", JSON.stringify(this.files));
-    console.log("anuncio enviado: ", formData);
-
+    formData.append("file", JSON.stringify(this.files));    
     this.notificacionService.save(formData).subscribe(
       (data) => {
         if (data.status === 200) {
-          console.log('"data.result"', data.result);
-          console.log("notificacion registrada correctamente");
-          this.showToast("notificacion registrada correctamente");          
-          this.router.navigate(["/avisos"]);
+          this.createNotificacion.reset();
+          this.router.navigate(['/avisos', { item: true }]);
         } else {
-          console.log('Llego otro status al guardar anuncio');
-          this.guardarNotificacionLocalmente();
-          this.router.navigate(["/avisos"]);
+          this.userData.showToast('error1 al guardar');          
         }
       },
-      (err) => {
-        console.log(err);
-        console.log('Llego otro status al guardar anuncio');
-        this.guardarNotificacionLocalmente();
-        this.router.navigate(["/avisos"]);
-       
+      (err) => {      
+        this.userData.showToast('error 2 al guardar');       
       },
       () => {}
     );
 
-    
+  }
+  editar(){
+    console.log('editar()...');
+    this.notificacionChangesForm = this.fb.group({});
+    this.getDirtyFields();
+    console.log('resolucionChangesForm', JSON.stringify(this.notificacionChangesForm.value));
 
-    /* this.avisoService.guardarAviso(this.aviso);
-    this.router.navigate(['/avisos']);  */
-    
+    this.notificacionService.update(this.notificacion.id, this.notificacionChangesForm.value).subscribe(data => {
+      if (data.status === 200) {
+        this.createNotificacion.reset();
+        this.router.navigate(['/avisos', { item: true }]);
+      } else {
+        this.userData.showToast('Error al editar registro, llego otro status');
+      }
+    }, err => {
+      console.log(err); this.userData.showToast("Error: " + err);
+    },
+      () => {
+      });
+  }
+
+  getDirtyFields() {
+    Object.keys(this.createNotificacion['controls'].data['controls']).forEach(key => {
+      if (this.createNotificacion.get('data').get(key).dirty) {
+        this.notificacionChangesForm.addControl(key, this.createNotificacion.get('data').get(key));
+      }
+    });
   }
 
   guardarNotificacionLocalmente() {

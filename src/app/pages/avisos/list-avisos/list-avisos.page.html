@@ -2,11 +2,18 @@
   <ion-card-header>
     <ion-card-title>{{aviso.data.titulo}}</ion-card-title>
     <ion-card-subtitle>
-      <span class="text-primary"> {{aviso.fechaDeCreacion | date:'h:mm a - dd MMM yy '}} </span>
+      <span class="text-primary"> {{aviso.fechaDeCreacion}} </span>
       <div class="card-more">
+        <ion-buttons slot="end" >
+
+        <ion-button slot="end" (click)="editRowSelected()"  >
+          <ion-icon slot="icon-only" color="primary" name="create-outline"></ion-icon>
+        </ion-button>
+
         <ion-button fill="clear" (click)="lanzarMenu()">
           <ion-icon slot="icon-only" color="primary" name="ellipsis-vertical-outline"></ion-icon>
         </ion-button>
+      </ion-buttons>
       </div>
     </ion-card-subtitle>
   </ion-card-header>

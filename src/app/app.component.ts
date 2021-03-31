@@ -72,8 +72,13 @@ export class AppComponent implements OnInit{
       this.userData.empresa_id = 0;
       this.userData.agente_id = 0;
       this.userData.nameImageEmpresa ="";
+      this.eliminarStorage();
       return this.router.navigateByUrl('/home');
     });
 
+  }
+
+  async eliminarStorage(){
+    await this.storage.clear();
   }
 }
