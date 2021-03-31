@@ -2,11 +2,23 @@
   <ion-card-header>
     <ion-card-title>{{convocatoria.data.titulo}}</ion-card-title>
     <ion-card-subtitle>
-      <span class="text-primary"> {{convocatoria.fechaDeCreacion | date:'h:mm a - dd MMM yy '}} </span>
+
+
+      <span class="text-primary">Fecha: {{convocatoria.data.fecha | date:' dd/MM/yy ' }} </span>
       <div class="card-more">
-        <ion-button fill="clear" (click)="lanzarMenu()">
-          <ion-icon slot="icon-only" color="primary" name="ellipsis-vertical-outline"></ion-icon>
-        </ion-button>
+        <ion-buttons slot="end" *ngIf="userData.administrador">
+          
+          <ion-button slot="end" (click)="editRowSelected()"  >
+            <ion-icon slot="icon-only" color="primary" name="create-outline"></ion-icon>
+          </ion-button>
+
+          <ion-button fill="clear" (click)="lanzarMenu()">
+            <ion-icon slot="icon-only" color="primary" name="ellipsis-vertical-outline"></ion-icon>
+          </ion-button>
+          </ion-buttons>
+
+
+        
       </div>
     </ion-card-subtitle>
   </ion-card-header>
@@ -14,5 +26,16 @@
   <ion-card-content>
     {{convocatoria.data.descripcion}}
   </ion-card-content>
+
+  <ion-item >
+    <ion-slides pager="{{convocatoria.files?.archivos.length > 1 ?true:false}}" >
+      <ion-slide *ngFor="let img of convocatoria.files.archivos; let i = index;" class="pdf-slide">
+        <ion-label (click)="downloadPDF(img)">
+          <ion-icon name="cloud-download-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
+          PDF {{i+1}}
+        </ion-label>
+      </ion-slide>
+    </ion-slides>
+  </ion-item>
 
 </ion-card>

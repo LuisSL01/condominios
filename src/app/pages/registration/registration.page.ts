@@ -133,7 +133,7 @@ export class RegistrationPage implements OnInit {
   }
 
   cambioUsuario(event){
-    let user:string = event.detail.value;        
+    let user:string = event.detail.value;
     if(user.includes(" ")){
       user = user.split(" ").join("");
       this.createAgente.value.username = user;

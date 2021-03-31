@@ -20,6 +20,11 @@ export class DepartamentoService {
     return this.http.post<ApiResponse>(this.baseUrl + this.departamentoContext, torreData).pipe(share());
   }
 
+  update(idDepartamento: number, departamentoData: any) : Observable<ApiResponse> {
+    console.log('update depto', this.baseUrl + this.departamentoContext + environment.coreApiBaseEditOperation+  "/" + idDepartamento);
+    return this.http.patch<ApiResponse>(this.baseUrl + this.departamentoContext + environment.coreApiBaseEditOperation+  "/" + idDepartamento, departamentoData).pipe(share());
+  }
+
   getDepartamentosPorEmpresa(idEmpresa: number){
     console.log(this.baseUrl+this.departamentoContext+"/listByEmpresa/"+idEmpresa);
     return this.http.get<ApiResponse>(this.baseUrl+this.departamentoContext+"/listByEmpresa/"+idEmpresa).pipe(share());
@@ -35,5 +40,6 @@ export class DepartamentoService {
     console.log(this.baseUrl + this.departamentoContext+ environment.coreApiGetDepartamentoListOperation +"/"+idEmpresa+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):''));
     return this.http.get<ApiResponse>(this.baseUrl + this.departamentoContext+ environment.coreApiGetDepartamentoListOperation +"/"+idEmpresa+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):'')).pipe(share());
   }
+  
 
 }

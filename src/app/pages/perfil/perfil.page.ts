@@ -7,6 +7,8 @@ import { ToastController } from '@ionic/angular';
 import { AgenteService } from '../../services/agente.service';
 import { DatePipe } from '@angular/common';
 import { CatalogoUsoCFDI } from 'src/app/models/catalogo-uso-cfdi.model';
+import { DepartamentoService } from '../../services/departamento.service';
+import { TorreService } from '../../services/torre.service';
 
 @Component({
   selector: 'app-perfil',
@@ -18,10 +20,19 @@ export class PerfilPage implements OnInit {
   //Se inyecta en el constructor para armar los formularios reactivos..
 
   catalogoUsoCFDI: CatalogoUsoCFDI[] = [];
+  torreSelected:any;
+  departamentos: any[] = [];
+  torres: any[] = [];
+  idEmpresa:number;
+
+  nombreTorre:string;
+  nombreDepartamento:string;
 
   constructor(private fb: FormBuilder,
     private router: Router,
+    private torreService: TorreService,
     private storage: Storage,
+    private departamentoService: DepartamentoService,
     private userData: UserData,
     private agenteService: AgenteService,
     private toastr: ToastController,
@@ -37,7 +48,8 @@ export class PerfilPage implements OnInit {
     fechaDeNacimiento: [new Date(), Validators.required],
     ocupacion: ['', Validators.required],
     email: ['', Validators.email],
-    telefono: ['', null],
+    telefono: ['', null],    
+    departamentoAC:['', null],
     data: this.fb.group({  //Datos de facturacion    
       razonSocialEmpresa: ["",],
       rfcEmpresa: ["",],
@@ -49,7 +61,9 @@ export class PerfilPage implements OnInit {
   agenteChangesForm: FormGroup;
 
   ngOnInit() {
+    this.idEmpresa = this.userData.getIdEmpresa();
     this.rellenaCatalogoUsoCFDI()
+    
   }
 
   rellenaCatalogoUsoCFDI() {
@@ -86,6 +100,7 @@ export class PerfilPage implements OnInit {
 
   ionViewDidEnter() {    
     this.getUsuario();
+    this.getDataTorre();
   }
 
   traerAgente() {
@@ -102,11 +117,59 @@ export class PerfilPage implements OnInit {
     });
   }
 
+  cambioTorre(event){
+    this.torreSelected = event.detail.value;
+    console.log('cambio depto'+ JSON.stringify(this.torreSelected));
+    this.getDataDepartamento();    
+  }
+
+  async getDataTorre() {
+    console.log('getDataTorree');
+    await this.torreService.getTorresFull(this.idEmpresa).subscribe((data) => {
+      console.log(data);
+      if (data.status === 200) {
+        this.torres = data.result;
+      } else {
+        this.showToast('error al recuperar registros de torre' + data.status);
+      }
+    },
+      (err) => {
+        this.showToast('error al recuperar registros de torre');
+      }
+    );
+  }
+
+  async getDataDepartamento() {
+    console.log('getDataDepartamento');
+    if (this.userData.getAplicaTorres()) {
+      if (this.torreSelected) {
+        await this.departamentoService.getDepartamentosPorTorre(this.torreSelected.id).subscribe((data) => {
+          console.log(data);
+          if (data.status === 200) this.departamentos = data.result;
+          else this.showToast('error al recuperar registros');
+        },
+          (err) => { this.showToast('error al recuperar registros'); }
+        );
+      } else {
+        this.showToast('Debe seleccionar una torre para listar los departamentos');
+      }
+    } else {
+      await this.departamentoService.getDepartamentosPorEmpresa(this.idEmpresa).subscribe((data) => {
+        console.log(data);
+        if (data.status === 200) this.departamentos = data.result;
+        else this.showToast('error al recuperar registros: '+ data.status);
+      },
+        (err) => { this.showToast('error al recuperar registros'); }
+      );
+    }
+
+  }
+
   async getUsuario() {
     /* console.log('getUsuario');
     console.log("this.idAgente: " + this.userData.getIdAgente()); */
     await this.agenteService.getUserById(this.userData.getIdAgente()).subscribe(data => {
-      console.log(data);
+      console.log('USERFULL-->',JSON.stringify(data));
       if (data.status === 200) {
 
         if (!data.result.fechaDeNacimiento) {
@@ -123,7 +186,7 @@ export class PerfilPage implements OnInit {
    */        
         const formattedDate = this.datePipe.transform(data.result.fechaDeNacimiento, 'yyyy-MM-dd ');
         let formData: any;
-                
+
         if (data.result.data) {          
           formData = this.fb.group({
             razonSocialEmpresa: [data.result.data.razonSocialEmpresa],
@@ -132,7 +195,7 @@ export class PerfilPage implements OnInit {
             usoCFDIEmpresa: [data.result.data.usoCFDIEmpresa]
           });
 
-        } else {          
+        } else {
           formData = this.fb.group({
             razonSocialEmpresa: [""],
             rfcEmpresa: [""],
@@ -142,8 +205,6 @@ export class PerfilPage implements OnInit {
 
         }
 
-
-
         this.createAgente = this.fb.group({
           nombreCompleto: [data.result.nombreCompleto],
           apellidoPaterno: [data.result.apellidoPaterno],
@@ -152,16 +213,28 @@ export class PerfilPage implements OnInit {
           fechaDeNacimiento: [formattedDate],
           ocupacion: [data.result.ocupacion],
           email: [data.result.email],
+          departamentoAC:[data.result.departamentoAC],
+          
           telefono: [data.result.telefono],
           data: formData
         });
 
-        data: this.fb.group({  //Datos de facturacion    
-          razonSocialEmpresa: ["",],
-          rfcEmpresa: ["",],
-          correoEmpresa: ["",],
-          usoCFDIEmpresa: ["",],
-        })
+        if(data.result.dataTorre){
+          this.nombreTorre = data.result.dataTorre.nombre;
+        }
+
+        if(data.result.dataDepartamento){
+          this.nombreDepartamento = data.result.dataDepartamento.nombre;
+        }
+        
+        
+
+
+
+      console.log(JSON.stringify(this.createAgente.value));
+
+
+
 
       } else {
         this.showToast('No se lograron recuperar tus datos en este momento');
@@ -169,6 +242,8 @@ export class PerfilPage implements OnInit {
       }
     });
   }
+
+
 
 
   guardarDatos() {

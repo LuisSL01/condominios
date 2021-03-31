@@ -8,7 +8,7 @@
 
       <div formGroupName="data">
 
-        <ion-item>
+        <ion-item *ngIf="false" >
           <ion-label>
             <ion-icon name="mail-open-outline" style="font-size:23px; color: #50c8ec; 
             margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Destinatario
@@ -42,6 +42,41 @@
  
         
       </div>
+
+      <ion-item-divider>
+        <ion-label>
+          Extra
+        </ion-label>
+      </ion-item-divider>
+
+      <ion-item >
+        <ion-label   >
+          <ion-icon name="analytics-outline" style="font-size:23px; color: #50c8ec; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Punto de acuerdo
+        </ion-label>
+        <ion-select  interface="popover"  
+          formControlName="votacion"          
+          okText="Aceptar" cancelText="Cancelar">
+          <ion-select-option *ngFor="let pp of puntosAcuerdo" [value]="pp.id">
+            {{ pp.titulo}}
+          </ion-select-option>          
+        </ion-select>
+      </ion-item>
+
+      <ion-item >
+        <ion-label   >
+          <ion-icon name="reader-outline" style="font-size:23px; color: #50c8ec; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Convocatoria
+        </ion-label>
+        <ion-select  interface="popover"  
+          formControlName="publicacion"          
+          okText="Aceptar" cancelText="Cancelar">
+          <ion-select-option *ngFor="let pp of convocatorias" [value]="pp.id">
+            {{ pp.data.titulo}}
+          </ion-select-option> 
+        </ion-select>
+      </ion-item>
+
       
     </ion-list>
    

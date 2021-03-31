@@ -21,6 +21,7 @@ export class ConfiguracionEmpPage implements OnInit {
   idEmpresa: number;
   aplicaTorres: boolean = false;
   torreSelected: any;
+  departamentoSelected: any;
 
   dataRegistro = {};
 
@@ -48,7 +49,8 @@ export class ConfiguracionEmpPage implements OnInit {
   }
 
   async findConfig(){
-    this.aplicaTorres = await  this.userData.getAplicaTorres();
+    /* this.aplicaTorres = await  this.userData.getAplicaTorres(); */
+    this.aplicaTorres = true;
     if(this.aplicaTorres){
       this.getDataTorre();
     }else{
@@ -59,7 +61,7 @@ export class ConfiguracionEmpPage implements OnInit {
 
   addTorre() {
     this.crearRegistroTorre = true;
-    this.mensajeStr = "Crear una nueva torre";
+    this.mensajeStr = "Crear una nueva torre/privada";
     this.presentAlertCreateTorre();
   }
 
@@ -89,8 +91,25 @@ export class ConfiguracionEmpPage implements OnInit {
     this.presentAlertCreateDepartamento();
   }
 
+  editDepartamento(){
+    if(this.departamentoSelected){
+      console.log('edit depto');
+      console.log('departamentoSelected,'+ JSON.stringify(this.departamentoSelected));
+      this.mensajeStr = "Editando departamento";
+      this.presentAlertEditDepartamento();
+
+    }else{
+      this.userData.showToast("debe seleccionar un departamento.");
+    }
+    
+    
+  }
+
+  
+
   cambioTorre() {
     console.log('cambio torre');
+    this.departamentoSelected = null;
     this.getDataDepartamento();
   }
 
@@ -171,6 +190,42 @@ export class ConfiguracionEmpPage implements OnInit {
         }
       ]
     });
+    await alert.present();
+  }
+
+  async presentAlertEditDepartamento() {
+    const alert = await this.alertController.create({
+      cssClass: 'alertHeader',
+      header: 'Confirmar!',
+      message: this.mensajeStr,
+      inputs: [
+        {
+          name: 'name',
+          type: 'text',
+          placeholder: 'Nombre',
+          value:this.departamentoSelected.data.nombre
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Guardar',
+          handler: (alertData) => {
+            console.log('Confirm Okay');
+            this.dataRegistro = {
+              nombre: alertData.name
+            }
+            this.editarDepartamento();
+          }
+        }
+      ]
+    });
 
     await alert.present();
   }
@@ -221,6 +276,24 @@ export class ConfiguracionEmpPage implements OnInit {
     );
   }
 
+  async editarDepartamento() {
+    console.log('editarDepartamento');
+    
+    
+    console.log('Objeto enviado..' + JSON.stringify(this.dataRegistro));    
+    await this.departamentoService.update(this.departamentoSelected.id, this.dataRegistro).subscribe((data) => {
+      console.log(data);
+      if (data.status === 200) {
+        this.userData.showToast('editado correctamente');
+        this.getDataDepartamento();
+      } else { this.userData.showToast('Error 1 al editar'); }
+    },
+      (err) => {
+        console.log(err); this.userData.showToast("Error 2 al editar: " + err);
+      }, () => { }
+    );
+  }
+
   async getDataTorre() {
     console.log('getDataTorree');
 
@@ -228,6 +301,7 @@ export class ConfiguracionEmpPage implements OnInit {
       console.log(data);
       if (data.status === 200) {
         this.torres = data.result;
+        if(this.torres.length ===0)this.userData.showToast("No hay torres/privadas registradas");
       } else {
         this.userData.showToast('error al recuperar registros');
       }
@@ -244,7 +318,12 @@ export class ConfiguracionEmpPage implements OnInit {
       if (this.torreSelected) {
         await this.departamentoService.getDepartamentosPorTorre(this.torreSelected.id).subscribe((data) => {
           console.log(data);
-          if (data.status === 200) this.departamentos = data.result;
+          if (data.status === 200) {          
+            this.departamentos = data.result;
+            if(this.departamentos.length ===0)this.userData.showToast("No hay departamentos registrados");
+          }
+
+
           else this.userData.showToast('error al recuperar registros');
         },
           (err) => { this.userData.showToast('error al recuperar registros'); }

@@ -81,7 +81,9 @@
           <ion-icon name="call-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
           &nbsp;&nbsp;Celular:
         </ion-label>
-        <ion-input (ionChange)="cambioNumeroTelefono( $event )" formControlName="celular"></ion-input>
+        <ion-input  type="text" maxlength="10"
+         formControlName="celular"></ion-input>
+        
       </ion-item>
 
 
@@ -159,7 +161,7 @@
         <ion-label>
           <ion-icon name="leaf-outline" style="font-size:23px; color: #50c8ec; 
               margin-bottom: -5px;
-          "></ion-icon>&nbsp;&nbsp;Torre:
+          "></ion-icon>&nbsp;&nbsp;Torre/Privada:
         </ion-label>
         <ion-select  interface="popover" okText="Aceptar" cancelText="Cancelar" 
         (ionChange)="cambioTorre($event)" >

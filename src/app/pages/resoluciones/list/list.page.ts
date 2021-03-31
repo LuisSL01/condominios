@@ -23,6 +23,11 @@ export class ListPage implements OnInit {
   ngOnInit() {
   }
 
+
+  editRowSelected() {
+    this.router.navigate(['/resoluciones/add', { item: JSON.stringify(this.resolucion) }]);
+  }
+
   async lanzarMenu() {
     let bntBorrar;    
     bntBorrar = {

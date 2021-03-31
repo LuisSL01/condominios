@@ -178,6 +178,10 @@ const routes: Routes = [
   },  {
     path: 'calendar',
     loadChildren: () => import('./pages/calendar/calendar.module').then( m => m.CalendarPageModule)
+  },
+  {
+    path: 'departamento',
+    loadChildren: () => import('./pages/departamento/departamento.module').then( m => m.DepartamentoPageModule)
   }
 
 

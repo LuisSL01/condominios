@@ -25,11 +25,6 @@ export class ConvocatoriaService {
   constructor(private http: HttpClient,
               private storage: Storage,
               private dataLocalService: DataLocalService) {
-      
-      
-
-      
-
   }
 
   
@@ -39,9 +34,26 @@ export class ConvocatoriaService {
     return this.http.post<ApiResponse>(this.baseUrl + this.publicacionContext, notificacionData).pipe(share());
   }
 
+  saveWithPDF(notificacionData: FormData): Observable<ApiResponse> {
+    console.log('guardarConvocatoria:'+this.baseUrl + environment.coreApiBasePublicacionPDFOperation);    
+    return this.http.post<ApiResponse>(this.baseUrl + environment.coreApiBasePublicacionPDFOperation, notificacionData).pipe(share());
+  }
+
+  update(idConvocatoria: number, convocatoriaData: any) : Observable<ApiResponse> {
+    console.log('update adeudo', this.baseUrl + this.publicacionContext + environment.coreApiBaseEditOperation+  "/" + idConvocatoria);
+    return this.http.patch<ApiResponse>(this.baseUrl + this.publicacionContext + environment.coreApiBaseEditOperation+  "/" + idConvocatoria, convocatoriaData).pipe(share());
+  }
+
+
+
   getConvocatorias(idEmpresa: number, page: number, size: number, filters: string){
     console.log(this.baseUrl +environment.coreApiBasePublicacionOperation + environment.coreApiGetAnunciosListOperation +"/"+idEmpresa+ "/CONVOCATORIA?page="+page+"&size="+size+"");
     return this.http.get<ApiResponse>(this.baseUrl +environment.coreApiBasePublicacionOperation + environment.coreApiGetAnunciosListOperation + '/' + idEmpresa + '/CONVOCATORIA?page=' + page + '&size=' + size + (filters ? ('&filters=' + filters):'')).pipe(share());
+  }
+
+  getFullConvocatorias(idEmpresa: number){
+    console.log(this.baseUrl +environment.coreApiBasePublicacionOperation + environment.coreApiGetAnunciosListOperation +"Full/"+idEmpresa+ "/CONVOCATORIA");
+    return this.http.get<ApiResponse>(this.baseUrl +environment.coreApiBasePublicacionOperation + environment.coreApiGetAnunciosListOperation + 'Full/' + idEmpresa + '/CONVOCATORIA');
   }
 
   borrarConvocatoria(idPublicacion: number) : Observable<ApiResponse> {

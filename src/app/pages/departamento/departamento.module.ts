@@ -4,19 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ListPageRoutingModule } from './list-routing.module';
+import { DepartamentoPageRoutingModule } from './departamento-routing.module';
 
-import { ListPage } from './list.page';
-import { PipesModule } from '../../../pipes/pipes.module';
+import { DepartamentoPage } from './departamento.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ListPageRoutingModule,
-    PipesModule
+    DepartamentoPageRoutingModule
   ],
-  declarations: []
+  declarations: [DepartamentoPage]
 })
-export class ListPageModule {}
+export class DepartamentoPageModule {}

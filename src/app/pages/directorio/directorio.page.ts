@@ -4,7 +4,7 @@ import { Directorio } from '../../models/directorio.model';
 import { UserData } from '../../providers/user-data';
 import { Storage } from '@ionic/storage';
 import { IonInfiniteScroll, NavController } from '@ionic/angular';
-import { NavigationExtras, Router } from '@angular/router';
+import { NavigationExtras, Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-directorio',
@@ -26,6 +26,7 @@ export class DirectorioPage implements OnInit {
   constructor(public directorioService:DirectorioService,
               private userData: UserData,
               private storage:Storage ,
+              public activatedRoute: ActivatedRoute,
               public navCtrl: NavController,
               private router: Router,) { 
   }
@@ -33,6 +34,15 @@ export class DirectorioPage implements OnInit {
   ngOnInit() {
     this.idEmpresa = this.userData.getIdEmpresa();
     this.cargaData();
+  }
+  ionViewDidEnter(){
+    console.log('ionViewDidEnter de directorios PAGE');
+    let value:boolean = JSON.parse(this.activatedRoute.snapshot.paramMap.get('item'));
+    if(value != null){
+      this.contactoPage = 0;
+      this.infiniteScroll.disabled = false;//Cada que se hace el refresh se habilita el componente infinite scroll      
+      this.getDirectorios(this.contactoPage,10,null, null);
+    }
   }
 
   async cargaData(){
@@ -49,28 +59,28 @@ export class DirectorioPage implements OnInit {
 
   getDirectorios(page: number, size: number, eventInfinite?, eventRefresh?) {     
     this.directorioService.getDirectorios(this.idEmpresa, page, size, this.filters).subscribe((data) => {
-        console.log(data);        
+         
           if (data.status === 200) {
-            if(eventRefresh) this.directorios = [];
             if (eventInfinite) {
+              this.directorios.push(...data.result.content);
               if (data.result.content.length === 0) {
                 eventInfinite.target.disabled = true;
                 eventInfinite.target.complete();
                 return;
               }
+            }else{                      
+              this.directorios = data.result.content;
             }
-            this.directorios.push(...data.result.content)
-            this.storage.set(this.idEmpresa + this.directorioService.nombreEtiqueta, this.directorios);
-            this.userData.showToast('recuperados correctamente');
+            this.storage.set(this.idEmpresa + this.directorioService.nombreEtiqueta, this.directorios);            
             this.completeEvent(eventInfinite, eventRefresh);            
           } else {
-            this.userData.showToast('error al recuperar registros');
-            console.log(data.status);
-            this.completeEvent(eventInfinite, eventRefresh);            
+            console.log(data);
+            this.userData.showToast('error '+data.status+', al recuperar registros');            
+            this.completeEvent(eventInfinite, eventRefresh);
           }
         },
         (err) => {
-          this.userData.showToast('error al recuperar registros');
+          this.userData.showToast('error al recuperar registros'+ err);
           console.log(err);
           this.completeEvent(eventInfinite, eventRefresh);
         }

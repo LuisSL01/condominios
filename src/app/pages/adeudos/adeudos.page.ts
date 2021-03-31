@@ -33,8 +33,7 @@ export class AdeudosPage implements OnInit {
 
   ngOnInit() {
     this.idEmpresa = this.userData.getIdEmpresa();
-    this.idAgente = this.userData.getIdAgente();
-    
+    this.idAgente = this.userData.getIdAgente();    
     this.cargaFiltrosTabla();
   }
 

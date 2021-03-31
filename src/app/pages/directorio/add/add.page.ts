@@ -89,17 +89,24 @@ export class AddPage implements OnInit {
 
   validarCP() {
     console.log('cambio');
+    this.userData.showToast("Buscando CP, espere...");
     this.codigoPostalService.filterCodigosPostales(this.createDirectorio.value.direccion.asentamiento).subscribe(data => {
       if (data.status === 200) {
-        console.log('"data.result"', data.result);          
-        console.log(data.message);               
+        
         this.asentamientos = data.result;
+        if(this.asentamientos.length ==0){
+          this.userData.showToast("No hay asentamientos con el CP proporcionado");        
+        }else{
+          this.userData.showToast("Termino la busqueda, seleccione asentamiento");
+        }
       } else {
+        this.userData.showToast("Error al buscar el CP");
         console.log('Llego otro status');                        
         console.log(data.message);
       }
     },
     err => {
+      this.userData.showToast("Error al buscar el CP");
       console.log(err);    
     });
    }
@@ -133,7 +140,8 @@ export class AddPage implements OnInit {
       console.log(data);
       if (data.status === 200) { 
         this.userData.showToast('directorio registrado correctamente');
-        this.router.navigate(['/directorio']);
+        this.createDirectorio.reset();
+        this.router.navigate(['/directorio', { item: true}]);
       } else {this.userData.showToast('Error al registrar llego otro status');}
     },
     (err) => {console.log(err);this.userData.showToast("Error: "+ err);
@@ -152,7 +160,8 @@ export class AddPage implements OnInit {
       if (data.status === 200) {
         this.createDirectorio.markAsPristine();
         this.userData.showToast('directorio editado correctamente');
-        this.router.navigate(['/directorio']);
+        this.createDirectorio.reset();
+        this.router.navigate(['/directorio', { item: true}]);
       } else {
         this.userData.showToast('Error al editar registro, llego otro status');
       }
