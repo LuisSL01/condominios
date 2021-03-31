@@ -30,12 +30,15 @@ export class RegistrationPage implements OnInit {
   asentamientoSelected: any;
 
   empresaSelected: any;
-  torreSelected:any;
-  departamentoSelected:any;
+  torreSelected: any;
+  departamentoSelected: any;
 
 
 
-  createAgente = this.fb.group({//Esto para construir los formularios dinamicamente
+
+
+
+  /* createAgente = this.fb.group({//Esto para construir los formularios dinamicamente
     nombreCompleto: ['', [Validators.required, Validators.minLength(4)]],
     apellidoPaterno: ['', null],
     apellidoMaterno: ['', null],
@@ -47,29 +50,22 @@ export class RegistrationPage implements OnInit {
     password: ['', Validators.required],
     confirmarPassword: ['', Validators.required],
     email: ['', Validators.email],
-    celular: ['', null],
+    celular: ['0000', null],
     fechaDeIngreso: [new Date(), Validators.required],
-    
-    /* autoRegistro: [true, null],
-    direccion: this.fb.group({
-      calle: [null, null],
-      numeroExterior: ['', null],      
-      numeroInterior: ['', null],
-      asentamiento: [null, Validators.required]
-    }) */
 
   }
     ,
     {
       validator: MustMatch('password', 'confirmarPassword')
     }
-  );
+  ); */
+  createAgente: FormGroup;
   asentamientos: any[] = [];
-  empresas: any[] =  [];
+  empresas: any[] = [];
 
   torres: any[] = [];
   departamentos: any[] = [];
-  
+
   //Se inyecta en el constructor para armar los formularios reactivos..
   constructor(private fb: FormBuilder,
     private codigoPostalService: CodigoPostalService,
@@ -80,38 +76,210 @@ export class RegistrationPage implements OnInit {
     private torreService: TorreService,
     private departamentoService: DepartamentoService,
     private toastr: ToastController) {
-    
-
-
   }
   ngOnInit() {
 
+    this.construyeForm();
     this.buscarEmpresas();
 
   }
-  buscarEmpresas() {
-    console.log('buscando empresas...');    
-/*     this.empresas = [
 
-    {
-      "id": 32,
-      "nombre": "RINCON ESMERALDA",
-      "alias": "RINCON ESME"     
-  },
-  {
-      "id": 33,
-      "nombre": "EXPLANADA SUR",
-      "alias": "EXP SUR"
+  construyeForm() {
+    console.log('construye form');
+
+    this.createAgente = this.fb.group({//Esto para construir los formularios dinamicamente
+      nombreCompleto: ['', [Validators.required, Validators.minLength(4)]],
+      apellidoPaterno: ['', null],
+      apellidoMaterno: ['', null],
+      sexo: ['Femenino', Validators.required],
+      fechaDeNacimiento: [new Date(), Validators.required],
+      ocupacion: ['', Validators.required],
+
+      username: ['', [Validators.required, Validators.minLength(3)]],
+      password: ['', Validators.required],
+      confirmarPassword: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      celular: ['', null],
+      fechaDeIngreso: [new Date(), Validators.required],
+
+      /* autoRegistro: [true, null],
+      direccion: this.fb.group({
+        calle: [null, null],
+        numeroExterior: ['', null],      
+        numeroInterior: ['', null],
+        asentamiento: [null, Validators.required]
+      }) */
+
+    }
+      ,
+      {
+        validator: MustMatch('password', 'confirmarPassword')
+      }
+    );
   }
-  ]; */
+
+  ionViewDidEnter() {
+    console.log('uno ionViewDidEnter de visitas  PAGE');
+
+  }
 
 
-
+  buscarEmpresas() {
+    console.log('buscando empresas...');
     this.empresaService.filterEmpresasByActividadEconomica(11).subscribe(data => {
       if (data.status === 200) {
         console.log('"data.result"', data.result);
         console.log(JSON.stringify(data.message));
         this.empresas = data.result;
+        if (this.empresas.length === 0) {
+          this.showToast("Error al recuperar fraccionamientos, verifique tenga conexión a internet", "danger");
+        }
+      } else {
+        console.log('Llego otro status');
+        console.log(data.message);
+      }
+    }, err => { console.log(err); });
+  }
+
+  cambioNumeroTelefono(event) {
+    let phone: string = event.detail.value;
+    if (phone.length <= 10) {
+      this.createAgente.value.celular = phone;
+    } else {
+      this.showToast("El número celular no es valido, debe tener 10 digitos", "danger")
+    }
+  }
+
+  cambioUsuario(event) {
+    let user: string = event.detail.value;
+    if (user.includes(" ")) {
+      user = user.split(" ").join("");
+      this.createAgente.value.username = user;
+      console.log("this.createAgente.value.username", this.createAgente.value.username);
+      this.showToast("No se permiten espacios en blanco en usuario", "danger")
+    } else {
+      console.log('else');
+
+      this.createAgente.value.username = user;
+    }
+  }
+
+
+
+  guardarDatos() {
+    if (this.empresaSelected) {
+      if (!this.departamentoSelected) {
+        this.showToast('necesario selecccionar un departamento');
+        return;
+      }
+      let usuario: string = this.createAgente.value.username;
+      usuario = usuario.toLowerCase();
+
+
+      const agenteObj = {
+        agente: {
+          departamento: 'RESIDENTE'
+          , direccion: this.createAgente.value.direccion
+          , apellidoPaterno: this.createAgente.value.apellidoPaterno
+          , apellidoMaterno: this.createAgente.value.apellidoMaterno
+          , sexo: this.createAgente.value.sexo
+          , ocupacion: this.createAgente.value.ocupacion
+          , puesto: 'RESIDENTE'
+          , subClasificacion: 'SIN SUBCLASIFICACION'
+          , subDepartamento: 'SIN SUBDEPARTAMENTO'
+          , telefono: this.createAgente.value.celular
+          /* , fechaDeNacimiento: this.createAgente.value.fechaDeNacimiento + " 00:00:01.100 " */
+          , activo: false
+          , empresa: this.empresaSelected.id
+          , gerenteActivo: true
+          , departamentoAC: this.departamentoSelected.id
+
+        },
+        usuario: {
+          username: usuario
+          , nombreCompleto: this.createAgente.value.nombreCompleto
+          , email: this.createAgente.value.email
+          , password: this.createAgente.value.password
+          , autoRegistro: true
+          , passwordExpirado: false
+          , perfil: { id: 1 }
+        }
+      };
+      console.log('objetivo enviavo: ', agenteObj);
+
+      const objAgente = {
+        dispositivoUuid: this.pushService.userId
+      };
+
+
+      this.agenteService.registerUsuario(agenteObj).subscribe(data => {
+        if (data.status === 200) {
+          console.log('"data.result"', data.result);
+          const formData = new FormData(); //Esto no esta trabajanco chido...
+          formData.append("id_agente", data.result.id);
+          formData.append("id_empresa", "" + this.empresaSelected.id);
+          console.log("objeto enviado: ", formData);
+          let idAgente = data.result.id;
+          this.agenteService.addAgenteToEmpresa(formData).subscribe(
+            (data) => {
+              if (data.status === 200) {
+                console.log('"data.result"', data.result);
+                this.showToast("agente asociado a empresa correctamente");
+
+                if (!this.isEmpty(objAgente.dispositivoUuid)) {
+                  console.log('debo ir actualizar el uuid');
+                  this.agenteService.updateAgenteCore(idAgente, objAgente);
+                }
+                this.createAgente.reset();
+                this.router.navigate(["/home"]);
+              } else {
+                console.log('Llego otro status al asociar agente a empresa');
+              }
+            },
+            (err) => {
+              console.log(err);
+              console.log('Llego otro status al asociar agente a empresa');
+            },
+            () => { }
+          );
+          //Se envia a guardar en el server
+          this.showToast('Usuario registrado correctamente');
+        } else {
+          this.showToast('No se pudo registrar el usuario');
+        }
+      },
+        err => {
+          console.log(err);
+          if (err.status === 500) {//comunmente pasa por que el campo email es unico
+            this.showToast("Error al registrar, el correo ya se encuentra asociado a una cuenta", "danger");
+          }
+        },
+        () => {
+
+        });
+      /* console.log(this.createAgente.value); */
+    } else {
+      this.showToast('necesario selecccionar una residencia');
+    }
+  }
+
+
+  isEmpty(str) {
+    return (!str || 0 === str.length);
+  }
+
+  validarCP() {
+    this.asentamientos = [];
+    this.searchFailed = true;
+    console.log('cambio');
+    console.log(this.createAgente.value);
+    console.log(this.createAgente.value.direccion.asentamiento);
+    this.codigoPostalService.filterCodigosPostales(this.createAgente.value.direccion.asentamiento).subscribe(data => {
+      if (data.status === 200) {
+        console.log('"data.result"', data.result);
+        console.log(data.message);
+        this.searchFailed = false;
+        this.asentamientos = data.result;
       } else {
         console.log('Llego otro status');
         console.log(data.message);
@@ -121,182 +289,15 @@ export class RegistrationPage implements OnInit {
         console.log(err);
       });
 
-  }
-
-  cambioNumeroTelefono(event){
-    let phone:string = event.detail.value;        
-    if(phone.length <= 10){
-      this.createAgente.value.celular = phone;
-    }else{
-      this.showToast("El número celular no es valido, debe tener 10 digitos","danger")
-    }
-  }
-
-  cambioUsuario(event){
-    let user:string = event.detail.value;
-    if(user.includes(" ")){
-      user = user.split(" ").join("");
-      this.createAgente.value.username = user;
-      console.log("this.createAgente.value.username", this.createAgente.value.username);      
-      this.showToast("No se permiten espacios en blanco en usuario","danger")
-    }else{
-      console.log('else');
-      
-      this.createAgente.value.username = user;
-    }
-  }
-
-  guardarDatos() {
-    if(this.empresaSelected){      
-
-          /* this.createAgente.value.direccion.asentamiento = this.asentamientoSelected;
-          this.createAgente.value.direccion.numeroExterior = this.createAgente.value.direccion.numeroExterior.toUpperCase();
- */
-          const agenteObj = {
-            agente: {              
-                departamento: 'RESIDENTE'                
-              , direccion: this.createAgente.value.direccion
-              , apellidoPaterno: this.createAgente.value.apellidoPaterno
-					    , apellidoMaterno: this.createAgente.value.apellidoMaterno
-					    , sexo: this.createAgente.value.sexo
-              , ocupacion: this.createAgente.value.ocupacion              
-              , puesto: 'RESIDENTE'
-              , subClasificacion: 'SIN SUBCLASIFICACION'
-              , subDepartamento: 'SIN SUBDEPARTAMENTO'
-              , telefono: this.createAgente.value.celular
-              /* , fechaDeNacimiento: this.createAgente.value.fechaDeNacimiento + " 00:00:01.100 " */
-              , activo:false
-              , empresa: this.empresaSelected.id
-              , gerenteActivo: true
-              , departamentoAC: this.departamentoSelected.id
-
-            },
-            usuario: {
-              username: this.createAgente.value.username
-              , nombreCompleto: this.createAgente.value.nombreCompleto
-              , email: this.createAgente.value.email
-              , password: this.createAgente.value.password
-              , autoRegistro: true
-              , passwordExpirado: false
-               , perfil: {id : 1} 
-            }
-          };      
-          console.log('objetivo enviavo: ', agenteObj);
-
-          const objAgente = {
-            dispositivoUuid: this.pushService.userId      
-          };
-          
-
-          this.agenteService.registerUsuario(agenteObj).subscribe(data => {
-            if (data.status === 200) {
-              console.log('"data.result"', data.result);
-              const formData = new FormData(); //Esto no esta trabajanco chido...
-              formData.append("id_agente", data.result.id);
-              formData.append("id_empresa", ""+this.empresaSelected.id);
-              console.log("objeto enviado: ", formData);
-              let idAgente = data.result.id;
-              this.agenteService.addAgenteToEmpresa(formData).subscribe(
-                (data) => {
-                  if (data.status === 200) {
-                    console.log('"data.result"', data.result);                    
-                    this.showToast("agente asociado a empresa correctamente");  
-
-                    if( ! this.isEmpty(objAgente.dispositivoUuid)){
-                      console.log('debo ir actualizar el uuid');
-                      this.agenteService.updateAgenteCore(idAgente , objAgente);
-                    }
-                    this.createAgente.reset();
-                    this.router.navigate(["/home"]);                    
-                  } else {
-                    console.log('Llego otro status al asociar agente a empresa');              
-                  }
-                },
-                (err) => {
-                  console.log(err);
-                  console.log('Llego otro status al asociar agente a empresa');      
-                },
-                () => {}
-
-              );
-              //Se envia a guardar en el server
-              this.showToast('Usuario registrado correctamente');
-            } else {              
-              this.showToast('No se pudo registrar el usuario');
-            }
-          },
-            err => {
-              console.log(err);      
-            },
-            () => {
-      
-            });
-          /* console.log(this.createAgente.value); */
-    }else{
-      this.showToast('necesario selecccionar una residencia');
-    }
-  }
-
-  
-  isEmpty(str) {
-    return (!str || 0 === str.length);
-  }
-
-  validarCP() {
-
-   /*  this.asentamientos = [{
-      "colonia": "Molino Arriba",
-      "codigoPostal": "50874",
-      "ciudad": "sin ciudad",
-      "estado": "México",
-      "id": 64552,
-      "municipio": "Temoaya"
-    }, {
-      "colonia": "Campamento km 48",
-      "codigoPostal": "50874",
-      "ciudad": "sin ciudad",
-      "estado": "México",
-      "id": 64553,
-      "municipio": "Temoaya"
-    }, {
-      "colonia": "Magdalena",
-      "codigoPostal": "50874",
-      "ciudad": "sin ciudad",
-      "estado": "México",
-      "id": 64554,
-      "municipio": "Temoaya"
-    }];
-    this.searchFailed = false; */
-    
-          this.asentamientos = [];    
-          this.searchFailed = true;    
-          console.log('cambio');
-          console.log(this.createAgente.value);
-          console.log(this.createAgente.value.direccion.asentamiento);          
-          this.codigoPostalService.filterCodigosPostales(this.createAgente.value.direccion.asentamiento).subscribe(data => {
-            if (data.status === 200) {
-              console.log('"data.result"', data.result);          
-              console.log(data.message);
-              this.searchFailed = false;
-              this.asentamientos = data.result;
-            } else {
-              console.log('Llego otro status');                        
-              console.log(data.message);
-            }
-          },
-          err => {
-            console.log(err);    
-          });
-
     /* let data:any = this.codigoPostalService.filterCodigosPostales(
       this.createAgente.value.direccion.asentamiento); */
   }
-  
-  showToast(dataMessage: string, color_str?:string) {
+
+  showToast(dataMessage: string, color_str?: string) {
     this.toastr.create({
       message: dataMessage,
       duration: 2000,
-      color:color_str?color_str:null
+      color: color_str ? color_str : null
     }).then((toastData) => {
       toastData.present();
     });
@@ -312,14 +313,14 @@ export class RegistrationPage implements OnInit {
     console.log('cambio empresa');
     console.log('event', event);
     this.empresaSelected = event.detail.value;
-    if(this.empresaSelected && this.empresaSelected.configuracionEmpresa){
-      if(this.empresaSelected.configuracionEmpresa.aplicaTorres){
+    if (this.empresaSelected && this.empresaSelected.configuracionEmpresa) {
+      if (this.empresaSelected.configuracionEmpresa.aplicaTorres) {
         this.getDataTorre();
-      }else{
+      } else {
         this.getDataDepartamento();
       }
     }
-    
+
   }
 
   async getDataTorre() {
@@ -356,7 +357,7 @@ export class RegistrationPage implements OnInit {
       await this.departamentoService.getDepartamentosPorEmpresa(this.empresaSelected.id).subscribe((data) => {
         console.log(data);
         if (data.status === 200) this.departamentos = data.result;
-        else this.showToast('error al recuperar registros: '+ data.status);
+        else this.showToast('error al recuperar registros: ' + data.status);
       },
         (err) => { this.showToast('error al recuperar registros'); }
       );
@@ -364,16 +365,17 @@ export class RegistrationPage implements OnInit {
 
   }
 
-  cambioTorre(event){
+  cambioTorre(event) {
     this.torreSelected = event.detail.value;
-    console.log('cambio depto'+ JSON.stringify(this.torreSelected));
+    this.departamentoSelected = null;
+    console.log('cambio depto' + JSON.stringify(this.torreSelected));
     this.getDataDepartamento();
-    
+
   }
-  cambioDepto(event){
-    
+  cambioDepto(event) {
+
     this.departamentoSelected = event.detail.value;
-    console.log('cambio depto'+ JSON.stringify(this.departamentoSelected));
+    console.log('cambio depto' + JSON.stringify(this.departamentoSelected));
   }
 
   compareWithFn = (e1, e2) => {//No funciono la implementacion

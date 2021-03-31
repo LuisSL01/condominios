@@ -9,6 +9,8 @@ import { RegistrationPageRoutingModule } from './registration-routing.module';
 import { RegistrationPage } from './registration.page';
 import { ComponentsModule } from '../../components/components.module';
 
+import {NgxMaskIonicModule} from 'ngx-mask-ionic';
+
 
 
 
@@ -21,7 +23,8 @@ import { ComponentsModule } from '../../components/components.module';
     ReactiveFormsModule,
     RegistrationPageRoutingModule,
     ComponentsModule,
-
+    
+    NgxMaskIonicModule
   ],
   declarations: [RegistrationPage]
 })

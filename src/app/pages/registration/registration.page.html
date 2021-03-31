@@ -1,7 +1,7 @@
 <app-header titulo="Crear cuenta"></app-header>
 <ion-content fullscreen>
 
-  <form [formGroup]="createAgente" (ngSubmit)="guardarDatos()">
+  <form [formGroup]="createAgente" (ngSubmit)="guardarDatos()" >
 
     <ion-list>
 
@@ -48,8 +48,8 @@
         </ion-label>
         <ion-select interface="popover" placeholder="Seleccionar" formControlName="sexo" okText="Aceptar"
           cancelText="Cancelar">
-          <ion-select-option value="Masculino">Masculino</ion-select-option>
           <ion-select-option value="Femenino">Femenino</ion-select-option>
+          <ion-select-option value="Masculino">Masculino</ion-select-option>
           <ion-select-option value="Otro">Otro</ion-select-option>
         </ion-select>
       </ion-item>
@@ -81,12 +81,17 @@
           <ion-icon name="call-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
           &nbsp;&nbsp;Celular:
         </ion-label>
-        <ion-input  type="text" maxlength="10"
-         formControlName="celular"></ion-input>
+        <ion-input  type="text" 
+          maxlength="10"
+         formControlName="celular"          
+         ></ion-input>
+        <!-- <ion-input  type="text" 
+         mask="(000) 000-0000"
+        [(ngModel)]="telefonoSTR"
+        [ngModelOptions]="{standalone: true}"           
+         ></ion-input> -->
         
       </ion-item>
-
-
 
       <ion-item>
 
@@ -106,7 +111,7 @@
                 margin-bottom: -5px;
             "></ion-icon>&nbsp;&nbsp;Usuario:
         </ion-label>
-        <ion-input formControlName="username"  (ionChange)="cambioUsuario( $event )" ></ion-input>
+        <ion-input formControlName="username"    (ionChange)="cambioUsuario( $event )" ></ion-input>
       </ion-item>
       <ion-label color="danger"
         *ngIf="createAgente.controls.username.errors?.required && (createAgente.touched || createAgente.dirty)">* El

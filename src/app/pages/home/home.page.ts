@@ -79,13 +79,13 @@ export class HomePage implements OnInit {
     };
 
     const loginPayload = {
-      username: this.login.username,
+      username: this.login.username.toLowerCase(),
       password: this.login.password,
     };
 
 
 
-    console.log("loginPayload: " + loginPayload);
+    console.log("loginPayload: " + JSON.stringify(loginPayload));
     this.showLoading();
 
     this.user = loginPayload.username.toLowerCase();

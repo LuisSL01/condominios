@@ -31,6 +31,8 @@ import { DatePipe } from '@angular/common';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
 
+import {NgxMaskIonicModule} from 'ngx-mask-ionic'
+
 
 /* import { NgxMaskModule, IConfig } from 'ngx-mask' */
 /* export const options: Partial<IConfig> | (() => Partial<IConfig>) = null; */
@@ -43,10 +45,7 @@ import { Base64 } from '@ionic-native/base64/ngx';
      ComponentsModule,
      HttpClientModule,
      IonicStorageModule.forRoot(),
-     
-
-
-     
+     NgxMaskIonicModule.forRoot()
     ],
 
   providers: [

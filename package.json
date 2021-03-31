@@ -57,6 +57,7 @@
     "moment": "^2.27.0",
     "moment-timezone": "^0.5.31",
     "mx.ferreyra.callnumber": "0.0.2",
+    "ngx-mask-ionic": "^1.1.2",
     "onesignal-cordova-plugin": "^2.11.3",
     "phonegap-plugin-barcodescanner": "^8.1.0",
     "rxjs": "~6.5.1",
