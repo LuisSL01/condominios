@@ -1,0 +1,23 @@
+<app-menu-header></app-menu-header>
+
+<app-header titulo="QR Generado"></app-header>
+
+<ion-content fullscreen>
+  <ion-list>
+
+    <ngx-qrcode 
+        [elementType]="elementType" 
+        [value]="qr">
+      </ngx-qrcode>
+    
+
+    <br>
+
+    <ion-button (click)="compartir()" expand="block" shape="round">
+      Compartir
+    </ion-button>
+
+   
+  </ion-list>
+</ion-content>
+

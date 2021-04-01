@@ -31,7 +31,8 @@ import { DatePipe } from '@angular/common';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
 
-import {NgxMaskIonicModule} from 'ngx-mask-ionic'
+import {NgxMaskIonicModule} from 'ngx-mask-ionic';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 
 /* import { NgxMaskModule, IConfig } from 'ngx-mask' */
@@ -68,6 +69,7 @@ import {NgxMaskIonicModule} from 'ngx-mask-ionic'
     IOSFilePicker,
     FilePath,
     Base64,
+    SocialSharing,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
