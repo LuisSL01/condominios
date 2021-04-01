@@ -7,7 +7,7 @@ import { ConfiguracionEmpPage } from '../configuracion-emp/configuracion-emp.pag
 const routes: Routes = [
   {
     path: '',
-    component: AdministracionPage,
+    component: AdministracionPage,    
     children: [     
       {
         path: 'configuracion-emp',
@@ -42,7 +42,9 @@ const routes: Routes = [
     path: '',
     redirectTo: '/administracion/datos-empresa',
     pathMatch: 'full'
-  }
+  },
+  
+
 ];
 
 @NgModule({

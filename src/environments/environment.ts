@@ -42,13 +42,18 @@ export const environment = {
   coreApiGetFormularioEmpresaOperation: '/formulario',
   coreApiGetEmpresasAgente: '/listEmpresas', 
 
+
   // -> Agentes
-  coreApiBaseAgenteOperation: '/agente',
-  coreApiBaseAddEmpresaOperation: '/addEmpresa',
+  coreApiBaseAgenteOperation: '/agente',  
   /* coreApiBaseEmpresaGerenteOperation: ':listEmpresaGerente',
   coreApiBaseAllGerenteOperation: ':listAllGerente', */
   coreApiRegisterBaseAgenteOperation: '/register',
   coreApiUpdateStatusAgenteOperation: 'updateStatus',
+
+  //AgenteEmpresa
+  coreApiBaseAddEmpresaOperation: '/addEmpresa',
+  coreApiBaseAgenteEmpresaOperation: '/agenteEmpresa',
+  coreApiBaseAgenteEmpresaCountOperation: '/countByEmpresa',
 
   /* coreApiSetEmpresaToAgenteOperation: '/setEmpresa',
   coreApiGetAgenteConfigOperation: '/_config',

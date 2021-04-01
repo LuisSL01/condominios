@@ -23,6 +23,8 @@ export class ListAvisosPage implements OnInit {
     allowSlidePrev: false
   };
 
+  numRespuestas:number=0;
+
   pathS3: string = "https://almacenamientonube.s3.us-west-1.amazonaws.com/";
   pathBase64: string = "data:image/jpeg;base64,";
 
@@ -35,11 +37,22 @@ export class ListAvisosPage implements OnInit {
 
 
   ngOnInit() {
+    this.numRespuestas = this.aviso.respuestas.respuestasPublicacion.length;
+    console.log('en ng on init '+ this.numRespuestas);
+    
   }
 
 
   editRowSelected() {
     this.router.navigate(['/avisos/add-avisos', { item: JSON.stringify(this.aviso) }]);
+  }
+
+  verRespuestas(){
+    this.presentModalRespuestas();
+  }
+
+  responder(){
+    this.presentModalCreateRespuesta();
   }
 
 
@@ -157,7 +170,16 @@ export class ListAvisosPage implements OnInit {
       },
       cssClass: 'my-custom-class'
     });
-    return await modal.present();
+    await modal.present();
+
+    modal.onDidDismiss().then((result) => {
+      console.log('result'+ JSON.stringify(result));
+      if (result.data) {        
+        console.log('qui debo de hacer el refresh de l alista');        
+        this.aviso.respuestas.respuestasPublicacion.push(result.data);
+        this.numRespuestas ++;
+      }
+    });
   }
 
   async presentModalRespuestas() {

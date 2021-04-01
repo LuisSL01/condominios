@@ -27,8 +27,8 @@ export class AgenteService {
   }
 
   addAgenteToEmpresa(userData: FormData): Observable<ApiResponse> {
-    console.log('addAgenteToEmpresa:'+this.baseUrl + environment.coreApiBaseAgenteOperation + environment.coreApiBaseAddEmpresaOperation);
-    return this.http.post<ApiResponse>(this.baseUrl + environment.coreApiBaseAgenteOperation + environment.coreApiBaseAddEmpresaOperation, userData).pipe(share());
+    console.log('addAgenteToEmpresa:'+this.baseUrl + environment.coreApiBaseAgenteEmpresaOperation + environment.coreApiBaseAddEmpresaOperation);
+    return this.http.post<ApiResponse>(this.baseUrl + environment.coreApiBaseAgenteEmpresaOperation + environment.coreApiBaseAddEmpresaOperation, userData).pipe(share());
   }
 
   getUserById(id: number): Observable<ApiResponse> {

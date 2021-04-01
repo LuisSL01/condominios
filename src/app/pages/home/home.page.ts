@@ -50,16 +50,15 @@ export class HomePage implements OnInit {
 
    async verificaExisteDatosSesion(){  
     console.log('verificaExisteDatosSesion');
-    const dt = await this.storage.get('userDetails');        
+    const dt = await this.storage.get('userDetails');
     if (dt) {
-      if(dt.id){
-        console.log('Se encontraron datos de sesion , no es necesario volver a iniciar sesion');
-        
+      
+        console.log('Se encontraron datos de sesion , no es necesario volver a iniciar sesion');        
         this.showLoading();
         this.userData.setConfigEmpresa();
         this.router.navigate(['/inicio']);
         this.showToast("Bienvenido " + JSON.parse(dt).nombreCompleto);
-      }
+      
     }
    }
 

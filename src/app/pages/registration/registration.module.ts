@@ -10,6 +10,7 @@ import { RegistrationPage } from './registration.page';
 import { ComponentsModule } from '../../components/components.module';
 
 import {NgxMaskIonicModule} from 'ngx-mask-ionic';
+import { CreatePageModule } from '../empresa/create/create.module';
 
 
 
@@ -22,9 +23,9 @@ import {NgxMaskIonicModule} from 'ngx-mask-ionic';
     IonicModule,
     ReactiveFormsModule,
     RegistrationPageRoutingModule,
-    ComponentsModule,
-    
-    NgxMaskIonicModule
+    ComponentsModule,    
+    NgxMaskIonicModule,
+    CreatePageModule
   ],
   declarations: [RegistrationPage]
 })

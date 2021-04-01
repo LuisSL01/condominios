@@ -20,12 +20,13 @@ import { EmpresaService } from '../../services/empresa.service';
 export class ExtraPage implements OnInit {
 
   idEmpresa: number;
+  admon:boolean;
 
   constructor(private transfer: FileTransfer, 
     private file: File,
     private fileopen: FileOpener,
     private platform: Platform,
-    private userData: UserData,
+    public userData: UserData,
     private fileChooser: FileChooser,
     private filePicker: IOSFilePicker,
     private filePath: FilePath,
@@ -34,6 +35,17 @@ export class ExtraPage implements OnInit {
 
   ngOnInit() {
     this.idEmpresa = this.userData.getIdEmpresa();
+    
+
+    this.admon = this.userData.administrador;
+
+
+    console.log('en ngon init del formato de construccion..', this.admon);
+  }
+  
+  ionViewDidEnter(){
+    console.log('en ionViewDidEnter del formato de construccion..');
+    
   }
 
   cargarFormato() {

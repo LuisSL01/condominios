@@ -8,11 +8,12 @@ import { CodigoPostalService } from '../../services/codigo-postal.service';
 import { Direccion } from '../../models/direccion.model'; */
 import { AgenteService } from '../../services/agente.service';
 import { EmpresaService } from '../../services/empresa.service';
-import { ToastController } from '@ionic/angular';
+import { ToastController, ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { TorreService } from '../../services/torre.service';
 import { DepartamentoService } from '../../services/departamento.service';
 import { PushService } from '../../services/push.service';
+import { CreatePage } from '../empresa/create/create.page';
 
 
 
@@ -66,6 +67,8 @@ export class RegistrationPage implements OnInit {
   torres: any[] = [];
   departamentos: any[] = [];
 
+  usuariosAsociadosEmpresa:number=0;
+
   //Se inyecta en el constructor para armar los formularios reactivos..
   constructor(private fb: FormBuilder,
     private codigoPostalService: CodigoPostalService,
@@ -74,6 +77,7 @@ export class RegistrationPage implements OnInit {
     private router: Router,
     private pushService: PushService,
     private torreService: TorreService,
+    private modalCtrl: ModalController,
     private departamentoService: DepartamentoService,
     private toastr: ToastController) {
   }
@@ -108,7 +112,8 @@ export class RegistrationPage implements OnInit {
         numeroExterior: ['', null],      
         numeroInterior: ['', null],
         asentamiento: [null, Validators.required]
-      }) */
+      }) 
+      */
 
     }
       ,
@@ -116,6 +121,26 @@ export class RegistrationPage implements OnInit {
         validator: MustMatch('password', 'confirmarPassword')
       }
     );
+  }
+
+  async abrirCreateEmpresaModal() {
+    console.log('abrirCreateEmpresaModal');
+    
+    const modal = await this.modalCtrl.create({
+      component: CreatePage,      
+      cssClass: 'cal-modal',
+      backdropDismiss: false
+    });
+   
+    await modal.present();
+   
+    modal.onDidDismiss().then((result) => {
+      console.log('result', result);
+      if (result.data) {        
+        console.log('result.data', result.data);
+        this.empresas.push(result.data);
+      }       
+    });
   }
 
   ionViewDidEnter() {
@@ -168,17 +193,22 @@ export class RegistrationPage implements OnInit {
 
   guardarDatos() {
     if (this.empresaSelected) {
-      if (!this.departamentoSelected) {
-        this.showToast('necesario selecccionar un departamento');
-        return;
-      }
+
       let usuario: string = this.createAgente.value.username;
       usuario = usuario.toLowerCase();
+
+      let departamento:string="RESIDENTE";
+      let estatusUser = false;
+      if(this.usuariosAsociadosEmpresa === 0 ){
+        console.log('resulta que no hay ningun usuario en la empresa');
+        departamento="ADMINISTRADOR";//Se crea como admin y activo
+        estatusUser = true;
+      }
 
 
       const agenteObj = {
         agente: {
-          departamento: 'RESIDENTE'
+          departamento: departamento
           , direccion: this.createAgente.value.direccion
           , apellidoPaterno: this.createAgente.value.apellidoPaterno
           , apellidoMaterno: this.createAgente.value.apellidoMaterno
@@ -189,10 +219,10 @@ export class RegistrationPage implements OnInit {
           , subDepartamento: 'SIN SUBDEPARTAMENTO'
           , telefono: this.createAgente.value.celular
           /* , fechaDeNacimiento: this.createAgente.value.fechaDeNacimiento + " 00:00:01.100 " */
-          , activo: false
+          , activo: estatusUser
           , empresa: this.empresaSelected.id
           , gerenteActivo: true
-          , departamentoAC: this.departamentoSelected.id
+          , departamentoAC: this.departamentoSelected?.id
 
         },
         usuario: {
@@ -206,6 +236,9 @@ export class RegistrationPage implements OnInit {
         }
       };
       console.log('objetivo enviavo: ', agenteObj);
+      console.log(this.usuariosAsociadosEmpresa);
+      
+      
 
       const objAgente = {
         dispositivoUuid: this.pushService.userId
@@ -225,7 +258,6 @@ export class RegistrationPage implements OnInit {
               if (data.status === 200) {
                 console.log('"data.result"', data.result);
                 this.showToast("agente asociado a empresa correctamente");
-
                 if (!this.isEmpty(objAgente.dispositivoUuid)) {
                   console.log('debo ir actualizar el uuid');
                   this.agenteService.updateAgenteCore(idAgente, objAgente);
@@ -313,6 +345,7 @@ export class RegistrationPage implements OnInit {
     console.log('cambio empresa');
     console.log('event', event);
     this.empresaSelected = event.detail.value;
+    this.countAgentesOfEmpresa();
     if (this.empresaSelected && this.empresaSelected.configuracionEmpresa) {
       if (this.empresaSelected.configuracionEmpresa.aplicaTorres) {
         this.getDataTorre();
@@ -363,6 +396,19 @@ export class RegistrationPage implements OnInit {
       );
     }
 
+  }
+  
+  async countAgentesOfEmpresa() {
+    console.log('countAgentesOfEmpresa');  
+      await this.empresaService.countUsers(this.empresaSelected.id).subscribe((data) => {
+        console.log(data);
+        if (data.status === 200) {
+          this.usuariosAsociadosEmpresa = data.result;
+        }
+        else this.showToast('error 1 al contar usuarios de empresa: ' + data.status);
+      },
+        (err) => { this.showToast('error 2 al contar usuarios de empresa'); }
+      );    
   }
 
   cambioTorre(event) {

@@ -30,8 +30,6 @@ export class AddPage implements OnInit {
       cantidad: ["", [Validators.required]],
       fechaCubrir: [new Date()]
     })
-
-
   });
 
   idEmpresa:number;
