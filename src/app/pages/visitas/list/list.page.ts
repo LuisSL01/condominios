@@ -75,7 +75,7 @@ export class ListPage implements OnInit {
             /*       this.barcodeScannerOptions = {
               showTorchButton: true,
               showFlipCameraButton: true
-            }; */
+            }; 
             this.encodeDataVisita = this.visita.id+"|"+this.visita.uuid;
             this.encodeDataVisita = btoa(this.encodeDataVisita);
             this.barcodeScanner.encode(this.barcodeScanner.Encode.TEXT_TYPE, this.encodeDataVisita).then(encodedData => {
@@ -87,7 +87,8 @@ export class ListPage implements OnInit {
                 console.log("Error occured : " + err);
               }
             );
-  
+            */
+            this.router.navigate(['/visitas/extra', { item: JSON.stringify(this.visita)}]);  
   
           }
         },
@@ -111,7 +112,7 @@ export class ListPage implements OnInit {
             /*       this.barcodeScannerOptions = {
               showTorchButton: true,
               showFlipCameraButton: true
-            }; */
+            }; 
             this.encodeDataVisita = this.visita.id+"|"+this.visita.uuid;
             this.encodeDataVisita = btoa(this.encodeDataVisita);
 
@@ -124,7 +125,8 @@ export class ListPage implements OnInit {
                 console.log("Error occured : " + err);
               }
             );
-  
+            */
+            this.router.navigate(['/visitas/extra', { item: JSON.stringify(this.visita)}]);  
   
           }
         }
