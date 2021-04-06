@@ -11,6 +11,7 @@ import { Storage } from "@ionic/storage";
 import { DatosInteresService } from '../../services/datos-interes.service';
 import { ModalController } from "@ionic/angular";
 import { DatosInteresPage } from '../datos-interes/datos-interes.page';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inicio',
@@ -50,6 +51,7 @@ export class InicioPage implements OnInit {
               public publicacionService : PublicacionService,
               private anuncioService : AnuncioService,
               private storage: Storage,
+              private router: Router,
               private userData:UserData,
               private datosInteresService:DatosInteresService,
               private modalCtrl: ModalController,) {
@@ -62,15 +64,32 @@ export class InicioPage implements OnInit {
 
  
   ngOnInit() {  
-    this.direccion = this.userData.getDataDireccionEmpresa();
-    this.nombreEmpresa = this.userData.getNombreEmpresa();    
-    this.cargaFiltrosTabla();    
+    console.log('en ngon init de inicio');
+    
+    this.verificaExisteDatosSesion();     
   }
 
+  async verificaExisteDatosSesion(){  
+    console.log('verificaExisteDatosSesion');
+    const dt = await this.storage.get('userDetails');
+    if (dt) {      
+      console.log('Ya hay sesion, se cargan los datos');
+      this.direccion = this.userData.getDataDireccionEmpresa();
+      this.nombreEmpresa = this.userData.getNombreEmpresa();    
+      this.idEmpresa = this.userData.getIdEmpresa();
+      this.cargarDatosInteres();
+      this.cargaAnunciosStorage();  
+
+      
+      this.cargaFiltrosTabla();      
+    }else{
+      console.log('No hay sesion, se debe introducir usuario y contraseña');
+      this.router.navigate(['/home']);//se redireccione al home para que inicie sesion
+    }
+   }
+
   ionViewWillEnter(){    
-    this.idEmpresa = this.userData.getIdEmpresa();
-    this.cargarDatosInteres();
-    this.cargaAnunciosStorage();    
+   
   }
   async cargarDatosInteres(){    
     await this.cargarDataClima();    
