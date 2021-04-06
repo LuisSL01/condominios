@@ -10,6 +10,7 @@ import { Observable } from 'rxjs/index';
 import { Notificacion } from '../models/notificacion.model';
 import { UserData } from '../providers/user-data';
 import { Router } from '@angular/router';
+import { LogService } from './log.service';
  
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,7 @@ export class PushService {
               private storage: Storage,
               private router: Router,
               private userData: UserData,
+              private logService:LogService,
               private http: HttpClient) {}
 
   async getMensajes() {
@@ -39,6 +41,7 @@ export class PushService {
 
   configuracionInicial(){
     console.log('configuracionInicial()');
+    this.logService.escribeLog("configuracionInicial() de push service")
     //El primer valor es la ONESIGNAL APP ID -->443f2c44-d14e-456d-a9e2-3dab0afa3122
     //El Segundo argumento es el id del remitente de firebase --> 800047039884
     this.oneSignal.startInit('443f2c44-d14e-456d-a9e2-3dab0afa3122', '800047039884');
@@ -76,6 +79,10 @@ export class PushService {
     );
     this.oneSignal.endInit();
 
+
+    this.logService.escribeLog("user id: "+ this.userId);
+    this.logService.escribeLog("terminando configuracion de push");
+    
   }
 
   saveNotificacion(notificacionData: any){

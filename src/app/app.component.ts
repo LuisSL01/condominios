@@ -10,6 +10,7 @@ import { Componente } from 'src/app/interfaces/interface';
 import { Observable } from 'rxjs';
 import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
+import { LogService } from './services/log.service';
 
 
 
@@ -35,9 +36,13 @@ export class AppComponent implements OnInit{
     private dataService:DataService, 
     public userData: UserData,
     private storage: Storage,
-    private router:Router
+    private router:Router,
+    private logService:LogService
+
   ) {
+    /* this.logService.escribeLog("Iniciando constructor en app components"); */
     this.initializeApp();
+    /* this.logService.escribeLog("Iniciando constructor en app components"); */
   }
 
   ngOnInit() {
@@ -51,13 +56,23 @@ export class AppComponent implements OnInit{
   }
 
   initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-      console.log('iniciando configuracion inicial');
+    
+    
+    this.platform.ready().then(() => {      
+      this.logService.creaCarpeta(); 
       
 
+      this.logService.escribeLog("*******************************");
+      this.logService.escribeLog("termino de levantar plataforma");
+      /* this.logService.escribeLog("this.platform.ready().then"); 
+      */
+      this.logService.escribeLog("comienza a cargar estilos");
+      this.statusBar.styleDefault();
+      this.logService.escribeLog("se oculta splashcreen");
+      this.splashScreen.hide();
+      this.logService.escribeLog("comienza configuracion inicial de push service");
       this.pushService.configuracionInicial()
+      /* this.logService.escribeLog("terminando this.platform.ready().then"); */
     });
   }
 

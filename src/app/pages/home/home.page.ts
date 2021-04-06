@@ -12,6 +12,7 @@ import { EmpresaPage } from "../empresa/empresa.page";
 import { AgenteService } from '../../services/agente.service';
 import { PushService } from '../../services/push.service';
 import { isEmpty } from 'rxjs/operators';
+import { LogService } from '../../services/log.service';
 
 @Component({
   selector: "app-home",
@@ -33,17 +34,20 @@ export class HomePage implements OnInit {
     public alertController: AlertController,
     public storage: Storage,
     private router: Router,
+    private logService:LogService,
     private dataLocalService: DataLocalService,
     private modalCtrl: ModalController,
     private agenteService: AgenteService,
     private pushService: PushService
   ) {
 
+    this.logService.escribeLog("en el constructor de home");
  
 
   }
 
   ngOnInit() {
+    
     console.log('estoy en el ngoninit de home');
     this.verificaExisteDatosSesion();
    }
@@ -51,8 +55,7 @@ export class HomePage implements OnInit {
    async verificaExisteDatosSesion(){  
     console.log('verificaExisteDatosSesion');
     const dt = await this.storage.get('userDetails');
-    if (dt) {
-      
+    if (dt) {      
         console.log('Se encontraron datos de sesion , no es necesario volver a iniciar sesion');        
         this.showLoading();
         this.userData.setConfigEmpresa();
@@ -66,6 +69,9 @@ export class HomePage implements OnInit {
     console.log("onLogin()");
     console.log("this.user:" + this.login.username);
     console.log("this.pass:" + this.login.password);
+
+    
+    this.logService.escribeLog("Se ha presionado iniciar sesión");
 
     if (this.login.username === "" || this.login.password === "") {
       this.showToast("Se necesita usuario y contraseña")

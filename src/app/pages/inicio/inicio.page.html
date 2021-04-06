@@ -12,7 +12,9 @@
     <ion-slide >      
         <ion-col size="12">          
           <ion-card >
-            <ion-item>
+
+            
+            <ion-item *ngIf="direccion && direccion.asentamiento">
               <ion-icon name="pin" slot="start"></ion-icon>
               <ion-label>
                 <!-- <h2>Clima en:</h2> -->
