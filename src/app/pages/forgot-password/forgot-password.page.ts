@@ -22,6 +22,8 @@ export class ForgotPasswordPage implements OnInit {
   ngOnInit() {
   }
 
+
+  
   async buscarAgentePorEmail() {
     if (this.email) {
       await this.agenteService.getUserByEmail(this.email).subscribe(data => {

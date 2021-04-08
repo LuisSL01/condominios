@@ -146,15 +146,11 @@ export class UserData {
 
 
 
- async setConfigUser(){
-   console.log('setConfigUser');
+ async setConfigUser(){   
   const data = await  this.storage.get('userFull');
     if (data) {
-      /* console.log('data', JSON.stringify(data)); */
-      
-      if(data.departamento){
-
-      console.log("val.departamento", data.departamento);
+      /* console.log('data', JSON.stringify(data)); */      
+      if(data.departamento){       
         if(data.departamento === 'RESIDENTE'){
           this.administrador = false;
         }else{
@@ -162,10 +158,6 @@ export class UserData {
         }        
       }        
     }  
-
-    console.log('setConfigUser', this.administrador);
-
-    
  }
 
  recibeDepartamento(depto:string){
@@ -203,8 +195,7 @@ export class UserData {
 
   }
 
-  async retrieveBase64ToImageEmpresa(){
-    console.log('retrieveBase64ToImageEmpresa');    
+  async retrieveBase64ToImageEmpresa(){    
     let empresa = await JSON.parse(window.localStorage.getItem('empresaData'));
     if(empresa){
       if(empresa.configuracionEmpresa){

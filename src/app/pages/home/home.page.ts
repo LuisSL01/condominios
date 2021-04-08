@@ -40,19 +40,12 @@ export class HomePage implements OnInit {
     private agenteService: AgenteService,
     private pushService: PushService
   ) {
-
-    this.logService.escribeLog("en el constructor de home");
- 
-
   }
 
   ngOnInit() {
-    
-    console.log('estoy en el ngoninit de home');
-    this.verificaExisteDatosSesion();
    }
 
-   async verificaExisteDatosSesion(){  
+  /*  async verificaExisteDatosSesion(){  
     console.log('verificaExisteDatosSesion');
     const dt = await this.storage.get('userDetails');
     if (dt) {      
@@ -63,7 +56,7 @@ export class HomePage implements OnInit {
         this.showToast("Bienvenido " + JSON.parse(dt).nombreCompleto);
       
     }
-   }
+   } */
 
   onLogin() {
     console.log("onLogin()");

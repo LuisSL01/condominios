@@ -9,11 +9,8 @@ export class PublicacionService {
 
   publicaciones: Publicacion[] = [];
   constructor(private dataLocalService: DataLocalService,
-              private storage: Storage) {
-                console.log('en el constructor de publicaciones...');
-                
-    this.cargarPublicaciones();
-
+              private storage: Storage) {                
+    
    }   
    async cargarPublicaciones(){
     this.publicaciones =[];
