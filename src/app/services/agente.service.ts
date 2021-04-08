@@ -35,6 +35,10 @@ export class AgenteService {
     return this.http.get<ApiResponse>(this.baseUrl + this.agenteContext + '/' + id).pipe(share());    
   }
 
+  getUserByEmail(email: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.baseUrl + this.agenteContext + '/getByEmail/' + email).pipe(share());
+  }
+
   updateStatus(data:FormData): Observable<ApiResponse> {
     console.log('updateStatus: ', this.baseUrl + this.agenteContext+':'+ environment.coreApiUpdateStatusAgenteOperation );    
     return this.http.patch<ApiResponse>(this.baseUrl + this.agenteContext+':'+ environment.coreApiUpdateStatusAgenteOperation ,data).pipe(share());    

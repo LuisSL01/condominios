@@ -29,7 +29,7 @@ export class AddPage implements OnInit {
       descripcion: ["", [Validators.required]]
     }),
     votacion: ["", null],//puede pertenecer a un punto de acuerdo
-    publicacion: ["", null],//puede pertener a una convocatoria
+    publicacionID: ["", null],//puede pertener a una convocatoria
     tipo: ["RESOLUCION"],
   });
 
@@ -70,7 +70,7 @@ export class AddPage implements OnInit {
         descripcion: [this.resolucion.data.descripcion]
       }),
       votacion: [this.resolucion.votacion],//puede pertenecer a un punto de acuerdo
-      publicacion: [this.resolucion.publicacion],//puede pertener a una convocatoria
+      publicacionID: [this.resolucion.publicacionID],//puede pertener a una convocatoria
       tipo: ["RESOLUCION"],
     });
   }
@@ -130,7 +130,7 @@ export class AddPage implements OnInit {
       data: this.createResolucion.value.data,
       tipo: this.createResolucion.value.tipo,
       votacion: this.createResolucion.value.votacion,//Punto de acuerdo adjunto
-      publicacion: this.createResolucion.value.publicacion,//Convocatoria adjunta
+      publicacionID: this.createResolucion.value.publicacionID,//Convocatoria adjunta
       files: {
         archivos: [],
       }

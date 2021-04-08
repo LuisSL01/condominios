@@ -11,6 +11,7 @@ import { Storage } from "@ionic/storage";
 import { DatosInteresService } from '../../services/datos-interes.service';
 import { ModalController } from "@ionic/angular";
 import { DatosInteresPage } from '../datos-interes/datos-interes.page';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inicio',
@@ -50,6 +51,7 @@ export class InicioPage implements OnInit {
               public publicacionService : PublicacionService,
               private anuncioService : AnuncioService,
               private storage: Storage,
+              private router: Router,
               private userData:UserData,
               private datosInteresService:DatosInteresService,
               private modalCtrl: ModalController,) {
@@ -61,19 +63,30 @@ export class InicioPage implements OnInit {
      }
 
  
-  ngOnInit() {  
-    this.direccion = this.userData.getDataDireccionEmpresa();
-    this.nombreEmpresa = this.userData.getNombreEmpresa();    
-    this.cargaFiltrosTabla();    
+  ngOnInit() {      
+    this.cargaFiltrosTabla();     
   }
 
+  async verificaExisteDatosSesion(){  
+    const dt = await this.storage.get('userDetails');
+    if (dt) {
+      this.direccion = this.userData.getDataDireccionEmpresa();
+      this.nombreEmpresa = this.userData.getNombreEmpresa();    
+      this.idEmpresa = this.userData.getIdEmpresa();
+      this.cargarDatosInteres();
+      this.cargaAnunciosStorage();
+    }else{
+      this.router.navigate(['/home']);//se redireccione al home para que inicie sesion
+    }
+   }
+
   ionViewWillEnter(){    
-    this.idEmpresa = this.userData.getIdEmpresa();
-    this.cargarDatosInteres();
-    this.cargaAnunciosStorage();    
+    this.verificaExisteDatosSesion();     
   }
-  async cargarDatosInteres(){    
-    await this.cargarDataClima();    
+  async cargarDatosInteres(){ 
+    if( ! this.climaData){//que solo recupere cuanto no hayan datos
+      await this.cargarDataClima();    
+    }
   }
 
 

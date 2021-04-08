@@ -5,7 +5,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',//se le indica que pagina es la principal al cargar
+    redirectTo: 'inicio',//se le indica que pagina es la principal al cargar
     pathMatch: 'full'
   },
   {
@@ -175,7 +175,8 @@ const routes: Routes = [
   {
     path: 'extra',
     loadChildren: () => import('./pages/extra/extra.module').then( m => m.ExtraPageModule)
-  },  {
+  },
+  {
     path: 'calendar',
     loadChildren: () => import('./pages/calendar/calendar.module').then( m => m.CalendarPageModule)
   },
