@@ -41,6 +41,11 @@ export class ResolucionService {
     return this.http.post<ApiResponse>(this.baseUrl + this.publicacionContext, notificacionData).pipe(share());
   }
 
+  update(idResolucion: number, convocatoriaData: any) : Observable<ApiResponse> {
+    console.log('update', this.baseUrl + this.publicacionContext + environment.coreApiBaseEditOperation+  "/" + idResolucion);
+    return this.http.patch<ApiResponse>(this.baseUrl + this.publicacionContext + environment.coreApiBaseEditOperation+  "/" + idResolucion, convocatoriaData).pipe(share());
+  }
+
   getResoluciones(idEmpresa: number, page: number, size: number, filters: string){
     console.log(this.baseUrl +environment.coreApiBasePublicacionOperation + environment.coreApiGetAnunciosListOperation +"/"+idEmpresa+ "/RESOLUCION?page="+page+"&size="+size+"");
     return this.http.get<ApiResponse>(this.baseUrl +environment.coreApiBasePublicacionOperation + environment.coreApiGetAnunciosListOperation + '/' + idEmpresa + '/RESOLUCION?page=' + page + '&size=' + size + (filters ? ('&filters=' + filters):'')).pipe(share());

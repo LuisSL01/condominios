@@ -12,6 +12,7 @@ import { EmpresaPage } from "../empresa/empresa.page";
 import { AgenteService } from '../../services/agente.service';
 import { PushService } from '../../services/push.service';
 import { isEmpty } from 'rxjs/operators';
+import { LogService } from '../../services/log.service';
 
 @Component({
   selector: "app-home",
@@ -33,31 +34,37 @@ export class HomePage implements OnInit {
     public alertController: AlertController,
     public storage: Storage,
     private router: Router,
+    private logService:LogService,
     private dataLocalService: DataLocalService,
     private modalCtrl: ModalController,
     private agenteService: AgenteService,
     private pushService: PushService
   ) {
-
-    this.storage.get('userDetails').then((val) => {
-      if (val) {
-        if(val.id){
-          this.showLoading();
-          this.userData.setConfigEmpresa();
-          this.router.navigate(['/inicio']);
-          this.showToast("Bienvenido " + JSON.parse(val).nombreCompleto);
-        }        
-      }
-    });
-
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+   }
+
+  /*  async verificaExisteDatosSesion(){  
+    console.log('verificaExisteDatosSesion');
+    const dt = await this.storage.get('userDetails');
+    if (dt) {      
+        console.log('Se encontraron datos de sesion , no es necesario volver a iniciar sesion');        
+        this.showLoading();
+        this.userData.setConfigEmpresa();
+        this.router.navigate(['/inicio']);
+        this.showToast("Bienvenido " + JSON.parse(dt).nombreCompleto);
+      
+    }
+   } */
 
   onLogin() {
     console.log("onLogin()");
     console.log("this.user:" + this.login.username);
     console.log("this.pass:" + this.login.password);
+
+    
+    this.logService.escribeLog("Se ha presionado iniciar sesión");
 
     if (this.login.username === "" || this.login.password === "") {
       this.showToast("Se necesita usuario y contraseña")
@@ -70,13 +77,13 @@ export class HomePage implements OnInit {
     };
 
     const loginPayload = {
-      username: this.login.username,
+      username: this.login.username.toLowerCase(),
       password: this.login.password,
     };
 
 
 
-    console.log("loginPayload: " + loginPayload);
+    console.log("loginPayload: " + JSON.stringify(loginPayload));
     this.showLoading();
 
     this.user = loginPayload.username.toLowerCase();
@@ -89,9 +96,8 @@ export class HomePage implements OnInit {
       this.idAgente = 4;
 
       if( ! this.isEmpty(objAgente.dispositivoUuid)){
-        console.log('debo ir actualizar el uuid');
-        
-        this.updateAgenteCore(this.idAgente , objAgente);
+        console.log('debo ir actualizar el uuid');        
+        this.agenteService.updateAgenteCore(this.idAgente , objAgente);
       }
       
 
@@ -114,8 +120,10 @@ export class HomePage implements OnInit {
               } else {//Aqui debo preguntar a cuantas empresas tiene acceso                          
                 this.idAgente = data.result.id;
                 
-                console.log("objAgente: " + objAgente);                
-                this.updateAgenteCore(this.idAgente , objAgente);
+                if( ! this.isEmpty(objAgente.dispositivoUuid)){
+                  console.log('debo ir actualizar el uuid');        
+                  this.agenteService.updateAgenteCore(this.idAgente , objAgente);                  
+                }
 
                 this.authService.getListEmpresas(this.idAgente).subscribe(data => {
                   if (data.status === 200) {
@@ -158,18 +166,7 @@ export class HomePage implements OnInit {
   }
 
   
-  updateAgenteCore(id: number, datosForm: any) {
-    this.agenteService.updateUsuarioCore(id, datosForm).subscribe(data => {
-      console.log('data.result:: ', data.result);
-      if (data.status === 200) {
-      } else {
-        this.userData.showToast('Error al actualizar uuid de usuario');        
-      }
-    }, err => {
-      console.log('error::', err);     
-    },
-      () => {});
-  }
+ 
 
   buscarEmpresasAgente() {//Es para pruebas locales
     console.log("buscando empresas...");

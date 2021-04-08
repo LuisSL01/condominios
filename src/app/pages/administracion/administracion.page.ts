@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserData } from '../../providers/user-data';
 
 @Component({
   selector: 'app-administracion',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdministracionPage implements OnInit {
 
-  constructor() { }
+  constructor(public userData:UserData) { }
 
   ngOnInit() {
   }

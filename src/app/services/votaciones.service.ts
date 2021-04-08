@@ -68,6 +68,11 @@ export class VotacionesService{
     return this.http.get<ApiResponse>(this.baseUrl + this.votacionContext+ environment.coreApiGetVotacionListOperation +"/"+idEmpresa+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):'')).pipe(share());
   }
 
+  getFullVotaciones(idEmpresa: number){
+    console.log(this.baseUrl + this.votacionContext+ environment.coreApiGetVotacionListOperation +"Full/"+idEmpresa);
+    return this.http.get<ApiResponse>(this.baseUrl + this.votacionContext+ environment.coreApiGetVotacionListOperation +"Full/"+idEmpresa);
+  }
+
 
   guardarVotacion(votacion: Encuesta) {
     const existe = this.votaciones.find(vot => vot.id === votacion.id);

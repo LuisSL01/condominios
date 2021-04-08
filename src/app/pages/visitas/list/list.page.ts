@@ -63,53 +63,77 @@ export class ListPage implements OnInit {
           }
         }
       };
+      let bttns =[];
+    if(this.userData.administrador){
+      bttns = [
+        guardarBorrarBtn,
+        {
+          text: 'Generar qr',
+          icon: 'qr-code-outline',        
+          cssClass: 'action-dark',
+          handler: () => {
+            /*       this.barcodeScannerOptions = {
+              showTorchButton: true,
+              showFlipCameraButton: true
+            }; 
+            this.encodeDataVisita = this.visita.id+"|"+this.visita.uuid;
+            this.encodeDataVisita = btoa(this.encodeDataVisita);
+            this.barcodeScanner.encode(this.barcodeScanner.Encode.TEXT_TYPE, this.encodeDataVisita).then(encodedData => {
+              console.log('dentro de data');
+              
+                console.log('encodedData',encodedData);
+                this.encodeDataVisita = encodedData;
+              },(err) => {
+                console.log("Error occured : " + err);
+              }
+            );
+            */
+            this.router.navigate(['/visitas/extra', { item: JSON.stringify(this.visita)}]);  
+  
+          }
+        },
+        {
+          text: 'Cancelar',
+          icon: 'close',
+          role: 'cancel',
+          cssClass: 'action-dark',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ];
+    }else{
+      bttns = [        
+        {
+          text: 'Generar qr',
+          icon: 'qr-code-outline',        
+          cssClass: 'action-dark',
+          handler: () => {
+            /*       this.barcodeScannerOptions = {
+              showTorchButton: true,
+              showFlipCameraButton: true
+            }; 
+            this.encodeDataVisita = this.visita.id+"|"+this.visita.uuid;
+            this.encodeDataVisita = btoa(this.encodeDataVisita);
 
+            this.barcodeScanner.encode(this.barcodeScanner.Encode.TEXT_TYPE, this.encodeDataVisita).then(encodedData => {
+              console.log('dentro de data');
+              
+                console.log('encodedData',encodedData);
+                this.encodeDataVisita = encodedData;
+              },(err) => {
+                console.log("Error occured : " + err);
+              }
+            );
+            */
+            this.router.navigate(['/visitas/extra', { item: JSON.stringify(this.visita)}]);  
+  
+          }
+        }
+      ];
+    }
     const actionSheet = await this.actionSheetCtrl.create({
-      buttons: [
-      guardarBorrarBtn,
-      {
-        text: 'Generar qr',
-        icon: 'qr-code-outline',        
-        cssClass: 'action-dark',
-        handler: () => {
-          /*       this.barcodeScannerOptions = {
-            showTorchButton: true,
-            showFlipCameraButton: true
-          }; */
-          this.encodeDataVisita = this.visita.id+"|"+this.visita.uuid;
-          this.encodeDataVisita = btoa(this.encodeDataVisita);
-          
-
-          console.log('Compartir qr');
-
-          console.log('Compartir qr2222');
-
-
-
-
-          this.barcodeScanner.encode(this.barcodeScanner.Encode.TEXT_TYPE, this.encodeDataVisita).then(encodedData => {
-            console.log('dentro de data');
-            
-              console.log('encodedData',encodedData);
-              this.encodeDataVisita = encodedData;
-            },(err) => {
-              console.log("Error occured : " + err);
-            }
-          );
-
-
-        }
-      },
-      {
-        text: 'Cancelar',
-        icon: 'close',
-        role: 'cancel',
-        cssClass: 'action-dark',
-        handler: () => {
-          console.log('Cancel clicked');
-        }
-      }
-    ]
+      buttons: bttns
     });
     await actionSheet.present();
   }

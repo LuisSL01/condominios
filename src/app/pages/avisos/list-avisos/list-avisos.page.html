@@ -2,11 +2,32 @@
   <ion-card-header>
     <ion-card-title>{{aviso.data.titulo}}</ion-card-title>
     <ion-card-subtitle>
-      <span class="text-primary"> {{aviso.data.fechaCreacion | date:'h:mm a - dd MMM yy '}} </span>
+      <span class="text-primary"> {{aviso.fechaDeCreacion}} </span>
       <div class="card-more">
+        <ion-buttons slot="end" >
+
+
+        <ion-button slot="end" (click)="editRowSelected()"  >
+          <ion-icon slot="icon-only" color="primary" name="create-outline"></ion-icon>
+        </ion-button>
+
+
+
+        <ion-button slot="end" (click)="verRespuestas()" *ngIf="numRespuestas > 0" >
+          <ion-label>
+            <h2>{{numRespuestas}}</h2>
+            </ion-label>
+          <ion-icon slot="icon-only" color="primary" name="chatbubble-ellipses-outline"></ion-icon>            
+        </ion-button>
+        
+        <ion-button slot="end" (click)="responder()"  >
+          <ion-icon slot="icon-only" color="primary" name="share"></ion-icon>
+        </ion-button>
+
         <ion-button fill="clear" (click)="lanzarMenu()">
           <ion-icon slot="icon-only" color="primary" name="ellipsis-vertical-outline"></ion-icon>
         </ion-button>
+      </ion-buttons>
       </div>
     </ion-card-subtitle>
   </ion-card-header>

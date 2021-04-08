@@ -20,6 +20,8 @@ export class Publicacion{
     public tipo:string;//aviso, convocatoria, resolucion, anuncio    
     public respuestas:RespuestaApp;
     public estatus:boolean; 
+    public votacion:number;
+    public publicacionID:number;
 
     public nombreAgenteCreador:string;
     public correoAgenteCreador:string;

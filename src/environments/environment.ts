@@ -8,16 +8,20 @@ export const environment = {
   // Endpoints para Gestión de Credenciales
 
 
+ 
+  
   authServiceBaseUrl: 'http://54.177.89.203:8080',
   coreServiceBaseUrl: 'http://54.177.89.203:8081',
-  formsServiceBaseUrl: 'http://54.177.89.203:8082',   
+  formsServiceBaseUrl: 'http://54.177.89.203:8082',    
+ 
 
-/*
 
-  authServiceBaseUrl: 'http://192.168.80.100:8080',
-  coreServiceBaseUrl: 'http://192.168.80.100:8081',
-  formsServiceBaseUrl: 'http://192.168.80.100:8082',
-*/
+
+  /* authServiceBaseUrl: 'http://192.168.137.1:8080',
+  coreServiceBaseUrl: 'http://192.168.137.1:8081',
+  formsServiceBaseUrl: 'http://192.168.137.1:8082',  */
+ 
+
 
   authApiGetUsersOperation: '/users/',
   authApiBaseUserOperation: '/user/',
@@ -39,13 +43,18 @@ export const environment = {
   coreApiGetFormularioEmpresaOperation: '/formulario',
   coreApiGetEmpresasAgente: '/listEmpresas', 
 
+
   // -> Agentes
-  coreApiBaseAgenteOperation: '/agente',
-  coreApiBaseAddEmpresaOperation: '/addEmpresa',
+  coreApiBaseAgenteOperation: '/agente',  
   /* coreApiBaseEmpresaGerenteOperation: ':listEmpresaGerente',
   coreApiBaseAllGerenteOperation: ':listAllGerente', */
   coreApiRegisterBaseAgenteOperation: '/register',
   coreApiUpdateStatusAgenteOperation: 'updateStatus',
+
+  //AgenteEmpresa
+  coreApiBaseAddEmpresaOperation: '/addEmpresa',
+  coreApiBaseAgenteEmpresaOperation: '/agenteEmpresa',
+  coreApiBaseAgenteEmpresaCountOperation: '/countByEmpresa',
 
   /* coreApiSetEmpresaToAgenteOperation: '/setEmpresa',
   coreApiGetAgenteConfigOperation: '/_config',
@@ -120,6 +129,8 @@ export const environment = {
   //app- avisos
   coreApiBaseAvisosAdministracionOperation: '/aviso',
   coreApiBasePublicacionOperation: '/publicacion',
+  coreApiBasePublicacionPDFOperation: '/publicacion-pdf',
+  
   coreApiBasePublicacionRespuestaOperation: '/respuesta',  
   coreApiBasePublicacionReporteOperation: '/reporte',  
   coreApiBasePublicacionesOperation: '/publicaciones',
@@ -187,6 +198,10 @@ export const environment = {
 
   coreApiBaseDepartamentoOperation: '/departamento',  
   coreApiGetDepartamentoListOperation: ':listByEmpresa',
+
+  coreApiBaseCorreoOperation: '/correo',  
+  coreApiBaseCorreoSimpleOperation: '/sendCorreoSimple',  
+  
   
 
 };

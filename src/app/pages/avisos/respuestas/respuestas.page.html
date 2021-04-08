@@ -9,23 +9,21 @@
       <ion-col size="12" *ngFor="let respuesta of respuestas">
         <ion-card class="card-image">
           <ion-card-header>
-            <ion-card-title>{{respuesta.nombreAgente}} respondio:</ion-card-title>
-
+            <ion-card-title>{{respuesta?.nombreAgente}} respondio:</ion-card-title>
             <ion-card-subtitle>
-              <span class="text-primary">  {{respuesta.mensaje}}  </span>
-
-
+              <span class="text-primary" *ngIf="respuesta?.fechaDeCreacion"> {{respuesta.fechaDeCreacion}}   </span>
+              
               <div class="card-more">
               </div>
             </ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
-            <h3>
-            {{respuesta.fechaDeCreacion}}
-          </h3>
+            <ion-label>
+              {{respuesta?.mensaje}}
+            </ion-label>
+            
           </ion-card-content>
         </ion-card>
-
       </ion-col>
     </ion-row>
   </ion-grid>

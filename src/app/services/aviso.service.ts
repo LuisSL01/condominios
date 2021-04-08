@@ -62,11 +62,14 @@ export class AvisoService {
      }
    }
 
-  save(notificacionData: FormData): Observable<ApiResponse> {
-    console.log('guardarNotificacion:'+this.baseUrl + this.publicacionContext);
-    console.log('notificacionData',notificacionData);
+  save(notificacionData: FormData): Observable<ApiResponse> {    
     return this.http.post<ApiResponse>(this.baseUrl + this.publicacionContext, notificacionData).pipe(share());
-  }  
+  }
+
+  update(idNotificacion: number, notificacionData: any) : Observable<ApiResponse> {
+    console.log('update notificacion',this.baseUrl + this.publicacionContext + environment.coreApiBaseEditOperation+  "/" + idNotificacion);    
+    return this.http.patch<ApiResponse>(this.baseUrl + this.publicacionContext + environment.coreApiBaseEditOperation+  "/" + idNotificacion, notificacionData).pipe(share());
+  }
 
   saveRespuesta(idPublicacion:number, respuesta: any): Observable<ApiResponse> {
     console.log('saveRespuesta:'+this.baseUrl + this.publicacionContext + environment.coreApiBasePublicacionRespuestaOperation+"/"+idPublicacion);

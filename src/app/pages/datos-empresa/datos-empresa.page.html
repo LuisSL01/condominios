@@ -3,9 +3,7 @@
     <ion-title>datos-empresa</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content fullscreen>
-
   <ion-list>
     <ion-list-header color="primary">
       <ion-label> 
@@ -39,6 +37,56 @@
 
     </ion-label>
   </ion-item>
+
+  <ion-item-divider>
+    <ion-label>
+        Datos bancarios
+    </ion-label>    
+</ion-item-divider>
+
+<div *ngIf="empData?.data">
+<ion-item>
+  <ion-label>
+    <ion-icon name="text-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
+    &nbsp;&nbsp;RFC:
+  </ion-label> 
+  <ion-label class="ion-text-wrap">{{empData.rfc}}</ion-label>     
+</ion-item>
+
+<ion-item>
+  <ion-label>
+    <ion-icon name="text-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
+    &nbsp;&nbsp;Banco:
+  </ion-label> 
+  <ion-label class="ion-text-wrap">{{empData.data.banco}}</ion-label>     
+</ion-item>
+
+<ion-item>
+  <ion-label>
+    <ion-icon name="text-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
+    &nbsp;&nbsp;Sucursal:
+  </ion-label> 
+  <ion-label class="ion-text-wrap">{{empData.data.sucursal}}</ion-label>     
+</ion-item>
+
+<ion-item>
+  <ion-label>
+    <ion-icon name="text-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
+    &nbsp;&nbsp;Cuenta:
+  </ion-label> 
+  <ion-label class="ion-text-wrap">{{empData.data.cuenta}}</ion-label>     
+</ion-item>
+
+<ion-item>
+  <ion-label>
+    <ion-icon name="text-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
+    &nbsp;&nbsp;Clave interbancaria:
+  </ion-label> 
+  <ion-label class="ion-text-wrap">{{empData.data.clabeInterbancaria}}</ion-label>     
+</ion-item>
+
+</div>
+
 
   
   

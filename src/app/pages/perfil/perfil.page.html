@@ -14,13 +14,14 @@
                 <ion-input formControlName="nombreCompleto"></ion-input>
             </ion-item>
             <ion-label color="danger"
-            *ngIf="createAgente.controls.nombreCompleto.errors?.required && (createAgente.controls.nombreCompleto.touched || createAgente.controls.nombreCompleto.dirty)">
-            *
-            El
-            nombre es obligatorio </ion-label>
+                *ngIf="createAgente.controls.nombreCompleto.errors?.required && (createAgente.controls.nombreCompleto.touched || createAgente.controls.nombreCompleto.dirty)">
+                *
+                El
+                nombre es obligatorio </ion-label>
             <ion-label color="danger"
-            *ngIf="createAgente.controls.nombreCompleto.errors?.minlength && (createAgente.touched || createAgente.dirty)">*
-            El nombre tiene que tener al menos 4 caracteres.</ion-label>
+                *ngIf="createAgente.controls.nombreCompleto.errors?.minlength && (createAgente.touched || createAgente.dirty)">
+                *
+                El nombre tiene que tener al menos 4 caracteres.</ion-label>
 
             <ion-item>
                 <ion-label>
@@ -53,7 +54,7 @@
                 </ion-select>
             </ion-item>
 
-            <ion-item >
+            <ion-item>
                 <ion-label>
                     <ion-icon name="today-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;">
                     </ion-icon>&nbsp;&nbsp;Fecha de nacimiento
@@ -74,10 +75,11 @@
 
             <ion-item>
                 <ion-label>
-                    <ion-icon name="mail-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
+                    <ion-icon name="mail-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;">
+                    </ion-icon>
                     &nbsp;&nbsp;Celular:
                 </ion-label>
-                <ion-input (ionChange)="cambioNumeroTelefono( $event )" formControlName="telefono"></ion-input>
+                <ion-input type="text" maxlength="10" formControlName="telefono"></ion-input>
             </ion-item>
 
             <ion-item>
@@ -89,13 +91,132 @@
                 <ion-input formControlName="email"></ion-input>
             </ion-item>
             <ion-label color="danger"
-            *ngIf="createAgente.controls.email.errors?.email && (createAgente.touched || createAgente.dirty)">* El email no
-            es válido.</ion-label>
+                *ngIf="createAgente.controls.email.errors?.email && (createAgente.touched || createAgente.dirty)">* El
+                email no
+                es válido.</ion-label>
+
+            <ion-item-divider>
+                <ion-label>
+                    Datos Departamento
+                </ion-label>
+
+            </ion-item-divider>
+
+            <ion-item>
+                <ion-label>
+                    <ion-icon name="leaf-outline" style="font-size:23px; color: #50c8ec; 
+              margin-bottom: -5px;
+          "></ion-icon>&nbsp;&nbsp;Torre/Privada:
+                </ion-label>
+                <ion-select interface="popover" okText="Aceptar" cancelText="Cancelar" placeholder="{{nombreTorre}}"
+                    (ionChange)="cambioTorre($event)">
+                    <ion-select-option *ngFor="let tt of torres" [value]="tt"> {{ tt.data.nombre}} </ion-select-option>
+                </ion-select>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>
+                    <ion-icon name="leaf-outline" style="font-size:23px; color: #50c8ec; 
+              margin-bottom: -5px;
+          "></ion-icon>&nbsp;&nbsp;Departamento:
+                </ion-label>
+                <ion-select placeholder="{{nombreDepartamento}}" interface="popover" okText="Aceptar"
+                    cancelText="Cancelar" formControlName="departamentoAC">
+                    <ion-select-option *ngFor="let tt of departamentos" [value]="tt.id"> {{ tt.data.nombre}}
+                    </ion-select-option>
+                </ion-select>
+            </ion-item>
+
+            <ion-item-divider>
+                <ion-label>
+                    Datos facturación
+                </ion-label>
+
+            </ion-item-divider>
+            <div formGroupName="data">
+                <ion-item>
+                    <ion-label class="ion-text-wrap">
+                        <ion-icon name="person-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;">
+                        </ion-icon>
+                        &nbsp;&nbsp;Nombre o razon Social:
+                    </ion-label>
+                    <ion-input formControlName="razonSocialEmpresa" aut></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label>
+                        <ion-icon name="text-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;">
+                        </ion-icon>
+                        &nbsp;&nbsp;RFC:
+                    </ion-label>
+                    <ion-input formControlName="rfcEmpresa"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label>
+                        <ion-icon name="mail-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;">
+                        </ion-icon>
+                        &nbsp;&nbsp;Email:
+                    </ion-label>
+                    <ion-input formControlName="correoEmpresa"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label>
+                        <ion-icon name="text-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;">
+                        </ion-icon>
+                        &nbsp;&nbsp;Uso del CFDI:
+                    </ion-label>
+                    <ion-select interface="action-sheet" formControlName="usoCFDIEmpresa" okText="Aceptar"
+                        cancelText="Cancelar">
+
+                        <ion-select-option *ngFor="let cat of catalogoUsoCFDI"
+                            value="{{cat.idcatalogo}} - {{cat.descripcion}}">
+                            {{cat.idcatalogo}} - {{cat.descripcion}}
+
+                        </ion-select-option>
+
+                    </ion-select>
+
+                </ion-item>
+            </div>
+
 
         </ion-list>
-    
-        <app-buttons valueLinkCancel="/inicio" valueDisabled="{{ ! createAgente.valid}}"></app-buttons>
-        <app-footer></app-footer>
-    
+
+
+
+        <ion-footer class="ion-no-border" translucent>
+            <ion-toolbar color="light" style=" height: 50px;">
+                <ion-grid>
+                    <ion-row>
+
+                        <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" offset-md="4"
+                            offset-sm="4">
+                            <ion-img src="assets/bee.png" style="height:30px; margin-left: -290px;"></ion-img>
+
+                            <ion-button fill="clear" size="small" routerLink="/inicio"
+                                style="text-transform: none; margin-left: 120px; margin-top: -40px;">Cancelar
+                                <ion-icon slot="start" name="close-circle-outline"
+                                    style="font-size:23px; color:#50c8ec;"></ion-icon>
+                            </ion-button>
+
+
+
+
+                            <ion-button fill="clear" size="small"
+                                style="text-transform: none; margin-top: -80px;  margin-left: 220px;" type="submit"
+                                disabled="{{! createAgente.valid}}">
+                                Guardar
+                                <ion-icon slot="start" name="checkmark-circle-outline"
+                                    style="font-size:23px; color: #50c8ec;"></ion-icon>
+                            </ion-button>
+
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-toolbar>
+        </ion-footer>
+
+
     </form>
 </ion-content>

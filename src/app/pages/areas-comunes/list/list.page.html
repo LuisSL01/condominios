@@ -6,10 +6,10 @@
       <div class="card-more">
 
         <ion-buttons slot="end">
-          <ion-button slot="end" (click)="onRowSelected()">
+          <ion-button slot="end" (click)="onRowSelected()" *ngIf="userData.administrador">
             <ion-icon slot="icon-only" color="primary" name="create-outline"></ion-icon>
           </ion-button>
-          <ion-button fill="clear" (click)="lanzarMenu()">
+          <ion-button fill="clear" (click)="lanzarMenu()" *ngIf="userData.administrador">
             <ion-icon slot="icon-only"  color="primary" name="ellipsis-vertical-outline"></ion-icon>
           </ion-button>
         </ion-buttons>

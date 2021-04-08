@@ -84,6 +84,10 @@ export class AreaComunService {
     return this.http.get<ApiResponse>(this.baseUrl + this.areaComunContext+'/listByEmpresa'+"/"+idEmpresa).pipe(share());
   }
    
+  getReservasByAreaComun(idAreaComun: number){
+    console.log('getReservasByAreaComun: '+ this.baseUrl + environment.coreApiBaseAreaComunReservaOperation+'/listByAreaComun'+"/"+idAreaComun);
+    return this.http.get<ApiResponse>(this.baseUrl + environment.coreApiBaseAreaComunReservaOperation+'/listByAreaComun'+"/"+idAreaComun).pipe(share());
+  }
    
   saveLocal(areaComun : AreaComun){    
     areaComun.id = this.dataLocalService.getNumeroRandom() * -1;

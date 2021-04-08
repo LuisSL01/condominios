@@ -2,21 +2,43 @@
 
 <app-header titulo="Reglamento"></app-header>
 <ion-content fullscreen>
-    <ion-list>
-        <ion-item>
-            <ion-label>
-                <ion-icon name="pencil-outline" style="font-size:23px; color: #50c8ec;  margin-bottom: -5px;">
-                </ion-icon>&nbsp;&nbsp;Reglamento
-            </ion-label>
+    <section>
+        <br>
+        <ion-label>
+            <ion-icon name="pencil-outline" style="font-size:23px; color: #50c8ec;  margin-bottom: -5px;">
+            </ion-icon>&nbsp;&nbsp;Reglamento
+        </ion-label>
+      </section>
+      <section *ngIf="userData.administrador">
+        <br>
+        <ion-button 
+        (click)="subirReglamento()"
+        color="primary" expand="block">Cargar Reglamento
+        </ion-button>
+      </section>
+      <section>
+        <br>
+        <ion-button 
+        (click)="verReglamento()"
+        color="primary" expand="block">Ver Reglamento
+        </ion-button>
+      </section>
+      <section *ngIf="true" >
+        <br>
+        <ion-button 
+        (click)="generarPdf()"
+        color="primary" expand="block">Prueba PDF
+        </ion-button>
+      </section>
 
-            <ion-button (click)="subirReglamento()" expand="block" fill="clear" shape="round">
-                Click me
-            </ion-button>
+      <section *ngIf="true" >
+        <br>
+        <ion-button 
+        (click)="generarPdf2()"
+        color="primary" expand="block">Prueba 2 PDF
+        </ion-button>
+      </section>
+    
 
-
-            <ion-button (click)="downloadDoc()" expand="block" fill="clear" shape="round">
-                Descargar/Ver
-            </ion-button>
-        </ion-item>
-    </ion-list>
+  
 </ion-content>

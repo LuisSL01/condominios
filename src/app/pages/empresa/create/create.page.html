@@ -1,0 +1,138 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Crear fraccionamiento</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form [formGroup]="createEmpresa" (ngSubmit)="save()">
+    <ion-list>
+
+      <ion-item>
+        <ion-label position="floating">
+          <ion-icon name="home-outline" style="font-size:23px; color: #50c8ec; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;Nombre
+        </ion-label>
+        <ion-input type="text" formControlName="nombre"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">
+          <ion-icon name="text-outline" style="font-size:23px; color: #50c8ec; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;Alias
+        </ion-label>
+        <ion-input type="text" formControlName="alias"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">
+          <ion-icon name="text-outline" style="font-size:23px; color: #50c8ec; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;RFC
+        </ion-label>
+        <ion-input type="text" formControlName="rfc"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">
+          <ion-icon name="call-outline" style="font-size:23px; color: #50c8ec; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;Teléfono
+        </ion-label>
+        <ion-input type="text" maxlength="10" formControlName="telefono"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">
+          <ion-icon name="mail-outline" style="font-size:23px; color: #50c8ec; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;Email
+        </ion-label>
+        <ion-input type="email" formControlName="email"></ion-input>
+      </ion-item>
+
+      <ion-item-divider>
+        <ion-label>
+          Direccion
+        </ion-label>
+      </ion-item-divider>
+
+      <div formGroupName="direccion">
+        <ion-item>
+          <ion-label position="floating">
+            <ion-icon name="trail-sign-outline" style="font-size:23px; color: #50c8ec; 
+            margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Calle
+          </ion-label>
+          <ion-input type="text" formControlName="calle"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <ion-icon name="trail-sign-outline" style="font-size:23px; color: #50c8ec; 
+            margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;# Int
+          </ion-label>
+          <ion-input type="text" formControlName="numeroInterior"></ion-input>
+          <ion-label>
+            <ion-icon name="trail-sign-outline" style="font-size:23px; color: #50c8ec; 
+            margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;# Ext
+          </ion-label>
+          <ion-input type="text" formControlName="numeroExterior"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <ion-icon name="leaf-outline" style="font-size:23px; color: #50c8ec; 
+                margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;CP
+          </ion-label>
+          <ion-input type="text" maxlength="5" formControlName="cp" placeholder="CP">
+          </ion-input>
+          <ion-button fill="clear" (click)="validarCP()">Buscar
+            <ion-icon style="font-size:23px; color: #50c8ec; 
+            margin-bottom: -5px; " slot="icon-only" name="search-outline"></ion-icon>
+          </ion-button>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <ion-icon name="trail-sign-outline" style="font-size:23px; color: #50c8ec; 
+                margin-bottom: -5px;
+            "></ion-icon>&nbsp;&nbsp;Asentamiento:
+          </ion-label>
+          <ion-select interface="action-sheet" cancelText="Cancelar" placeholder="Seleccionar" required
+            formControlName="asentamiento">
+            <ion-select-option *ngFor="let asento of asentamientos" [value]="asento">
+              {{ asento.colonia }}-{{ asento.municipio}}--{{asento.estado}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+      <ion-item-divider>
+        <ion-label>
+          Logo
+        </ion-label>
+      </ion-item-divider>
+      <ion-item>
+        <ion-label>Logo</ion-label>
+        <ion-button fill="clear" size="small" (click)="libreria()">
+          <ion-icon slot="start" name="image-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
+        </ion-button>
+      </ion-item>
+
+      <ion-item>
+        <ion-col size="6">
+          <ion-card>            
+            <img *ngIf="logoFondo"  src="{{pathBase64}}{{logoFondo.base64}}">                        
+          </ion-card>
+        </ion-col>
+      </ion-item>
+
+    </ion-list>
+  </form>
+
+</ion-content>
+
+<ion-toolbar color="primary">
+  <ion-buttons slot="start">
+    <ion-button (click)="close()">
+      <ion-icon name="close" slot="icon-only"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-buttons slot="end">
+    <ion-button (click)="save()">
+      <ion-icon name="checkmark" slot="icon-only"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>

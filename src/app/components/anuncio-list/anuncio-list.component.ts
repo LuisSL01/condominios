@@ -28,6 +28,7 @@ export class AnuncioListComponent implements OnInit {
 
       
   reporte:RespuestaPublicacion = new RespuestaPublicacion();
+  idAgente:number;
  
   constructor(public anuncioService: AnuncioService,
     private actionSheetCtrl: ActionSheetController,
@@ -37,7 +38,9 @@ export class AnuncioListComponent implements OnInit {
     private platform:Platform,
     private userData: UserData) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.idAgente  = this.userData.getIdAgente();
+  }
 
 
 
@@ -70,33 +73,14 @@ export class AnuncioListComponent implements OnInit {
   }
 
   chatSelected(){
-    console.log('log, se ha agregado el plugin....');    
-
-    
-    
-    /* console.log('link a abrir: ', "https://wa.me/52"+this.anuncio.celularAgenteCreador+"?text=Hola%20desde%20Armonía%20Residencial"); */
+    console.log('log, se ha agregado el plugin....');
     console.log('link a abrir: ', "whatsapp//send?phone="+this.anuncio.celularAgenteCreador+"?text=Hola%20desde%20Armonía%20Residencial"); 
-
-    /* window.open("https://wa.me/52"+this.anuncio.celularAgenteCreador+"?text=Hola%20desde%20Armonía%20Residencial");  */
-
-
-
-
-
-    window.open("whatsapp//send?phone="+this.anuncio.celularAgenteCreador+"?text=Hola%20desde%20Armonía%20Residencial"); 
-
-    //send?phone=
-    /* this.platform.ready().then(() => {
-    }); */
-
-
-
-
-   
+    window.open("whatsapp//send?phone="+this.anuncio.celularAgenteCreador+"?text=Hola%20desde%20Armonía%20Residencial");    
   }
 
   
   async lanzarMenu() {
+    let bttns =[];
     let guardarBorrarBtn;
     guardarBorrarBtn = {
       text: 'Borrar anuncio',
@@ -123,9 +107,8 @@ export class AnuncioListComponent implements OnInit {
         }
       }
     };
-
-    const actionSheet = await this.actionSheetCtrl.create({
-      buttons: [
+    if(this.userData.administrador){
+      bttns = [
         guardarBorrarBtn,
         {
           text: 'Reportar',
@@ -185,6 +168,38 @@ export class AnuncioListComponent implements OnInit {
             console.log('Cancel clicked');
           }
         }]
+    }else{
+      bttns = [        
+        {
+          text: 'Reportar',
+          icon: 'alert-circle-outline',
+          cssClass: 'action-dark',
+          handler: () => {
+
+            this.reporte.agenteCreador = this.userData.getIdAgente();
+            this.reporte.nombreAgente = this.userData.getNombreCompleto();
+            this.reporte.mensaje = "Se ha reportado el anuncio";
+
+            this.anuncioService.reportarAnuncio(this.anuncio.id, this.reporte).subscribe(
+              (data) => {
+                console.log(data);        
+                if (data.status === 200) this.userData.showToast('Se ha reportado correctamente');                  
+                else console.log('Llego otro status al guardar reporte');                
+              },
+              (err) => {
+                console.log(err);
+                this.userData.showToast('No se pudo guardar la reporte, se guarda localmente');                
+              },
+              () => {}
+            );
+          }
+        }    
+        ]
+    }
+    
+
+    const actionSheet = await this.actionSheetCtrl.create({
+      buttons: bttns
     });
     await actionSheet.present();
   }

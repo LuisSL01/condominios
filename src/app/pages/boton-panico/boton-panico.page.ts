@@ -96,7 +96,7 @@ export class BotonPanicoPage implements OnInit {
       this.eventoAppService.save(eventoObj).subscribe((data) => {
           console.log(data);
           if (data.status === 200) {
-            this.userData.showToast('registrado correctamente');
+            this.userData.showToast('Se ha creado correctamente');
           } else {this.userData.showToast('Error al registrar en el servidor');}
         },
         (err) => {console.log(err);this.userData.showToast("Error: "+ err);

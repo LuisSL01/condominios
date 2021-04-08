@@ -15,7 +15,7 @@
 
         <ion-buttons slot="end">
 
-          <ion-button slot="end" (click)="onRowSelected()">
+          <ion-button slot="end" (click)="onRowSelected()" *ngIf="anuncio.agenteCreador === idAgente">
             <ion-icon slot="icon-only" color="primary" name="create-outline"></ion-icon>
           </ion-button>
           <ion-button fill="clear" (click)="lanzarMenu()">

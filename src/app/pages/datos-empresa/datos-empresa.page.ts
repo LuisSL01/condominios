@@ -28,6 +28,7 @@ export class DatosEmpresaPage implements OnInit {
     /* console.log(this.empData); */    
   }
   ionViewDidEnter(){
+    
     /* console.log('ionViewDidEnter');     */        
   }  
 

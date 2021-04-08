@@ -1,10 +1,8 @@
 <app-menu-header></app-menu-header>
 
-
-
+<ion-content>
+</ion-content>
   <ion-tabs>
-
-    
     <ion-tab-bar slot="bottom">
 
       <ion-tab-button tab="datos-empresa">
@@ -12,7 +10,7 @@
         <ion-label>Contactar</ion-label>
       </ion-tab-button>
 
-      <ion-tab-button tab="configuracion-emp" >
+      <ion-tab-button tab="configuracion-emp"  *ngIf="userData.administrador">
         <ion-icon name="calendar"></ion-icon>
         <ion-label>Configuración</ion-label>        
       </ion-tab-button>
