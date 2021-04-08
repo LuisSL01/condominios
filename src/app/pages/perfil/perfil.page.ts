@@ -169,7 +169,7 @@ export class PerfilPage implements OnInit {
     /* console.log('getUsuario');
     console.log("this.idAgente: " + this.userData.getIdAgente()); */
     await this.agenteService.getUserById(this.userData.getIdAgente()).subscribe(data => {
-      console.log('USERFULL-->',JSON.stringify(data));
+      /* console.log('USERFULL-->',JSON.stringify(data)); */
       if (data.status === 200) {
 
         if (!data.result.fechaDeNacimiento) {
@@ -231,7 +231,7 @@ export class PerfilPage implements OnInit {
 
 
 
-      console.log(JSON.stringify(this.createAgente.value));
+      /* console.log(JSON.stringify(this.createAgente.value)); */
 
 
 

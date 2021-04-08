@@ -21,7 +21,7 @@ export class Publicacion{
     public respuestas:RespuestaApp;
     public estatus:boolean; 
     public votacion:number;
-    public publicacion:number;
+    public publicacionID:number;
 
     public nombreAgenteCreador:string;
     public correoAgenteCreador:string;

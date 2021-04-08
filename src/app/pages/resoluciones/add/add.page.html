@@ -69,7 +69,7 @@
           margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Convocatoria
         </ion-label>
         <ion-select  interface="popover"  
-          formControlName="publicacion"          
+          formControlName="publicacionID"          
           okText="Aceptar" cancelText="Cancelar">
           <ion-select-option *ngFor="let pp of convocatorias" [value]="pp.id">
             {{ pp.data.titulo}}

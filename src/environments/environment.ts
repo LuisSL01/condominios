@@ -198,6 +198,10 @@ export const environment = {
 
   coreApiBaseDepartamentoOperation: '/departamento',  
   coreApiGetDepartamentoListOperation: ':listByEmpresa',
+
+  coreApiBaseCorreoOperation: '/correo',  
+  coreApiBaseCorreoSimpleOperation: '/sendCorreoSimple',  
+  
   
 
 };
