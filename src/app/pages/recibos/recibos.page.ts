@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { GastoService } from '../../services/gasto.service';
 import { UserData } from '../../providers/user-data';
-import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { Archivo } from 'src/app/models/archivo-vortex.model';
 import { PagosComprobantesService } from '../../services/pagos-comprobantes.service';
 import { PagosComprobantes } from '../../models/pagos-comprobantes.model';
+import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
 
 
 
@@ -26,7 +26,7 @@ export class RecibosPage implements OnInit {
     private userData: UserData,
     public pagosComprobantesService: PagosComprobantesService,
     private file: File,
-    private fileOpener: FileOpener,) { }
+    private previewAnyFile: PreviewAnyFile) { }
 
   ngOnInit() {
     this.idEmpresa = this.userData.getIdEmpresa();
@@ -76,14 +76,9 @@ export class RecibosPage implements OnInit {
             .then(blob => {
               this.file.writeFile(this.file.cacheDirectory, 'Recibo.pdf', blob, { replace: true })
                 .then(res => {
-                  this.fileOpener.open(
-                    res.toInternalURL(),
-                    'application/pdf')
-                    .then((res) => { })
-                    .catch(err => {
-                      console.log('open error')
-                      this.userData.showToast('open error!');
-                    });
+                  this.previewAnyFile.preview(res.toURL())
+                    .then((res: any) => {})
+                    .catch((error: any) => alert('error3: ' + error));
                 })
                 .catch(err => {
                   console.log('save error')
@@ -101,10 +96,6 @@ export class RecibosPage implements OnInit {
     }else{
       this.userData.showToast("Debe seleccionar un pago para poder generar su recibo");
     }
-    
-    
-
   }
-
 
 }
