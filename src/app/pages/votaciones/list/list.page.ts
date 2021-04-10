@@ -32,7 +32,17 @@ export class ListPage implements OnInit {
   }
 
   responderEncuesta(){
-    this.presentModalRespoderEncuesta();
+    
+    console.log('actual: '+ new Date().getTime());
+    console.log('reg: '+new Date(this.encuesta.fechaTermina).getTime());
+    
+    
+    if(new Date().getTime() < new Date(this.encuesta.fechaTermina).getTime()){
+      this.presentModalRespoderEncuesta();
+    }else{
+      this.userData.showToast("La fecha de encuesta ya termino, no se puede responder");
+    }
+    
   }
 
   async lanzarMenu() {
@@ -75,16 +85,8 @@ export class ListPage implements OnInit {
           this.presentModalRespoderEncuesta();
       }
       }, */
-      guardarBorrarBtn,
-      {
-        text: 'Cancelar',
-        icon: 'close',
-        role: 'cancel',
-        cssClass: 'action-dark',
-        handler: () => {
-          console.log('Cancel clicked');
-        }
-      }]
+      guardarBorrarBtn
+     ]
     });
     await actionSheet.present();
   }

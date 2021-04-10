@@ -81,43 +81,36 @@ export class HomePage implements OnInit {
       password: this.login.password,
     };
 
-
-
     console.log("loginPayload: " + JSON.stringify(loginPayload));
     this.showLoading();
-
     this.user = loginPayload.username.toLowerCase();
-    if (
+  /*   if (
       loginPayload.username.toLowerCase() === "test1" &&
       loginPayload.password.toLowerCase() === "test1"
     ) {//Usuario admin prueba
       window.localStorage.setItem("userDetails", JSON.stringify({ "username": "test1", "nombreCompleto": "Test1", "id": 4 }));
       this.storage.set("userDetails", JSON.stringify({ "username": "test1", "nombreCompleto": "Test1", "id": 4 }));
       this.idAgente = 4;
-
       if( ! this.isEmpty(objAgente.dispositivoUuid)){
         console.log('debo ir actualizar el uuid');        
         this.agenteService.updateAgenteCore(this.idAgente , objAgente);
-      }
-      
-
+      }      
       this.buscarEmpresasAgente();
       this.presentModalListEmpresas(); //Debo presentar el modal para seleccionar una empresa
-    } else {
+    } else { */
       this.authService.login(loginPayload).subscribe(data => {
         if (data.status === 200) {
-          window.localStorage.setItem('userDetails', JSON.stringify(data.result));
-          this.storage.set('userDetails', JSON.stringify(data.result));
           this.agenteService.getUserById(data.result.id).subscribe(userFull => {
             if (userFull.status === 200) {
-              this.storage.set('userFull', userFull.result);
-              
               /* this.userData.recibeDepartamento(userFull.result.departamento); */
               let nombreCOmpleto = userFull.result.nombreCompleto +" "+ userFull.result.apellidoPaterno +" " +  userFull.result.apellidoMaterno;
               if (userFull.result.activo === false) {
-                this.router.navigate(['/']);
+                this.router.navigate(['/home']);
                 this.showToast("El usuario " + nombreCOmpleto + ", no se encuentra activo para la aplicación móvil");
               } else {//Aqui debo preguntar a cuantas empresas tiene acceso                          
+                window.localStorage.setItem('userDetails', JSON.stringify(data.result));
+                this.storage.set('userDetails', JSON.stringify(data.result));              
+                this.storage.set('userFull', userFull.result);
                 this.idAgente = data.result.id;
                 
                 if( ! this.isEmpty(objAgente.dispositivoUuid)){
@@ -158,7 +151,7 @@ export class HomePage implements OnInit {
       }, err => {
         this.showToast("Error 2, usuario o contraseña inválidos");
       });
-    }
+    /* } */
   }
 
   isEmpty(str) {

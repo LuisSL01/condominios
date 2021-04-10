@@ -66,7 +66,7 @@ export class AnunciosPage implements OnInit {
 
   ionViewWillEnter(){    
     console.log('se ejecuta dos');  
-    this.showToastAlert("Nota: Los anuncios son responsabilidad de quien lo crea.");  
+    this.showToastAlert("Nota: Los anuncios son responsabilidad de quien los crea.");  
   }
 
 

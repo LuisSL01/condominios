@@ -109,11 +109,12 @@ export class AddPage implements OnInit {
   }
 
   buscarAdeudosAgente(){
-    console.log('buscarAdeudosAgente');    
+    this.userData.showToast("Buscando adeudos asignados");
     this.adeudoService.getAdeudosByEmpresaAndAgente(this.userData.getIdEmpresa(), this.agenteSelectedId).subscribe((data) => {
       if (data.status === 200) {
         console.log('Adeudos recuperados correctamente'); 
         this.adeudos = data.result;
+        if(this.adeudos.length ===0)this.userData.showToast("No hay adeudos asignados al usuario registradas");
       } else {
         console.log('Llego otro status al recuperar agentes');
       }
@@ -192,6 +193,7 @@ export class AddPage implements OnInit {
     this.pagosComprobantesService.save(formData).subscribe((data) => {
         console.log(data);
         if (data.status === 200) {
+          this.createPagoComprobante.reset();
           this.userData.showToast('comprobante de pago registrado correctamente');          
           this.router.navigate(['/pagos-comprobantes', { item: true}]);
         } else {

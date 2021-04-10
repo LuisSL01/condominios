@@ -23,7 +23,7 @@ export class ForgotPasswordPage implements OnInit {
   }
 
 
-  
+
   async buscarAgentePorEmail() {
     if (this.email) {
       await this.agenteService.getUserByEmail(this.email).subscribe(data => {
@@ -48,7 +48,7 @@ export class ForgotPasswordPage implements OnInit {
 
             this.correoService.enviarCorreo(formularioData).subscribe(data => {
               if (data.status === 200) {                
-                this.showToast("Se ha enviado un correo para reestablecer la contraseña", "success", 5000);
+                this.showToast("Se ha enviado un correo a la cuenta : "+this.email+" para reestablecer la contraseña", "success", 5000);
               } else {
                 this.showToast("Ocurrio un error al enviar correo", "warning");
               }
@@ -60,7 +60,7 @@ export class ForgotPasswordPage implements OnInit {
 
 
           } else {
-            this.showToast("No se encontro alguna cuenta con el correo proporcionado", "danger");
+            this.showToast("No se encontro alguna cuenta con el correo : "+this.email+"", "danger");
           }
         } else {
           this.showToast("Ocurrio un error al recuperar los datos", "warning");

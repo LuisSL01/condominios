@@ -158,15 +158,6 @@ export class AnuncioListComponent implements OnInit {
           }
         );
           }
-        },
-        {
-          text: 'Cancelar',
-          icon: 'close',
-          role: 'cancel',
-          cssClass: 'action-dark',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
         }]
     }else{
       bttns = [        
