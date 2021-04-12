@@ -30,7 +30,7 @@ export class ListAvisosPage implements OnInit {
 
   constructor(public avisoService: AvisoService,
     private actionSheetCtrl: ActionSheetController,
-    private userData: UserData,
+    public userData: UserData,
     private modalCtlr: ModalController,
     private toastCtrl: ToastController,
     private router: Router) { }

@@ -17,7 +17,7 @@ export class ListPage implements OnInit {
   constructor(public adeudoService:AdeudoService,
               private actionSheetCtrl:ActionSheetController,
               private router: Router,
-              private userData:UserData) { }
+              public userData:UserData) { }
 
   ngOnInit() {
   }
@@ -54,16 +54,8 @@ export class ListPage implements OnInit {
 
     const actionSheet = await this.actionSheetCtrl.create({
       buttons: [
-      guardarBorrarBtn,
-      {
-        text: 'Cancelar',
-        icon: 'close',
-        role: 'cancel',
-        cssClass: 'action-dark',
-        handler: () => {
-          console.log('Cancel clicked');
-        }
-      }]
+      guardarBorrarBtn
+      ]
     });
     await actionSheet.present();
   }

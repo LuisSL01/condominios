@@ -2,10 +2,17 @@
 
 <app-header titulo="Nuevo anuncio"></app-header>
 
+
+
 <ion-content>
 
   <form [formGroup]="createAnuncio"  (ngSubmit)="save()">
     <ion-list>
+      <!-- <ion-list-header color="primary">
+        <ion-label> 
+          <h2>Nuevo anuncio</h2>
+          </ion-label>
+      </ion-list-header> -->
       <div formGroupName="data">
         <ion-item>
           <ion-label>

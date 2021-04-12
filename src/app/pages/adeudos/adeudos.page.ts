@@ -25,7 +25,7 @@ export class AdeudosPage implements OnInit {
   public camposFiltros:string[]=new Array();
 
   constructor(public adeudoService: AdeudoService,
-              private userData:UserData,
+              public userData:UserData,
               public activatedRoute: ActivatedRoute,
               private storage: Storage,) { 
     

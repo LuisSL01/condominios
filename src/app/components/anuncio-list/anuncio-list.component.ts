@@ -7,6 +7,7 @@ import { UserData } from '../../providers/user-data';
 import { Router } from '@angular/router';
 
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 
 
 @Component({
@@ -36,6 +37,7 @@ export class AnuncioListComponent implements OnInit {
     private router: Router,
     private emailComposer: EmailComposer,
     private platform:Platform,
+    private photoViewer: PhotoViewer,
     private userData: UserData) { }
 
   ngOnInit() {
@@ -158,15 +160,6 @@ export class AnuncioListComponent implements OnInit {
           }
         );
           }
-        },
-        {
-          text: 'Cancelar',
-          icon: 'close',
-          role: 'cancel',
-          cssClass: 'action-dark',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
         }]
     }else{
       bttns = [        
@@ -202,6 +195,11 @@ export class AnuncioListComponent implements OnInit {
       buttons: bttns
     });
     await actionSheet.present();
+  }
+
+  viewImage(path:string, titulo:string, descripcion:string){
+    /* console.log('vieew image.->', this.pathS3 + path+'<-');     */
+    this.photoViewer.show(this.pathS3 + path , titulo + ", \n"+ descripcion , {share: true, headers: '{algo:foo,algo:bar}'});
   }
 
   showToast(dataMessage: string) {

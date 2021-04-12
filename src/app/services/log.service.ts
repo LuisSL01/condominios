@@ -21,50 +21,52 @@ export class LogService {
 
                }
   async creaCarpeta(){
-    if (this.platform.is('android')) {      
-      
-
-        await this.file.checkDir(this.file.externalRootDirectory, this.nameFolder)
-         .then(
-           _ => this.file.checkFile(this.file.externalRootDirectory, this.nameFolder + this.nameFile)
-             .then(_ => {     
-               this.archivoListo = true; 
-               /* this.file.writeFile(this.file.externalRootDirectory, this.nameFolder + this.nameFile, "Hola\n",  {append: true, replace: false}); */
-             })          
-             .catch(err =>
-               {
-                 /* console.log("Entro en el catch");           */  
+    try {      
+      if (this.platform.is('android')) {      
+          await this.file.checkDir(this.file.externalRootDirectory, this.nameFolder)
+           .then(
+             _ => this.file.checkFile(this.file.externalRootDirectory, this.nameFolder + this.nameFile)
+               .then(_ => {     
+                 this.archivoListo = true; 
+                 /* this.file.writeFile(this.file.externalRootDirectory, this.nameFolder + this.nameFile, "Hola\n",  {append: true, replace: false}); */
+               })          
+               .catch(err =>
+                 {
+                   /* console.log("Entro en el catch");           */  
+                   this.file.createFile(this.file.externalRootDirectory, this.nameFolder + this.nameFile, true).then(res=>{console.log('se ha creado el log.txt correctamente');
+                   this.archivoListo = true;
+                  }
+                   
+                   ).catch(err=>{
+                    
+                     /* console.log('error al crear archivo txt');  */
+                   })   
+                   //Ya podemos escribir sobre el archivo creado
+                   //this.file.writeFile(this.file.externalRootDirectory, this.nameFolder + this.nameFile, "Hola\n",  {append: true, replace: false});
+                 }
+               )
+               )
+           .catch(
+             err => this.file.createDir(this.file.externalRootDirectory, this.nameFolder, false)
+               .then(response => {
+                 /* console.log("El folder se ha creado correctamente");             */
                  this.file.createFile(this.file.externalRootDirectory, this.nameFolder + this.nameFile, true).then(res=>{console.log('se ha creado el log.txt correctamente');
                  this.archivoListo = true;
                 }
-                 
                  ).catch(err=>{
-                  
                    /* console.log('error al crear archivo txt');  */
-                 })   
+                 })  
                  //Ya podemos escribir sobre el archivo creado
-                 //this.file.writeFile(this.file.externalRootDirectory, this.nameFolder + this.nameFile, "Hola\n",  {append: true, replace: false});
-               }
-             )
-             )
-         .catch(
-           err => this.file.createDir(this.file.externalRootDirectory, this.nameFolder, false)
-             .then(response => {
-               /* console.log("El folder se ha creado correctamente");             */
-               this.file.createFile(this.file.externalRootDirectory, this.nameFolder + this.nameFile, true).then(res=>{console.log('se ha creado el log.txt correctamente');
-               this.archivoListo = true;
-              }
-               ).catch(err=>{
-                 /* console.log('error al crear archivo txt');  */
-               })  
-               //Ya podemos escribir sobre el archivo creado
-             //this.file.writeFile(this.file.externalRootDirectory, this.nameFolder + this.nameFile, "Hola\n",  {append: true, replace: false});
-             }).catch(err => {      
-               /* console.log('No fue posible crear el archivo ' + this.nameFolder + '. Err: ' + err.message); */
-             })
-         );
+               //this.file.writeFile(this.file.externalRootDirectory, this.nameFolder + this.nameFile, "Hola\n",  {append: true, replace: false});
+               }).catch(err => {      
+                 /* console.log('No fue posible crear el archivo ' + this.nameFolder + '. Err: ' + err.message); */
+               })
+           );
+        
+      }    
+    } catch (error) {
       
-    }    
+    }
   }             
 
   escribeLog(mensaje:any){

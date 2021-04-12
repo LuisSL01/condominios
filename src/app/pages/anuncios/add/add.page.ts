@@ -181,19 +181,16 @@ export class AddPage implements OnInit {
     formData.append("data", JSON.stringify(anuncioObj));
     formData.append("file", JSON.stringify(this.files));
     console.log("anuncio enviado: ", formData);
-
+    
     //Se envia a guardar en el server
     this.anuncioService.guardarAnuncio(formData).subscribe(
       (data) => {
         if (data.status === 200) {
-          console.log('"data.result"', data.result);
-          console.log("anuncio registrado correctamente");
+          this.createAnuncio.reset();
           this.showToast("anuncio registrado correctamente");
           /* this.guardarAnuncioLocalmente(); */          
-
           /* this.router.navigate(['/anuncios', { item: JSON.stringify(data.result)}]);   */
           this.router.navigate(['/anuncios', { item: true}]); 
-
           /* this.location.back(); */
         } else {
           console.log('Llego otro status al guardar anuncio');

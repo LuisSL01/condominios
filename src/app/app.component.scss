@@ -1,0 +1,50 @@
+/* .hospital_list {
+    
+    overflow-y: auto;
+    
+  } */
+
+ /*  .container {
+    width: 100px;
+    background-color: green;
+    overflow: hidden; 
+    white-space: nowrap;
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .scroll {
+      overflow: auto;
+    }
+  } */
+
+
+
+  .overflow-scroll {
+    overflow-y: auto;
+  }
+
+
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+::-webkit-scrollbar:vertical {
+    width: 11px;
+}
+
+::-webkit-scrollbar:horizontal {
+    height: 11px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 2px solid white;
+    background-color: rgba(0, 0, 0, .5);
+}
+
+::-webkit-scrollbar-track {
+    background-color: #fff;
+    border-radius: 8px;
+}

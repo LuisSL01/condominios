@@ -31,7 +31,7 @@ export class ReglamentoPage implements OnInit {
     private file: File,
     private fileopen: FileOpener,
     private platform: Platform,
-    private userData: UserData,
+    public userData: UserData,
     private fileChooser: FileChooser,
     private filePicker: IOSFilePicker,
     private filePath: FilePath,

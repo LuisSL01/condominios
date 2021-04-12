@@ -217,8 +217,8 @@ export class RegistrationPage implements OnInit {
           , puesto: 'RESIDENTE'
           , subClasificacion: 'SIN SUBCLASIFICACION'
           , subDepartamento: 'SIN SUBDEPARTAMENTO'
-          , telefono: this.createAgente.value.celular
-          /* , fechaDeNacimiento: this.createAgente.value.fechaDeNacimiento + " 00:00:01.100 " */
+          , telefono: this.createAgente.value.celular            
+          , fechaDeNacimiento: new Date(this.createAgente.value.fechaDeNacimiento).getTime()
           , activo: estatusUser
           , empresa: this.empresaSelected.id
           , gerenteActivo: true

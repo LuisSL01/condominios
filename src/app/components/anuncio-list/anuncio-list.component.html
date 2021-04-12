@@ -55,7 +55,8 @@
   <ion-item >
     <ion-slides pager="{{anuncio.files?.archivos.length > 1 ?true:false}}" >
       <ion-slide *ngFor="let img of anuncio.files.archivos" class="image-slide">      
-        <img  *ngIf="img.rutaS3"  src="{{pathS3}}{{img.rutaS3}}">
+        <img  *ngIf="img.rutaS3"  src="{{pathS3}}{{img.rutaS3}}" 
+        (click)="viewImage(img.rutaS3, anuncio.data.titulo,  anuncio.data.descripcion)">
         <img  *ngIf=" ! img.rutaS3"  src="{{pathBase64}}{{img.base64}}">
       </ion-slide>
     </ion-slides>

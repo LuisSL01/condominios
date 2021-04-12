@@ -36,19 +36,22 @@ export class ExtraPage implements OnInit {
   ngOnInit() {
     this.idEmpresa = this.userData.getIdEmpresa();
     
-
-    this.admon = this.userData.administrador;
-
-
     console.log('en ngon init del formato de construccion..', this.admon);
   }
   
   ionViewDidEnter(){
-    console.log('en ionViewDidEnter del formato de construccion..');
-    
+    this.admon = this.userData.administrador;
+    console.log('en ionViewDidEnter del formato de construccion..');    
   }
 
-  cargarFormato() {
+  cargarGuiaConstruccion(){
+    this.cargarFormato("guiaConstruccion");
+  }
+  cargarFormatoConstruccion(){
+    this.cargarFormato("formatoConstruccion");
+  }
+
+  cargarFormato(tipoFormatoContruccion:string) {//guia construccion
     this.userData.showToast("Cargando formato, por favor espere...");
     if (this.platform.is('ios')) {
       this.filePicker.pickFile()
@@ -58,17 +61,16 @@ export class ExtraPage implements OnInit {
             this.base64.encodeFile(filePath).then((base64File: string) => {
               base64File = base64File.substring(base64File.lastIndexOf(',') + 1, base64File.length)
               const files: Archivo[] = new Array();
-              files.push(new Archivo(base64File, "formatoconst_" + this.idEmpresa + ".pdf"));
+              files.push(new Archivo(base64File, tipoFormatoContruccion+"_" + this.idEmpresa + ".pdf"));
               const formData = new FormData();
               formData.append("file", JSON.stringify(files));
-              this.empresaService.saveFormatoConstruccionPDF(formData, this.idEmpresa).subscribe(
+              this.empresaService.saveFileConstruccion(formData, this.idEmpresa, tipoFormatoContruccion).subscribe(
                 (data) => {
                   console.log(data);
-                  if(data.status === 200){          
-                    //this.router.navigate(['/reglamento']);    
-                    alert('El formato se ha cargado correctamente')      
+                  if(data.status === 200){
+                    alert('El formato se ha cargado correctamente')
                   } else {
-                    alert('Problema al cargar el formato')   
+                    alert('Problema al cargar el formato '+ tipoFormatoContruccion)   
                   }
                 }, (err) =>{
                   this.userData.showToast("Error C: " + err);
@@ -90,17 +92,17 @@ export class ExtraPage implements OnInit {
             this.base64.encodeFile(filePath).then((base64File: string) => {
               base64File = base64File.substring(base64File.lastIndexOf(',') + 1, base64File.length)
               const files: Archivo[] = new Array();
-              files.push(new Archivo(base64File, "formatoconst_" + this.idEmpresa + ".pdf"));
+              files.push(new Archivo(base64File, tipoFormatoContruccion+"_" + this.idEmpresa + ".pdf"));
               const formData = new FormData();
               formData.append("file", JSON.stringify(files));
-              this.empresaService.saveFormatoConstruccionPDF(formData, this.idEmpresa).subscribe(
+              this.empresaService.saveFileConstruccion(formData, this.idEmpresa, tipoFormatoContruccion).subscribe(
                 (data) => {
                   console.log(data);
                   if(data.status === 200){          
                     //this.router.navigate(['/reglamento']);    
                     alert('El formato se ha cargado correctamente')      
                   } else {
-                    alert('Problema al cargar el formato')   
+                    alert('Problema al cargar el formato '+ tipoFormatoContruccion)   
                   }
                 }, (err) =>{
                   this.userData.showToast("Error C: " + err);
@@ -117,16 +119,43 @@ export class ExtraPage implements OnInit {
 
   }
 
-  verFormato(){
+  verFormatoGuia(){
+    this.userData.showToast("Descargando pdf, por favor espere...");
+    this.empresaService.getEmpresaById(this.idEmpresa).subscribe(
+      (data) => {
+        var file : Archivo;
+        file = data.result.configuracionEmpresa.guiaContruccion;
+        if(file == null){
+          alert("Aún no se ha cargado un formato de guia");
+        } else {
+          const fileTransfer: FileTransferObject =  this.transfer.create();    
+          const url = 'https://almacenamientonube.s3.us-west-1.amazonaws.com/' + file.rutaS3;
+          fileTransfer.download(url, this.file.dataDirectory + 'guiaConstruccion.pdf').then((entry) => {
+            const entryUrl = entry.toURL();
+            console.log('download complete: ' + entryUrl);
+            this.fileopen.open(entryUrl, 'application/pdf');
+          }, (error) => {
+            console.log('error: '+error);      
+          }); 
+        }      
+      }, (err) =>{
+        console.log(err);
+        this.userData.showToast("Error: " + err);
+      }, () => {}
+    );
+ 
+  }
+
+  verFormatoConstruccion(){
     this.userData.showToast("Descargando pdf, por favor espere...");
     this.empresaService.getEmpresaById(this.idEmpresa).subscribe(
       (data) => {
         var file : Archivo;
         file = data.result.configuracionEmpresa.formatoConstruccion;
         if(file == null){
-          alert("Aún no se ha cargado un formato");
+          alert("Aún no se ha cargado un formato de construcción");
         } else {
-          const fileTransfer: FileTransferObject =  this.transfer.create();    
+          const fileTransfer: FileTransferObject =  this.transfer.create();
           const url = 'https://almacenamientonube.s3.us-west-1.amazonaws.com/' + file.rutaS3;
           fileTransfer.download(url, this.file.dataDirectory + 'formatoConstruccion.pdf').then((entry) => {
             const entryUrl = entry.toURL();

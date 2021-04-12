@@ -25,7 +25,7 @@ export class ListPage implements OnInit {
     private fileopen: FileOpener,
     private router: Router,
     private transfer: FileTransfer,
-    private userData: UserData) {
+    public userData: UserData) {
 
   }
 
@@ -81,16 +81,8 @@ export class ListPage implements OnInit {
 
     const actionSheet = await this.actionSheetCtrl.create({
       buttons: [
-        guardarBorrarBtn,
-        {
-          text: 'Cancelar',
-          icon: 'close',
-          role: 'cancel',
-          cssClass: 'action-dark',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        }]
+        guardarBorrarBtn
+        ]
     });
 
     await actionSheet.present();

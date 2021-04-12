@@ -19,6 +19,8 @@ export class UserData {
   nombreCompleto:string ="";
   administrador:boolean =false;
 
+  aplicaAreasComunes:boolean = false;
+
   constructor(
     public storage: Storage,
     private toastCtrl: ToastController
@@ -156,9 +158,13 @@ export class UserData {
         }else{
           this.administrador = true;
         }        
-      }        
+      }
+      console.log("Administrador:->"+this.administrador+"<-");
+              
     }  
  }
+
+ 
 
  recibeDepartamento(depto:string){
    console.log("recibeDepartamento", depto);
@@ -200,8 +206,11 @@ export class UserData {
     if(empresa){
       if(empresa.configuracionEmpresa){
         this.base64ImageEmpresa ='https://almacenamientonube.s3.us-west-1.amazonaws.com/'+empresa.configuracionEmpresa.logoFondoClaro.rutaS3;
+        this.aplicaAreasComunes = empresa.configuracionEmpresa.aplicaReservarAreas;
       }      
-    }    
+    } 
+    console.log('this.aplicaAreasComunes: '+ this.aplicaAreasComunes);
+       
   }
 
   showToast(dataMessage: string) {

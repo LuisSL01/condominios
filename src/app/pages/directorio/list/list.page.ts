@@ -19,7 +19,7 @@ export class ListPage implements OnInit {
 
   constructor(public directorioService:DirectorioService,
               private actionSheetCtrl: ActionSheetController,
-              private userData:UserData,
+              public userData:UserData,
               private router: Router) { 
     }
 
@@ -50,16 +50,8 @@ export class ListPage implements OnInit {
 
     const actionSheet = await this.actionSheetCtrl.create({
       buttons: [   
-      btnEliminar,
-      {
-        text: 'Cancelar',
-        icon: 'close',
-        role: 'cancel',
-        cssClass: 'action-dark',
-        handler: () => {
-          console.log('Cancel clicked');
-        }
-      }]
+      btnEliminar
+    ]
     });
     await actionSheet.present();
   }

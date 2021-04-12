@@ -33,9 +33,9 @@ export class EmpresaService {
     return this.http.post<ApiResponse>(this.baseUrl + this.empresaContext + "/" + idEmpresa + "/reglamento", reglamentoData).pipe(share());
   }
 
-  saveFormatoConstruccionPDF(formatoData: any, idEmpresa: number): Observable<ApiResponse> {
-    console.log('saveFormatoConstruccionPDF: ' + this.baseUrl + this.empresaContext + "/" + idEmpresa + "/formatoConstruccion");
-    return this.http.post<ApiResponse>(this.baseUrl + this.empresaContext + "/" + idEmpresa + "/formatoConstruccion", formatoData).pipe(share());
+  saveFileConstruccion(formatoData: any, idEmpresa: number, tipo:string): Observable<ApiResponse> {
+    console.log('saveFormatoConstruccionPDF: ' + this.baseUrl + this.empresaContext + "/" + idEmpresa + "/"+tipo +"/formatoConstruccion");
+    return this.http.post<ApiResponse>(this.baseUrl + this.empresaContext + "/" + idEmpresa + "/"+tipo + "/formatoConstruccion", formatoData).pipe(share());
   }
 
   update(data:FormData): Observable<ApiResponse> {

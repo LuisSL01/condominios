@@ -17,7 +17,7 @@ export class ListPage implements OnInit {
   
   constructor(private resolucionService: ResolucionService,
               private actionSheetCtrl: ActionSheetController,    
-              private userData:UserData,
+              public userData:UserData,
               private router: Router) { }
 
   ngOnInit() {
@@ -53,16 +53,8 @@ export class ListPage implements OnInit {
 
     const actionSheet = await this.actionSheetCtrl.create({
       buttons: [
-        bntBorrar,
-        {
-          text: 'Cancelar',
-          icon: 'close',
-          role: 'cancel',
-          cssClass: 'action-dark',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        }]
+        bntBorrar
+      ]
     });
 
     await actionSheet.present();

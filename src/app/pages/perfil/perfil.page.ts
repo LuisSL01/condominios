@@ -28,6 +28,7 @@ export class PerfilPage implements OnInit {
   nombreTorre:string;
   nombreDepartamento:string;
 
+  arr = [];
   constructor(private fb: FormBuilder,
     private router: Router,
     private torreService: TorreService,
@@ -37,6 +38,11 @@ export class PerfilPage implements OnInit {
     private agenteService: AgenteService,
     private toastr: ToastController,
     private datePipe: DatePipe) {
+
+      /* for (let index = 0; index < 100; index++) {
+        this.arr.push("Eleement " + index);
+        
+      } */
 
   }
 

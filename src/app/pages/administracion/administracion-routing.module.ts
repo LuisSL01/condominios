@@ -5,6 +5,12 @@ import { AdministracionPage } from './administracion.page';
 import { ConfiguracionEmpPage } from '../configuracion-emp/configuracion-emp.page';
 
 const routes: Routes = [
+  
+  {
+    path: '',//Se agrega para que en un principio sea la primera que se carge
+    redirectTo: '/administracion/datos-empresa',
+    pathMatch: 'full'
+  },
   {
     path: '',
     component: AdministracionPage,    
@@ -37,12 +43,7 @@ const routes: Routes = [
         ]
       }, 
     ]
-  },
-  {
-    path: '',
-    redirectTo: '/administracion/datos-empresa',
-    pathMatch: 'full'
-  },
+  }
   
 
 ];

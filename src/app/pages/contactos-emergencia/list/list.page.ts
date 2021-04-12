@@ -17,7 +17,7 @@ export class ListPage implements OnInit {
   
   constructor(public contactoService : ContactosEmergenciaService,
               private actionSheetCtrl: ActionSheetController,
-              private userData:UserData,
+              public userData:UserData,
               private router: Router,
               private callNumber: CallNumber) { }
 
@@ -68,16 +68,8 @@ export class ListPage implements OnInit {
 
     const actionSheet = await this.actionSheetCtrl.create({
       buttons: [
-      guardarBorrarBtn,
-      {
-        text: 'Cancelar',
-        icon: 'close',
-        role: 'cancel',
-        cssClass: 'action-dark',
-        handler: () => {
-          console.log('Cancel clicked');
-        }
-      }]
+      guardarBorrarBtn
+    ]
     });
     await actionSheet.present();
   }

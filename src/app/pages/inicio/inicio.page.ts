@@ -125,11 +125,16 @@ export class InicioPage implements OnInit {
     return await modal.present();
   }
 
-  async cargaAnunciosStorage(){      
+  async cargaAnunciosStorage(){ 
+    if(this.userData.administrador){
       await this.cargarAnunciosTemporalesStorage(this.idEmpresa);      
       if(this.anunciosList.length == 0){        
         await this.getAnuncios(this.anunciosPage, 10);
       }     
+    }else{
+      await this.getAnuncios(this.anunciosPage, 10);
+    }     
+      
   }
 
   getAnuncios(page: number, size: number, eventInfinite?, eventRefresh?) {
