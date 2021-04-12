@@ -22,7 +22,7 @@ export class ListPage implements OnInit {
               public areaComunService: AreaComunService,
               private actionSheetCtrl: ActionSheetController,
               private router: Router,
-              private userData:UserData) { }
+              public userData:UserData) { }
 
   ngOnInit() {
   }

@@ -25,7 +25,7 @@ export class ListPage implements OnInit {
     private fileopen: FileOpener,
     private router: Router,
     private transfer: FileTransfer,
-    private userData: UserData) {
+    public userData: UserData) {
 
   }
 

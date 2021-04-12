@@ -146,7 +146,7 @@ export class ExtraPage implements OnInit {
  
   }
 
-  verFormatoConstruccion(ff:string){
+  verFormatoConstruccion(){
     this.userData.showToast("Descargando pdf, por favor espere...");
     this.empresaService.getEmpresaById(this.idEmpresa).subscribe(
       (data) => {

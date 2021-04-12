@@ -17,7 +17,7 @@ export class ListPage implements OnInit {
   constructor(public adeudoService:AdeudoService,
               private actionSheetCtrl:ActionSheetController,
               private router: Router,
-              private userData:UserData) { }
+              public userData:UserData) { }
 
   ngOnInit() {
   }

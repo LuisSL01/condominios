@@ -42,7 +42,7 @@ eventSource = [];
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
   constructor(public areaComunService: AreaComunService,
-              private userData:UserData,
+              public userData:UserData,
               private datePipe: DatePipe,
               private alertCtrl: AlertController,
               @Inject(LOCALE_ID) private locale: string,

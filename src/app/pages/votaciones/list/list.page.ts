@@ -18,7 +18,7 @@ export class ListPage implements OnInit {
   constructor(public votacionService: VotacionesService,
     private actionSheetCtrl: ActionSheetController,
     private modalCtrl:ModalController,
-    private userData:UserData,
+    public userData:UserData,
     private router:Router) { }
 
   ngOnInit() {

@@ -17,7 +17,7 @@ export class ListPage implements OnInit {
   
   constructor(private resolucionService: ResolucionService,
               private actionSheetCtrl: ActionSheetController,    
-              private userData:UserData,
+              public userData:UserData,
               private router: Router) { }
 
   ngOnInit() {

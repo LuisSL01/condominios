@@ -34,6 +34,7 @@
     "@ionic-native/header-color": "^5.28.0",
     "@ionic-native/network": "^5.30.0",
     "@ionic-native/onesignal": "^5.31.1",
+    "@ionic-native/photo-viewer": "^5.32.0",
     "@ionic-native/preview-any-file": "^5.32.0",
     "@ionic-native/social-sharing": "^5.31.1",
     "@ionic-native/splash-screen": "^5.29.0",
@@ -43,6 +44,7 @@
     "@techiediaries/ngx-qrcode": "^9.1.0",
     "call-number": "^1.0.1",
     "com-badrit-base64": "^0.2.0",
+    "com-sarriaroman-photoviewer": "^1.2.5",
     "cordova-android": "^8.1.0",
     "cordova-ios": "5.1.1",
     "cordova-plugin-add-swift-support": "^2.0.2",
@@ -144,7 +146,8 @@
         "PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION": "This app requires photo library access to function properly.",
         "PHOTO_LIBRARY_USAGE_DESCRIPTION": "This app requires photo library access to function properly."
       },
-      "cordova-plugin-preview-any-file": {}
+      "cordova-plugin-preview-any-file": {},
+      "com-sarriaroman-photoviewer": {}
     },
     "platforms": [
       "android",

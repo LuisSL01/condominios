@@ -20,7 +20,7 @@ export class ListPage implements OnInit {
   constructor(public bitacoraVisitaService : BitacoraVisitaService,
               public actionSheetCtrl : ActionSheetController,
               private router: Router,
-              private userData:UserData) {                
+              public userData:UserData) {                
                }
 
   ngOnInit() {

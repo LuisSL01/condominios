@@ -19,7 +19,7 @@ export class ListPage implements OnInit {
 
   constructor(public directorioService:DirectorioService,
               private actionSheetCtrl: ActionSheetController,
-              private userData:UserData,
+              public userData:UserData,
               private router: Router) { 
     }
 

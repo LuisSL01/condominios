@@ -34,6 +34,8 @@ import { Base64 } from '@ionic-native/base64/ngx';
 import {NgxMaskIonicModule} from 'ngx-mask-ionic';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
+
 
 
 /* import { NgxMaskModule, IConfig } from 'ngx-mask' */
@@ -72,6 +74,7 @@ import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
     Base64,
     SocialSharing,
     PreviewAnyFile,
+    PhotoViewer,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

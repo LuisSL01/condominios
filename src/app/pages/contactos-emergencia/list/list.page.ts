@@ -17,7 +17,7 @@ export class ListPage implements OnInit {
   
   constructor(public contactoService : ContactosEmergenciaService,
               private actionSheetCtrl: ActionSheetController,
-              private userData:UserData,
+              public userData:UserData,
               private router: Router,
               private callNumber: CallNumber) { }
 

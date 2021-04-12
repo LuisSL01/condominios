@@ -74,13 +74,11 @@ export class PushService {
     //Obtener el id del suscriptor
     this.oneSignal.getIds().then( info =>{
       this.userId = info.userId;
-      console.log('this.userId: '+this.userId);    
+      console.log('this.userId: '+this.userId);
+      this.logService.escribeLog("user id: "+ this.userId);
     }
     );
     this.oneSignal.endInit();
-
-
-    this.logService.escribeLog("user id: "+ this.userId);
     this.logService.escribeLog("terminando configuracion de push");
     
   }
@@ -138,13 +136,12 @@ export class PushService {
 
 
 async procesaDataNotificacionAbierta(noti: OSNotification){
-  console.log('procesaDataNotificacionAbierta', JSON.stringify(noti));    
+/*   console.log('procesaDataNotificacionAbierta', JSON.stringify(noti));    
   console.log('procesaDataNotificacionAbierta', JSON.stringify(noti.payload));    
   console.log('procesaDataNotificacionAbierta', JSON.stringify(noti.payload.additionalData));      
-  console.log('procesaDataNotificacionAbierta', JSON.stringify(noti.payload.additionalData.routerLink));    
+  console.log('procesaDataNotificacionAbierta', JSON.stringify(noti.payload.additionalData.routerLink));     */
   const dt = await this.storage.get('userDetails');
-  console.log(JSON.stringify(dt));
-  
+  /* console.log(JSON.stringify(dt)); */  
   if(dt){
     console.log('dt');    
       console.log('dt.id');      
@@ -152,8 +149,7 @@ async procesaDataNotificacionAbierta(noti: OSNotification){
     //Sy existe sesion debo redireccionar a la ruta del push
     
   }else{
-    console.log('else');
-    
+    console.log('else');    
     //Sy existe sesion debo redireccionar al home
     this.router.navigate(['/home']);
   }

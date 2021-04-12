@@ -49,7 +49,7 @@ export class AddPage implements OnInit {
     private camera: Camera,
     private router: Router,
     private fb: FormBuilder,
-    private userData: UserData,
+    public userData: UserData,
     private agenteService: AgenteService,
     public activatedRoute: ActivatedRoute,
     private adeudoService: AdeudoService) { }
