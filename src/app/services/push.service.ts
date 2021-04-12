@@ -136,12 +136,8 @@ export class PushService {
 
 
 async procesaDataNotificacionAbierta(noti: OSNotification){
-/*   console.log('procesaDataNotificacionAbierta', JSON.stringify(noti));    
-  console.log('procesaDataNotificacionAbierta', JSON.stringify(noti.payload));    
-  console.log('procesaDataNotificacionAbierta', JSON.stringify(noti.payload.additionalData));      
-  console.log('procesaDataNotificacionAbierta', JSON.stringify(noti.payload.additionalData.routerLink));     */
-  const dt = await this.storage.get('userDetails');
-  /* console.log(JSON.stringify(dt)); */  
+
+  const dt = await this.storage.get('userDetails');  
   if(dt){
     console.log('dt');    
       console.log('dt.id');      
