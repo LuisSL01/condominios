@@ -70,10 +70,10 @@ export class LogService {
   escribeLog(mensaje:any){
     /* console.log('escribeLog '+ mensaje);
     console.log('escribeLogen  '+ mensaje); */
+    
+    const formattedDate = this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss');
     if (this.platform.is('android')) {
       if(this.archivoListo){
-
-        const formattedDate = this.datePipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss');
         this.file.writeFile(this.file.externalRootDirectory, this.nameFolder + this.nameFile,"["+formattedDate+"] ->" + mensaje+"\n",  {append: true, replace: false}).
         then(res=>{
           /* console.log('log registrado correctamente'); */
@@ -89,6 +89,46 @@ export class LogService {
           })          
         })  
       }
+    } else {
+      this.file.writeFile(this.file.documentsDirectory, this.nameFile, "["+formattedDate+"] ->" + mensaje + "\n",  {append: true, replace: false})
+      .then(res=>{
+        console.log('log registrado correctamente 1: ' + res);
+      })
+      .catch(err=>{
+        console.log('catch, vamos a crear el file: ' + err);
+        this.file.createFile(this.file.documentsDirectory, this.nameFile, true)
+        .then(res=>{
+          console.log('se ha creado el log.txt correctamente 1');
+          this.file.writeFile(this.file.documentsDirectory, this.nameFile, "["+formattedDate+"] ->" + mensaje + "\n",  {append: true, replace: false})
+          .then(res=>{
+            console.log('log registrado correctamente 2: ' + res);
+          })
+          .catch(err=>{
+            console.log('error al escribir log: ' + err);
+          })          
+        })  
+        .catch(err=>{
+          console.log('error al crear archivo txt 1: ' + err);
+        })
+      })
     }
   }
+
+  compartirLog(){
+
+    var path;
+    if (this.platform.is('android')) {
+      path = this.file.externalRootDirectory + '/' + this.nameFolder;
+    } else {
+      path = this.file.documentsDirectory + '/';
+    }
+
+    this.file.readAsText(path, this.nameFile).then((data) => {
+      alert('log: \n' + data);
+    }).catch((err) => {
+      alert('no archivo: ' + err);
+    }); 
+    
+  }
+
 }

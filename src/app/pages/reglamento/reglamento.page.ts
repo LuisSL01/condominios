@@ -13,6 +13,7 @@ import { Base64 } from '@ionic-native/base64/ngx';
 import { Archivo } from '../../models/archivo-vortex.model';
 import { EmpresaService } from '../../services/empresa.service';
 import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
+import { LogService } from '../../services/log.service';
 
 
 @Component({
@@ -36,7 +37,8 @@ export class ReglamentoPage implements OnInit {
     private filePath: FilePath,
     private base64: Base64,
     private empresaService: EmpresaService,
-    private previewAnyFile: PreviewAnyFile
+    private previewAnyFile: PreviewAnyFile,
+    private logService: LogService,
   ) {
     /* this.fileTransfer = this.transfer.create(); */
   }
@@ -279,4 +281,15 @@ export class ReglamentoPage implements OnInit {
       });
       
   }
+
+
+  btnEscribir(){
+    var a = 'fui fui'
+    this.logService.escribeLog(a)
+  }
+
+  btnLog(){
+    this.logService.compartirLog()
+  }
+
 }
