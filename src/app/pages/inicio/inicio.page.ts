@@ -12,6 +12,7 @@ import { DatosInteresService } from '../../services/datos-interes.service';
 import { ModalController } from "@ionic/angular";
 import { DatosInteresPage } from '../datos-interes/datos-interes.page';
 import { Router } from '@angular/router';
+/* import { FirebaseAnalytics } from '@ionic-native/firebase-analytics/ngx'; */
 
 @Component({
   selector: 'app-inicio',
@@ -54,7 +55,18 @@ export class InicioPage implements OnInit {
               private router: Router,
               private userData:UserData,
               private datosInteresService:DatosInteresService,
-              private modalCtrl: ModalController,) {
+              private modalCtrl: ModalController,
+              /* private firebaseAnalytics: FirebaseAnalytics */
+              ) {
+                try {
+                  /* this.firebaseAnalytics.logEvent('page_view', {page: "inicio"})
+                  .then((res: any) => console.log(res))
+                .catch((error: any) => console.error(error)); */
+                  
+                } catch (error) {
+                  console.log('error->',error);                  
+                }
+                
                 this.componentes = this.dataService.getMenuOpts();
 
                 /* this.publicaciones = this.publicacionService.publicaciones;

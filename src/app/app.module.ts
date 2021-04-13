@@ -35,6 +35,7 @@ import {NgxMaskIonicModule} from 'ngx-mask-ionic';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
+/* import { FirebaseAnalytics } from '@ionic-native/firebase-analytics/ngx'; */
 
 
 
@@ -75,6 +76,7 @@ import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
     SocialSharing,
     PreviewAnyFile,
     PhotoViewer,
+    /* FirebaseAnalytics, */
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
