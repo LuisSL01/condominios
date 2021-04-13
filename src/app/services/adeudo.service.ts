@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { AdeudoPago } from '../models/adeudo-pago.model';
 import { Storage } from '@ionic/storage';
 import { DataLocalService } from './data-local.service';
@@ -13,18 +13,21 @@ import { environment } from 'src/environments/environment';
 })
 export class AdeudoService {
 
-  adeudos:AdeudoPago[] =[];
- 
-
+  adeudos:AdeudoPago[] =[]; 
   baseUrl: string = environment.coreServiceBaseUrl;
   adeudoContext: string = environment.coreApiBaseAdeudoOperation;  
   nombreEtiqueta = "_adeudo";
-
+  adeudoListener = new EventEmitter<AdeudoPago>();
+  
   constructor(private storage:Storage,
               private dataLocalService:DataLocalService,              
               private http: HttpClient) {                                 
                  
               }
+              
+  removeElement(elm:AdeudoPago){
+    this.adeudoListener.emit(elm);
+  }              
 
 
   save(adeudoData: any): Observable<ApiResponse> {

@@ -34,6 +34,16 @@ export class ConvocatoriasPage implements OnInit {
     this.cargarConvocatorias();
     this.cargaFiltrosTabla();
 
+    this.convocatoriaService.convocatoriaListener.subscribe(elm => {
+      if(this.convocatoriasList){
+        var index = this.convocatoriasList.indexOf(elm);
+        if (index > -1) {
+          this.convocatoriasList.splice(index, 1);
+          this.storage.set(this.idEmpresa + this.convocatoriaService.nombreEtiqueta, this.convocatoriasList);
+        }
+      }
+    });
+
   }
   cargaFiltrosTabla(){
     this.camposFiltros.push("data_titulo");

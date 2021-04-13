@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Visita } from '../models/visita.model';
 import { DataLocalService } from './data-local.service';
 import { Storage } from '@ionic/storage';
@@ -21,17 +21,23 @@ export class VisitaService {
   visitaContext: string = environment.coreApiBaseVisitaOperation;  
   nombreEtiqueta = "_visitas";
 
+  visitaListener = new EventEmitter<Visita>();
+
   constructor(private dataLocalService: DataLocalService,
-              private storage: Storage,
-              private userData:UserData,
+              private storage: Storage,              
               private http: HttpClient) {
     
-    this.cargarVisitas();
+    /* this.cargarVisitas(); */
 
   }
 
+                
+  removeElement(elm:Visita){
+    this.visitaListener.emit(elm);
+  }
+
   construyeNombreEtiqueta() {
-    return this.nombreEtiquetaJson = this.dataLocalService.idempresa + "_visitas";
+    return this.nombreEtiquetaJson = "_visitas";
   }
 
   save(visitaData: any): Observable<ApiResponse> {

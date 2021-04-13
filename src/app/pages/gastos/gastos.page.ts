@@ -34,6 +34,17 @@ export class GastosPage implements OnInit {
     this.cargarGastosLocalesStorage();
     this.cargaGastosStorage();
     this.cargaFiltrosTabla();
+
+    
+    this.gastoService.gastoListener.subscribe(noti => {
+      if(this.gastos){
+        var index = this.gastos.indexOf(noti);
+        if (index > -1) {
+          this.gastos.splice(index, 1);
+          this.storage.set(this.idEmpresa + "_gastos", this.gastos);          
+        }
+      }
+    });
   }
 
   cargaFiltrosTabla(){
@@ -74,7 +85,7 @@ export class GastosPage implements OnInit {
             }else{                      
               this.gastos = data.result.content;
             }            
-            this.storage.set(this.idEmpresa + "_gastos", this.gastos);            
+            this.storage.set(this.idEmpresa + "_gastos", this.gastos);
             this.completeEvent(eventInfinite, eventRefresh);            
           } else {
             this.userData.showToast('Error al recuperar los registros');

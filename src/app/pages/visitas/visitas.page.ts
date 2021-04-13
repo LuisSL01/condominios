@@ -33,6 +33,16 @@ export class VisitasPage implements OnInit {
     this.idEmpresa = this.userData.getIdEmpresa();
     this.idAgente = this.userData.getIdAgente();    
     this.cargaFiltrosTabla();    
+
+    this.visitaService.visitaListener.subscribe(noti => {
+      if(this.visitasList){
+        var index = this.visitasList.indexOf(noti);
+        if (index > -1) {
+          this.visitasList.splice(index, 1);
+          this.storage.set(this.idEmpresa + this.visitaService.nombreEtiqueta, this.visitasList);
+        }
+      }
+    });
   }
 
   cargaFiltrosTabla(){

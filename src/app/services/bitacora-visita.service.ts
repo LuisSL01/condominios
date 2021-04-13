@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { BitacoraVisita } from '../models/bitacora-visitas.model';
 import { Storage } from '@ionic/storage';
 import { DataLocalService } from './data-local.service';
@@ -21,12 +21,17 @@ export class BitacoraVisitaService {
   baseUrl: string = environment.coreServiceBaseUrl;
   bitacoraVisitaContext: string = environment.coreApiBaseBitacoraVisitaOperation;  
   nombreEtiqueta = "_bitacora-visita";
+  
+  bitacoraListener = new EventEmitter<BitacoraVisita>();
 
   constructor(private storage:Storage ,
-              private dataLocalService:DataLocalService,
-              private userData:UserData,
+              private dataLocalService:DataLocalService,              
               private http: HttpClient) {
    }
+
+   removeElement(elm:BitacoraVisita){
+    this.bitacoraListener.emit(elm);
+  }
 
   save(bitacoraVisitaData: FormData): Observable<ApiResponse> {
     console.log('save bitacora-comun:'+this.baseUrl + this.bitacoraVisitaContext);    

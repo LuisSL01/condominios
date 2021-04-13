@@ -36,6 +36,16 @@ export class PagosComprobantesPage implements OnInit {
     this.idEmpresa = this.userData.getIdEmpresa();
     this.idAgente = this.userData.getIdAgente();    
     this.cargaFiltrosTabla();
+
+    this.pagosComprobantesService.pagoListener.subscribe(noti => {
+      if(this.pagoComprobanteList){
+        var index = this.pagoComprobanteList.indexOf(noti);
+        if (index > -1) {
+          this.pagoComprobanteList.splice(index, 1);
+          this.storage.set(this.idEmpresa + this.pagosComprobantesService.nombreEtiqueta, this.pagoComprobanteList);
+        }
+      }
+    });
   }
 
   cargaFiltrosTabla(){
@@ -87,7 +97,7 @@ export class PagosComprobantesPage implements OnInit {
                   }else{                      
                     this.pagoComprobanteList = data.result.content;
                   }                        
-                  this.storage.set(this.idEmpresa + this.pagosComprobantesService.nombreEtiqueta, this.pagoComprobanteList);            
+                  this.storage.set(this.idEmpresa + this.pagosComprobantesService.nombreEtiqueta, this.pagoComprobanteList);
                   this.completeEvent(eventInfinite, eventRefresh);
                 } else {
                   this.userData.showToast('error al recuperar registros');

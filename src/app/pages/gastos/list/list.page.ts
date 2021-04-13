@@ -39,10 +39,9 @@ export class ListPage implements OnInit {
           if(this.gasto.id > 0){            
             this.gastoService.delete(this.gasto.id).subscribe(
               (data) => {
-                if (data.status === 200) {
-                  console.log('"data.result"', data.result);
-                  console.log("Gasto eliminado  correctamente");
-                  this.showToast("Gasto eliminado correctamente");                  
+                if (data.status === 200) {                  
+                  this.showToast("Gasto eliminado correctamente");
+                  this.gastoService.removeElement(this.gasto);
                 } else {
                   console.log('Llego otro status al eliminar gasto');  
                   this.showToast("Error al eliminar registro de Gasto");                  

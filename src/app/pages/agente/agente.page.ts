@@ -37,6 +37,17 @@ export class AgentePage implements OnInit {
     /* this.getAgentes(0,10); */
     this.cargaAgentesStorage();
     this.cargaFiltrosTabla();
+
+    this.agenteService.agenteListener.subscribe(noti => {
+      if(this.agentesList){
+        var index = this.agentesList.indexOf(noti);
+        if (index > -1) {
+          this.agentesList.splice(index, 1);
+          this.storage.set(this.idEmpresa + "_agentes", this.agentesList);
+        }
+      }
+    });
+
   }
 
   cargaFiltrosTabla(){    
@@ -94,11 +105,13 @@ export class AgentePage implements OnInit {
             console.log(
               "llego otro status al recuperar agentes: " + data.status
             );
+            this.userData.showToast("Error al recuperar agentes");
             this.completeEvent(eventInfinite, eventRefresh);
           }
         },
         (err) => {
           console.log(err);
+          this.userData.showToast("Error al recuperar agentes, revise su conexión a internet");
           this.completeEvent(eventInfinite, eventRefresh);
         }
       );

@@ -36,6 +36,17 @@ export class ResolucionesPage implements OnInit {
     this.idEmpresa = this.userData.getIdEmpresa();
     this.cargarResoluciones();    
     this.cargaFiltrosTabla();
+
+    this.resolucionService.resolicionListener.subscribe(elm => {
+      if(this.resolucionesList){
+        var index = this.resolucionesList.indexOf(elm);
+        if (index > -1) {
+          console.log('se encontro la res, y se removio de la lista');          
+          this.resolucionesList.splice(index, 1);
+          this.storage.set(this.idEmpresa + this.resolucionService.nombreEtiqueta, this.resolucionesList);
+        }
+      }
+    });
   }
   ionViewDidEnter(){    
     let value:boolean = JSON.parse(this.activatedRoute.snapshot.paramMap.get('item'));
@@ -71,7 +82,7 @@ export class ResolucionesPage implements OnInit {
             }else{                      
               this.resolucionesList = data.result.content;
             }
-            this.storage.set(this.idEmpresa + this.resolucionService.nombreEtiqueta, this.resolucionesList);            
+            this.storage.set(this.idEmpresa + this.resolucionService.nombreEtiqueta, this.resolucionesList);
             this.completeEvent(eventInfinite, eventRefresh);
           } else {
             this.userData.showToast('error al recuperar registros');

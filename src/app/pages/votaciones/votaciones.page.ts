@@ -33,6 +33,16 @@ export class VotacionesPage implements OnInit {
     this.idEmpresa = this.userData.getIdEmpresa();
     this.cargaData();
     this.cargaFiltrosTabla();
+
+    this.votacionesService.votacionListener.subscribe(elm => {
+      if(this.votacionesList){
+        var index = this.votacionesList.indexOf(elm);
+        if (index > -1) {
+          this.votacionesList.splice(index, 1);
+          this.storage.set(this.idEmpresa + this.votacionesService.nombreEtiqueta, this.votacionesList);
+        }
+      }
+    });
   }
   
   cargaFiltrosTabla(){

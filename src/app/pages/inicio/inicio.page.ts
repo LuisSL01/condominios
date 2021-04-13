@@ -76,7 +76,16 @@ export class InicioPage implements OnInit {
 
  
   ngOnInit() {      
-    this.cargaFiltrosTabla();     
+    this.cargaFiltrosTabla();    
+    this.anuncioService.anuncioListener.subscribe(elm => {
+      if(this.anunciosList){
+        var index = this.anunciosList.indexOf(elm);
+        if (index > -1) {
+          this.anunciosList.splice(index, 1);
+          this.storage.set(this.idEmpresa + "_anuncios", this.anunciosList);
+        }
+      }
+    }); 
   }
 
   async verificaExisteDatosSesion(){  

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { DirectorioService } from 'src/app/services/directorio.service';
 import { Directorio } from '../../models/directorio.model';
 import { UserData } from '../../providers/user-data';
@@ -28,12 +28,23 @@ export class DirectorioPage implements OnInit {
               private storage:Storage ,
               public activatedRoute: ActivatedRoute,
               public navCtrl: NavController,
-              private router: Router,) { 
+              private router: Router) { 
   }
 
   ngOnInit() {
     this.idEmpresa = this.userData.getIdEmpresa();
     this.cargaData();
+
+    this.directorioService.directorioListener.subscribe(noti => {
+      if(this.directorios){
+        var index = this.directorios.indexOf(noti);
+        if (index > -1) {
+          this.directorios.splice(index, 1);
+          this.storage.set(this.idEmpresa + this.directorioService.nombreEtiqueta, this.directorios);
+        }        
+      }
+    });
+
   }
   ionViewDidEnter(){
     console.log('ionViewDidEnter de directorios PAGE');

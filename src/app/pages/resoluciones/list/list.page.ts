@@ -38,7 +38,10 @@ export class ListPage implements OnInit {
         
         if(this.resolucion.id > 0){            
           this.resolucionService.borrarResolucion(this.resolucion.id).subscribe((data) => {
-              if (data.status === 200) this.userData.showToast("resolución eliminada correctamente");
+            if (data.status === 200) {
+              this.userData.showToast("resolución eliminada correctamente");
+              this.resolucionService.removeElement(this.resolucion); 
+            }
               else this.userData.showToast("Error al eliminar registro");
             },
             (err) => {

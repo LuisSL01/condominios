@@ -93,6 +93,7 @@ export class AnuncioListComponent implements OnInit {
           this.anuncioService.borrarAnuncio(this.anuncio.id).subscribe((data) => {
             if (data.status === 200) {
               this.showToast("anuncio eliminado correctamente");
+              this.anuncioService.removeElement(this.anuncio);
             } else {
               this.showToast("Error al eliminar registro");
             }

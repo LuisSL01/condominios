@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { environment } from 'src/environments/environment';
 import { PagosComprobantes } from '../models/pagos-comprobantes.model';
@@ -24,12 +24,15 @@ export class PagosComprobantesService {
   nombreEtiqueta = "_pagos-comprobantes";
   nombreEtiquetaValidar = "_pagos-comprobantes-validar";
 
-  constructor(private storage: Storage,
-              private dataLocalService: DataLocalService,
-              private userData:UserData,
-              private http:HttpClient) {
+  pagoListener = new EventEmitter<PagosComprobantes>();
 
-    
+  constructor(private storage: Storage,              
+              private http:HttpClient) { 
+  }
+
+
+  removeElement(elm:PagosComprobantes){
+    this.pagoListener.emit(elm);
   }
 
   /* construyeNombreEtiqueta(){

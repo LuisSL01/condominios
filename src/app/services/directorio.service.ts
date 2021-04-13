@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable , EventEmitter} from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Directorio } from '../models/directorio.model';
 import { DataLocalService } from './data-local.service';
@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiResponse } from '../models/api-response.model';
 import { share } from 'rxjs/operators';
 import { Observable } from 'rxjs/index';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,11 +18,19 @@ export class DirectorioService {
   directorioContext: string = environment.coreApiBaseDirectorioOperation;  
   nombreEtiqueta = "_directorios";
 
+  directorioListener = new EventEmitter<Directorio>();
+
   constructor(private storage: Storage,              
               private http: HttpClient) {
       
   
   }
+
+  removeElement(dir:Directorio){        
+    this.directorioListener.emit(dir);
+  }
+
+
 
   
   save(directorioData: any): Observable<ApiResponse> {

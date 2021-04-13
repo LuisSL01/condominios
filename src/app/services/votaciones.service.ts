@@ -1,11 +1,10 @@
-import { Injectable, OnInit } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Encuesta } from '../models/votaciones.model';
 import { DataLocalService } from './data-local.service';
 import { Storage } from '@ionic/storage';
 import { EncuestaPregunta } from '../models/encuesta-pregunta.model';
 import { EncuestaPreguntaRespuesta } from '../models/encuesta-pregunta-respuesta.model';
 import { environment } from 'src/environments/environment';
-import { UserData } from '../providers/user-data';
 import { HttpClient } from '@angular/common/http';
 import { ApiResponse } from '../models/api-response.model';
 import { share } from 'rxjs/operators';
@@ -21,14 +20,18 @@ export class VotacionesService{
 
   baseUrl: string = environment.coreServiceBaseUrl;
   votacionContext: string = environment.coreApiBaseVotacionOperation;
-  
-
   nombreEtiqueta = "_encuestas";
+
+  votacionListener = new EventEmitter<Encuesta>();
+
   constructor(public storage: Storage,
-              private dataLocalService: DataLocalService,
-              private userData:UserData,
+              private dataLocalService: DataLocalService,              
               private http: HttpClient) {
      /*  this.cargarVotaciones(); */      
+  }
+
+  removeElement(elm:Encuesta){
+    this.votacionListener.emit(elm);
   }
   
   construyeNombreEtiquetaJson(){    

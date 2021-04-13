@@ -23,20 +23,11 @@ export class ListPage implements OnInit {
 
   ngOnInit() {
   }
-
   editRowSelected(){
-
-    console.log(this.encuesta);
-
     this.router.navigate(['/votaciones/add', { item: JSON.stringify(this.encuesta)}]);      
   }
 
-  responderEncuesta(){
-    
-    console.log('actual: '+ new Date().getTime());
-    console.log('reg: '+new Date(this.encuesta.fechaTermina).getTime());
-    
-    
+  responderEncuesta(){              
     if(new Date().getTime() < new Date(this.encuesta.fechaTermina).getTime()){
       this.presentModalRespoderEncuesta();
     }else{
@@ -58,8 +49,8 @@ export class ListPage implements OnInit {
           if(this.encuesta.id > 0 ){
             this.votacionService.delete(this.encuesta.id).subscribe((data) => {
                 if (data.status === 200) {
-                  this.userData.showToast('Eliminado correctamente');                
-                  this.router.navigate(['/votaciones', { item: true, skipLocationChange: true}]);
+                  this.userData.showToast('Eliminado correctamente');
+                  this.votacionService.removeElement(this.encuesta); 
                 }
                 else  this.userData.showToast('Error al eliminar registro');                
               },

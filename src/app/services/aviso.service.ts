@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
 import {Publicacion} from '../models/publicacion.model';
@@ -20,17 +20,21 @@ export class AvisoService {
 
   notificaciones: Publicacion[] = [];
   notificacionesLocales: Publicacion[] = [];
-  
-
   nombreEtiquetaJson = "";
-
   baseUrl: string = environment.coreServiceBaseUrl;  
   publicacionContext: string = environment.coreApiBasePublicacionOperation;
+
+
+  avisoListener = new EventEmitter<Publicacion>();
 
   constructor(private http: HttpClient,
               private storage: Storage,
               private dataLocalService: DataLocalService,
               private userData:UserData) {
+  }
+
+  removeElement(elm:Publicacion){
+    this.avisoListener.emit(elm);
   }
 
   

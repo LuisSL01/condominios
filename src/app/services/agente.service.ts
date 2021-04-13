@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ApiResponse } from '../models/api-response.model';
@@ -15,9 +15,18 @@ export class AgenteService {
   baseUrl: string = environment.coreServiceBaseUrl;
   baseUrlAuth: string = environment.authServiceBaseUrl;
   agenteContext: string = environment.coreApiBaseAgenteOperation;  
+
+  agenteListener = new EventEmitter<any>();            
   
   constructor(private http:HttpClient,
-              private toastCtrl: ToastController) { }
+              private toastCtrl: ToastController) { 
+
+              }
+  removeElement(elm:any){
+    this.agenteListener.emit(elm);
+  }            
+
+  
 
   registerUsuario(userData: any): Observable<ApiResponse> {
     console.log('registerUsuario:'+this.baseUrlAuth + environment.authApiRegisterAgenteOperation);

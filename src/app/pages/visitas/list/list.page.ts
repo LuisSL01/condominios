@@ -48,8 +48,8 @@ export class ListPage implements OnInit {
           if(this.visita.id > 0 ){
             this.visitaService.delete(this.visita.id).subscribe((data) => {
                 if (data.status === 200) {                   
-                  this.userData.showToast('visita eliminada correctamente');
-                  this.router.navigate(['/visitas', { item: true, skipLocationChange: true}]);
+                  this.userData.showToast('visita eliminada correctamente');                  
+                  this.visitaService.removeElement(this.visita);
                 }                
                 else  this.userData.showToast('Error al eliminar registro');                
               },

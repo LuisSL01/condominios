@@ -36,6 +36,16 @@ export class BitacoraVisitasPage implements OnInit {
     this.idEmpresa = this.userData.getIdEmpresa();
     this.cargarData();    
     this.cargaFiltrosTabla();    
+
+    this.bitacoraVisitaService.bitacoraListener.subscribe(noti => {
+      if(this.bitacoraRegistrosList){
+        var index = this.bitacoraRegistrosList.indexOf(noti);
+        if (index > -1) {
+          this.bitacoraRegistrosList.splice(index, 1);
+          this.storage.set(this.idEmpresa + this.bitacoraVisitaService.nombreEtiqueta, this.bitacoraRegistrosList);
+        }
+      }
+    });
   }
 
   cargaFiltrosTabla(){

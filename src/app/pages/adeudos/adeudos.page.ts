@@ -35,6 +35,17 @@ export class AdeudosPage implements OnInit {
     this.idEmpresa = this.userData.getIdEmpresa();
     this.idAgente = this.userData.getIdAgente();    
     this.cargaFiltrosTabla();
+
+    
+    this.adeudoService.adeudoListener.subscribe(noti => {
+      if(this.adeudos){
+        var index = this.adeudos.indexOf(noti);
+        if (index > -1) {
+          this.adeudos.splice(index, 1);
+          this.storage.set(this.idEmpresa + this.adeudoService.nombreEtiqueta, this.adeudos);
+        }
+      }
+    });
   }
 
   cargaFiltrosTabla(){

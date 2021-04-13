@@ -3,7 +3,7 @@
     <name>Armonía Residencial</name>
     <description>App para hacer más amena la convivencia en la Residencia.</description>
     <author email="ingmiguelveloz@gmail.com" href="https://www.erpvortex.com/">Erp Vortex</author>
-    <content original-src="index.html" src="http://localhost:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <access launch-external="yes" origin="whatsapp://*" />
     <allow-navigation href="*" />

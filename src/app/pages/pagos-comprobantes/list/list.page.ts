@@ -46,7 +46,7 @@ export class ListPage implements OnInit {
             this.pagosComprobantesService.delete(this.pagoComprobante.id).subscribe((data) => {
                 if (data.status === 200) { 
                   console.log("eliminado correctamente"); this.userData.showToast('registro eliminado correctamente');
-                  this.router.navigate(['/pagos-comprobantes', { item: true, skipLocationChange: true}]);
+                  this.pagosComprobantesService.removeElement(this.pagoComprobante);                  
                 }
                 else  this.userData.showToast('Error al eliminar registro');
               },

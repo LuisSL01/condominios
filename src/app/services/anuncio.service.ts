@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { ToastController } from '@ionic/angular';
 import { Anuncio } from '../models/anuncio.model';
@@ -23,11 +23,17 @@ export class AnuncioService {
   baseUrl: string = environment.coreServiceBaseUrl;
   publicacionContext: string = environment.coreApiBasePublicacionOperation;
 
+  anuncioListener = new EventEmitter<Publicacion>();
+
   constructor(private storage: Storage,
     private dataLocalService: DataLocalService,
     private userData:UserData,
     private http: HttpClient) {
     /* this.cargarAnunciosLocales(); */
+  }
+
+  removeElement(ann:Publicacion){
+    this.anuncioListener.emit(ann);
   }
 
   construyeNombreEtiqueta(){
