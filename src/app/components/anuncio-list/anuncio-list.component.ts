@@ -199,9 +199,19 @@ export class AnuncioListComponent implements OnInit {
 
   viewImage(path:string, titulo:string, descripcion:string){
     /* console.log('vieew image.->', this.pathS3 + path+'<-');     */
-    this.photoViewer.show(this.pathS3 + path , titulo + ", \n"+ descripcion , {share: true, headers: '{algo:foo,algo:bar}'});
-  }
-
+    if (this.platform.is('android')) {
+      try {
+      
+    
+        this.photoViewer.show(this.pathS3 + path , titulo + ", \n"+ descripcion , {share: true, headers: '{algo:foo,algo:bar}'});
+      
+    } catch (error) {
+     console.log(JSON.stringify(error));
+          
+      }
+    }
+   
+}
   showToast(dataMessage: string) {
     this.toastr
       .create({
