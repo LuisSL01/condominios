@@ -62,5 +62,11 @@
     "name": "Visitas",
     "redirectTo": "/mis-visitas"
     , "valida": "false"
+  },
+  {
+    "icon": "help-circle",
+    "name": "Ayuda",
+    "redirectTo": "/ayuda"
+    , "valida": "false"
   }
 ]
