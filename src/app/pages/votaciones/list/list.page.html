@@ -1,26 +1,28 @@
 <ion-card>
   <ion-card-header>
-    <ion-card-title>  {{encuesta.titulo}} </ion-card-title>
+    <ion-card-title> {{encuesta.titulo}} </ion-card-title>
     <ion-card-subtitle>
       <span class="text-primary">
-        <ion-label><h3>
-          Fin: {{encuesta.fechaTermina  | date:'dd/MM/yy HH:mm a'}}
-        </h3></ion-label>
-        
-        </span>
+        <ion-label>
+          <h3>
+            Vence el: {{encuesta.fechaTermina  | date:'dd/MM/yy HH:mm a'}}
+          </h3>
+        </ion-label>
+
+      </span>
       <div class="card-more">
         <ion-buttons slot="end">
 
-          <ion-button slot="end" (click)="editRowSelected()" *ngIf="userData.administrador" >
+          <ion-button slot="end" (click)="editRowSelected()" *ngIf="userData.administrador">
             <ion-icon slot="icon-only" color="primary" name="create-outline"></ion-icon>
           </ion-button>
 
           <ion-button fill="clear" (click)="responderEncuesta()">
-            <ion-icon slot="icon-only"  name="arrow-redo-circle-outline"></ion-icon>
+            <ion-icon slot="icon-only" name="arrow-redo-circle-outline"></ion-icon>
           </ion-button>
-        <ion-button fill="clear" (click)="lanzarMenu()" *ngIf="userData.administrador" >
-          <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
-        </ion-button>
+          <ion-button fill="clear" (click)="lanzarMenu()" *ngIf="userData.administrador">
+            <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
+          </ion-button>
         </ion-buttons>
       </div>
     </ion-card-subtitle>
@@ -28,14 +30,25 @@
   <ion-card-content>
     <ion-label>
       <h2>
-      {{encuesta.mensaje}}
-    </h2>
-    <h3>
-      Han respondido: {{encuesta.countRespuestas}}
-    </h3>
-  
-  </ion-label>
-    
+        {{encuesta.mensaje}}
+      </h2>
+    </ion-label>
+
+    <ion-label color="success">Preguntas</ion-label>
+    <ion-label color="secondary" *ngFor="let res of encuesta.opcionesSeleccionadas | keyvalue;  let i = index; ">
+      <h3>
+        {{i+1}} .- {{res.key}}
+        <ion-label color="dark">
+          <h4 *ngFor="let pp of res.value.respuestaPregunta | keyvalue; " color="primary"> "{{pp.key}}" [{{pp.value}}]
+            ->{{ (pp.value / res.value.contadorRespuestas)*100 | number:'2.1-2' }} %
+            <ion-progress-bar *ngIf="pp.value" value="{{ pp.value / res.value.contadorRespuestas }}"></ion-progress-bar>
+
+          </h4>
+
+        </ion-label>
+
+      </h3>
+    </ion-label>
+
   </ion-card-content>
 </ion-card>
-

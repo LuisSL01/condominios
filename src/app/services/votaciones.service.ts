@@ -24,6 +24,8 @@ export class VotacionesService{
 
   votacionListener = new EventEmitter<Encuesta>();
 
+  respuestaListener = new EventEmitter<any>();
+
   constructor(public storage: Storage,
               private dataLocalService: DataLocalService,              
               private http: HttpClient) {
@@ -32,6 +34,10 @@ export class VotacionesService{
 
   removeElement(elm:Encuesta){
     this.votacionListener.emit(elm);
+  }
+
+  invokeRespuestaListener(){
+    this.respuestaListener.emit(true);
   }
   
   construyeNombreEtiquetaJson(){    

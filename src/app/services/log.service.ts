@@ -91,7 +91,7 @@ export class LogService {
           })          
         })  
       }
-    } else {
+    } else if(this.platform.is('ios')){
       this.file.writeFile(this.file.documentsDirectory, this.nameFile, "["+formattedDate+"] ->" + mensaje + "\n",  {append: true, replace: false})
       .then(res=>{
         console.log('log registrado correctamente 1: ' + res);

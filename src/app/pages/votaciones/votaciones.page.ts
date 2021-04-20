@@ -43,6 +43,13 @@ export class VotacionesPage implements OnInit {
         }
       }
     });
+
+    this.votacionesService.respuestaListener.subscribe(elm =>{
+      this.votacionPage = 0;
+      this.infiniteScroll.disabled = false;//Cada que se hace el refresh se habilita el componente infinite scroll
+      this.getVotaciones(this.votacionPage, 10, null, null);    
+    }
+    );
   }
   
   cargaFiltrosTabla(){

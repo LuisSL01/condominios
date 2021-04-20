@@ -14,6 +14,7 @@ import { DatosInteresPage } from '../datos-interes/datos-interes.page';
 import { Router } from '@angular/router';
 /* import { FirebaseAnalytics } from '@ionic-native/firebase-analytics/ngx'; */
 
+
 @Component({
   selector: 'app-inicio',
   templateUrl: './inicio.page.html',
@@ -56,17 +57,16 @@ export class InicioPage implements OnInit {
               private userData:UserData,
               private datosInteresService:DatosInteresService,
               private modalCtrl: ModalController,
+              
               /* private firebaseAnalytics: FirebaseAnalytics */
               ) {
-                try {
-                  /* this.firebaseAnalytics.logEvent('page_view', {page: "inicio"})
-                  .then((res: any) => console.log(res))
-                .catch((error: any) => console.error(error)); */
-                  
-                } catch (error) {
-                  console.log('error->',error);                  
-                }
+
+                console.log(' en el cosntructor de inicio');
+                console.log(' en el cosntructor de inicio-----');
                 
+
+                
+                console.log('log se ha registrado el inicio...');       
                 this.componentes = this.dataService.getMenuOpts();
 
                 /* this.publicaciones = this.publicacionService.publicaciones;

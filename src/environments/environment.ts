@@ -4,22 +4,34 @@
 
 export const environment = {
   production: false,
+
+  config:{
+    apiKey: "AIzaSyAGtdAUkNQ6FcH7_4QVeQ50QXEoLhWTR50",
+    authDomain: "armonia-residencial.firebaseapp.com",
+    projectId: "armonia-residencial",
+    storageBucket: "armonia-residencial.appspot.com",
+    messagingSenderId: "800047039884",
+    appId: "1:800047039884:web:9840ffa35672c8cb1942a9",
+    measurementId: "G-SZK0ESC999"
+  },
+
+
   //  url: 'http://192.168.73.100:3000',
   // Endpoints para Gestión de Credenciales
 
 
  
   
-  authServiceBaseUrl: 'http://54.177.89.203:8080',
+  /* authServiceBaseUrl: 'http://54.177.89.203:8080',
   coreServiceBaseUrl: 'http://54.177.89.203:8081',
-  formsServiceBaseUrl: 'http://54.177.89.203:8082',    
+  formsServiceBaseUrl: 'http://54.177.89.203:8082',     */
  
 
 
 
-  /* authServiceBaseUrl: 'http://192.168.137.1:8080',
+  authServiceBaseUrl: 'http://192.168.137.1:8080',
   coreServiceBaseUrl: 'http://192.168.137.1:8081',
-  formsServiceBaseUrl: 'http://192.168.137.1:8082',  */
+  formsServiceBaseUrl: 'http://192.168.137.1:8082', 
  
 
 
