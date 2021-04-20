@@ -79,6 +79,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/reglamento/reglamento.module').then( m => m.ReglamentoPageModule)
   },
   {
+    path: 'ayuda',
+    loadChildren: () => import('./pages/ayuda/ayuda.module').then( m => m.AyudaPageModule)
+  },
+  {
     path: 'mis-visitas',
     loadChildren: () => import('./pages/mis-visitas/mis-visitas.module').then( m => m.MisVisitasPageModule)
   },
