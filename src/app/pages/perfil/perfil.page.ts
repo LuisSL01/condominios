@@ -29,22 +29,6 @@ export class PerfilPage implements OnInit {
   nombreDepartamento:string;
 
   arr = [];
-  constructor(private fb: FormBuilder,
-    private router: Router,
-    private torreService: TorreService,
-    private storage: Storage,
-    private departamentoService: DepartamentoService,
-    private userData: UserData,
-    private agenteService: AgenteService,
-    private toastr: ToastController,
-    private datePipe: DatePipe) {
-
-      /* for (let index = 0; index < 100; index++) {
-        this.arr.push("Eleement " + index);
-        
-      } */
-
-  }
 
   createAgente = this.fb.group({//Esto para construir los formularios dinamicamente
     nombreCompleto: ['', [Validators.required, Validators.minLength(4)]],
@@ -65,6 +49,24 @@ export class PerfilPage implements OnInit {
   });
 
   agenteChangesForm: FormGroup;
+  constructor(private fb: FormBuilder,
+    private router: Router,
+    private torreService: TorreService,
+    private storage: Storage,
+    private departamentoService: DepartamentoService,
+    private userData: UserData,
+    private agenteService: AgenteService,
+    private toastr: ToastController,
+    private datePipe: DatePipe) {
+
+      /* for (let index = 0; index < 100; index++) {
+        this.arr.push("Eleement " + index);
+        
+      } */
+
+  }
+
+ 
 
   ngOnInit() {
     this.idEmpresa = this.userData.getIdEmpresa();

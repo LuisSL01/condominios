@@ -48,11 +48,8 @@ export class AnuncioService {
   }
 
   getAnuncios(idEmpresa: number, page: number, size: number, filters: string){
-    console.log('filters', filters);
-    
-    console.log(this.baseUrl +environment.coreApiBasePublicacionOperation + environment.coreApiGetAnunciosListOperation + '/' + idEmpresa + '/ANUNCIO?page=' + page + '&size=' + size + (filters ? ('&filters=' + filters):''));
+    /* console.log(this.baseUrl +environment.coreApiBasePublicacionOperation + environment.coreApiGetAnunciosListOperation + '/' + idEmpresa + '/ANUNCIO?page=' + page + '&size=' + size + (filters ? ('&filters=' + filters):'')); */
     return this.http.get<ApiResponse>(this.baseUrl +environment.coreApiBasePublicacionOperation + environment.coreApiGetAnunciosListOperation + '/' + idEmpresa + '/ANUNCIO?page=' + page + '&size=' + size + (filters ? ('&filters=' + filters):'')).pipe(share());
-
   }
 
 

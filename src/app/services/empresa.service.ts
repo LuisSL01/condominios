@@ -43,6 +43,11 @@ export class EmpresaService {
     return this.http.patch<ApiResponse>(this.baseUrl + this.empresaContext ,data).pipe(share());    
   }
 
+  updateEmpresa(id: number, empresaData: any): Observable<ApiResponse> {
+    console.log('updateEmpresa', this.baseUrl + this.empresaContext + '/edit' + id, empresaData);
+    return this.http.patch<ApiResponse>(this.baseUrl + this.empresaContext + '/edit' + id, empresaData).pipe(share());
+  }
+
   countUsers(idEmpresa:number){
     console.log('countUsers:'+this.baseUrl + environment.coreApiBaseAgenteEmpresaOperation + environment.coreApiBaseAgenteEmpresaCountOperation+"/"+idEmpresa);
     return this.http.get<ApiResponse>(this.baseUrl + environment.coreApiBaseAgenteEmpresaOperation + environment.coreApiBaseAgenteEmpresaCountOperation+"/"+idEmpresa).pipe(share());

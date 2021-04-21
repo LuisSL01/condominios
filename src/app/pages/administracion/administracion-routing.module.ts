@@ -8,7 +8,7 @@ const routes: Routes = [
   
   {
     path: '',//Se agrega para que en un principio sea la primera que se carge
-    redirectTo: '/administracion/datos-empresa',
+    redirectTo: '/administracion/extra',
     pathMatch: 'full'
   },
   {

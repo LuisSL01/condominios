@@ -59,16 +59,8 @@ export class InicioPage implements OnInit {
               private modalCtrl: ModalController,
               
               /* private firebaseAnalytics: FirebaseAnalytics */
-              ) {
-
-                console.log(' en el cosntructor de inicio');
-                console.log(' en el cosntructor de inicio-----');
-                
-
-                
-                console.log('log se ha registrado el inicio...');       
+              ) { 
                 this.componentes = this.dataService.getMenuOpts();
-
                 /* this.publicaciones = this.publicacionService.publicaciones;
                   console.log('this.publicaciones:'+ this.publicaciones); */
                
@@ -177,8 +169,6 @@ export class InicioPage implements OnInit {
               }
               
             }else{
-              console.log('else infinite');
-              
               this.anunciosList = data.result.content;
             }
            
