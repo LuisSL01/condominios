@@ -202,7 +202,8 @@ export const environment = {
   coreApiBaseCorreoOperation: '/correo',  
   coreApiBaseCorreoSimpleOperation: '/sendCorreoSimple',  
   
-  
+  coreApiBaseAgenteDepartamentoOperation: '/agenteDepartamento',  
+  coreApiBaseAgenteDepartamentoListOperation: '/listDepartamentos',    
 
 };
 

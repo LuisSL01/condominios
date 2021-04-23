@@ -187,7 +187,11 @@ const routes: Routes = [
   {
     path: 'departamento',
     loadChildren: () => import('./pages/departamento/departamento.module').then( m => m.DepartamentoPageModule)
+  },  {
+    path: 'agente-departamento',
+    loadChildren: () => import('./pages/agente-departamento/agente-departamento.module').then( m => m.AgenteDepartamentoPageModule)
   }
+
 
 
 

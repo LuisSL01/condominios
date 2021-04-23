@@ -78,6 +78,30 @@
           </ion-datetime>
           
         </ion-item>
+
+        <ion-item >
+          <ion-label >
+            <ion-icon name="receipt-outline" style="font-size:23px; color: #50c8ec;
+                margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Recurrente
+          </ion-label>
+          <ion-toggle formControlName="recurrente" slot="end" ></ion-toggle>
+        </ion-item>
+
+        <ion-item *ngIf="createAdeudo.value.data.recurrente" >
+          <ion-label>
+            <ion-icon name="pencil-outline" style="font-size:23px; color: #50c8ec; 
+            margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Periodo
+          </ion-label>
+          <ion-select interface="popover" 
+            formControlName="periodo"
+            okText="Aceptar"  cancelText="Cancelar">
+            <ion-select-option value="Mensual">Mensual</ion-select-option>
+            <ion-select-option value="Bimestral">Bimestral</ion-select-option>
+            <ion-select-option value="Trimestral">Trimestral</ion-select-option>
+            <ion-select-option value="Semestral">Semestral</ion-select-option>
+            <ion-select-option value="Anual">Anual</ion-select-option>
+          </ion-select>
+        </ion-item>
       </div>
 
     </ion-list>

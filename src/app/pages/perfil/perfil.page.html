@@ -75,7 +75,7 @@
 
             <ion-item>
                 <ion-label>
-                    <ion-icon name="mail-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;">
+                    <ion-icon name="call-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;">
                     </ion-icon>
                     &nbsp;&nbsp;Celular:
                 </ion-label>
@@ -97,37 +97,48 @@
 
             <ion-item-divider>
                 <ion-label>
-                    Datos inmueble
+                    Mis inmuebles [{{misDepartamentos.length}}]
                 </ion-label>
-
+                <ion-button fill="clear" (click)="agregarDepto()">
+                    <ion-icon   style="font-size:23px; color: #50c8ec; 
+                    margin-bottom: -5px; "slot="icon-only" name="add-circle-outline"></ion-icon>
+                  </ion-button>      
             </ion-item-divider>
-
-            <ion-item>
+            <ion-item *ngIf="false" >
                 <ion-label>
-                    <ion-icon name="leaf-outline" style="font-size:23px; color: #50c8ec; 
-              margin-bottom: -5px;
-          "></ion-icon>&nbsp;&nbsp;Torre/Privada:
+                    <ion-icon name="leaf-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Torre/Privada:
                 </ion-label>
                 <ion-select interface="popover" okText="Aceptar" cancelText="Cancelar" placeholder="{{nombreTorre}}"
                     (ionChange)="cambioTorre($event)">
                     <ion-select-option *ngFor="let tt of torres" [value]="tt"> {{ tt.data.nombre}} </ion-select-option>
                 </ion-select>
             </ion-item>
-
-
-
-            
-            <ion-item>
+            <ion-item *ngIf="false">
                 <ion-label>
-                    <ion-icon name="leaf-outline" style="font-size:23px; color: #50c8ec; 
-              margin-bottom: -5px;
-          "></ion-icon>&nbsp;&nbsp;Inmueble:
+                    <ion-icon name="leaf-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Inmueble:
                 </ion-label>
                 <ion-select placeholder="{{nombreDepartamento}}" interface="popover" okText="Aceptar"
                     cancelText="Cancelar" formControlName="departamentoAC">
                     <ion-select-option *ngFor="let tt of departamentos" [value]="tt.id"> {{ tt.data.nombre}}
                     </ion-select-option>
                 </ion-select>
+            </ion-item>
+            
+            <ion-item *ngIf="misDepartamentos.length === 0" >
+                <ion-label color="success">
+                    Agregue registros con el botón de arriba
+                </ion-label>                
+            </ion-item>
+
+            <ion-item *ngFor="let depto of misDepartamentos">
+                <ion-label>
+                    <ion-icon name="business-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
+                    &nbsp;&nbsp;{{depto.departamentoData.nombre}}
+                </ion-label> 
+                <ion-button fill="clear" (click)="deleteDepto(depto)">
+                    <ion-icon   style="font-size:23px; color: red; 
+                    margin-bottom: -5px; "slot="icon-only" name="trash-bin-outline"></ion-icon>
+                  </ion-button>        
             </ion-item>
 
             <ion-item-divider>

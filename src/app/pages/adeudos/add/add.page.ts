@@ -28,7 +28,10 @@ export class AddPage implements OnInit {
       concepto: ["", [Validators.required]],
       descripcion: ["",],
       cantidad: ["", [Validators.required]],
-      fechaCubrir: [new Date()]
+      fechaCubrir: [new Date()],
+      registroOriginal:[true],//Para diferenciar los creados manualmente y los automaticos desde el servidor
+      recurrente:[false],
+      periodo:[""],
     })
   });
 
@@ -43,9 +46,6 @@ export class AddPage implements OnInit {
     public activatedRoute: ActivatedRoute,
     private userData:UserData,
     private agenteService:AgenteService) { 
-      console.log('estoy en el constructor de add page adeudo');
-      console.log('pruebaa 1111');
-      
     }
 
   ngOnInit() {
@@ -65,7 +65,10 @@ export class AddPage implements OnInit {
         concepto: [this.adeudo.data.concepto],
         descripcion: [this.adeudo.data.descripcion],
         cantidad: [this.adeudo.data.cantidad],
-        fechaCubrir: [this.adeudo.data.fechaCubrir]
+        fechaCubrir: [this.adeudo.data.fechaCubrir],
+        recurrente:[this.adeudo.data.recurrente],
+        periodo:[this.adeudo.data.periodo],
+        registroOriginal:[this.adeudo.data.registroOriginal],
       })
     });
   }

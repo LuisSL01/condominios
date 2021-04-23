@@ -117,7 +117,13 @@ export class UserData {
   
 
   getAplicaTorres():boolean{
-    return JSON.parse(window.localStorage.getItem('empresaData')).aplicaTorres;
+    let data = JSON.parse(window.localStorage.getItem('empresaData'));
+    if(data){
+      return data.configuracionEmpresa?.aplicaTorres;
+    }else{
+      return false;
+    }
+    
   }
 
    getDataDireccionEmpresa():any{

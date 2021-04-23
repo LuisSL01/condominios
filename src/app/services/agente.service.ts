@@ -74,6 +74,23 @@ export class AgenteService {
     return this.http.patch<ApiResponse>(this.baseUrl + this.agenteContext + '/' + id, userData).pipe(share());
   }
 
+  getDepartamentosPorAgente(idAgente:number){
+    console.log('trae departamentos por id agente');
+    return this.http.get<ApiResponse>(this.baseUrl + environment.coreApiBaseAgenteDepartamentoOperation + environment.coreApiBaseAgenteDepartamentoListOperation+"/"+ idAgente).pipe(share());
+  }
+
+  addDepartamentoToAgente(formData: FormData): Observable<ApiResponse> {
+    console.log('agregarDepartamentoAgente:'+this.baseUrl + environment.coreApiBaseAgenteDepartamentoOperation);
+    return this.http.post<ApiResponse>(this.baseUrl + environment.coreApiBaseAgenteDepartamentoOperation , formData).pipe(share());
+  }
+
+  deleteAgenteDepto(idAgenteDepto: number) : Observable<ApiResponse> {
+    console.log('deleteAgenteDepto: ',this.baseUrl + environment.coreApiBaseAgenteDepartamentoOperation +environment.coreApiBaseDeleteOperation + "/" + idAgenteDepto );
+    return this.http.delete<ApiResponse>(this.baseUrl + environment.coreApiBaseAgenteDepartamentoOperation + environment.coreApiBaseDeleteOperation + "/" + idAgenteDepto).pipe(share());
+  }
+
+
+
   updateAgenteCore(id: number, datosForm: any) {
     this.updateUsuarioCore(id, datosForm).subscribe(data => {
       console.log('data.result:: ', data.result);
