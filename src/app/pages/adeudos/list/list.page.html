@@ -5,8 +5,9 @@
       <span class="text-primary" *ngIf="adeudo.data" >
         <ion-label>
           <h2>Concepto: {{adeudo.data.concepto}}</h2>
-          <h2>Cantidad: $ {{adeudo.data.cantidad}}</h2>
-          <h3>Fecha a cubrir: {{adeudo.data.fechaCubrir | date:' MMM / yyyy '}}</h3>
+          <h2>Cantidad: $ {{adeudo.data.cantidad}}</h2>          
+          <h3>Fecha a cubrir: {{adeudo.data.fechaCubrir | date:' MMM , y'}}</h3>
+          
         </ion-label>
       </span>
       <div class="card-more">

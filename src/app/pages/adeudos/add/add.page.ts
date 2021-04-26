@@ -30,7 +30,7 @@ export class AddPage implements OnInit {
       cantidad: ["", [Validators.required]],
       fechaCubrir: [new Date()],
       registroOriginal:[true],//Para diferenciar los creados manualmente y los automaticos desde el servidor
-      recurrente:[false],
+      recurrente:[false],      
       periodo:[""],
     })
   });
@@ -68,7 +68,7 @@ export class AddPage implements OnInit {
         fechaCubrir: [this.adeudo.data.fechaCubrir],
         recurrente:[this.adeudo.data.recurrente],
         periodo:[this.adeudo.data.periodo],
-        registroOriginal:[this.adeudo.data.registroOriginal],
+        registroOriginal:[this.adeudo.data.registroOriginal],        
       })
     });
   }
@@ -89,8 +89,21 @@ export class AddPage implements OnInit {
   }
 
 
-  save(){
-
+  save(){    
+    if(this.createAdeudo.value.data){
+      let fechaSel
+      try {
+        let anio_mes = this.createAdeudo.value.data.fechaCubrir.split("-");      
+        fechaSel = new Date(
+            anio_mes[0],//anio
+            (anio_mes[1]-1),//numero de meses van de ->0-11
+            1 //dia
+        );  
+        this.createAdeudo.value.data.fechaCubrir = fechaSel;
+      } catch (error) {        
+      }      
+    }
+    
     if(this.edit) this.editar();
     else this.nuevo();
 
@@ -103,8 +116,11 @@ export class AddPage implements OnInit {
     
     console.log(this.createAdeudo.value);
     let soloUnAgente:boolean = this.createAdeudo.value.destinatario === 'solo-uno' ? true:false;
+    
+    
     if(soloUnAgente){
       //Debo crear el adeudo a solo un agente      
+          
           const adeudoObj = {
             empresa : this.idEmpresa,
             agenteCreador : this.idAgente,
@@ -112,18 +128,22 @@ export class AddPage implements OnInit {
             data: this.createAdeudo.value.data
           };
           console.log('Objeto enviado..'+ JSON.stringify(adeudoObj));
+          
           this.adeudoService.save(adeudoObj).subscribe((data) => {
               console.log(data);
               if (data.status === 200) { 
                 this.createAdeudo.reset();                
                 this.router.navigate(['/adeudos', { item: true}]);
-              } else {this.userData.showToast('Error al registrar el adeudo, llego otro status');}
+              } else {this.userData.showToast('Error al registrar el adeudo');}
             },
-            (err) => {console.log(err);this.userData.showToast("Error: "+ err);
+            (err) => {
+              console.log(err);this.userData.showToast("Error: "+ err);
+              this.userData.showToast('Error en el servicio al registrar adeudo');
             },() => {}
           );
     }else{
       //Debo crear el adeudo a todos los agentes de las empresa seleccionada
+      
       const adeudoObj = {
         empresa : this.idEmpresa,
         agenteCreador : this.idAgente,
