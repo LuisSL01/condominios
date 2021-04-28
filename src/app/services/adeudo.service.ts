@@ -44,6 +44,11 @@ export class AdeudoService {
     console.log('save saveByEmpresa:'+this.baseUrl + environment.coreApiBaseAdeudoByEmpresaOperation+"/"+idEmpresa);
     return this.http.post<ApiResponse>(this.baseUrl + environment.coreApiBaseAdeudoByEmpresaOperation+"/"+idEmpresa, adeudoData).pipe(share());
   } 
+
+  saveByTorre(idTorre:number, adeudoData: any): Observable<ApiResponse> {
+    console.log('save saveByEmpresa:'+this.baseUrl + environment.coreApiBaseAdeudoByTorreOperation+"/"+idTorre);
+    return this.http.post<ApiResponse>(this.baseUrl + environment.coreApiBaseAdeudoByTorreOperation+"/"+idTorre, adeudoData).pipe(share());
+  } 
   
   delete(idAdeudo: number) : Observable<ApiResponse> {
     console.log('borrando registro: ',this.baseUrl + this.adeudoContext +environment.coreApiBaseDeleteOperation + "/" + idAdeudo );    
@@ -62,12 +67,21 @@ export class AdeudoService {
     return this.http.get<ApiResponse>(this.baseUrl + this.adeudoContext+":listByAgente/"+idEmpresa+"/"+idAgente+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):'')).pipe(share());
   }
 
+  getAdeudosPorDepartamento(idEmpresa: number, idDepartamento:number, page: number, size: number, filters: string){
+    console.log(this.baseUrl + this.adeudoContext+":listByDepartamento/"+idEmpresa+"/"+idDepartamento+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):''));
+    return this.http.get<ApiResponse>(this.baseUrl + this.adeudoContext+":listByDepartamento/"+idEmpresa+"/"+idDepartamento+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):'')).pipe(share());
+  }
+
   
   getAdeudosByEmpresaAndAgente(idEmpresa: number, idAgente:number){
     console.log(this.baseUrl + this.adeudoContext+ environment.coreApiGetAdeudoAgenteListOperation +"/"+idEmpresa+"/"+idAgente);
     return this.http.get<ApiResponse>(this.baseUrl + this.adeudoContext+ environment.coreApiGetAdeudoAgenteListOperation +"/"+idEmpresa+"/"+idAgente).pipe(share());
   }
-            
+
+  getAdeudosByEmpresaAndDepartamento(idEmpresa: number, idDepartamento:number){
+    console.log(this.baseUrl + this.adeudoContext+ environment.coreApiGetAdeudoDepartamentoListOperation +"/"+idEmpresa+"/"+idDepartamento);
+    return this.http.get<ApiResponse>(this.baseUrl + this.adeudoContext+ environment.coreApiGetAdeudoDepartamentoListOperation +"/"+idEmpresa+"/"+idDepartamento).pipe(share());
+  }
 
   construyeNombreEtiqueta(){
     return this.nombreEtiqueta = this.dataLocalService.idempresa+'_adeudo';

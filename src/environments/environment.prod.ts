@@ -4,6 +4,16 @@
 
 export const environment = {
   production: true,
+  
+  firebaseConfig : {
+    apiKey: "AIzaSyAGtdAUkNQ6FcH7_4QVeQ50QXEoLhWTR50",
+    authDomain: "armonia-residencial.firebaseapp.com",
+    projectId: "armonia-residencial",
+    storageBucket: "armonia-residencial.appspot.com",
+    messagingSenderId: "800047039884",
+    appId: "1:800047039884:web:9840ffa35672c8cb1942a9",
+    measurementId: "G-SZK0ESC999"
+  },
   //  url: 'http://192.168.73.100:3000',
   // Endpoints para Gestión de Credenciales
 
@@ -164,10 +174,11 @@ export const environment = {
   //Adeudo
   coreApiBaseAdeudoOperation: '/adeudo',    
   coreApiBaseAdeudoByEmpresaOperation: '/adeudoByEmpresa',
+  coreApiBaseAdeudoByTorreOperation: '/adeudoByTorre',
   coreApiBaseAdeudosOperation: '/adeudos',
   coreApiGetAdeudoListOperation: ':listByEmpresa',
   coreApiGetAdeudoAgenteListOperation: ':listByEmpresaAndAgente',
-
+  coreApiGetAdeudoDepartamentoListOperation: ':listByEmpresaAndDepartamento',
   //Pagos-comprobantes
   coreApiBasePagoComprobanteOperation: '/pago-comprobante',  
   coreApiGetPagoComprobanteListOperation: ':listByEmpresa',

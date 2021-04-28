@@ -36,6 +36,10 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAnalyticsModule, ScreenTrackingService  } from '@angular/fire/analytics';
+import { environment } from 'src/environments/environment';
+
 
 /* import { FirebaseAnalytics } from '@ionic-native/firebase-analytics/ngx'; */
 
@@ -53,6 +57,8 @@ import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
      HttpClientModule,
      IonicStorageModule.forRoot(),
      NgxMaskIonicModule.forRoot(),     
+     AngularFireModule.initializeApp(environment.firebaseConfig),
+     AngularFireAnalyticsModule
     ],
 
   providers: [
@@ -80,6 +86,7 @@ import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
     PhotoViewer,
     
     /* FirebaseAnalytics, */
+    ScreenTrackingService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

@@ -5,6 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { UserData } from '../../../providers/user-data';
 import { AgenteService } from '../../../services/agente.service';
+import { TorreService } from '../../../services/torre.service';
+import { DepartamentoService } from '../../../services/departamento.service';
 
 @Component({
   selector: 'app-add',
@@ -18,12 +20,19 @@ export class AddPage implements OnInit {
   ponerDescripcion = false;
 
   agentes: any[] =  [];
+
+
+  departamentos: any[] = [];
+  torres: any[] = [];
+  torreSelected:any;
+
   edit:boolean = false;
 
   createAdeudo = this.fb.group({
     //Esto para construir los formularios dinamicamente
     destinatario: ["", [Validators.required]],
     agenteAdeuda: ["",],
+    departamento: ["",],
     data: this.fb.group({
       concepto: ["", [Validators.required]],
       descripcion: ["",],
@@ -45,6 +54,8 @@ export class AddPage implements OnInit {
     private fb: FormBuilder,
     public activatedRoute: ActivatedRoute,
     private userData:UserData,
+    private torreService:TorreService,
+    private departamentoService:DepartamentoService,
     private agenteService:AgenteService) { 
     }
 
@@ -54,9 +65,63 @@ export class AddPage implements OnInit {
     this.adeudo = JSON.parse(this.activatedRoute.snapshot.paramMap.get('item'));    
     if(this.adeudo != null) this.prepareEdit();
     else this.adeudo = new AdeudoPago();
-
-    this.buscarAgentes();
+    /* this.buscarAgentes(); */
+    this.getDataTorre();
   }
+
+  async getDataTorre() {
+    console.log('getDataTorree');
+    this.userData.showToast('Buscando torres/privadas');
+    await this.torreService.getTorresFull(this.idEmpresa).subscribe((data) => {
+      console.log(data);
+      if (data.status === 200) {
+        this.torres = data.result;
+        if(this.torres.length ===0){
+          this.userData.showToast('No tiene torres/privadas registradas');
+        }else{
+          this.userData.showToast( this.torres.length +' torres/privadas encontrados');
+        }
+      } else {
+        this.userData.showToast('error al recuperar registros de torre' + data.status);
+      }
+    },
+      (err) => {
+        this.userData.showToast('error en el servicio al recuperar registros de torre');
+      }
+    );
+  }
+
+  cambioTorre(event){
+    this.torreSelected = event.detail.value;
+    console.log('cambio cambioTorre'+ JSON.stringify(this.torreSelected));
+    this.createAdeudo.value.departamento = null;    
+    this.getDataDepartamento();    
+  }
+
+  async getDataDepartamento() {    
+    this.userData.showToast('Buscando inmuebles');    
+      if (this.torreSelected) {
+        await this.departamentoService.getDepartamentosPorTorre(this.torreSelected.id).subscribe((data) => {          
+          if (data.status === 200) {
+            this.departamentos = data.result;            
+            if(this.departamentos.length ===0){
+              this.userData.showToast('No tiene inmuebles registrados');
+            }else{
+              this.userData.showToast(this.departamentos.length+' inmuebles encontrados');
+            }
+          }
+          else this.userData.showToast('error al recuperar registros');
+        },
+          (err) => { this.userData.showToast('error al recuperar registros'); }
+        );
+      } else {
+        this.userData.showToast('Debe seleccionar una torre para listar los departamentos');
+      }
+    
+
+  }
+
+
   prepareEdit(){
     console.log('prepareEdit');
     this.edit = true;
@@ -115,24 +180,24 @@ export class AddPage implements OnInit {
   nuevo(){
     
     console.log(this.createAdeudo.value);
-    let soloUnAgente:boolean = this.createAdeudo.value.destinatario === 'solo-uno' ? true:false;
     
-    
-    if(soloUnAgente){
-      //Debo crear el adeudo a solo un agente      
-          
+    let dess:string = this.createAdeudo.value.destinatario;
+
+    if(dess == "solo-uno"){
+      console.log(dess);
+      //Debo crear el adeudo a solo un agente                
           const adeudoObj = {
             empresa : this.idEmpresa,
             agenteCreador : this.idAgente,
             agenteAdeuda : this.createAdeudo.value.agenteAdeuda,
+            departamento : this.createAdeudo.value.departamento,
             data: this.createAdeudo.value.data
           };
-          console.log('Objeto enviado..'+ JSON.stringify(adeudoObj));
-          
+          console.log('Objeto enviado..'+ JSON.stringify(adeudoObj));          
           this.adeudoService.save(adeudoObj).subscribe((data) => {
               console.log(data);
-              if (data.status === 200) { 
-                this.createAdeudo.reset();                
+              if (data.status === 200) {
+                this.createAdeudo.reset();
                 this.router.navigate(['/adeudos', { item: true}]);
               } else {this.userData.showToast('Error al registrar el adeudo');}
             },
@@ -141,17 +206,38 @@ export class AddPage implements OnInit {
               this.userData.showToast('Error en el servicio al registrar adeudo');
             },() => {}
           );
-    }else{
-      //Debo crear el adeudo a todos los agentes de las empresa seleccionada
-      
+          
+    }else if(dess == "torre_privada"){
+      console.log(dess);
+      //Debo crear el adeudo a todos los agentes de las empresa seleccionada      
       const adeudoObj = {
         empresa : this.idEmpresa,
         agenteCreador : this.idAgente,
-        data: this.createAdeudo.value.data
-       /*  concepto: this.createAdeudo.value.concepto,
-        descripcion: this.createAdeudo.value.descripcion,
-        cantidad: this.createAdeudo.value.cantidad,
-        fechaCubrir: this.createAdeudo.value.fechaCubrir  */ 
+        data: this.createAdeudo.value.data       
+      };
+      if(this.torreSelected){
+        console.log('Objeto enviado..'+ JSON.stringify(adeudoObj));
+        this.adeudoService.saveByTorre(this.torreSelected.id, adeudoObj).subscribe((data) => {
+            console.log(data);
+            if (data.status === 200) {
+              this.userData.showToast('registrado correctamente');       
+              this.createAdeudo.reset();     
+              this.router.navigate(['/adeudos', { item: true}]);
+            } else {this.userData.showToast('Error al registrar el adeudo, llego otro status');}
+          },
+          (err) => {console.log(err);this.userData.showToast("Error: "+ err);
+          },() => {}
+        );
+      }else{
+        this.userData.showToast('Debe seleccionar una torre /privada');
+      }
+    }else if(dess == "todos"){
+      console.log(dess);      
+      //Debo crear el adeudo a todos los agentes de las empresa seleccionada
+      const adeudoObj = {
+        empresa : this.idEmpresa,
+        agenteCreador : this.idAgente,
+        data: this.createAdeudo.value.data      
       };
       console.log('Objeto enviado..'+ JSON.stringify(adeudoObj));
       this.adeudoService.saveByEmpresa(this.idEmpresa, adeudoObj).subscribe((data) => {

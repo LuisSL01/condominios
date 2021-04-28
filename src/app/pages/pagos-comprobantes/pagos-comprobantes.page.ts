@@ -19,6 +19,7 @@ export class PagosComprobantesPage implements OnInit {
   
   idEmpresa: number;
   idAgente: number;
+  idDepartamento:number;
   filters: any;
   pagoComprobantePage: number = 0;
 
@@ -35,6 +36,7 @@ export class PagosComprobantesPage implements OnInit {
   ngOnInit() {
     this.idEmpresa = this.userData.getIdEmpresa();
     this.idAgente = this.userData.getIdAgente();    
+    this.idDepartamento = this.userData.departamento_id;
     this.cargaFiltrosTabla();
 
     this.pagosComprobantesService.pagoListener.subscribe(noti => {
@@ -84,6 +86,7 @@ export class PagosComprobantesPage implements OnInit {
 
   getPagosComprobantes(page: number, size: number, eventInfinite?, eventRefresh?) {
 
+    this.userData.showToast('Buscando registros');
     if(this.userData.administrador){//Si es administrador puede ver todos los adeudos
           this.pagosComprobantesService.getPagosComprobantes(this.idEmpresa, page, size, this.filters).subscribe((data) => {
                 if (data.status === 200) {
@@ -112,7 +115,8 @@ export class PagosComprobantesPage implements OnInit {
               }
             );
     }else{
-      this.pagosComprobantesService.getPagosComprobantesPorAgente(this.idEmpresa, this.idAgente, page, size, this.filters).subscribe((data) => {
+      //this.pagosComprobantesService.getPagosComprobantesPorAgente(this.idEmpresa, this.idAgente, page, size, this.filters).subscribe((data) => {
+        this.pagosComprobantesService.getPagosComprobantesPorDepartamento(this.idEmpresa, this.idDepartamento, page, size, this.filters).subscribe((data) => {
         if (data.status === 200) {
           if (eventInfinite) {
             this.pagoComprobanteList.push(...data.result.content);

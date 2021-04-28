@@ -18,6 +18,7 @@ export class RecibosPage implements OnInit {
 
   idEmpresa: number;
   idAgente: number;
+  idDepartamento:number;
   pagoSelected:any;
 
   public pagoComprobanteList: PagosComprobantes[] = [];
@@ -31,6 +32,7 @@ export class RecibosPage implements OnInit {
   ngOnInit() {
     this.idEmpresa = this.userData.getIdEmpresa();
     this.idAgente = this.userData.getIdAgente();
+    this.idDepartamento = this.userData.departamento_id;
     
   }
   ionViewDidEnter(){
@@ -39,9 +41,9 @@ export class RecibosPage implements OnInit {
   getPagosComprobantes() {
     this.userData.showToast('Buscando comprobantes autorizados');
     //Si es administrador puede ver todos los adeudos
-    this.pagosComprobantesService.getTodosPagosComprobantesPorAgente(this.idEmpresa, this.idAgente, 13).subscribe((data) => {
-      console.log(data);
-      
+//    this.pagosComprobantesService.getTodosPagosComprobantesPorAgente(this.idEmpresa, this.idAgente, 13).subscribe((data) => {
+  this.pagosComprobantesService.getTodosPagosComprobantesPorDepartamento(this.idEmpresa, this.idDepartamento, 13).subscribe((data) => {
+      console.log(data);      
       if (data.status === 200) {
         this.pagoComprobanteList = data.result;
         if(this.pagoComprobanteList.length ===0)this.userData.showToast("No se encontraron comprobantes con estatus autorizado");

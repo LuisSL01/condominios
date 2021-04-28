@@ -7,13 +7,23 @@
       <ion-item *ngIf=" (!edit) && (userData.administrador) " >
         <ion-label>
           <ion-icon name="person-outline" style="font-size:23px; color: #50c8ec; 
-          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Agente
+          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Inmueble
         </ion-label>
-        <ion-select interface="popover" (ionChange)="cambioAgenteAdeudo($event)" okText="Aceptar" cancelText="Cancelar">
+
+        <ion-select *ngIf="false" interface="popover" (ionChange)="cambioAgenteAdeudo($event)" okText="Aceptar" 
+          cancelText="Cancelar">
           <ion-select-option *ngFor="let ag of agentes" [value]="ag.id">
             {{ ag.nombreCompleto}}
           </ion-select-option>          
         </ion-select>
+
+        <ion-select interface="popover" (ionChange)="cambioDepartamentoAdeudo($event)" okText="Aceptar" 
+          cancelText="Cancelar">
+          <ion-select-option *ngFor="let ag of departamentos" [value]="ag.id">
+            {{ ag.data?.nombre}}
+          </ion-select-option>          
+        </ion-select>
+
       </ion-item>
 
       <ion-item *ngIf=" ! edit">

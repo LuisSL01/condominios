@@ -222,7 +222,7 @@ export class RegistrationPage implements OnInit {
           , activo: estatusUser
           , empresa: this.empresaSelected.id
           , gerenteActivo: true
-          , departamentoAC: this.departamentoSelected?.id
+          //, departamentoAC: this.departamentoSelected?.id
 
         },
         usuario: {
@@ -235,7 +235,7 @@ export class RegistrationPage implements OnInit {
           , perfil: { id: 1 }
         }
       };
-      console.log('objetivo enviavo: ', agenteObj);
+      console.log('objeto enviado: ', agenteObj);
       console.log(this.usuariosAsociadosEmpresa);
       
       
@@ -254,14 +254,33 @@ export class RegistrationPage implements OnInit {
           console.log("objeto enviado: ", formData);
           let idAgente = data.result.id;
           this.agenteService.addAgenteToEmpresa(formData).subscribe(
-            (data) => {
-              if (data.status === 200) {
+            (data) => {if (data.status === 200) {
                 console.log('"data.result"', data.result);
-                this.showToast("agente asociado a empresa correctamente");
+                this.showToast("usuario asociado a fraccionamiento correctamente");
                 if (!this.isEmpty(objAgente.dispositivoUuid)) {
                   console.log('debo ir actualizar el uuid');
                   this.agenteService.updateAgenteCore(idAgente, objAgente);
                 }
+
+                if(this.departamentoSelected){
+                  const formDataAgenteDepto = new FormData(); //Esto no esta trabajanco chido...
+                  formDataAgenteDepto.append("id_agente",idAgente);
+                  formDataAgenteDepto.append("id_departamento",this.departamentoSelected.id);
+                  this.agenteService.addDepartamentoToAgente(formDataAgenteDepto).subscribe(
+                  (data) => {
+                    if (data.status === 200) {
+                      console.log('Se agrego correctamente al depto');
+                    } else {
+                      console.log('Error al agregar agente a departamento');                      
+                    }
+                  },
+                  (err) => {
+                    this.showToast("Error en el servicio al crear registro", 'danger');
+                  },
+                  () => { }
+                );
+                }
+
                 this.createAgente.reset();
                 this.router.navigate(["/home"]);
               } else {
