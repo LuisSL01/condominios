@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
+import { UserData } from '../../providers/user-data';
 
 @Component({
   selector: 'app-departamento',
@@ -14,6 +15,7 @@ export class DepartamentoPage implements OnInit {
 
   constructor(private modalCtrl: ModalController,
               public storage: Storage,
+              private userData:UserData,
               private router: Router,) { }
 
   ngOnInit() {
@@ -26,9 +28,8 @@ export class DepartamentoPage implements OnInit {
   }
 
   departamentoSelected(departamento:any){
-
-    console.log('se ha seleccionado el departamento: '+ JSON.stringify(departamento));
-    this.storage.set('departamentoData', JSON.stringify(departamento));
+    this.storage.set('departamentoData', departamento);
+    this.userData.setConfigUser();
     this.router.navigate(['/inicio']);
     this.modalCtrl.dismiss();
 

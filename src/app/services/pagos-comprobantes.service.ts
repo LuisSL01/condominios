@@ -66,9 +66,19 @@ export class PagosComprobantesService {
     return this.http.get<ApiResponse>(this.baseUrl + this.pagoComprobanteContext+ environment.coreApiGetPagoComprobanteAgenteListOperation +"/"+idEmpresa+"/"+idAgente+"/"+idEstatus).pipe(share());
   }
 
+  getTodosPagosComprobantesPorDepartamento(idEmpresa: number, idDepartamento:number, idEstatus:number){
+    console.log(this.baseUrl + this.pagoComprobanteContext+ environment.coreApiGetPagoComprobanteDepartamentoListOperation +"/"+idEmpresa+"/"+idDepartamento+"/"+idEstatus);
+    return this.http.get<ApiResponse>(this.baseUrl + this.pagoComprobanteContext+ environment.coreApiGetPagoComprobanteDepartamentoListOperation +"/"+idEmpresa+"/"+idDepartamento+"/"+idEstatus).pipe(share());
+  }
+
   getPagosComprobantesPorAgente(idEmpresa: number, idAgente:number, page: number, size: number, filters: string){
     console.log(this.baseUrl+this.pagoComprobanteContext+":listByAgente/"+idEmpresa+"/"+idAgente+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):''));
     return this.http.get<ApiResponse>(this.baseUrl+this.pagoComprobanteContext+":listByAgente/"+idEmpresa+"/"+idAgente+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):'')).pipe(share());
+  }
+
+  getPagosComprobantesPorDepartamento(idEmpresa: number, idDepartamento:number, page: number, size: number, filters: string){
+    console.log(this.baseUrl+this.pagoComprobanteContext+":listByDepartamento/"+idEmpresa+"/"+idDepartamento+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):''));
+    return this.http.get<ApiResponse>(this.baseUrl+this.pagoComprobanteContext+":listByDepartamento/"+idEmpresa+"/"+idDepartamento+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):'')).pipe(share());
   }
 
   updateStatus(data:FormData): Observable<ApiResponse> {

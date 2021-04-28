@@ -82,7 +82,7 @@ export class HomePage implements OnInit {
                 this.showToast("El usuario " + this.nombreCompleto + ", no se encuentra activo para la aplicación móvil");
               } else {//Aqui debo preguntar a cuantas empresas tiene acceso                          
                 window.localStorage.setItem('userDetails', JSON.stringify(data.result));
-                this.storage.set('userDetails', JSON.stringify(data.result));              
+                this.storage.set('userDetails', JSON.stringify(data.result));
                 this.storage.set('userFull', userFull.result);
                 this.idAgente = data.result.id;
                 
@@ -114,8 +114,6 @@ export class HomePage implements OnInit {
             window.localStorage.setItem('empresaData', JSON.stringify(this.empresas[0]));
             this.storage.set('empresaData', JSON.stringify(this.empresas[0]));
             this.userData.setConfigEmpresa();
-            this.userData.setConfigUser();
-  
             this.buscaDepartamentosAgente();
             
           } else if (this.empresas.length > 1) {
@@ -140,9 +138,12 @@ export class HomePage implements OnInit {
               console.log(this.departamentos);
               this.presentModalListDepartamentos();
             }else{
-              console.log('el usuario solo tiene un departamento asignado');
+              if(this.departamentos.length == 1){
+                this.storage.set('departamentoData', this.departamentos[0]);
+                this.userData.setConfigUser();
+              }
               this.router.navigateByUrl('/inicio');
-              this.showToast("Bienvenido " + this.nombreCompleto + " a Armonía Residencial");                                        
+              this.showToast("Bienvenido " + this.nombreCompleto + " a Armonía Residencial");
             }
   
         }else{

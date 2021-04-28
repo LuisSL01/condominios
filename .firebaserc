@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "armonia-residencial": {
+      "hosting": {
+        "app": [
+          "armonia-residencial"
+        ]
+      }
+    }
+  }
+}

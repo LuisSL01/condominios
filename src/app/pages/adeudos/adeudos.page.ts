@@ -18,6 +18,7 @@ export class AdeudosPage implements OnInit {
 
   idEmpresa: number;
   idAgente: number;
+  idDepartamento:number;
   filters: any;
   adeudoPage: number = 0;
 
@@ -33,7 +34,8 @@ export class AdeudosPage implements OnInit {
 
   ngOnInit() {
     this.idEmpresa = this.userData.getIdEmpresa();
-    this.idAgente = this.userData.getIdAgente();    
+    this.idAgente = this.userData.getIdAgente(); 
+    this.idDepartamento = this.userData.departamento_id;
     this.cargaFiltrosTabla();
 
     
@@ -112,7 +114,7 @@ export class AdeudosPage implements OnInit {
           }
         );
     }else{
-      this.adeudoService.getAdeudosPorAgente(this.idEmpresa, this.idAgente, page, size, this.filters)
+      this.adeudoService.getAdeudosPorDepartamento(this.idEmpresa, this.idDepartamento, page, size, this.filters)
       .subscribe((data) => {
         console.log(data);        
           if (data.status === 200) {

@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
 
-  config:{
+  firebaseConfig : {
     apiKey: "AIzaSyAGtdAUkNQ6FcH7_4QVeQ50QXEoLhWTR50",
     authDomain: "armonia-residencial.firebaseapp.com",
     projectId: "armonia-residencial",
@@ -176,14 +176,17 @@ export const environment = {
   //Adeudo
   coreApiBaseAdeudoOperation: '/adeudo',    
   coreApiBaseAdeudoByEmpresaOperation: '/adeudoByEmpresa',
+  coreApiBaseAdeudoByTorreOperation: '/adeudoByTorre',
   coreApiBaseAdeudosOperation: '/adeudos',
   coreApiGetAdeudoListOperation: ':listByEmpresa',
   coreApiGetAdeudoAgenteListOperation: ':listByEmpresaAndAgente',
+  coreApiGetAdeudoDepartamentoListOperation: ':listByEmpresaAndDepartamento',
 
   //Pagos-comprobantes
   coreApiBasePagoComprobanteOperation: '/pago-comprobante',  
   coreApiGetPagoComprobanteListOperation: ':listByEmpresa',
   coreApiGetPagoComprobanteAgenteListOperation: ':listByEmpresaAndAgente',
+  coreApiGetPagoComprobanteDepartamentoListOperation: ':listByEmpresaAndDepartamento',
 
   //Gasto
   coreApiBaseGastoOperation: '/gasto',

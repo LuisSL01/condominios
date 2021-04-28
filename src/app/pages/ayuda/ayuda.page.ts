@@ -28,7 +28,9 @@ export class AyudaPage implements OnInit {
   }
 
   btnLog(){
+    this.userData.showToast("Intentanto log al servidor");
     this.logService.compartirLog()
+    
   }
 
   btnReinicio(){

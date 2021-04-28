@@ -12,6 +12,7 @@ export class UserData {
   HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
   empresa_id:number = 0;
   agente_id:number = 0;
+  departamento_id:number=0;
 
 
   nameImageEmpresa ="";
@@ -116,6 +117,8 @@ export class UserData {
 
   
 
+  
+
   getAplicaTorres():boolean{
     let data = JSON.parse(window.localStorage.getItem('empresaData'));
     if(data){
@@ -155,6 +158,8 @@ export class UserData {
 
 
  async setConfigUser(){   
+console.log('setConfigUser');
+   
   const data = await  this.storage.get('userFull');
     if (data) {
       /* console.log('data', JSON.stringify(data)); */      
@@ -165,9 +170,14 @@ export class UserData {
           this.administrador = true;
         }        
       }
-      console.log("Administrador:->"+this.administrador+"<-");
-              
-    }  
+      console.log("Administrador:->"+this.administrador+"<-");              
+    }
+  const dataDepto = await this.storage.get('departamentoData');  
+  if(dataDepto){
+    this.departamento_id = dataDepto.departamento;    
+  }
+  console.log('departamento_id->'+this.departamento_id);
+
  }
 
  

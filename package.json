@@ -15,6 +15,7 @@
   "dependencies": {
     "@angular/common": "~9.1.6",
     "@angular/core": "~9.1.6",
+    "@angular/fire": "^6.1.4",
     "@angular/forms": "~9.1.6",
     "@angular/platform-browser": "~9.1.6",
     "@angular/platform-browser-dynamic": "~9.1.6",
@@ -63,6 +64,7 @@
     "cordova-plugin-x-socialsharing": "^6.0.3",
     "cordova-sqlite-storage": "^5.0.1",
     "es6-promise-plugin": "^4.2.2",
+    "firebase": "^8.4.2",
     "ionic2-calendar": "^0.6.7",
     "moment": "^2.27.0",
     "moment-timezone": "^0.5.31",
@@ -102,7 +104,13 @@
     "protractor": "~5.4.3",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "~3.8.3"
+    "typescript": "~3.8.3",
+    "@angular-devkit/architect": ">= 0.900 < 0.1200",
+    "firebase-tools": "^8.0.0",
+    "fuzzy": "^0.1.3",
+    "inquirer": "^6.2.2",
+    "inquirer-autocomplete-prompt": "^1.0.1",
+    "open": "^7.0.3"
   },
   "description": "An Ionic project",
   "cordova": {
