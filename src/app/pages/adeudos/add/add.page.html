@@ -47,8 +47,8 @@
           <ion-icon name="leaf-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
           &nbsp;&nbsp;Inmueble:
         </ion-label>
-        <ion-select placeholder="seleccione" interface="popover" okText="Aceptar" [(ngModel)]="departamentoSelected"
-        formControlName="departamento"
+        <ion-select placeholder="seleccione" interface="popover" okText="Aceptar"           
+          formControlName="departamento"
           cancelText="Cancelar">
           <ion-select-option *ngFor="let tt of departamentos" [value]="tt.id"> {{ tt.data.nombre}}
           </ion-select-option>

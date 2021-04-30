@@ -183,7 +183,7 @@ export const environment = {
   coreApiBasePagoComprobanteOperation: '/pago-comprobante',  
   coreApiGetPagoComprobanteListOperation: ':listByEmpresa',
   coreApiGetPagoComprobanteAgenteListOperation: ':listByEmpresaAndAgente',
-
+  coreApiGetPagoComprobanteDepartamentoListOperation: ':listByEmpresaAndDepartamento',
   //Gasto
   coreApiBaseGastoOperation: '/gasto',
   coreApiGetGastoListOperation: ':listByEmpresa',
