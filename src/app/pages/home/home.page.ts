@@ -92,14 +92,14 @@ export class HomePage implements OnInit {
                 this.buscaEmpresasUsuario();                
               }
             } else {
-              console.log('Llego otro status al recuperar el usauario');
+              this.userData.showToast("Error al recuperar datos de usuario", "warning");
             }
           });
         } else {
-          this.showToast("Error 1, usuario o contraseña inválidos");
+          this.userData.showToast("Error al autenticar usuario", "warning");
         }
       }, err => {
-        this.showToast("Error 2, usuario o contraseña inválidos");
+        this.userData.showToast("Error en el servicio, intente más tarde", "danger");
       });
     /* } */
   }

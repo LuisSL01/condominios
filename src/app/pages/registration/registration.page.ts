@@ -90,7 +90,7 @@ export class RegistrationPage implements OnInit {
 
   construyeForm() {
     console.log('construye form');
-
+    
     this.createAgente = this.fb.group({//Esto para construir los formularios dinamicamente
       nombreCompleto: ['', [Validators.required, Validators.minLength(4)]],
       apellidoPaterno: ['', null],
@@ -187,6 +187,17 @@ export class RegistrationPage implements OnInit {
 
       this.createAgente.value.username = user;
     }
+  }
+
+  public onKeyUp(event: any) {
+    console.log('onKeyUp');    
+    let newValue:string = event.target.value;    
+    /* let regExp = new RegExp('^[A-Za-z0-9?]+$');  Este patern acepta mayusculas pero solo necesitamos minusculas */
+    let regExp = new RegExp('^[a-z0-9?]+$');
+    if (! regExp.test(newValue)) {
+      this.showToast("Solo se permiten letras minúsculas y números", "warning")
+      event.target.value = newValue.slice(0, -1);
+    }        
   }
 
 

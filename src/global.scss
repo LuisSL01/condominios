@@ -122,6 +122,13 @@
     overflow: auto !important;
 }
 
+.picker-col{//Para que se muestre completamente el mes en el date time picker
+    max-width: 90px !important;
+}
+
+.picker-opts{//Para que se muestre completamente el mes en el date time picker
+    max-width: 90px !important;
+}
 
 ion-button{ 
     font-family:ParalucentW00-DemiBold;
