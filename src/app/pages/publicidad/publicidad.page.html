@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar></ion-toolbar>
+</ion-header>
+
+
+<ion-content fullscreen >
+  <ion-list>
+    <ion-list-header color="primary">
+      <ion-label> 
+        <h2>Publicidad</h2>
+      </ion-label>
+    </ion-list-header>
+    <br>
+
+    <ion-item-divider>
+      <ion-label>
+          Registros
+      </ion-label>
+      <ion-button fill="clear" (click)="agregar()">
+          <ion-icon   style="font-size:23px; color: #50c8ec; 
+          margin-bottom: -5px; "slot="icon-only" name="add-circle-outline"></ion-icon>
+        </ion-button>
+  </ion-item-divider>
+
+  <ion-item *ngFor="let pub of publicidades">
+    <ion-label>
+        <ion-icon name="business-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
+        &nbsp;&nbsp;{{pub.data?.pathUrl}}
+    </ion-label> 
+    <ion-button fill="clear" (click)="delete(pub)">
+        <ion-icon   style="font-size:23px; color: red; 
+        margin-bottom: -5px; "slot="icon-only" name="trash-bin-outline"></ion-icon>
+      </ion-button>        
+  </ion-item>
+    
+    
+  </ion-list>
+
+</ion-content>

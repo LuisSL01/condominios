@@ -361,8 +361,7 @@ export class RegistrationPage implements OnInit {
   }
 
   cambioEmpresa(event) {
-    console.log('cambio empresa');
-    console.log('event', event);
+    
     this.empresaSelected = event.detail.value;
     this.countAgentesOfEmpresa();
     if (this.empresaSelected && this.empresaSelected.configuracionEmpresa) {
@@ -377,10 +376,16 @@ export class RegistrationPage implements OnInit {
 
   async getDataTorre() {
     console.log('getDataTorree');
+    this.showToast("Buscando torres/privadas del fraccionamiento");
     await this.torreService.getTorresFull(this.empresaSelected.id).subscribe((data) => {
       console.log(data);
       if (data.status === 200) {
         this.torres = data.result;
+        if(this.torres.length ===0){
+          this.showToast('No tiene torres/privadas registradas el fraccionamiento');
+        }else{
+          this.showToast( this.torres.length +' torres/privadas encontrados');
+        }
       } else {
         this.showToast('error al recuperar registros de torre' + data.status);
       }
@@ -393,11 +398,19 @@ export class RegistrationPage implements OnInit {
 
   async getDataDepartamento() {
     console.log('getDataDepartamento');
+    this.showToast("Buscando inmuebles de la torre/privada ");
     if (this.empresaSelected.configuracionEmpresa.aplicaTorres) {
       if (this.torreSelected) {
         await this.departamentoService.getDepartamentosPorTorre(this.torreSelected.id).subscribe((data) => {
           console.log(data);
-          if (data.status === 200) this.departamentos = data.result;
+          if (data.status === 200){
+            this.departamentos = data.result;
+            if(this.departamentos.length ===0){
+              this.showToast('No tiene inmuebles registrados en la torre/privada');
+            }else{
+              this.showToast( this.departamentos.length +' inmuebles encontrados');
+            }
+          } 
           else this.showToast('error al recuperar registros');
         },
           (err) => { this.showToast('error al recuperar registros'); }

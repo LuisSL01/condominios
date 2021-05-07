@@ -1,0 +1,43 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { ApiResponse } from '../models/api-response.model';
+import { share } from 'rxjs/operators';
+import { Observable } from 'rxjs/index';
+import { environment } from 'src/environments/environment';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class PublicidadService {
+
+  baseUrl: string = environment.coreServiceBaseUrl;
+  publicidadContext: string = environment.coreApiBasePublicidadOperation;
+
+  constructor(private http: HttpClient) { }
+
+  save(publicidadData: any): Observable<ApiResponse> {
+    console.log('save: ' + this.baseUrl + this.publicidadContext);
+    return this.http.post<ApiResponse>(this.baseUrl + this.publicidadContext, publicidadData).pipe(share());
+  }
+
+  getPublicidad(idEmpresa: number, page: number, size: number, filters: string){
+    console.log(this.baseUrl + this.publicidadContext + environment.coreApiBasePublicidadListOperation + "/" + idEmpresa + "?page=" + page + "&size=" + size + (filters ? ('&filters=' + filters) : ''));
+    return this.http.get<ApiResponse>(this.baseUrl + this.publicidadContext+ environment.coreApiBasePublicidadListOperation + "/" + idEmpresa + "?page=" + page + "&size=" + size +(filters ? ('&filters=' + filters) : '')).pipe(share());
+  }
+
+  getPublicidadAllPorEmpresa(idEmpresa: number){
+    console.log(this.baseUrl + this.publicidadContext+":listByEmpresaAll/"+idEmpresa);
+    return this.http.get<ApiResponse>(this.baseUrl + this.publicidadContext+":listByEmpresaAll/"+idEmpresa).pipe(share());
+  }
+
+  update(idPublicidad: number, publicacionData: any) : Observable<ApiResponse> {
+    console.log('update publicidad', this.baseUrl + this.publicidadContext + environment.coreApiBaseEditOperation+  "/" + idPublicidad);
+    return this.http.patch<ApiResponse>(this.baseUrl+this.publicidadContext+environment.coreApiBaseEditOperation+  "/" + idPublicidad, publicacionData).pipe(share());
+  }
+
+  delete(idPublicidad: number): Observable<ApiResponse> {
+    console.log('borrando registro publicidad: ', this.baseUrl + this.publicidadContext + environment.coreApiBaseDeleteOperation + "/" + idPublicidad );
+    return this.http.delete<ApiResponse>(this.baseUrl + this.publicidadContext + environment.coreApiBaseDeleteOperation + "/" + idPublicidad).pipe(share());
+  }
+
+}

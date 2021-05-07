@@ -184,7 +184,7 @@
               margin-bottom: -5px;
           "></ion-icon>&nbsp;&nbsp;Torre/Privada:
         </ion-label>
-        <ion-select  interface="popover" okText="Aceptar" cancelText="Cancelar" 
+        <ion-select   interface="action-sheet" okText="Aceptar" cancelText="Cancelar" 
         (ionChange)="cambioTorre($event)" >
             <ion-select-option *ngFor="let tt of torres" [value]="tt"> {{ tt.data.nombre}} </ion-select-option>
         </ion-select>
@@ -196,7 +196,7 @@
               margin-bottom: -5px;
           "></ion-icon>&nbsp;&nbsp;Inmueble:
         </ion-label>
-        <ion-select  interface="popover"  okText="Aceptar" cancelText="Cancelar"
+        <ion-select  interface="action-sheet"  okText="Aceptar" cancelText="Cancelar"
         (ionChange)="cambioDepto($event)" >
             <ion-select-option *ngFor="let tt of departamentos" [value]="tt"> {{ tt.data.nombre}} </ion-select-option>
         </ion-select>        

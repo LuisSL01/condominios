@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Crear nuevo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form  >
+    <ion-list>
+      
+    
+    <ion-item lines="full">
+      <ion-label position="floating">
+        <ion-icon slot="start" name="person"
+          style="font-size:23px; color: #01143f; margin-left:5px;   margin-bottom: -5px; "></ion-icon>&nbsp;
+          Url
+      </ion-label>
+      <ion-input type="text" 
+      [(ngModel)]="_pathUrl" [ngModelOptions]="{standalone: true}" required></ion-input>
+    </ion-item>
+
+    <ion-item-divider>
+      <ion-label>
+        Imagén
+      </ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <ion-label>Imagén</ion-label>
+      <ion-button fill="clear" size="small" (click)="libreria()">
+        <ion-icon slot="start" name="image-outline" style="font-size:23px; color: #50c8ec;"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+    <ion-item>
+      <ion-col size="6">
+        <ion-card>            
+          <img *ngIf="image"  src="{{pathBase64}}{{image.base64}}">                        
+        </ion-card>
+      </ion-col>
+    </ion-item>
+  </ion-list>
+
+
+
+   
+
+    
+  </form>
+</ion-content>
+
+<ion-toolbar color="primary">
+  <ion-buttons slot="start">
+    <ion-button (click)="close()">
+      <ion-icon name="close" slot="icon-only"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-buttons slot="end">
+    <ion-button (click)="save()">
+      <ion-icon name="checkmark" slot="icon-only"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>

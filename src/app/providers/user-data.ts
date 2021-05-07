@@ -229,10 +229,11 @@ console.log('setConfigUser');
        
   }
 
-  showToast(dataMessage: string) {
+  showToast(dataMessage: string, color_str?: string) {
     this.toastCtrl.create({
       message: dataMessage,
-      duration: 2000
+      duration: 2000,
+      color: color_str ? color_str : null
     }).then((toastData) => {
       toastData.present();
     });
