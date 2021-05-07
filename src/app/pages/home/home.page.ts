@@ -98,8 +98,8 @@ export class HomePage implements OnInit {
         } else {
           this.userData.showToast("Error al autenticar usuario", "warning");
         }
-      }, err => {
-        this.userData.showToast("Error en el servicio, intente más tarde", "danger");
+      }, err => {        
+        this.userData.showToast("Error al autenticar usuario", "warning");
       });
     /* } */
   }
