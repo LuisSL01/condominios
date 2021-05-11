@@ -54,9 +54,12 @@ export class AgenteService {
   }
 
 
+
+  
+
   getAgentes(idEmpresa: number, page: number, size: number, filters: string): Observable<any> {
-    console.log("getAgentes: ",this.baseUrl +this.agenteContext +environment.coreApiBaseAgenteOperationList+ '/' + idEmpresa + '?page=' + page + '&size=' + size + (filters ? ('&filters=' + filters) : ''));    
-    return this.http.get<any>(this.baseUrl +this.agenteContext +environment.coreApiBaseAgenteOperationList+ '/' + idEmpresa + '?page=' + page + '&size=' + size + (filters ? ('&filters=' + filters) : '')).pipe(share());
+    console.log("getAgentes: ",this.baseUrl +this.agenteContext +environment.coreApiBaseAgenteOperationList+ '/app/' + idEmpresa + '?page=' + page + '&size=' + size + (filters ? ('&filters=' + filters) : ''));    
+    return this.http.get<any>(this.baseUrl +this.agenteContext +environment.coreApiBaseAgenteOperationList+ '/app/' + idEmpresa + '?page=' + page + '&size=' + size + (filters ? ('&filters=' + filters) : '')).pipe(share());
   }
 
   getManzanas(idEmpresa:number){

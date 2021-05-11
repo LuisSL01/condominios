@@ -8,13 +8,15 @@
               #mySlider
               (ionSlidesDidLoad)="slidesDidLoad(mySlider)"
               >
-              <ion-slide   *ngFor="let pub of imagesPublicidad"              
-              >                                      
+              <!-- <ion-slide   *ngFor="let pub of publicidadService.imagesPublicidad">
+                <ion-img *ngIf="pub.data" src="{{pathS3}}{{pub.data.pathImage}}" 
+                  (click)="clicPublicidad(pub.data.pathUrl)"
+                style=" height:100px; display: block; width:400px;"></ion-img>
+              </ion-slide> -->
+              <ion-slide   *ngFor="let pub of imagesPublicidad">                                      
                 <ion-img *ngIf="pub.data" src="{{pub.data.pathImage}}" 
                   (click)="clicPublicidad(pub.data.pathUrl)"
-                style=" height:100px; display: block; width:400px;  
-                "
-                ></ion-img>
+                style=" height:100px; display: block; width:400px;"></ion-img>
               </ion-slide>
             </ion-slides>
           

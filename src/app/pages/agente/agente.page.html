@@ -25,10 +25,8 @@
               <span class="text-primary">
                 <ion-label>
                   <h2>{{agente.nombreCompleto}} {{agente.apellidoPaterno}} {{agente.apellidoMaterno}} </h2>
-                  <h3>{{agente.email}}</h3>
-                  
-                </ion-label>
-                
+                  <h3>{{agente.email}}</h3>                  
+                </ion-label>                
                 </span>
               <div class="card-more">
                 <ion-button fill="clear" (click)="lanzarMenu(agente.id, agente.activo)">
@@ -40,7 +38,17 @@
           </ion-card-header>
 
           <ion-card-content  >
-            Activo: {{agente.activo ? 'SI':'NO'}}
+            <ion-label>
+              Activo: {{agente.activo ? 'SI':'NO'}}  
+            </ion-label>            
+            <ion-label color="secondary" *ngIf="agente.agenteDepartamentos">
+              <h2   *ngFor="let pp of agente?.agenteDepartamentos" color="primary"> 
+                {{pp.departamentoData.nombre}}
+
+    
+              </h2>
+    
+            </ion-label>
           </ion-card-content>
 
           

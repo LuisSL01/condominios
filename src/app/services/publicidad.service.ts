@@ -4,6 +4,8 @@ import { ApiResponse } from '../models/api-response.model';
 import { share } from 'rxjs/operators';
 import { Observable } from 'rxjs/index';
 import { environment } from 'src/environments/environment';
+import { Publicidad } from '../models/publicidad.model';
+import { UserData } from '../providers/user-data';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +14,30 @@ export class PublicidadService {
 
   baseUrl: string = environment.coreServiceBaseUrl;
   publicidadContext: string = environment.coreApiBasePublicidadOperation;
+  idEmpresa:number;
 
-  constructor(private http: HttpClient) { }
+  imagesPublicidad:Publicidad[]=[];
+
+
+  constructor(private http: HttpClient,
+              private userData:UserData) {                
+   }
+
+   
+  async cargarRegistros(){
+    this.idEmpresa = this.userData.getIdEmpresa();
+    await this.getPublicidadAllPorEmpresa(this.idEmpresa).subscribe(
+      data=>{        
+        if(data.status === 200){
+          this.imagesPublicidad = data.result;
+          console.log('this.imagesPublicidad', JSON.stringify(this.imagesPublicidad));    
+        }
+      }, err => {                  
+        console.log('Error en el servicio al buscar registros');
+      }
+    );
+    console.log('this.imagesPublicidad', JSON.stringify(this.imagesPublicidad));    
+  }
 
   save(publicidadData: any): Observable<ApiResponse> {
     console.log('save: ' + this.baseUrl + this.publicidadContext);
