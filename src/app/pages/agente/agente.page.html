@@ -42,10 +42,8 @@
               Activo: {{agente.activo ? 'SI':'NO'}}  
             </ion-label>            
             <ion-label color="secondary" *ngIf="agente.agenteDepartamentos">
-              <h2   *ngFor="let pp of agente?.agenteDepartamentos" color="primary"> 
-                {{pp.departamentoData.nombre}}
-
-    
+              <h2   *ngFor="let pp of agente.agenteDepartamentos" color="primary"> 
+                {{pp.departamentoData?.nombre}}
               </h2>
     
             </ion-label>
