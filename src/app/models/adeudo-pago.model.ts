@@ -9,6 +9,8 @@ export class AdeudoPago{
 
     public todos:number;
     public nombreAgenteAdeuda:string ;//para mostrarlo en el List
+    public nombreConcepto:string ;//para mostrarlo en el List
+    public nombreStatus:string ;//para mostrarlo en el List
 
     
     constructor(){

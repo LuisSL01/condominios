@@ -43,17 +43,15 @@ export class FooterComponent implements OnInit {
 
   insertaPub(){
       console.log('insertarndo componente spublicidad');    
-      this.imagesPublicidad.push(this.generaElementPub("https://almacenamientonube.s3.us-west-1.amazonaws.com/App/publicidad_eco_tierra.png", "http://www.ecodetierra.com/"));
-      this.imagesPublicidad.push(this.generaElementPub("https://almacenamientonube.s3.us-west-1.amazonaws.com/App/publicidad_erve.png", "https://grupoerve.com/"));
-      this.imagesPublicidad.push(this.generaElementPub("https://almacenamientonube.s3.us-west-1.amazonaws.com/App/publicidad_norden.png", "http://www.norden.com.mx/"));
-      this.imagesPublicidad.push(this.generaElementPub("https://almacenamientonube.s3.us-west-1.amazonaws.com/App/Banners-app-desarrollos-erve1.png", "https://grupoerve.com/"));
-      this.imagesPublicidad.push(this.generaElementPub("https://almacenamientonube.s3.us-west-1.amazonaws.com/App/Banners-app-desarrollos-erve2.png", "https://grupoerve.com/"));
-      this.imagesPublicidad.push(this.generaElementPub("https://almacenamientonube.s3.us-west-1.amazonaws.com/App/Banners-app-desarrollos-erve3.png", "https://grupoerve.com/"));
-      this.imagesPublicidad.push(this.generaElementPub("https://almacenamientonube.s3.us-west-1.amazonaws.com/App/Banners-app-desarrollos-erve4.png", "https://grupoerve.com/"));
-      this.imagesPublicidad.push(this.generaElementPub("https://almacenamientonube.s3.us-west-1.amazonaws.com/App/Banners-app-desarrollos-erve5.png", "https://grupoerve.com/"));
-      this.imagesPublicidad.push(this.generaElementPub("https://almacenamientonube.s3.us-west-1.amazonaws.com/App/Banners-app-desarrollos-erve6.png", "https://grupoerve.com/"));
-      this.imagesPublicidad.push(this.generaElementPub("https://almacenamientonube.s3.us-west-1.amazonaws.com/App/Banners-app-desarrollos-erve7.png", "https://grupoerve.com/"));
-      this.imagesPublicidad.push(this.generaElementPub("https://almacenamientonube.s3.us-west-1.amazonaws.com/App/Banners-app-desarrollos-erve8.png", "https://grupoerve.com/"));
+      
+      this.imagesPublicidad.push(this.generaElementPub("https://almacenamientonube.s3.us-west-1.amazonaws.com/App/Banners-app-desarrollos-erve1.png", "https://grupoerve.com/e-sur/"));
+      this.imagesPublicidad.push(this.generaElementPub("https://almacenamientonube.s3.us-west-1.amazonaws.com/App/Banners-app-desarrollos-erve2.png", "https://grupoerve.com/e-sur/"));
+      this.imagesPublicidad.push(this.generaElementPub("https://almacenamientonube.s3.us-west-1.amazonaws.com/App/Banners-app-desarrollos-erve3.png", "https://grupoerve.com/rincon-esmeralda/"));
+      this.imagesPublicidad.push(this.generaElementPub("https://almacenamientonube.s3.us-west-1.amazonaws.com/App/Banners-app-desarrollos-erve4.png", "https://grupoerve.com/vista-reforma/"));
+      this.imagesPublicidad.push(this.generaElementPub("https://almacenamientonube.s3.us-west-1.amazonaws.com/App/Banners-app-desarrollos-erve5.png", "https://grupoerve.com/vista-reforma/"));
+      this.imagesPublicidad.push(this.generaElementPub("https://almacenamientonube.s3.us-west-1.amazonaws.com/App/Banners-app-desarrollos-erve6.png", "https://grupoerve.com/rincon-de-la-plata/"));
+      this.imagesPublicidad.push(this.generaElementPub("https://almacenamientonube.s3.us-west-1.amazonaws.com/App/Banners-app-desarrollos-erve7.png", "https://grupoerve.com/punta-poniente/"));
+      this.imagesPublicidad.push(this.generaElementPub("https://almacenamientonube.s3.us-west-1.amazonaws.com/App/Banners-app-desarrollos-erve8.png", "https://grupoerve.com/rincon-del-valle/"));
   }
   generaElementPub(_pathImage: string, _pathUrl: string): Publicidad {
     let ob:Publicidad = new Publicidad();    

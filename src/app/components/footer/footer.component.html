@@ -2,7 +2,8 @@
   <ion-toolbar color="light" style=" position: fixed; bottom: 0px; height: 100px;">
     <ion-grid>
       <ion-row>
-        <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" offset-md="4" offset-sm="4">
+        <ion-col size="12" size-lg="4" size-md="4" size-sm="4" offset-lg="4" 
+        offset-md="4" offset-sm="4">
             <ion-slides  [options]="slideOpts"
               class="slides"
               #mySlider
@@ -13,10 +14,10 @@
                   (click)="clicPublicidad(pub.data.pathUrl)"
                 style=" height:100px; display: block; width:400px;"></ion-img>
               </ion-slide> -->
-              <ion-slide   *ngFor="let pub of imagesPublicidad">                                      
+              <ion-slide  style=" height:100px; display: block; width:400px;" *ngFor="let pub of imagesPublicidad">
                 <ion-img *ngIf="pub.data" src="{{pub.data.pathImage}}" 
                   (click)="clicPublicidad(pub.data.pathUrl)"
-                style=" height:100px; display: block; width:400px;"></ion-img>
+                ></ion-img>
               </ion-slide>
             </ion-slides>
           

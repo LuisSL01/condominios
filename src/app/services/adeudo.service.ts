@@ -14,8 +14,12 @@ import { environment } from 'src/environments/environment';
 export class AdeudoService {
 
   adeudos:AdeudoPago[] =[]; 
-  baseUrl: string = environment.coreServiceBaseUrl;
+  baseUrl: string = environment.coreServiceBaseUrl;  
   adeudoContext: string = environment.coreApiBaseAdeudoOperation;  
+  conceptoAdeudoContext: string = environment.coreApiBaseConceptoAdeudoOperation;  
+  
+
+
   nombreEtiqueta = "_adeudo";
   adeudoListener = new EventEmitter<AdeudoPago>();
   
@@ -83,6 +87,34 @@ export class AdeudoService {
     return this.http.get<ApiResponse>(this.baseUrl + this.adeudoContext+ environment.coreApiGetAdeudoDepartamentoListOperation +"/"+idEmpresa+"/"+idDepartamento).pipe(share());
   }
 
+/*Concepto adeudos */
+
+  getConceptoAdeudoAllPorEmpresa(idEmpresa: number){
+    console.log(this.baseUrl+this.conceptoAdeudoContext+ environment.coreApiBaseConceptoAdeudoListOperation+"All/"+idEmpresa);
+    return this.http.get<ApiResponse>(this.baseUrl+this.conceptoAdeudoContext+environment.coreApiBaseConceptoAdeudoListOperation+"All/"+idEmpresa).pipe(share());
+  }
+
+  saveConceptoAdeudo(conceptoAdeudoData: any): Observable<ApiResponse> {
+    console.log('saveConceptoAdeudo:'+this.baseUrl + this.conceptoAdeudoContext);
+    return this.http.post<ApiResponse>(this.baseUrl + this.conceptoAdeudoContext, conceptoAdeudoData).pipe(share());
+  }
+
+  updateConceptoAdeudo(idConceptoAdeudo: number, conceptoAdeudoData: any) : Observable<ApiResponse> {
+    console.log('updateConceptoAdeudo', this.baseUrl + this.conceptoAdeudoContext + environment.coreApiBaseEditOperation+  "/" + idConceptoAdeudo);
+    return this.http.patch<ApiResponse>(this.baseUrl+this.conceptoAdeudoContext+environment.coreApiBaseEditOperation+  "/" + idConceptoAdeudo, conceptoAdeudoData).pipe(share());
+  }
+
+  deleteConceptoAdeudo(idPublicidad: number): Observable<ApiResponse> {
+    console.log('deleteConceptoAdeudo ', this.baseUrl + this.conceptoAdeudoContext + environment.coreApiBaseDeleteOperation + "/" + idPublicidad );
+    return this.http.delete<ApiResponse>(this.baseUrl + this.conceptoAdeudoContext + environment.coreApiBaseDeleteOperation + "/" + idPublicidad).pipe(share());
+  }
+
+  uploadPlantilla(formData: any, idEmpresa: number, idAgente:number): Observable<ApiResponse> {
+    console.log('saveReglamentoPDF: ' + this.baseUrl + this.adeudoContext + "/plantilla/" + idEmpresa+"/agente/"+idAgente);
+    return this.http.post<ApiResponse>(this.baseUrl + this.adeudoContext + "/plantilla/" + idEmpresa+"/agente/"+idAgente, formData).pipe(share());
+  }
+
+/*Concepto adeudo */
   construyeNombreEtiqueta(){
     return this.nombreEtiqueta = this.dataLocalService.idempresa+'_adeudo';
   }            

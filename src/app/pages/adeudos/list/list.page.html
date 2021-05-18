@@ -1,23 +1,22 @@
 <ion-card>
   <ion-card-header>
-    <ion-card-title>De: {{adeudo.dataDepartamento?.nombre}}</ion-card-title>
+    <ion-card-title color="{{adeudo.nombreStatus ==='PENDIENTE'?'danger':'success' }}" >De: {{adeudo.dataDepartamento?.nombre}}</ion-card-title>
+    
     <ion-card-subtitle  >
       <span class="text-primary" *ngIf="adeudo.data" >
         <ion-label>
-          <h2>Concepto: {{adeudo.data.concepto}}</h2>
-          <h2>Cantidad: $ {{adeudo.data.cantidad}}</h2>          
-          <h3>Fecha a cubrir: {{adeudo.data.fechaCubrir | date:' MMM , y'}}</h3>
+          <h2>Concepto: {{adeudo.nombreConcepto}}</h2>
+          <h2>Importe: $ {{adeudo.data.importe}}</h2>          
+          <h2>Fecha a cubrir: {{adeudo.data.fechaCubrir | date:'dd/MM/yyyy'}}</h2>
           
         </ion-label>
       </span>
       <div class="card-more">
         <ion-buttons slot="end" *ngIf="userData.administrador">
-
           <ion-button slot="end" (click)="editRowSelected()"  >
             <ion-icon slot="icon-only" color="primary" name="create-outline"></ion-icon>
-          </ion-button>
+          </ion-button>  
           
-  
           <ion-button fill="clear" (click)="lanzarMenu()">
             <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
           </ion-button>
@@ -27,6 +26,17 @@
     </ion-card-subtitle>
   </ion-card-header>
   <ion-card-content *ngIf="adeudo.data">
-    {{adeudo.data.descripcion}}
+    <ion-label>
+      <h2>
+        {{adeudo.data.descripcion}}  
+      </h2>
+      
+    </ion-label>
+    <ion-label color="{{adeudo.nombreStatus ==='PENDIENTE'?'danger':'success' }}">
+      <h2>
+        {{adeudo.nombreStatus}}
+      </h2>
+    </ion-label>
+    
   </ion-card-content>  
 </ion-card>

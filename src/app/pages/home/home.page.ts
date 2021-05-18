@@ -114,6 +114,7 @@ export class HomePage implements OnInit {
             window.localStorage.setItem('empresaData', JSON.stringify(this.empresas[0]));
             this.storage.set('empresaData', JSON.stringify(this.empresas[0]));
             this.userData.setConfigEmpresa();
+            
             this.buscaDepartamentosAgente();
             
           } else if (this.empresas.length > 1) {
@@ -140,6 +141,8 @@ export class HomePage implements OnInit {
             }else{
               if(this.departamentos.length == 1){
                 this.storage.set('departamentoData', this.departamentos[0]);
+                this.userData.setConfigUser();
+              }else{
                 this.userData.setConfigUser();
               }
               this.router.navigateByUrl('/inicio');

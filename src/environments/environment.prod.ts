@@ -219,6 +219,9 @@ export const environment = {
   coreApiBasePublicidadOperation: '/publicidad',  
   coreApiBasePublicidadListOperation: '/listByEmpresa',  
 
+  coreApiBaseConceptoAdeudoOperation: '/concepto-adeudo',    
+  coreApiBaseConceptoAdeudoListOperation: ':listByEmpresa',    
+
 };
 
 /*

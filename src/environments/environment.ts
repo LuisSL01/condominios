@@ -173,6 +173,7 @@ export const environment = {
   coreApiBaseBitacoraVisitaOperation: '/bitacora-visit',      
   coreApiGetBitacoraVisitaListOperation: ':listByEmpresa',
 
+  
   //Adeudo
   coreApiBaseAdeudoOperation: '/adeudo',    
   coreApiBaseAdeudoByEmpresaOperation: '/adeudoByEmpresa',
@@ -181,6 +182,8 @@ export const environment = {
   coreApiGetAdeudoListOperation: ':listByEmpresa',
   coreApiGetAdeudoAgenteListOperation: ':listByEmpresaAndAgente',
   coreApiGetAdeudoDepartamentoListOperation: ':listByEmpresaAndDepartamento',
+
+
 
   //Pagos-comprobantes
   coreApiBasePagoComprobanteOperation: '/pago-comprobante',  
@@ -223,6 +226,8 @@ export const environment = {
   coreApiBasePublicidadOperation: '/publicidad',  
   coreApiBasePublicidadListOperation: '/listByEmpresa',  
   
+  coreApiBaseConceptoAdeudoOperation: '/concepto-adeudo',    
+  coreApiBaseConceptoAdeudoListOperation: ':listByEmpresa',    
 
   
 

@@ -194,6 +194,10 @@ const routes: Routes = [
   {
     path: 'publicidad',
     loadChildren: () => import('./pages/publicidad/publicidad.module').then( m => m.PublicidadPageModule)
+  },
+  {
+    path: 'adeudo-plantilla',
+    loadChildren: () => import('./pages/adeudo-plantilla/adeudo-plantilla.module').then( m => m.AdeudoPlantillaPageModule)
   }
 
 
