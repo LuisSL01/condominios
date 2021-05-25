@@ -1,5 +1,7 @@
+<ion-header>
 <app-menu-header></app-menu-header>
 <app-header titulo="Nueva notificación"></app-header>
+</ion-header>
 
 <ion-content>
   <form [formGroup]="createNotificacion" (ngSubmit)="save()">
@@ -65,6 +67,6 @@
 
 
    <app-buttons valueLinkCancel="/avisos" valueDisabled="{{! createNotificacion.valid}}"></app-buttons>
-    <app-footer></app-footer>
+    <!-- <app-footer></app-footer> -->
   </form>
 </ion-content>

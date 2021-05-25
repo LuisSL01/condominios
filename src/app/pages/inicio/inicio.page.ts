@@ -65,14 +65,9 @@ export class InicioPage implements OnInit {
               ) { 
                 this.componentes = this.dataService.getMenuOpts();
                 /* this.publicaciones = this.publicacionService.publicaciones;
-                  console.log('this.publicaciones:'+ this.publicaciones); */
-                  console.log('invocando a analytics');
-                  
+                  console.log('this.publicaciones:'+ this.publicaciones); */                  
                   this.analytics.setCurrentScreen('Inicio');
-                  this.analytics.logEvent('en log event de inicio')
-
-                  console.log('Se han invocado los metodos de analytics');
-               
+                  this.analytics.logEvent('Ventana inicio')                  
      }
 
  
@@ -90,16 +85,21 @@ export class InicioPage implements OnInit {
   }
 
   async verificaExisteDatosSesion(){  
-    const dt = await this.storage.get('userDetails');
-    if (dt) {
-      this.direccion = this.userData.getDataDireccionEmpresa();
-      this.nombreEmpresa = this.userData.getNombreEmpresa();    
-      this.idEmpresa = this.userData.getIdEmpresa();
-      this.cargarDatosInteres();
-      this.cargaAnunciosStorage();
-    }else{
+    try {
+      const dt = await this.storage.get('userDetails');
+      if (dt) {
+        this.direccion = this.userData.getDataDireccionEmpresa();
+        this.nombreEmpresa = this.userData.getNombreEmpresa();    
+        this.idEmpresa = this.userData.getIdEmpresa();
+        this.cargarDatosInteres();
+        this.cargaAnunciosStorage();
+      }else{
+        this.router.navigate(['/home']);//se redireccione al home para que inicie sesion
+      }
+    } catch (error) {
+      console.log('error'+ error);
       this.router.navigate(['/home']);//se redireccione al home para que inicie sesion
-    }
+    }   
    }
 
   ionViewWillEnter(){    

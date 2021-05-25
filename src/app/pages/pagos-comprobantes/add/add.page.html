@@ -1,5 +1,8 @@
+<ion-header>
 <app-menu-header></app-menu-header>
 <app-header titulo="Comprobante de pago"></app-header>
+</ion-header>
+
 <ion-content>
 
   <form [formGroup]="createPagoComprobante"  (ngSubmit)="save()" >
@@ -33,7 +36,7 @@
         </ion-label>
         <ion-select formControlName="adeudoId" interface="popover"  okText="Aceptar" cancelText="Cancelar">
           <ion-select-option *ngFor="let add of adeudos" [value]="add.id">
-            {{ add.data.concepto }} - {{ add.data.fechaCubrir | date:' MMM yy '}}
+            {{ add.nombreConcepto }} - {{ add.data.fechaCubrir | date:' MMM yy '}}
           </ion-select-option>          
         </ion-select>
       </ion-item>
@@ -56,6 +59,26 @@
             margin-bottom: -5px;"></ion-icon>&nbsp;Descripción</ion-label>        
           <ion-textarea rows="2" cols="1" 
           formControlName="descripcionFormaPago"></ion-textarea>   
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <ion-icon name="calculator-outline" style="font-size:23px; color: #50c8ec; 
+                margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Importe
+          </ion-label>
+          <ion-input type="number" formControlName="importe">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <ion-icon name="calendar-outline" style="font-size:23px; color: #50c8ec; 
+            margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Fecha
+          </ion-label>
+          <ion-datetime style="margin-bottom: -8px;" placeholder="Fecha " displayFormat="DD MMM YYYY"
+            monthShortNames="ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic" cancelText="Descartar"
+            doneText="Aceptar" formControlName="fecha">
+          </ion-datetime>
         </ion-item>
       </div>
 
@@ -80,6 +103,6 @@
     <app-buttons valueLinkCancel="/pagos-comprobantes" 
     valueDisabled="{{ ! createPagoComprobante.valid}}" ></app-buttons>
 
-    <app-footer></app-footer>
+    <!-- <app-footer></app-footer> -->
   </form>
 </ion-content>

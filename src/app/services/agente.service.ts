@@ -54,9 +54,12 @@ export class AgenteService {
   }
 
 
+
+  
+
   getAgentes(idEmpresa: number, page: number, size: number, filters: string): Observable<any> {
-    console.log("getAgentes: ",this.baseUrl +this.agenteContext +environment.coreApiBaseAgenteOperationList+ '/' + idEmpresa + '?page=' + page + '&size=' + size + (filters ? ('&filters=' + filters) : ''));    
-    return this.http.get<any>(this.baseUrl +this.agenteContext +environment.coreApiBaseAgenteOperationList+ '/' + idEmpresa + '?page=' + page + '&size=' + size + (filters ? ('&filters=' + filters) : '')).pipe(share());
+    console.log("getAgentes: ",this.baseUrl +this.agenteContext +environment.coreApiBaseAgenteOperationList+ '/app/' + idEmpresa + '?page=' + page + '&size=' + size + (filters ? ('&filters=' + filters) : ''));    
+    return this.http.get<any>(this.baseUrl +this.agenteContext +environment.coreApiBaseAgenteOperationList+ '/app/' + idEmpresa + '?page=' + page + '&size=' + size + (filters ? ('&filters=' + filters) : '')).pipe(share());
   }
 
   getManzanas(idEmpresa:number){
@@ -82,6 +85,11 @@ export class AgenteService {
   addDepartamentoToAgente(formData: FormData): Observable<ApiResponse> {
     console.log('agregarDepartamentoAgente:'+this.baseUrl + environment.coreApiBaseAgenteDepartamentoOperation);
     return this.http.post<ApiResponse>(this.baseUrl + environment.coreApiBaseAgenteDepartamentoOperation , formData).pipe(share());
+  }
+
+  addAgenteToDepartamentos(formData: FormData): Observable<ApiResponse> {
+    console.log('addAgenteToDepartamentos:'+this.baseUrl + environment.coreApiBaseAgenteDepartamentoOperation+environment.coreApiBaseAgenteDepartamentoMultipleOperation);
+    return this.http.post<ApiResponse>(this.baseUrl + environment.coreApiBaseAgenteDepartamentoOperation+environment.coreApiBaseAgenteDepartamentoMultipleOperation , formData).pipe(share());
   }
 
   deleteAgenteDepto(idAgenteDepto: number) : Observable<ApiResponse> {

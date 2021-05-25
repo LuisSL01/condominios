@@ -13,7 +13,7 @@ export class UserData {
   empresa_id:number = 0;
   agente_id:number = 0;
   departamento_id:number=0;
-
+  nombreDepartamento:string="";
 
   nameImageEmpresa ="";
   base64ImageEmpresa ="";
@@ -158,7 +158,7 @@ export class UserData {
 
 
  async setConfigUser(){   
-console.log('setConfigUser');
+  console.log('setConfigUser');
    
   const data = await  this.storage.get('userFull');
     if (data) {
@@ -170,13 +170,17 @@ console.log('setConfigUser');
           this.administrador = true;
         }        
       }
+      this.nombreCompleto = data.nombreCompleto;
       console.log("Administrador:->"+this.administrador+"<-");              
     }
   const dataDepto = await this.storage.get('departamentoData');  
   if(dataDepto){
     this.departamento_id = dataDepto.departamento;    
+    this.nombreDepartamento = dataDepto.departamentoData.nombre;
   }
   console.log('departamento_id->'+this.departamento_id);
+  console.log('nombreDepartamento->'+this.nombreDepartamento);
+  
 
  }
 
@@ -229,10 +233,11 @@ console.log('setConfigUser');
        
   }
 
-  showToast(dataMessage: string) {
+  showToast(dataMessage: string, color_str?: string) {
     this.toastCtrl.create({
       message: dataMessage,
-      duration: 2000
+      duration: 2000,
+      color: color_str ? color_str : null
     }).then((toastData) => {
       toastData.present();
     });

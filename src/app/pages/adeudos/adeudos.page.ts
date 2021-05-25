@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdeudoPago } from '../../models/adeudo-pago.model';
 import { AdeudoService } from '../../services/adeudo.service';
 import { UserData } from '../../providers/user-data';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { IonInfiniteScroll, ModalController } from '@ionic/angular';
 import { Storage } from "@ionic/storage";
 import { ActivatedRoute } from '@angular/router';
+import { AdeudoPlantillaPage } from '../adeudo-plantilla/adeudo-plantilla.page';
 
 @Component({
   selector: 'app-adeudos',
@@ -28,6 +29,7 @@ export class AdeudosPage implements OnInit {
   constructor(public adeudoService: AdeudoService,
               public userData:UserData,
               public activatedRoute: ActivatedRoute,
+              private modalCtrl: ModalController,
               private storage: Storage,) { 
     
   }
@@ -67,6 +69,32 @@ export class AdeudosPage implements OnInit {
     }else{
       this.cargaData();
     }
+  }
+
+  async openModalPlantilla(){
+    console.log('openModalPlantilla');
+    const modal = await this.modalCtrl.create({
+      component: AdeudoPlantillaPage,      
+      cssClass: 'cal-modal',
+      backdropDismiss: false
+    });
+   
+    await modal.present();
+   
+    modal.onDidDismiss().then((result) => {
+
+      
+
+      
+      if (result.data && result.data.event) {
+        console.log('se han recibido data del mdal');
+        
+        
+      } 
+      
+    
+    });
+    
   }
 
   

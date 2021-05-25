@@ -214,7 +214,14 @@ export const environment = {
   coreApiBaseCorreoSimpleOperation: '/sendCorreoSimple',  
   
   coreApiBaseAgenteDepartamentoOperation: '/agenteDepartamento',  
-  coreApiBaseAgenteDepartamentoListOperation: '/listDepartamentos',    
+  coreApiBaseAgenteDepartamentoMultipleOperation: '/multiple',  
+  coreApiBaseAgenteDepartamentoListOperation: '/listDepartamentos',   
+  
+  coreApiBasePublicidadOperation: '/publicidad',  
+  coreApiBasePublicidadListOperation: '/listByEmpresa',  
+
+  coreApiBaseConceptoAdeudoOperation: '/concepto-adeudo',    
+  coreApiBaseConceptoAdeudoListOperation: ':listByEmpresa',    
 
 };
 

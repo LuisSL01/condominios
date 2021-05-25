@@ -124,7 +124,7 @@ export class AgenteDepartamentoPage implements OnInit {
     console.log(this.torreSelected);
     console.log(this.departamentoSelected);    
     console.log('-->');
-    const formData = new FormData(); //Esto no esta trabajanco chido...
+    const formData = new FormData();
           formData.append("id_agente",""+this.userData.getIdAgente());
           formData.append("id_departamento", "" + this.departamentoSelected.id);
     this.agenteService.addDepartamentoToAgente(formData).subscribe(

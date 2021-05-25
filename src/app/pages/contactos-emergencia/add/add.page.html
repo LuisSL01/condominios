@@ -1,6 +1,8 @@
+<ion-header>
 <app-menu-header></app-menu-header>
 
 <app-header titulo="Contacto de emergencia"></app-header>
+</ion-header>
 <ion-content>
 
   <form [formGroup]="createContacto" (ngSubmit)="save()">
@@ -47,6 +49,6 @@
     </ion-list>
 
     <app-buttons valueLinkCancel="/contactos-emergencia" valueDisabled="{{ ! createContacto.valid}}"></app-buttons>
-    <app-footer></app-footer>
+    <!-- <app-footer></app-footer> -->
   </form>
 </ion-content>

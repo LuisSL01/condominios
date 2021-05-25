@@ -8,7 +8,7 @@ import { CodigoPostalService } from '../../services/codigo-postal.service';
 import { Direccion } from '../../models/direccion.model'; */
 import { AgenteService } from '../../services/agente.service';
 import { EmpresaService } from '../../services/empresa.service';
-import { ToastController, ModalController } from '@ionic/angular';
+import { ToastController, ModalController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { TorreService } from '../../services/torre.service';
 import { DepartamentoService } from '../../services/departamento.service';
@@ -33,33 +33,6 @@ export class RegistrationPage implements OnInit {
   empresaSelected: any;
   torreSelected: any;
   departamentoSelected: any;
-
-
-
-
-
-
-  /* createAgente = this.fb.group({//Esto para construir los formularios dinamicamente
-    nombreCompleto: ['', [Validators.required, Validators.minLength(4)]],
-    apellidoPaterno: ['', null],
-    apellidoMaterno: ['', null],
-    sexo: ['', Validators.required],
-    fechaDeNacimiento: [new Date(), Validators.required],
-    ocupacion: ['', Validators.required],
-
-    username: ['', [Validators.required, Validators.minLength(3)]],
-    password: ['', Validators.required],
-    confirmarPassword: ['', Validators.required],
-    email: ['', Validators.email],
-    celular: ['0000', null],
-    fechaDeIngreso: [new Date(), Validators.required],
-
-  }
-    ,
-    {
-      validator: MustMatch('password', 'confirmarPassword')
-    }
-  ); */
   createAgente: FormGroup;
   asentamientos: any[] = [];
   empresas: any[] = [];
@@ -68,6 +41,8 @@ export class RegistrationPage implements OnInit {
   departamentos: any[] = [];
 
   usuariosAsociadosEmpresa:number=0;
+
+  misDepartamentos:any[]=[];
 
   //Se inyecta en el constructor para armar los formularios reactivos..
   constructor(private fb: FormBuilder,
@@ -79,6 +54,7 @@ export class RegistrationPage implements OnInit {
     private torreService: TorreService,
     private modalCtrl: ModalController,
     private departamentoService: DepartamentoService,
+    public alertController: AlertController,
     private toastr: ToastController) {
   }
   ngOnInit() {
@@ -90,7 +66,7 @@ export class RegistrationPage implements OnInit {
 
   construyeForm() {
     console.log('construye form');
-
+    
     this.createAgente = this.fb.group({//Esto para construir los formularios dinamicamente
       nombreCompleto: ['', [Validators.required, Validators.minLength(4)]],
       apellidoPaterno: ['', null],
@@ -104,17 +80,7 @@ export class RegistrationPage implements OnInit {
       confirmarPassword: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       celular: ['', null],
-      fechaDeIngreso: [new Date(), Validators.required],
-
-      /* autoRegistro: [true, null],
-      direccion: this.fb.group({
-        calle: [null, null],
-        numeroExterior: ['', null],      
-        numeroInterior: ['', null],
-        asentamiento: [null, Validators.required]
-      }) 
-      */
-
+      fechaDeIngreso: [new Date(), Validators.required],  
     }
       ,
       {
@@ -143,27 +109,21 @@ export class RegistrationPage implements OnInit {
     });
   }
 
-  ionViewDidEnter() {
-    console.log('uno ionViewDidEnter de visitas  PAGE');
-
+  ionViewDidEnter() {    
   }
 
 
-  buscarEmpresas() {
-    console.log('buscando empresas...');
+  buscarEmpresas() {    
     this.empresaService.filterEmpresasByActividadEconomica(11).subscribe(data => {
-      if (data.status === 200) {
-        console.log('"data.result"', data.result);
-        console.log(JSON.stringify(data.message));
+      if (data.status === 200) {                
         this.empresas = data.result;
         if (this.empresas.length === 0) {
           this.showToast("Error al recuperar fraccionamientos, verifique tenga conexión a internet", "danger");
         }
-      } else {
-        console.log('Llego otro status');
-        console.log(data.message);
+      } else {        
+        this.showToast("Error al recuperar fraccionamientos, verifique tenga conexión a internet", "danger");
       }
-    }, err => { console.log(err); });
+    }, err => { this.showToast('Error en el servicio recuperar fraccionamientos', 'danger'); });
   }
 
   cambioNumeroTelefono(event) {
@@ -179,24 +139,30 @@ export class RegistrationPage implements OnInit {
     let user: string = event.detail.value;
     if (user.includes(" ")) {
       user = user.split(" ").join("");
-      this.createAgente.value.username = user;
-      console.log("this.createAgente.value.username", this.createAgente.value.username);
+      this.createAgente.value.username = user;      
       this.showToast("No se permiten espacios en blanco en usuario", "danger")
-    } else {
-      console.log('else');
-
+    } else {      
       this.createAgente.value.username = user;
     }
+  }
+
+  public onKeyUp(event: any) {
+    console.log('onKeyUp');    
+    let newValue:string = event.target.value;    
+    /* let regExp = new RegExp('^[A-Za-z0-9?]+$');  Este patern acepta mayusculas pero solo necesitamos minusculas */
+    let regExp = new RegExp('^[a-z0-9?]+$');
+    if (! regExp.test(newValue)) {
+      this.showToast("Solo se permiten letras minúsculas y números", "warning")
+      event.target.value = newValue.slice(0, -1);
+    }        
   }
 
 
 
   guardarDatos() {
     if (this.empresaSelected) {
-
       let usuario: string = this.createAgente.value.username;
       usuario = usuario.toLowerCase();
-
       let departamento:string="RESIDENTE";
       let estatusUser = false;
       if(this.usuariosAsociadosEmpresa === 0 ){
@@ -204,7 +170,6 @@ export class RegistrationPage implements OnInit {
         departamento="ADMINISTRADOR";//Se crea como admin y activo
         estatusUser = true;
       }
-
 
       const agenteObj = {
         agente: {
@@ -243,7 +208,13 @@ export class RegistrationPage implements OnInit {
       const objAgente = {
         dispositivoUuid: this.pushService.userId
       };
+      console.log(JSON.stringify(this.misDepartamentos));
 
+      if(this.misDepartamentos.length ===0){
+        this.showToast('Debe seleccionar al menos un inmueble (fraccionamiento -> torre/privada-> inmueble)','warning');
+        return;
+      }
+      
 
       this.agenteService.registerUsuario(agenteObj).subscribe(data => {
         if (data.status === 200) {
@@ -262,11 +233,11 @@ export class RegistrationPage implements OnInit {
                   this.agenteService.updateAgenteCore(idAgente, objAgente);
                 }
 
-                if(this.departamentoSelected){
+                
                   const formDataAgenteDepto = new FormData(); //Esto no esta trabajanco chido...
                   formDataAgenteDepto.append("id_agente",idAgente);
-                  formDataAgenteDepto.append("id_departamento",this.departamentoSelected.id);
-                  this.agenteService.addDepartamentoToAgente(formDataAgenteDepto).subscribe(
+                  formDataAgenteDepto.append("departamentos",JSON.stringify(this.misDepartamentos));
+                  this.agenteService.addAgenteToDepartamentos(formDataAgenteDepto).subscribe(
                   (data) => {
                     if (data.status === 200) {
                       console.log('Se agrego correctamente al depto');
@@ -279,7 +250,7 @@ export class RegistrationPage implements OnInit {
                   },
                   () => { }
                 );
-                }
+                
 
                 this.createAgente.reset();
                 this.router.navigate(["/home"]);
@@ -317,6 +288,139 @@ export class RegistrationPage implements OnInit {
 
   isEmpty(str) {
     return (!str || 0 === str.length);
+  }
+
+  addDepartamentoToNewUser(){
+    if(this.departamentoSelected){
+      if (this.misDepartamentos.indexOf(this.departamentoSelected) === -1) {
+        console.log('agregando el departamento', JSON.stringify(this.departamentoSelected));
+        this.misDepartamentos.push(this.departamentoSelected);
+        this.showToast('agregado correctamente','success');
+    }else{
+      this.showToast('ya lo tiene agregado','warning');
+    }
+    }
+  }
+
+  async addTorre() {
+    if(this.empresaSelected){
+      const alert = await this.alertController.create({
+        cssClass: 'alertHeader',
+        header: 'Confirmar!',
+        message: 'Crear una nueva torre/privada',
+        inputs: [
+          {
+            name: 'name',
+            type: 'text',
+            placeholder: 'Nombre'
+          }
+        ],
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              console.log('Confirm Cancel: blah');
+            }
+          }, {
+            text: 'Guardar',
+            handler: (alertData) => {
+              console.log('Confirm Okay');
+              let dataRegistro = {
+                nombre: alertData.name
+              }  
+              const torreObj = {
+                empresa: this.empresaSelected.id,
+                data: dataRegistro
+              };
+              this.crearTorre(torreObj);  
+            }
+          }
+        ]
+      });
+      await alert.present();
+    }else{
+      this.showToast('Debe seleccionar un fraccionamiento','danger');
+      return;
+    }
+  }
+
+  async crearTorre(torreObj:any) {    
+    console.log('Objeto enviado..' + JSON.stringify(torreObj));
+    await this.torreService.save(torreObj).subscribe((data) => {
+      console.log(data);
+      if (data.status === 200) {        
+        this.torres.push(data.result);
+        this.showToast('Creado correctamente, seleccione el registro y creé un inmueble ej. (Lt 1001 Mz: 201)','success'); 
+      } else { this.showToast('Error al registrar torre/privada en el servidor','danger'); }
+    },
+      (err) => {
+        console.log(err); this.showToast("Error: " + err);
+      }, () => { }
+    );
+  }
+
+  async addDepartamento() {
+    if(this.torreSelected){
+      const alert = await this.alertController.create({
+        cssClass: 'alertHeader',
+        header: 'Confirmar!',
+        message: 'Crear una nuevo departamento en la torre:  '+ this.torreSelected.data.nombre,
+        inputs: [
+          {
+            name: 'name',
+            type: 'text',
+            placeholder: 'Nombre'
+          }
+        ],
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              console.log('Confirm Cancel: blah');
+            }
+          }, {
+            text: 'Guardar',
+            handler: (alertData) => {
+              
+              let dataRegistro = {
+                nombre: alertData.name
+              }  
+              const departamentoObj = {
+                empresa: this.empresaSelected.id,
+                torre:this.torreSelected.id,
+                data: dataRegistro                
+              };              
+              this.crearDepartamento(departamentoObj);
+            }
+          }
+        ]
+      });
+      await alert.present();
+    }else{
+      this.showToast('Debe seleccionar una torre/privada','warning');
+      return;
+    }
+   
+  }
+
+  async crearDepartamento(departamentoObj:any) {
+    console.log('crear departamento');
+    console.log('Objeto enviado..' + JSON.stringify(departamentoObj));
+    await this.departamentoService.save(departamentoObj).subscribe((data) => {
+      console.log(data);
+      if (data.status === 200) {        
+        this.departamentos.push(data.result);
+        this.showToast('Creado correctamente, ya puede dar clic para agregar a sus inmuebles de acceso','success'); 
+      } else { this.showToast('Error al registrar departamento en el servidor','danger'); }
+    },
+      (err) => {
+        console.log(err); this.showToast("Error: " + err);
+      }, () => { }
+    );
   }
 
   validarCP() {
@@ -360,9 +464,7 @@ export class RegistrationPage implements OnInit {
     console.log('this.asentamientoSelected: ', this.asentamientoSelected);
   }
 
-  cambioEmpresa(event) {
-    console.log('cambio empresa');
-    console.log('event', event);
+  cambioEmpresa(event) {    
     this.empresaSelected = event.detail.value;
     this.countAgentesOfEmpresa();
     if (this.empresaSelected && this.empresaSelected.configuracionEmpresa) {
@@ -377,10 +479,16 @@ export class RegistrationPage implements OnInit {
 
   async getDataTorre() {
     console.log('getDataTorree');
+    this.showToast("Buscando torres/privadas del fraccionamiento");
     await this.torreService.getTorresFull(this.empresaSelected.id).subscribe((data) => {
       console.log(data);
       if (data.status === 200) {
         this.torres = data.result;
+        if(this.torres.length ===0){
+          this.showToast('No tiene torres/privadas registradas el fraccionamiento');
+        }else{
+          this.showToast( this.torres.length +' torres/privadas encontrados');
+        }
       } else {
         this.showToast('error al recuperar registros de torre' + data.status);
       }
@@ -393,11 +501,19 @@ export class RegistrationPage implements OnInit {
 
   async getDataDepartamento() {
     console.log('getDataDepartamento');
+    this.showToast("Buscando inmuebles de la torre/privada ");
     if (this.empresaSelected.configuracionEmpresa.aplicaTorres) {
       if (this.torreSelected) {
         await this.departamentoService.getDepartamentosPorTorre(this.torreSelected.id).subscribe((data) => {
           console.log(data);
-          if (data.status === 200) this.departamentos = data.result;
+          if (data.status === 200){
+            this.departamentos = data.result;
+            if(this.departamentos.length ===0){
+              this.showToast('No tiene inmuebles registrados en la torre/privada');
+            }else{
+              this.showToast( this.departamentos.length +' inmuebles encontrados');
+            }
+          } 
           else this.showToast('error al recuperar registros');
         },
           (err) => { this.showToast('error al recuperar registros'); }
@@ -441,6 +557,15 @@ export class RegistrationPage implements OnInit {
 
     this.departamentoSelected = event.detail.value;
     console.log('cambio depto' + JSON.stringify(this.departamentoSelected));
+  }
+
+  cancelar(){
+    this.createAgente.reset();
+    this.misDepartamentos = [];
+    this.empresaSelected = null;
+    this.departamentoSelected = null;
+    this.torreSelected = null;
+    this.router.navigate(["/home"]);
   }
 
   compareWithFn = (e1, e2) => {//No funciono la implementacion

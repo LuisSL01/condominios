@@ -30,6 +30,8 @@ export class PagosComprobantes{
 	public nombreEstatus:string;
     public data: any;
     public infoAdeudo: any;
+    public infoDepartamento: any;
+    public nombreConceptoAdeudo:string;
     
 
     constructor(){

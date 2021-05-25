@@ -1,6 +1,8 @@
+<ion-header>
 <app-menu-header></app-menu-header>
 
 <app-header titulo="Nueva visita"></app-header>
+</ion-header>
 <ion-content>
   <form [formGroup]="createVisita" (ngSubmit)="save()">
     <ion-list>
@@ -128,7 +130,7 @@
 
     <app-buttons valueLinkCancel="/visitas" valueDisabled="{{! createVisita.valid}}"></app-buttons>
 
-    <app-footer></app-footer>
+    <!-- <app-footer></app-footer> -->
 
 
   </form>

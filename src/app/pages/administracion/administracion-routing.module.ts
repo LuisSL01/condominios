@@ -42,6 +42,15 @@ const routes: Routes = [
           }
         ]
       }, 
+      {
+        path: 'publicidad',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../../pages/publicidad/publicidad.module').then(m => m.PublicidadPageModule)
+          }
+        ]
+      }, 
     ]
   }
   

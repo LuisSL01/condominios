@@ -92,14 +92,14 @@ export class HomePage implements OnInit {
                 this.buscaEmpresasUsuario();                
               }
             } else {
-              console.log('Llego otro status al recuperar el usauario');
+              this.userData.showToast("Error al recuperar datos de usuario", "warning");
             }
           });
         } else {
-          this.showToast("Error 1, usuario o contraseña inválidos");
+          this.userData.showToast("Error al autenticar usuario", "warning");
         }
-      }, err => {
-        this.showToast("Error 2, usuario o contraseña inválidos");
+      }, err => {        
+        this.userData.showToast("Error al autenticar usuario", "warning");
       });
     /* } */
   }
@@ -114,6 +114,7 @@ export class HomePage implements OnInit {
             window.localStorage.setItem('empresaData', JSON.stringify(this.empresas[0]));
             this.storage.set('empresaData', JSON.stringify(this.empresas[0]));
             this.userData.setConfigEmpresa();
+            
             this.buscaDepartamentosAgente();
             
           } else if (this.empresas.length > 1) {
@@ -140,6 +141,8 @@ export class HomePage implements OnInit {
             }else{
               if(this.departamentos.length == 1){
                 this.storage.set('departamentoData', this.departamentos[0]);
+                this.userData.setConfigUser();
+              }else{
                 this.userData.setConfigUser();
               }
               this.router.navigateByUrl('/inicio');

@@ -1,6 +1,20 @@
+<ion-header>
 <app-menu-header></app-menu-header>
-
-<app-header titulo="Adeudos"></app-header>
+  <ion-toolbar color="secondary">    
+    <ion-title class="page-listing">Adeudos</ion-title>
+    <ion-buttons slot="start">  
+      <ion-back-button  class="button" text="" icon="chevron-back-circle-outline" 
+      defaultHref="/"  ></ion-back-button>       
+    </ion-buttons>
+    <ion-buttons slot="end" >      
+      <ion-button (click)="openModalPlantilla()">
+        <ion-icon slot="icon-only" name="cloud-upload-outline"></ion-icon>        
+      </ion-button>
+    </ion-buttons>
+    
+    
+  </ion-toolbar>
+</ion-header>
 
 <ion-content fullscreen>
 
@@ -35,8 +49,10 @@
 
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="userData.administrador">
-    <ion-fab-button routerLink="/adeudos/add">
+    <ion-fab-button  routerLink="/adeudos/add">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
+    
   </ion-fab>
+  
 </ion-content>

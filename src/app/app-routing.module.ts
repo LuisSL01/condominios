@@ -190,6 +190,14 @@ const routes: Routes = [
   },  {
     path: 'agente-departamento',
     loadChildren: () => import('./pages/agente-departamento/agente-departamento.module').then( m => m.AgenteDepartamentoPageModule)
+  },
+  {
+    path: 'publicidad',
+    loadChildren: () => import('./pages/publicidad/publicidad.module').then( m => m.PublicidadPageModule)
+  },
+  {
+    path: 'adeudo-plantilla',
+    loadChildren: () => import('./pages/adeudo-plantilla/adeudo-plantilla.module').then( m => m.AdeudoPlantillaPageModule)
   }
 
 
