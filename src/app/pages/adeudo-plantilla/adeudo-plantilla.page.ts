@@ -7,7 +7,10 @@ import { Archivo } from '../../models/archivo-vortex.model';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { UserData } from '../../providers/user-data';
 import { AdeudoService } from 'src/app/services/adeudo.service';
-
+import { FileDownloaderService } from 'src/app/services/file-downloader.service';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
 
 @Component({
   selector: 'app-adeudo-plantilla',
@@ -24,16 +27,57 @@ export class AdeudoPlantillaPage implements OnInit {
   constructor(private platform: Platform,
               private filePicker: IOSFilePicker,
               private base64: Base64,
+              private file: File,
+              private transfer: FileTransfer,
               private fileChooser: FileChooser,
               private filePath: FilePath,
+              private fileopen: FileOpener,
               private modalCtrl: ModalController,
               private adeudoService:AdeudoService,
+              private fileDownloaderService: FileDownloaderService,
               private userData:UserData) { }
 
   ngOnInit() {
     this.idEmpresa = this.userData.getIdEmpresa();
     this.idAgente = this.userData.getIdAgente();
   }
+
+
+  downloadPlantilla(){
+    console.log('downloadPlantilla');
+
+    /* let MIMETypes={ 
+      //extensiones para diferentes archivos
+      //https://stackoverflow.com/questions/48583578/how-to-open-doc-ppt-xlsx-pdf-jpg-png-file-using-ionic-native-file-opener
+      'txt' :'text/plain',
+      'docx':'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'doc' : 'application/msword',
+      'pdf' : 'application/pdf',
+      'jpg' : 'image/jpeg',
+      'bmp' : 'image/bmp',
+      'png' : 'image/png',
+      'xls' : 'application/vnd.ms-excel',
+      'xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'rtf' : 'application/rtf',
+      'ppt' : 'application/vnd.ms-powerpoint',
+      'pptx': 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+    } */
+
+    const fileTransfer: FileTransferObject = this.transfer.create();
+    //const url = 'https://almacenamientonube.s3.us-west-1.amazonaws.com/Config/reglamento_empresaId_7.pdf';
+    const url = 'https://almacenamientonube.s3.us-west-1.amazonaws.com/App/plantillas/PLANTILLA_CARGAR_ADEUDOS.xlsx';
+    fileTransfer.download(url, this.file.dataDirectory + 'plantilla_cargar_adeudos.xlsx').then((entry) => {
+      const entryUrl = entry.toURL();
+      console.log('download complete: ' + entryUrl);
+      this.fileopen.open(entryUrl, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    }, (error) => {
+      console.log('error: ' + error);
+      this.userData.showToast('Error al descargar plantilla, no se encontro en el servidor','danger');
+    });
+
+    
+  }
+
 
   seleccionarPlantilla(){    
     if (this.platform.is('ios')) {

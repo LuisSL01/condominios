@@ -87,6 +87,11 @@ export class AgenteService {
     return this.http.post<ApiResponse>(this.baseUrl + environment.coreApiBaseAgenteDepartamentoOperation , formData).pipe(share());
   }
 
+  addAgenteToDepartamentos(formData: FormData): Observable<ApiResponse> {
+    console.log('addAgenteToDepartamentos:'+this.baseUrl + environment.coreApiBaseAgenteDepartamentoOperation+environment.coreApiBaseAgenteDepartamentoMultipleOperation);
+    return this.http.post<ApiResponse>(this.baseUrl + environment.coreApiBaseAgenteDepartamentoOperation+environment.coreApiBaseAgenteDepartamentoMultipleOperation , formData).pipe(share());
+  }
+
   deleteAgenteDepto(idAgenteDepto: number) : Observable<ApiResponse> {
     console.log('deleteAgenteDepto: ',this.baseUrl + environment.coreApiBaseAgenteDepartamentoOperation +environment.coreApiBaseDeleteOperation + "/" + idAgenteDepto );
     return this.http.delete<ApiResponse>(this.baseUrl + environment.coreApiBaseAgenteDepartamentoOperation + environment.coreApiBaseDeleteOperation + "/" + idAgenteDepto).pipe(share());

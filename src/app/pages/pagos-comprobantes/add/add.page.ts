@@ -33,6 +33,8 @@ export class AddPage implements OnInit {
     data: this.fb.group({
       formaPago:["",[Validators.required]],
       descripcionFormaPago:["",],
+      importe: ["",],
+      fecha: [new Date()],
     })
   });
 
@@ -89,7 +91,9 @@ export class AddPage implements OnInit {
     this.createPagoComprobante = this.fb.group({
       data: this.fb.group({
         formaPago:[this.pago.data.formaPago],
-        descripcionFormaPago:[this.pago.data.descripcionFormaPago]
+        descripcionFormaPago:[this.pago.data.descripcionFormaPago],
+        importe: [this.pago.data.importe],
+        fecha: [this.pago.data.fecha],
       })
     });
   }

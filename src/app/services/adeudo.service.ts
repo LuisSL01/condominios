@@ -2,7 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { AdeudoPago } from '../models/adeudo-pago.model';
 import { Storage } from '@ionic/storage';
 import { DataLocalService } from './data-local.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ApiResponse } from '../models/api-response.model';
 import { share } from 'rxjs/operators';
 import { Observable } from 'rxjs/index';
@@ -112,6 +112,16 @@ export class AdeudoService {
   uploadPlantilla(formData: any, idEmpresa: number, idAgente:number): Observable<ApiResponse> {
     console.log('saveReglamentoPDF: ' + this.baseUrl + this.adeudoContext + "/plantilla/" + idEmpresa+"/agente/"+idAgente);
     return this.http.post<ApiResponse>(this.baseUrl + this.adeudoContext + "/plantilla/" + idEmpresa+"/agente/"+idAgente, formData).pipe(share());
+  }
+
+  getPlantila(): Observable<Blob> {
+    const headers = new HttpHeaders({'Content-Type': 'application/json', responseType: 'blob'});
+    console.log(this.baseUrl + this.adeudoContext + '/getPlantilla');
+        
+    return this.http.get<Blob>(this.baseUrl + this.adeudoContext + '/getPlantilla', {
+        headers: headers,
+        responseType: 'blob' as 'json'
+      });
   }
 
 /*Concepto adeudo */

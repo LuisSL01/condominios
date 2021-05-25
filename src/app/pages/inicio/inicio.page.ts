@@ -65,14 +65,9 @@ export class InicioPage implements OnInit {
               ) { 
                 this.componentes = this.dataService.getMenuOpts();
                 /* this.publicaciones = this.publicacionService.publicaciones;
-                  console.log('this.publicaciones:'+ this.publicaciones); */
-                  console.log('invocando a analytics');
-                  
+                  console.log('this.publicaciones:'+ this.publicaciones); */                  
                   this.analytics.setCurrentScreen('Inicio');
-                  this.analytics.logEvent('en log event de inicio')
-
-                  console.log('Se han invocado los metodos de analytics');
-               
+                  this.analytics.logEvent('Ventana inicio')                  
      }
 
  

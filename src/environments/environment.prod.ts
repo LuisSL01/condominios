@@ -214,6 +214,7 @@ export const environment = {
   coreApiBaseCorreoSimpleOperation: '/sendCorreoSimple',  
   
   coreApiBaseAgenteDepartamentoOperation: '/agenteDepartamento',  
+  coreApiBaseAgenteDepartamentoMultipleOperation: '/multiple',  
   coreApiBaseAgenteDepartamentoListOperation: '/listDepartamentos',   
   
   coreApiBasePublicidadOperation: '/publicidad',  
