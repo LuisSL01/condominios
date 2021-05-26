@@ -89,7 +89,7 @@ export class AdeudoPlantillaPage implements OnInit {
             this.base64.encodeFile(filePath).then((base64File: string) => {
               base64File = base64File.substring(base64File.lastIndexOf(',') + 1, base64File.length);
               this.plantilla = new Archivo(base64File, "plantillaAdeudo_" + this.idEmpresa + ".xlsx")
-              this.userData.showToast('procesado correctamente...','success');
+              this.userData.showToast('seleccionado correctamente...','success');
             }, (err) => {
               alert("Error E: " + err);
             });
@@ -108,7 +108,7 @@ export class AdeudoPlantillaPage implements OnInit {
             this.base64.encodeFile(filePath).then((base64File: string) => {
               base64File = base64File.substring(base64File.lastIndexOf(',') + 1, base64File.length)              
               this.plantilla = new Archivo(base64File, "plantillaAdeudo_" + this.idEmpresa + ".xlsx")
-              this.userData.showToast('procesado correctamente...','success');
+              this.userData.showToast('seleccionado correctamente...','success');
             }, (err) => {
               alert("Error E: " + err);
             });
@@ -122,16 +122,15 @@ export class AdeudoPlantillaPage implements OnInit {
   cargarPlantilla(){
     console.log('cargarPlantilla'+ this.plantilla);    
     const formData = new FormData();
-    console.log(JSON.stringify(this.plantilla));    
     formData.append("file", JSON.stringify(this.plantilla));
     this.adeudoService.uploadPlantilla(formData, this.idEmpresa, this.idAgente).subscribe(
       (data) => {
         console.log(data);
         if (data.status === 200) {
           //this.router.navigate(['/reglamento']);    
-          alert('plantilla cargada correctamente')
+          alert('Plantilla enviada exitosamente \n'+ data.result)
         } else {
-          alert('Problema al cargar plantilla')
+          alert('Problema al enviar plantilla al servidor')
         }
       }, (err) => {
         this.userData.showToast("Error C: " + err);

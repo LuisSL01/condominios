@@ -40,8 +40,11 @@ export class ListPage implements OnInit {
                 if (data.status === 200) { 
                   this.userData.showToast('registro eliminado correctamente');
                   this.adeudoService.removeElement(this.adeudo);
-                }else  
-                  this.userData.showToast('Error al eliminar registro');
+                }else if(data.status===500)  {
+                  this.userData.showToast('Error al eliminar registro, verifique no tenga un comprobante de pago asociado');
+                }
+                else
+                  this.userData.showToast("Error al eliminar registro");                  
               },
               (err) => {
                   this.userData.showToast("Error al eliminar registro");                  

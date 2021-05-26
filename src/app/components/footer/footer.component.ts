@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Publicidad } from 'src/app/models/publicidad.model';
 import { PublicidadService } from '../../services/publicidad.service';
+import { AngularFireAnalytics } from '@angular/fire/analytics';
 
 @Component({
   selector: 'app-footer',
@@ -33,7 +34,8 @@ export class FooterComponent implements OnInit {
 
   
   
-  constructor(public publicidadService:PublicidadService) { 
+  constructor(public publicidadService:PublicidadService,
+              private analytics: AngularFireAnalytics) { 
               this.insertaPub();
 
   }
@@ -65,6 +67,7 @@ export class FooterComponent implements OnInit {
 
   clicPublicidad(pathUrl:string){
     console.log('clicPublicidad', pathUrl);
+    this.analytics.logEvent('clic página: '+pathUrl);                  
     window.open(pathUrl,'_system', 'location=yes');
   }
 
