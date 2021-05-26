@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Seleccionar Residencia</ion-title>
+    <ion-title>Seleccionar Fraccionamiento</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
@@ -9,7 +9,7 @@
     <ion-item *ngFor="let empresa of empresas" (click)="empresaSelected(empresa)" detail>
 
       <ion-label>
-        {{empresa.id}} --  {{empresa.nombre}}
+        {{empresa.nombre}}
       </ion-label>
     </ion-item>
   </ion-list>

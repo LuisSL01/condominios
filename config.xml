@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.erpvortex.corbee1" version="1.0.22" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.erpvortex.corbee1" version="1.0.23" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Armonía Residencial</name>
     <description>App para hacer más amena la convivencia en la Residencia.</description>
     <author email="ingmiguelveloz@gmail.com" href="https://www.erpvortex.com/">Erp Vortex</author>
-    <content original-src="index.html" src="http://localhost:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <access launch-external="yes" origin="whatsapp://*" />
     <allow-navigation href="*" />
@@ -47,7 +47,7 @@
     </platform>
     <platform name="ios">
         <config-file parent="NSCameraUsageDescription" platform="ios" target="*-Info.plist">
-            <string>Para uso del fracionamiento (fotos)</string>
+            <string>You can take photos</string>
         </config-file>
         <config-file parent="NSLocationWhenInUseUsageDescription" platform="ios" target="*-Info.plist">
             <string>Para uso del fracionamiento</string>
