@@ -189,6 +189,7 @@ export class HomePage implements OnInit {
       componentProps: {
         empresas: this.empresas,
         username: this.user,
+        idAgente: this.idAgente
       },
       cssClass: "my-custom-class",
     });
