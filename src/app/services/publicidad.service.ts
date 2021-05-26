@@ -30,7 +30,7 @@ export class PublicidadService {
       data=>{        
         if(data.status === 200){
           this.imagesPublicidad = data.result;
-          console.log('this.imagesPublicidad', JSON.stringify(this.imagesPublicidad));    
+          console.log('this.imagesPublicidad', JSON.stringify(this.imagesPublicidad));
         }
       }, err => {                  
         console.log('Error en el servicio al buscar registros');
