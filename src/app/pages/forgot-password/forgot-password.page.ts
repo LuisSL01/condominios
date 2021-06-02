@@ -32,7 +32,10 @@ export class ForgotPasswordPage implements OnInit {
             /* let link = environment.coreServiceBaseUrl + "/reset-password;item=%7B%22i%22:%22"+btoa(data.result.id)+"%22,%22c%22:%22"+btoa(data.result.email)+"%22%7D";             */
             
             //ip del proyecto de angular
-            let link ="http://54.177.89.203/reset-password;item=%7B%22i%22:%22"+btoa(data.result.id)+"%22,%22c%22:%22"+btoa(data.result.email)+"%22%7D";
+
+            /* let link ="http://54.177.89.203/reset-password;item=%7B%22i%22:%22"+btoa(data.result.id)+"%22,%22c%22:%22"+btoa(data.result.email)+"%22%7D"; */
+
+            let link ="http://54.177.89.203/reset-password;item="+btoa(data.result.id+"||"+data.result.email)+"";
 
             let men = "Por favor acceda a la siguiente liga para reestablecer su contraseña <a href='" + link + "'>Clic aquí!</a>";
             let objCorreo = {
