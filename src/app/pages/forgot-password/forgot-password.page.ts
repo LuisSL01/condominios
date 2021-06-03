@@ -34,10 +34,14 @@ export class ForgotPasswordPage implements OnInit {
             //ip del proyecto de angular
 
             /* let link ="http://54.177.89.203/reset-password;item=%7B%22i%22:%22"+btoa(data.result.id)+"%22,%22c%22:%22"+btoa(data.result.email)+"%22%7D"; */
-
-            let link ="http://54.177.89.203/reset-password;item="+btoa(data.result.id+"||"+data.result.email)+"";
-
-            let men = "Por favor acceda a la siguiente liga para reestablecer su contraseña <a href='" + link + "'>Clic aquí!</a>";
+            
+            /* let link ="http://54.177.89.203/reset-password;item="+btoa(data.result.id+"||"+data.result.email)+""; */
+            let link ="http://54.177.89.203/reset-password;item="+data.result.id+"";
+            
+            /* let men = "Por favor acceda a la siguiente liga para reestablecer su contraseña <a href='" + link + "',target=\"popup\" onclick=\"window.open('"+link+"')\" >Clic aquí!</a>"; */
+            let men = "Por favor acceda a la siguiente liga para reestablecer su contraseña <a href='" + link + "' target=\"popup\" onclick=\"window.open('"+link+"')\" >Clic aquí!</a>";
+            
+            
             let objCorreo = {
               de: "notificaciones@erpvortex.com",
               para: [this.email],
@@ -45,7 +49,7 @@ export class ForgotPasswordPage implements OnInit {
               mensaje: men,
               cc: ["luis.silva@erpvortex.com"],
               bcc: []
-            }            
+            }
             const formularioData = new FormData();
             formularioData.append('data', JSON.stringify(objCorreo));
 
