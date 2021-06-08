@@ -63,11 +63,15 @@ export class InicioPage implements OnInit {
               
               /* private firebaseAnalytics: FirebaseAnalytics */
               ) { 
-                this.componentes = this.dataService.getMenuOpts();
-                /* this.publicaciones = this.publicacionService.publicaciones;
-                  console.log('this.publicaciones:'+ this.publicaciones); */                  
+                try{
+                  this.componentes = this.dataService.getMenuOpts();                
                   this.analytics.setCurrentScreen('Inicio');
-                  this.analytics.logEvent('Ventana inicio')                  
+                  this.analytics.logEvent('Ventana inicio');                  
+                } catch (error) {
+                  console.log('error'+ error);
+                  this.userData.showToast('Error en recuperar componentes/analytics-> '+ error,'danger');
+                  this.router.navigate(['/home']);//se redireccione al home para que inicie sesion
+                } 
      }
 
  
@@ -98,12 +102,13 @@ export class InicioPage implements OnInit {
       }
     } catch (error) {
       console.log('error'+ error);
+      this.userData.showToast('Error en verificaExisteDatosSesion-> '+ error,'danger');
       this.router.navigate(['/home']);//se redireccione al home para que inicie sesion
     }   
    }
 
   ionViewWillEnter(){    
-    this.verificaExisteDatosSesion();     
+    this.verificaExisteDatosSesion();
   }
   async cargarDatosInteres(){ 
     if( ! this.climaData){//que solo recupere cuanto no hayan datos
@@ -129,8 +134,7 @@ export class InicioPage implements OnInit {
           }
         );
     }else{
-      console.log('No se pudo recuperar los datos de empresa');
-      
+      console.log('No se pudo recuperar los datos de empresa');      
     }    
   }
 

@@ -79,7 +79,7 @@ export class BitacoraVisitasPage implements OnInit {
   getRegistrosVisita(page: number, size: number, eventInfinite?, eventRefresh?) {
     this.bitacoraVisitaService.getBitacoraVisitas(this.idEmpresa, page, size, this.filters).subscribe((data) => {
           if (data.status === 200) {
-
+            
             if (eventInfinite) {
               this.bitacoraRegistrosList.push(...data.result.content);
               if (data.result.content.length === 0) {
