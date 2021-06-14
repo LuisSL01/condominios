@@ -6,6 +6,7 @@ import { IonInfiniteScroll, ModalController } from '@ionic/angular';
 import { Storage } from "@ionic/storage";
 import { ActivatedRoute } from '@angular/router';
 import { AdeudoPlantillaPage } from '../adeudo-plantilla/adeudo-plantilla.page';
+import { UiServiceService } from '../../services/ui-service.service';
 
 @Component({
   selector: 'app-adeudos',
@@ -30,6 +31,7 @@ export class AdeudosPage implements OnInit {
               public userData:UserData,
               public activatedRoute: ActivatedRoute,
               private modalCtrl: ModalController,
+              private ui:UiServiceService,
               private storage: Storage,) { 
     
   }
@@ -82,17 +84,9 @@ export class AdeudosPage implements OnInit {
     await modal.present();
    
     modal.onDidDismiss().then((result) => {
-
-      
-
-      
       if (result.data && result.data.event) {
         console.log('se han recibido data del mdal');
-        
-        
       } 
-      
-    
     });
     
   }
@@ -112,9 +106,11 @@ export class AdeudosPage implements OnInit {
 
   getAdeudos(page: number, size: number, eventInfinite?, eventRefresh?) {
     console.log('getAdeudos');
+    this.ui.presentLoading();
     if(this.userData.administrador){//Si es administrador puede ver todos los adeudos
       this.adeudoService.getAdeudos(this.idEmpresa, page, size, this.filters)
         .subscribe((data) => {
+          this.ui.dismissLoading();
           console.log(data);        
             if (data.status === 200) {
               if (eventInfinite) {
@@ -136,6 +132,7 @@ export class AdeudosPage implements OnInit {
             }
           },
           (err) => {
+            this.ui.dismissLoading();
             this.userData.showToast('error al recuperar registros');
             console.log(err);
             this.completeEvent(eventInfinite, eventRefresh);
@@ -144,6 +141,7 @@ export class AdeudosPage implements OnInit {
     }else{
       this.adeudoService.getAdeudosPorDepartamento(this.idEmpresa, this.idDepartamento, page, size, this.filters)
       .subscribe((data) => {
+        this.ui.dismissLoading();
         console.log(data);        
           if (data.status === 200) {
             if (eventInfinite) {
@@ -165,6 +163,7 @@ export class AdeudosPage implements OnInit {
           }
         },
         (err) => {
+          this.ui.dismissLoading();
           this.userData.showToast('error al recuperar registros');
           console.log(err);
           this.completeEvent(eventInfinite, eventRefresh);

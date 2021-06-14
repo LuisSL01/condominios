@@ -13,6 +13,7 @@ import { AdeudosPage } from '../../adeudos/adeudos.page';
 import { AdeudoPago } from '../../../models/adeudo-pago.model';
 import { Archivo } from '../../../models/archivo-vortex.model';
 import { DepartamentoService } from '../../../services/departamento.service';
+import { UiServiceService } from '../../../services/ui-service.service';
 
 declare var window: any;
 
@@ -59,6 +60,7 @@ export class AddPage implements OnInit {
     private departamentoService: DepartamentoService,
     private agenteService: AgenteService,
     public activatedRoute: ActivatedRoute,
+    private ui:UiServiceService,
     private adeudoService: AdeudoService) { }
 
   ngOnInit() {
@@ -129,8 +131,10 @@ export class AddPage implements OnInit {
 
   buscarAdeudosDepartamento(){
     this.userData.showToast("Buscando adeudos asignados");
+    this.ui.presentLoading();
 //    this.adeudoService.getAdeudosByEmpresaAndAgente(this.userData.getIdEmpresa(), this.agenteSelectedId).subscribe((data) => {
     this.adeudoService.getAdeudosByEmpresaAndDepartamento(this.userData.getIdEmpresa(), this.departamentoSelectedId).subscribe((data) => {
+      this.ui.dismissLoading();
       if (data.status === 200) {
         console.log('Adeudos recuperados correctamente'); 
         this.adeudos = data.result;
@@ -144,7 +148,9 @@ export class AddPage implements OnInit {
       }
     },
     (err) => {
+      this.ui.dismissLoading();
       console.log(err);
+
     }
   );
   }

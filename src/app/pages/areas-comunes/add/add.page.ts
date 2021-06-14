@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ArchivoVortexApp, Archivo } from '../../../models/archivo-vortex.model';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { UserData } from "../../../providers/user-data";
+import { AlertController } from "@ionic/angular";
 
 declare var window: any;
 
@@ -19,6 +20,8 @@ export class AddPage implements OnInit {
   clasificacionAreas: string[] = ['Area verde','Juegos infantiles','Mascotas','Trota pista', 'Otro'];
 
   diasSelected:any[]=[];
+
+  tiempoFijoList:any[]=[];
 
   dias: any[] = [
     { name: 'Domingo', isChecked: false, pos: 0 },
@@ -68,7 +71,8 @@ export class AddPage implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     public activatedRoute: ActivatedRoute,
-    private userData: UserData
+    private userData: UserData,
+    public alertController: AlertController,
   ) {
     this.idEmpresa = this.userData.getIdEmpresa();
     this.idAgente = this.userData.getIdAgente();
@@ -291,5 +295,81 @@ export class AddPage implements OnInit {
   cambioHoraTermina(event) {
     /* this.areaComun.horaTermina = new Date(event.detail.value); */
     this.createArea.value.data.horaTermina =new Date(event.detail.value);
+  }
+
+  agregarTiempoFijo(){    
+    this.presentAlertCreateTiempoFijo();
+  }
+
+  async presentAlertCreateTiempoFijo() {
+    const alert = await this.alertController.create({
+      cssClass: 'alertHeader',
+      header: 'Confirmar!',
+      message: 'Agregar tiempo fijo al area comun',
+      inputs: [
+        {
+          name: 'desc',
+          type: 'text',
+          placeholder: 'Desc'
+        },        
+        {
+          name: 'horas',
+          type: 'number',
+          placeholder: 'hrs. (0-23)',
+          min: 0,
+          max: 23
+        },
+        {
+          name: 'minutos',
+          type: 'number',
+          placeholder: 'min. (1-59)',
+          min: 0,
+          max: 59
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Guardar',
+          handler: (alertData) => {
+            console.log('Confirm Okay');
+            if(alertData && alertData.desc){
+              const horas = alertData.horas;
+              if(!(horas >= 0 && horas<=23)){
+                this.userData.showToast('El valor de hora debe ser entre 0 y 23','warning');
+                return;
+              }
+              const minutos = alertData.minutos;
+              if(!(minutos >= 0 && minutos<=59)){
+                this.userData.showToast('El valor de minutos debe estar entre 0 y 59','warning');
+                return;
+              }
+              let objTiempoFijo:any ={};          
+              objTiempoFijo.descripcion = alertData.desc;
+              objTiempoFijo.horas = horas;
+              objTiempoFijo.minutos = minutos;
+              this.tiempoFijoList.push(objTiempoFijo);
+            }else{
+              this.userData.showToast('Error, la descripción es necesaria', 'warning');
+            }
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  deleteTempFijo(tiempoFijo){
+    if(this.tiempoFijoList){//se remueve de la lista
+      var index = this.tiempoFijoList.indexOf(tiempoFijo);
+      if (index > -1)  this.tiempoFijoList.splice(index, 1);   
+      console.log('se ha eliminado');                                                 
+    }    
   }
 }

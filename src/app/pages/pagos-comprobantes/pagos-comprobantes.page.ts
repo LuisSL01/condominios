@@ -5,6 +5,7 @@ import { IonInfiniteScroll } from '@ionic/angular';
 import { UserData } from '../../providers/user-data';
 import { Storage } from "@ionic/storage";
 import { ActivatedRoute } from '@angular/router';
+import { UiServiceService } from '../../services/ui-service.service';
 
 @Component({
   selector: 'app-pagos-comprobantes',
@@ -28,6 +29,7 @@ export class PagosComprobantesPage implements OnInit {
   constructor(public pagosComprobantesService: PagosComprobantesService,
               private userData:UserData,
               public activatedRoute: ActivatedRoute,
+              private ui:UiServiceService,
               private storage: Storage,) {
 
     
@@ -87,8 +89,10 @@ export class PagosComprobantesPage implements OnInit {
   getPagosComprobantes(page: number, size: number, eventInfinite?, eventRefresh?) {
 
     this.userData.showToast('Buscando registros');
+    this.ui.presentLoading();
     if(this.userData.administrador){//Si es administrador puede ver todos los adeudos
           this.pagosComprobantesService.getPagosComprobantes(this.idEmpresa, page, size, this.filters).subscribe((data) => {
+                this.ui.dismissLoading();
                 if (data.status === 200) {
                   if (eventInfinite) {
                     this.pagoComprobanteList.push(...data.result.content);
@@ -109,6 +113,7 @@ export class PagosComprobantesPage implements OnInit {
                 }
               },
               (err) => {
+                this.ui.dismissLoading();
                 this.userData.showToast('error al recuperar registros');
                 console.log(err);
                 this.completeEvent(eventInfinite, eventRefresh);
@@ -117,6 +122,7 @@ export class PagosComprobantesPage implements OnInit {
     }else{
       //this.pagosComprobantesService.getPagosComprobantesPorAgente(this.idEmpresa, this.idAgente, page, size, this.filters).subscribe((data) => {
         this.pagosComprobantesService.getPagosComprobantesPorDepartamento(this.idEmpresa, this.idDepartamento, page, size, this.filters).subscribe((data) => {
+        this.ui.dismissLoading();
         if (data.status === 200) {
           if (eventInfinite) {
             this.pagoComprobanteList.push(...data.result.content);
@@ -137,6 +143,7 @@ export class PagosComprobantesPage implements OnInit {
         }
       },
       (err) => {
+        this.ui.dismissLoading();
         this.userData.showToast('error al recuperar registros');
         console.log(err);
         this.completeEvent(eventInfinite, eventRefresh);

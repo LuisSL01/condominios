@@ -14,6 +14,7 @@ import { PushService } from '../../services/push.service';
 import { isEmpty } from 'rxjs/operators';
 import { LogService } from '../../services/log.service';
 import { DepartamentoPage } from '../departamento/departamento.page';
+import { UiServiceService } from '../../services/ui-service.service';
 
 @Component({
   selector: "app-home",
@@ -42,7 +43,8 @@ export class HomePage implements OnInit {
     private dataLocalService: DataLocalService,
     private modalCtrl: ModalController,
     private agenteService: AgenteService,
-    private pushService: PushService
+    private pushService: PushService,
+    private ui:UiServiceService
   ) {
   }
 
@@ -68,7 +70,8 @@ export class HomePage implements OnInit {
     };
 
     console.log("loginPayload: " + JSON.stringify(loginPayload));
-    this.showLoading();
+    
+    this.ui.presentLoading();
     this.user = loginPayload.username.toLowerCase();
   
       this.authService.login(loginPayload).subscribe(data => {
@@ -79,7 +82,8 @@ export class HomePage implements OnInit {
               this.nombreCompleto = userFull.result.nombreCompleto +" "+ userFull.result.apellidoPaterno +" " +  userFull.result.apellidoMaterno;
               if (userFull.result.activo === false) {
                 this.router.navigate(['/home']);
-                this.showToast("El usuario " + this.nombreCompleto + ", no se encuentra activo para la aplicación móvil");
+                this.ui.dismissLoading();
+                this.showToast("El usuario " + this.nombreCompleto + ", no se encuentra activo para la aplicación móvil");                
               } else {//Aqui debo preguntar a cuantas empresas tiene acceso                          
                 window.localStorage.setItem('userDetails', JSON.stringify(data.result));
                 this.storage.set('userDetails', JSON.stringify(data.result));
@@ -93,13 +97,16 @@ export class HomePage implements OnInit {
               }
             } else {
               this.userData.showToast("Error al recuperar datos de usuario", "warning");
+              this.ui.dismissLoading();
             }
           });
         } else {
           this.userData.showToast("Error al autenticar usuario", "warning");
+          this.ui.dismissLoading();
         }
       }, err => {        
         this.userData.showToast("Error al autenticar usuario", "warning");
+        this.ui.dismissLoading();
       });
     /* } */
   }
@@ -107,6 +114,7 @@ export class HomePage implements OnInit {
   buscaEmpresasUsuario(){
     if(this.idAgente > 0){
       this.authService.getListEmpresas(this.idAgente).subscribe(data => {
+
         if (data.status === 200) {
           this.empresas = data.result;
           if (this.empresas.length == 1) {//Debo redirecionar al inicio, solo hay una empresa
@@ -125,6 +133,7 @@ export class HomePage implements OnInit {
         }
       }, err => {
         console.log('Error al buscar las empresas');
+        this.ui.dismissLoading();
       });
     }
   }
@@ -132,8 +141,9 @@ export class HomePage implements OnInit {
   buscaDepartamentosAgente(){
     if(this.idAgente > 0){
       this.agenteService.getDepartamentosPorAgente(this.idAgente).subscribe(data=>{
+        this.ui.dismissLoading();
         if(data.status === 200){
-            this.departamentos = data.result;
+            this.departamentos = data.result;          
             if(this.departamentos.length > 1 ){
               console.log('debo mostrar los departamentos para que seleccione alguno');
               console.log(this.departamentos);
@@ -151,9 +161,11 @@ export class HomePage implements OnInit {
   
         }else{
           this.showToast('Error al recuperar departamentos del usuario')
+          
         }
       }, err => {                        
         this.showToast('Error en el servicio al buscar departamentos de usuario')
+        this.ui.dismissLoading();
       });
     }
   }

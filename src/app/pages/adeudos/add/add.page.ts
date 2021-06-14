@@ -39,10 +39,11 @@ export class AddPage implements OnInit {
     agenteAdeuda: ["",],
     departamento: ["",],
     conceptoAdeudo: ["",],
+    fechaCubrir: [new Date()],
     data: this.fb.group({      
       descripcion: ["",],
-      importe: ["", [Validators.required]],
-      fechaCubrir: [new Date()],
+      importe: ["", [Validators.required]],      
+      importeInteres: ["",],      
       registroOriginal:[true],//Para diferenciar los creados manualmente y los automaticos desde el servidor
       recurrente:[false],      
       periodo:[""],
@@ -332,12 +333,17 @@ export class AddPage implements OnInit {
   prepareEdit(){
     console.log('prepareEdit');
     this.edit = true;
+    console.log('this.adeudo.data.fechaCubrir ->',this.adeudo.data.fechaCubrir);
+    console.log('this.adeudo.fechaCubrir ->',this.adeudo.fechaCubrir);
+    
     this.createAdeudo = this.fb.group({
+      conceptoAdeudo: [this.adeudo.conceptoAdeudo],
+      fechaCubrir: [this.adeudo.fechaCubrir],
       data: this.fb.group({        
-        concepto: [this.adeudo.data.concepto],
-        descripcion: [this.adeudo.data.descripcion],
-        importe: [this.adeudo.data.importe],
-        fechaCubrir: [this.adeudo.data.fechaCubrir],
+        //concepto: [this.adeudo.data.concepto],
+        //descripcion: [this.adeudo.data.descripcion],
+        importe: [this.adeudo.data.importe],        
+        importeInteres: [this.adeudo.data.importeInteres],        
         recurrente:[this.adeudo.data.recurrente],
         periodo:[this.adeudo.data.periodo],
         registroOriginal:[this.adeudo.data.registroOriginal],        
@@ -400,6 +406,7 @@ export class AddPage implements OnInit {
             agenteAdeuda : this.createAdeudo.value.agenteAdeuda,
             departamento : this.createAdeudo.value.departamento,
             conceptoAdeudo: this.createAdeudo.value.conceptoAdeudo,
+            fechaCubrir: this.createAdeudo.value.fechaCubrir,
             status:22,//al crearse se crean como pendiente
             data: this.createAdeudo.value.data
           };
@@ -424,6 +431,7 @@ export class AddPage implements OnInit {
         empresa : this.idEmpresa,
         agenteCreador : this.idAgente,
         conceptoAdeudo: this.createAdeudo.value.conceptoAdeudo,
+        fechaCubrir: this.createAdeudo.value.fechaCubrir,
         data: this.createAdeudo.value.data       
       };
       if(this.torreSelected){
@@ -448,6 +456,7 @@ export class AddPage implements OnInit {
       const adeudoObj = {
         empresa : this.idEmpresa,
         agenteCreador : this.idAgente,
+        fechaCubrir: this.createAdeudo.value.fechaCubrir,
         data: this.createAdeudo.value.data      
       };
       console.log('Objeto enviado..'+ JSON.stringify(adeudoObj));
@@ -469,6 +478,12 @@ export class AddPage implements OnInit {
     console.log('editar()...');    
     this.adeudoChangesForm = this.fb.group({});
     this.getDirtyFields();
+
+    let formData = this.adeudoChangesForm.value;
+    if (formData.fechaCubrir) {
+      this.adeudoChangesForm.value.fechaCubrir = new Date(formData.fechaCubrir).getTime();  //en caso de que la fecha se haya editado se obtiene el datatime    
+    }
+
     console.log('adeudoChangesForm', JSON.stringify(this.adeudoChangesForm.value));
     this.adeudoService.update(this.adeudo.id, this.adeudoChangesForm.value).subscribe(data => {
       if (data.status === 200) {
@@ -487,10 +502,17 @@ export class AddPage implements OnInit {
 
   getDirtyFields() {
     
-    Object.keys(this.createAdeudo['controls'].data['controls']).forEach(key => {
+    /* Object.keys(this.createAdeudo['controls'].data['controls']).forEach(key => {
       if (this.createAdeudo.get('data').get(key).dirty) {
         this.adeudoChangesForm.addControl(key, this.createAdeudo.get('data').get(key));
       }
+    }); */
+
+    Object.keys(this.createAdeudo['controls']).forEach(key => {      
+      if (this.createAdeudo.get(key).dirty) {
+        this.adeudoChangesForm.addControl(key, this.createAdeudo.get(key));
+      }
+      
     });
   }
 

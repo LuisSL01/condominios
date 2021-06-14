@@ -14,6 +14,7 @@ import { Archivo } from '../../models/archivo-vortex.model';
 import { EmpresaService } from '../../services/empresa.service';
 import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
 import { LogService } from '../../services/log.service';
+import { UiServiceService } from '../../services/ui-service.service';
 
 
 @Component({
@@ -35,10 +36,11 @@ export class ReglamentoPage implements OnInit {
     private fileChooser: FileChooser,
     private filePicker: IOSFilePicker,
     private filePath: FilePath,
-    private base64: Base64,
+    private base64: Base64,  
     private empresaService: EmpresaService,
     private previewAnyFile: PreviewAnyFile,
     private logService: LogService,
+    private ui:UiServiceService
   ) {
     /* this.fileTransfer = this.transfer.create(); */
   }
@@ -72,6 +74,7 @@ export class ReglamentoPage implements OnInit {
 
 
   subirReglamento() {
+    
     if (this.platform.is('ios')) {
       this.filePicker.pickFile()
         .then((uri) => {
@@ -83,21 +86,24 @@ export class ReglamentoPage implements OnInit {
                 files.push(new Archivo(base64File, "reglamento_" + this.idEmpresa + ".pdf"));
                 const formData = new FormData();
                 formData.append("file", JSON.stringify(files));
+                this.ui.presentLoading();
                 this.empresaService.saveReglamentoPDF(formData, this.idEmpresa).subscribe(
                   (data) => {
+                    this.ui.dismissLoading();
                     console.log(data);
                     if (data.status === 200) {
                       //this.router.navigate(['/reglamento']);    
-                      alert('Reglamento cargado correctamente')
+                      alert('Reglamento cargado correctamente')                      
                     } else {
-                      alert('Problema al cargar el reglamento')
+                      alert('Problema al cargar el reglamento')                      
                     }
                   }, (err) => {
-                    this.userData.showToast("Error C: " + err);
+                    this.userData.showToast("Error C: " + err);                    
                   }, () => { }
                 );
+                
               }, (err) => {
-                alert("Error E: " + err);
+                alert("Error E: " + err);                
               });
             })
             .catch(err => alert(err));
@@ -116,19 +122,24 @@ export class ReglamentoPage implements OnInit {
                 files.push(new Archivo(base64File, "reglamento_" + this.idEmpresa + ".pdf"));
                 const formData = new FormData();
                 formData.append("file", JSON.stringify(files));
+                this.ui.presentLoading();
                 this.empresaService.saveReglamentoPDF(formData, this.idEmpresa).subscribe(
                   (data) => {
+                    this.ui.dismissLoading();
                     console.log(data);
-                    if (data.status === 200) {
+                    if (data.status === 200) {                
                       //this.router.navigate(['/reglamento']);    
+                      
                       alert('Reglamento cargado correctamente')
                     } else {
                       alert('Problema al cargar el reglamento')
                     }
                   }, (err) => {
+                    this.ui.dismissLoading();
                     this.userData.showToast("Error C: " + err);
                   }, () => { }
                 );
+                
               }, (err) => {
                 alert("Error E: " + err);
               });
@@ -137,6 +148,7 @@ export class ReglamentoPage implements OnInit {
         }, (err) => { }
         ).catch(e => alert('Error F' + e));
     }
+    
 
   }
 

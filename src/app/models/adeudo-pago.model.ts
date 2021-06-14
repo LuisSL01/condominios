@@ -11,7 +11,8 @@ export class AdeudoPago{
     public nombreAgenteAdeuda:string ;//para mostrarlo en el List
     public nombreConcepto:string ;//para mostrarlo en el List
     public nombreStatus:string ;//para mostrarlo en el List
-
+    public conceptoAdeudo:number;
+    public fechaCubrir:Date;
     
     constructor(){
 /*

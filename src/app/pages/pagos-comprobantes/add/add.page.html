@@ -36,7 +36,7 @@
         </ion-label>
         <ion-select formControlName="adeudoId" interface="popover"  okText="Aceptar" cancelText="Cancelar">
           <ion-select-option *ngFor="let add of adeudos" [value]="add.id">
-            {{ add.nombreConcepto }} - {{ add.data.fechaCubrir | date:' MMM yy '}}
+            {{ add.nombreConcepto }} - {{ add.fechaCubrir | date:'dd/MM/yyyy'}}
           </ion-select-option>          
         </ion-select>
       </ion-item>

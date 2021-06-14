@@ -19,19 +19,7 @@
           <ion-select-option value="solo-uno">Solo a uno</ion-select-option>
         </ion-select>
       </ion-item>
-      <!-- <ion-item *ngIf="createAdeudo.value.destinatario === 'solo-uno' && (!edit)">
-        <ion-label>
-          <ion-icon name="person-outline" style="font-size:23px; color: #50c8ec; 
-          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Usuario
-        </ion-label>
-        <ion-select  interface="popover"  
-          formControlName="agenteAdeuda"          
-          okText="Aceptar" cancelText="Cancelar">
-          <ion-select-option *ngFor="let ag of agentes" [value]="ag.id">
-            {{ ag.nombreCompleto}}
-          </ion-select-option>          
-        </ion-select>
-      </ion-item> -->
+    
       <ion-item *ngIf="(createAdeudo.value.destinatario === 'solo-uno' || 
                       createAdeudo.value.destinatario === 'torre_privada' ) && (!edit)">
         <ion-label>
@@ -57,21 +45,7 @@
         </ion-select>
       </ion-item>
 
-     <!--  <ion-item>
-        <ion-label>
-          <ion-icon name="pencil-outline" style="font-size:23px; color: #50c8ec; 
-          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Concepto
-        </ion-label>
-
-        <ion-select interface="popover" formControlName="concepto" okText="Aceptar" cancelText="Cancelar">
-          <ion-select-option value="Mantenimiento">Mantenimiento</ion-select-option>
-          <ion-select-option value="Jardineria">Jardineria</ion-select-option>
-          <ion-select-option value="Fiestas">Fiestas</ion-select-option>
-          <ion-select-option value="Otro">Otro</ion-select-option>
-        </ion-select>
-        
-      </ion-item> -->
-      <ion-item>
+      <ion-item  >
         <ion-label>
           <ion-icon name="pencil-outline" style="font-size:23px; color: #50c8ec; 
           margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Concepto
@@ -92,7 +66,7 @@
         
       </ion-item>
 
-      <ion-row >
+      <ion-row  >
         <ion-col size="4">            
         </ion-col>
         <ion-col size="4">
@@ -108,19 +82,20 @@
         </ion-button> 
         </ion-col>
       </ion-row>
+      
+      <ion-item>
+        <ion-label>
+          <ion-icon name="calendar-outline" style="font-size:23px; color: #50c8ec; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Fecha a cubrir
+        </ion-label>
 
+        <ion-datetime style="margin-bottom: -8px;" placeholder="Fecha cubrir" displayFormat="DD MMM YYYY"
+          monthShortNames="ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic" cancelText="Descartar"
+          doneText="Aceptar" formControlName="fechaCubrir">
+        </ion-datetime>
+
+      </ion-item>
       <div formGroupName="data">
-       
-
-        <!--
-        <ion-item  *ngIf="createAdeudo.value.data.concepto === 'Otro'">
-          <ion-label position="floating">
-            <ion-icon name="create-outline" style="font-size:23px; color: #50c8ec; 
-            margin-bottom: -5px;"></ion-icon>&nbsp;Descripción
-          </ion-label>
-          <ion-textarea rows="2" cols="1" formControlName="descripcion"></ion-textarea>
-        </ion-item>
-        -->
 
         <ion-item>
           <ion-label>
@@ -131,18 +106,15 @@
           </ion-input>
         </ion-item>
 
-        <ion-item>
+        <ion-item *ngIf="userData.administrador">
           <ion-label>
-            <ion-icon name="calendar-outline" style="font-size:23px; color: #50c8ec; 
-            margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Fecha a cubrir
+            <ion-icon name="calculator-outline" style="font-size:23px; color: #50c8ec; 
+                margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Importe interés
           </ion-label>
-
-          <ion-datetime style="margin-bottom: -8px;" placeholder="Fecha cubrir" displayFormat="DD MMM YYYY"
-            monthShortNames="ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic" cancelText="Descartar"
-            doneText="Aceptar" formControlName="fechaCubrir">
-          </ion-datetime>
-
+          <ion-input type="number" formControlName="importeInteres">
+          </ion-input>
         </ion-item>
+
 
         <ion-item>
           <ion-label>

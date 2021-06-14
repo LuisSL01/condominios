@@ -11,6 +11,7 @@ import { FileDownloaderService } from 'src/app/services/file-downloader.service'
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { UiServiceService } from '../../services/ui-service.service';
 
 @Component({
   selector: 'app-adeudo-plantilla',
@@ -35,6 +36,7 @@ export class AdeudoPlantillaPage implements OnInit {
               private modalCtrl: ModalController,
               private adeudoService:AdeudoService,
               private fileDownloaderService: FileDownloaderService,
+              private ui:UiServiceService,
               private userData:UserData) { }
 
   ngOnInit() {
@@ -120,19 +122,22 @@ export class AdeudoPlantillaPage implements OnInit {
   }
 
   cargarPlantilla(){
+    this.ui.presentLoading();
     console.log('cargarPlantilla'+ this.plantilla);    
     const formData = new FormData();
     formData.append("file", JSON.stringify(this.plantilla));
     this.adeudoService.uploadPlantilla(formData, this.idEmpresa, this.idAgente).subscribe(
       (data) => {
         console.log(data);
-        if (data.status === 200) {
+        this.ui.dismissLoading();
+        if (data.status === 200) {          
           //this.router.navigate(['/reglamento']);    
           alert('Plantilla enviada exitosamente \n'+ data.result)
-        } else {
+        } else {          
           alert('Problema al enviar plantilla al servidor')
         }
       }, (err) => {
+        this.ui.dismissLoading();
         this.userData.showToast("Error C: " + err);
       }, () => { }
     );
