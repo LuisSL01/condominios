@@ -3,6 +3,7 @@ import { AgenteService } from "../../services/agente.service";
 import { UserData } from "../../providers/user-data";
 import { Storage } from "@ionic/storage";
 import { ActionSheetController, IonInfiniteScroll, ToastController } from '@ionic/angular';
+import { UiServiceService } from '../../services/ui-service.service';
 
 @Component({
   selector: "app-agente",
@@ -25,7 +26,8 @@ export class AgentePage implements OnInit {
     private actionSheetCtrl: ActionSheetController,
     private storage: Storage,
     private userData: UserData,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private ui:UiServiceService
   ) {
     /* this.idEmpresa = this.userData.getIdEmpresa(); */
   }
@@ -83,12 +85,10 @@ export class AgentePage implements OnInit {
   }
 
   getAgentes(page: number, size: number, eventInfinite?, eventRefresh?) {
-    this.agenteService
-      .getAgentes(this.idEmpresa, page, size, this.filters)
-      .subscribe(
-        (data) => {
+    this.ui.presentLoading();
+    this.agenteService.getAgentes(this.idEmpresa, page, size, this.filters).subscribe((data) => {
+          this.ui.dismissLoading();
           if (data.status === 200) {
-
             if (eventInfinite) {
               this.agentesList.push(...data.result.content);
               if (data.result.content.length === 0) {
@@ -110,6 +110,7 @@ export class AgentePage implements OnInit {
           }
         },
         (err) => {
+          this.ui.dismissLoading();
           console.log(err);
           this.userData.showToast("Error al recuperar agentes, revise su conexión a internet");
           this.completeEvent(eventInfinite, eventRefresh);
@@ -178,15 +179,15 @@ export class AgentePage implements OnInit {
         const formData = new FormData();
               formData.append("id_agente",   JSON.stringify(idAgente));
               formData.append("status", JSON.stringify(!status));
-        this.agenteService.updateStatus(formData)
-        .subscribe(
+        this.ui.presentLoading();
+        this.agenteService.updateStatus(formData).subscribe(
           (data) => {
+            this.ui.dismissLoading();
             if (data.status === 200) {
-              
               this.showToast('Agente '+(!status?"Activado":"Inactivado")+' correctamente');
               this.agentePage = 0;
               this.infiniteScroll.disabled = false;
-              this.getAgentes(this.agentePage, 10, null, null);  
+              this.getAgentes(this.agentePage, 10, null, null); 
             } else {
               console.log("Llego otro status al actualizar el agentes " + data);
               this.showToast('No se pudo actualizar el agente');
