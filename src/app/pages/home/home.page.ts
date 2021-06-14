@@ -13,6 +13,8 @@ import { AgenteService } from '../../services/agente.service';
 import { PushService } from '../../services/push.service';
 import { isEmpty } from 'rxjs/operators';
 import { LogService } from '../../services/log.service';
+import { DepartamentoPage } from '../departamento/departamento.page';
+import { UiServiceService } from '../../services/ui-service.service';
 
 @Component({
   selector: "app-home",
@@ -24,7 +26,10 @@ export class HomePage implements OnInit {
   load: any;
   idAgente: number = 0;
   empresas: any[] = [];
+  departamentos: any[] = [];
   user: string;
+
+  nombreCompleto ="";
 
   constructor(
     public userData: UserData,
@@ -38,39 +43,22 @@ export class HomePage implements OnInit {
     private dataLocalService: DataLocalService,
     private modalCtrl: ModalController,
     private agenteService: AgenteService,
-    private pushService: PushService
+    private pushService: PushService,
+    private ui:UiServiceService
   ) {
   }
 
   ngOnInit() {
    }
 
-  /*  async verificaExisteDatosSesion(){  
-    console.log('verificaExisteDatosSesion');
-    const dt = await this.storage.get('userDetails');
-    if (dt) {      
-        console.log('Se encontraron datos de sesion , no es necesario volver a iniciar sesion');        
-        this.showLoading();
-        this.userData.setConfigEmpresa();
-        this.router.navigate(['/inicio']);
-        this.showToast("Bienvenido " + JSON.parse(dt).nombreCompleto);
-      
-    }
-   } */
-
   onLogin() {
-    console.log("onLogin()");
-    console.log("this.user:" + this.login.username);
-    console.log("this.pass:" + this.login.password);
-
-    
+  
     this.logService.escribeLog("Se ha presionado iniciar sesión");
 
     if (this.login.username === "" || this.login.password === "") {
       this.showToast("Se necesita usuario y contraseña")
       return;
     }
-
 
     const objAgente = {
       dispositivoUuid: this.pushService.userId      
@@ -81,82 +69,103 @@ export class HomePage implements OnInit {
       password: this.login.password,
     };
 
-
-
     console.log("loginPayload: " + JSON.stringify(loginPayload));
-    this.showLoading();
-
+    
+    this.ui.presentLoading();
     this.user = loginPayload.username.toLowerCase();
-    if (
-      loginPayload.username.toLowerCase() === "test1" &&
-      loginPayload.password.toLowerCase() === "test1"
-    ) {//Usuario admin prueba
-      window.localStorage.setItem("userDetails", JSON.stringify({ "username": "test1", "nombreCompleto": "Test1", "id": 4 }));
-      this.storage.set("userDetails", JSON.stringify({ "username": "test1", "nombreCompleto": "Test1", "id": 4 }));
-      this.idAgente = 4;
-
-      if( ! this.isEmpty(objAgente.dispositivoUuid)){
-        console.log('debo ir actualizar el uuid');        
-        this.agenteService.updateAgenteCore(this.idAgente , objAgente);
-      }
-      
-
-      this.buscarEmpresasAgente();
-      this.presentModalListEmpresas(); //Debo presentar el modal para seleccionar una empresa
-    } else {
+  
       this.authService.login(loginPayload).subscribe(data => {
         if (data.status === 200) {
-          window.localStorage.setItem('userDetails', JSON.stringify(data.result));
-          this.storage.set('userDetails', JSON.stringify(data.result));
           this.agenteService.getUserById(data.result.id).subscribe(userFull => {
             if (userFull.status === 200) {
-              this.storage.set('userFull', userFull.result);
-              
               /* this.userData.recibeDepartamento(userFull.result.departamento); */
-              let nombreCOmpleto = userFull.result.nombreCompleto +" "+ userFull.result.apellidoPaterno +" " +  userFull.result.apellidoMaterno;
+              this.nombreCompleto = userFull.result.nombreCompleto +" "+ userFull.result.apellidoPaterno +" " +  userFull.result.apellidoMaterno;
               if (userFull.result.activo === false) {
-                this.router.navigate(['/']);
-                this.showToast("El usuario " + nombreCOmpleto + ", no se encuentra activo para la aplicación móvil");
+                this.router.navigate(['/home']);
+                this.ui.dismissLoading();
+                this.showToast("El usuario " + this.nombreCompleto + ", no se encuentra activo para la aplicación móvil");                
               } else {//Aqui debo preguntar a cuantas empresas tiene acceso                          
+                window.localStorage.setItem('userDetails', JSON.stringify(data.result));
+                this.storage.set('userDetails', JSON.stringify(data.result));
+                this.storage.set('userFull', userFull.result);
                 this.idAgente = data.result.id;
                 
-                if( ! this.isEmpty(objAgente.dispositivoUuid)){
-                  console.log('debo ir actualizar el uuid');        
+                if( ! this.isEmpty(objAgente.dispositivoUuid)){                  
                   this.agenteService.updateAgenteCore(this.idAgente , objAgente);                  
                 }
-
-                this.authService.getListEmpresas(this.idAgente).subscribe(data => {
-                  if (data.status === 200) {
-                    this.empresas = data.result;
-                    if (this.empresas.length == 1) {//Debo redirecionar al inicio, solo hay una empresa
-                      /* window.localStorage.setItem('empresaData', JSON.stringify({ "nombre": this.empresas[0].nombre, "id": this.empresas[0].id }));
-                      this.storage.set('empresaData', JSON.stringify({ "nombre": this.empresas[0].nombre, "id": this.empresas[0].id })); */
-
-                      window.localStorage.setItem('empresaData', JSON.stringify(this.empresas[0]));
-                      this.storage.set('empresaData', JSON.stringify(this.empresas[0]));
-                      this.userData.setConfigEmpresa();
-                      this.userData.setConfigUser();
-                      this.router.navigateByUrl('/inicio');
-                      this.showToast("Bienvenido " + nombreCOmpleto + " a Armonía Residencial");
-                    } else if (this.empresas.length > 1) {
-                      this.presentModalListEmpresas()//Debo presentar el modal para seleccionar una empresa
-                    } else {
-                      console.log("Error al recuperar empresas del agente: ", nombreCOmpleto);//Error al recuperar las empresas del user
-                    }
-                  }
-                }, err => {
-                  console.log('Error al buscar las empresas');
-                });
+                this.buscaEmpresasUsuario();                
               }
             } else {
-              console.log('Llego otro status al recuperar el usauario');
+              this.userData.showToast("Error al recuperar datos de usuario", "warning");
+              this.ui.dismissLoading();
             }
           });
         } else {
-          this.showToast("Error 1, usuario o contraseña inválidos");
+          this.userData.showToast("Error al autenticar usuario", "warning");
+          this.ui.dismissLoading();
+        }
+      }, err => {        
+        this.userData.showToast("Error al autenticar usuario", "warning");
+        this.ui.dismissLoading();
+      });
+    /* } */
+  }
+
+  buscaEmpresasUsuario(){
+    if(this.idAgente > 0){
+      this.authService.getListEmpresas(this.idAgente).subscribe(data => {
+
+        if (data.status === 200) {
+          this.empresas = data.result;
+          if (this.empresas.length == 1) {//Debo redirecionar al inicio, solo hay una empresa
+            
+            window.localStorage.setItem('empresaData', JSON.stringify(this.empresas[0]));
+            this.storage.set('empresaData', JSON.stringify(this.empresas[0]));
+            this.userData.setConfigEmpresa();
+            
+            this.buscaDepartamentosAgente();
+            
+          } else if (this.empresas.length > 1) {
+            this.presentModalListEmpresas()//Debo presentar el modal para seleccionar una empresa
+          } else {
+            console.log("Error al recuperar empresas del agente: ", this.nombreCompleto);//Error al recuperar las empresas del user
+          }
         }
       }, err => {
-        this.showToast("Error 2, usuario o contraseña inválidos");
+        console.log('Error al buscar las empresas');
+        this.ui.dismissLoading();
+      });
+    }
+  }
+
+  buscaDepartamentosAgente(){
+    if(this.idAgente > 0){
+      this.agenteService.getDepartamentosPorAgente(this.idAgente).subscribe(data=>{
+        this.ui.dismissLoading();
+        if(data.status === 200){
+            this.departamentos = data.result;          
+            if(this.departamentos.length > 1 ){
+              console.log('debo mostrar los departamentos para que seleccione alguno');
+              console.log(this.departamentos);
+              this.presentModalListDepartamentos();
+            }else{
+              if(this.departamentos.length == 1){
+                this.storage.set('departamentoData', this.departamentos[0]);
+                this.userData.setConfigUser();
+              }else{
+                this.userData.setConfigUser();
+              }
+              this.router.navigateByUrl('/inicio');
+              this.showToast("Bienvenido " + this.nombreCompleto + " a Armonía Residencial");
+            }
+  
+        }else{
+          this.showToast('Error al recuperar departamentos del usuario')
+          
+        }
+      }, err => {                        
+        this.showToast('Error en el servicio al buscar departamentos de usuario')
+        this.ui.dismissLoading();
       });
     }
   }
@@ -192,6 +201,18 @@ export class HomePage implements OnInit {
       componentProps: {
         empresas: this.empresas,
         username: this.user,
+        idAgente: this.idAgente
+      },
+      cssClass: "my-custom-class",
+    });
+    return await modal.present();
+  }
+
+  async presentModalListDepartamentos() {
+    const modal = await this.modalCtrl.create({
+      component: DepartamentoPage,
+      componentProps: {
+        departamentos: this.departamentos
       },
       cssClass: "my-custom-class",
     });

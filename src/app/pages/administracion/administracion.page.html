@@ -1,4 +1,6 @@
+<ion-header>
 <app-menu-header></app-menu-header>
+</ion-header>
 
 <ion-content>
 </ion-content>
@@ -19,6 +21,14 @@
         <ion-icon name="information-circle"></ion-icon>
         <ion-label>¿Vas a construir?</ion-label>
       </ion-tab-button>
+
+      <ion-tab-button tab="publicidad" *ngIf="true">
+        
+        <ion-icon name="megaphone-outline"></ion-icon>
+        <ion-label>Publicidad</ion-label>
+      </ion-tab-button>
+
+      
     </ion-tab-bar>
   </ion-tabs>
 

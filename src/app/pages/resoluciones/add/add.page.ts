@@ -79,8 +79,7 @@ export class AddPage implements OnInit {
 
     if (this.convocatorias.length === 0) {
       console.log('debo ir a buscar puntos de acuerdo');
-      this.convocatoriaService.getFullConvocatorias(this.idEmpresa).subscribe((data) => {
-        console.log('data', JSON.stringify(data));
+      this.convocatoriaService.getFullConvocatorias(this.idEmpresa).subscribe((data) => {        
         if (data.status === 200) this.convocatorias = data.result;
         else this.userData.showToast('error 1 al recuperar registros');
       },
@@ -91,8 +90,7 @@ export class AddPage implements OnInit {
 
     if (this.puntosAcuerdo.length === 0) {
       console.log('debo ir a buscar puntos de acuerdo');
-      this.votacionService.getFullVotaciones(this.idEmpresa).subscribe((data) => {
-        console.log('data', JSON.stringify(data));
+      this.votacionService.getFullVotaciones(this.idEmpresa).subscribe((data) => {        
         if (data.status === 200) this.puntosAcuerdo = data.result;
         else this.userData.showToast('error 1 al recuperar puntos de acuerdo');
       },
@@ -158,7 +156,7 @@ export class AddPage implements OnInit {
     this.resolucionChangesForm = this.fb.group({});
     this.getDirtyFields();
     console.log('resolucionChangesForm', JSON.stringify(this.resolucionChangesForm.value));
-
+  if(this.resolucionChangesForm.value){
     this.resolucionService.update(this.resolucion.id, this.resolucionChangesForm.value).subscribe(data => {
       if (data.status === 200) {
         this.createResolucion.reset();
@@ -171,9 +169,22 @@ export class AddPage implements OnInit {
     },
       () => {
       });
+  }else{
+    console.log('no hay data por editar');
+    
+  }
   }
 
   getDirtyFields() {
+
+    Object.keys(this.createResolucion['controls']).forEach(key => {            
+      if (this.createResolucion.get(key).dirty) {              
+        if(key !== 'data'){//que solo se agreguen campos a nivel de root
+          this.resolucionChangesForm.addControl(key, this.createResolucion.get(key));
+        }
+      }
+    });
+
     Object.keys(this.createResolucion['controls'].data['controls']).forEach(key => {
       if (this.createResolucion.get('data').get(key).dirty) {
         this.resolucionChangesForm.addControl(key, this.createResolucion.get('data').get(key));

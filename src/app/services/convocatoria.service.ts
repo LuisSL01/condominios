@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
 import { DataLocalService } from './data-local.service';
@@ -22,11 +22,16 @@ export class ConvocatoriaService {
   baseUrl: string = environment.coreServiceBaseUrl;  
   publicacionContext: string = environment.coreApiBasePublicacionOperation;
 
+  convocatoriaListener = new EventEmitter<Publicacion>();
+
   constructor(private http: HttpClient,
               private storage: Storage,
               private dataLocalService: DataLocalService) {
   }
 
+  removeElement(ann:Publicacion){
+    this.convocatoriaListener.emit(ann);
+  }
   
   
   save(notificacionData: FormData): Observable<ApiResponse> {

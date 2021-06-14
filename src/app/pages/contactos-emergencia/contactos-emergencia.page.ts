@@ -37,6 +37,16 @@ export class ContactosEmergenciaPage implements OnInit {
     this.idEmpresa = this.userData.getIdEmpresa();
     this.cargaData();
     this.cargaFiltrosTabla();    
+
+    this.contactoService.contactoListener.subscribe(elm => {
+      if(this.contactos){
+        var index = this.contactos.indexOf(elm);
+        if (index > -1) {
+          this.contactos.splice(index, 1);          
+          this.storage.set(this.idEmpresa + this.contactoService.nombreEtiqueta, this.contactos);
+        }
+      }
+    });
   }
 
   cargaFiltrosTabla(){
@@ -101,7 +111,6 @@ export class ContactosEmergenciaPage implements OnInit {
     this.contactoService.getContactos(this.idEmpresa, page, size, this.filters).subscribe((data) => {
         console.log(data);        
           if (data.status === 200) {
-
             if (eventInfinite) {
               this.contactos.push(...data.result.content);
               if (data.result.content.length === 0) {
@@ -112,7 +121,7 @@ export class ContactosEmergenciaPage implements OnInit {
             }else{
               this.contactos = data.result.content;
             }
-            this.storage.set(this.idEmpresa + this.contactoService.nombreEtiqueta, this.contactos);            
+            this.storage.set(this.idEmpresa + this.contactoService.nombreEtiqueta, this.contactos);
             this.completeEvent(eventInfinite, eventRefresh);            
           } else {
             this.userData.showToast('error al recuperar registros');            

@@ -12,6 +12,8 @@ import { AdeudoService } from '../../../services/adeudo.service';
 import { AdeudosPage } from '../../adeudos/adeudos.page';
 import { AdeudoPago } from '../../../models/adeudo-pago.model';
 import { Archivo } from '../../../models/archivo-vortex.model';
+import { DepartamentoService } from '../../../services/departamento.service';
+import { UiServiceService } from '../../../services/ui-service.service';
 
 declare var window: any;
 
@@ -32,16 +34,21 @@ export class AddPage implements OnInit {
     data: this.fb.group({
       formaPago:["",[Validators.required]],
       descripcionFormaPago:["",],
+      importe: ["",],
+      fecha: [new Date()],
     })
   });
 
   idEmpresa: number;
   idAgente: number;
+  idDepartamento:number;
   pathBase64: string = "data:image/jpeg;base64,";
 
   agentes: any[] =  [];
+  departamentos: any[] = [];
   adeudos: AdeudoPago[] =[];
   agenteSelectedId:number;
+  departamentoSelectedId:number;
   edit:boolean = false;
   pagoComprobanteChangesForm: FormGroup;
 
@@ -49,15 +56,18 @@ export class AddPage implements OnInit {
     private camera: Camera,
     private router: Router,
     private fb: FormBuilder,
-    private userData: UserData,
+    public userData: UserData,
+    private departamentoService: DepartamentoService,
     private agenteService: AgenteService,
     public activatedRoute: ActivatedRoute,
+    private ui:UiServiceService,
     private adeudoService: AdeudoService) { }
 
   ngOnInit() {
     this.idEmpresa = this.userData.getIdEmpresa();
     this.idAgente = this.userData.getIdAgente();
-    
+    this.idDepartamento = this.userData.departamento_id;
+
     this.pago = JSON.parse(this.activatedRoute.snapshot.paramMap.get('item'));    
     if(this.pago != null) this.prepareEdit();
     else this.pago = new PagosComprobantes();
@@ -68,10 +78,12 @@ export class AddPage implements OnInit {
   ionViewDidEnter(){
     console.log('this.userData.administrador', this.userData.administrador);    
     if(this.userData.administrador){
-      this.buscarAgentes();
+      this.buscarDepartamentos();
+      //this.buscarAgentes();      
     }else{
       this.agenteSelectedId = this.idAgente;
-      this.buscarAdeudosAgente();
+      this.departamentoSelectedId = this.idDepartamento;
+      this.buscarAdeudosDepartamento();
     }
   }
  
@@ -81,7 +93,9 @@ export class AddPage implements OnInit {
     this.createPagoComprobante = this.fb.group({
       data: this.fb.group({
         formaPago:[this.pago.data.formaPago],
-        descripcionFormaPago:[this.pago.data.descripcionFormaPago]
+        descripcionFormaPago:[this.pago.data.descripcionFormaPago],
+        importe: [this.pago.data.importe],
+        fecha: [this.pago.data.fecha],
       })
     });
   }
@@ -105,23 +119,59 @@ export class AddPage implements OnInit {
     console.log('cambioAgenteAdeudo');
     console.log('event', event);
     this.agenteSelectedId = event.detail.value;
-    this.buscarAdeudosAgente();
+    this.buscarAdeudosDepartamento();
   }
 
-  buscarAdeudosAgente(){
-    console.log('buscarAdeudosAgente');    
-    this.adeudoService.getAdeudosByEmpresaAndAgente(this.userData.getIdEmpresa(), this.agenteSelectedId).subscribe((data) => {
+  cambioDepartamentoAdeudo(event){
+    console.log('cambioDepartamentoAdeudo');
+    console.log('event', event);
+    this.departamentoSelectedId = event.detail.value;
+    this.buscarAdeudosDepartamento();
+  }
+
+  buscarAdeudosDepartamento(){
+    this.userData.showToast("Buscando adeudos asignados");
+    this.ui.presentLoading();
+//    this.adeudoService.getAdeudosByEmpresaAndAgente(this.userData.getIdEmpresa(), this.agenteSelectedId).subscribe((data) => {
+    this.adeudoService.getAdeudosByEmpresaAndDepartamento(this.userData.getIdEmpresa(), this.departamentoSelectedId).subscribe((data) => {
+      this.ui.dismissLoading();
       if (data.status === 200) {
         console.log('Adeudos recuperados correctamente'); 
         this.adeudos = data.result;
+        if(this.adeudos.length ===0){
+          this.userData.showToast("No hay adeudos pendientes al inmueble seleccionado");
+        }else{
+          this.userData.showToast("Hay "+ this.adeudos.length+" pendientes");
+        }
       } else {
         console.log('Llego otro status al recuperar agentes');
       }
     },
     (err) => {
+      this.ui.dismissLoading();
       console.log(err);
+
     }
   );
+  }
+
+  buscarDepartamentos() {
+    console.log('buscarDepartamentos');    
+    this.userData.showToast('Buscando inmuebles');    
+      this.departamentoService.getDepartamentosPorEmpresa(this.idEmpresa).subscribe((data) => {
+        console.log(data);
+        if (data.status === 200){
+          this.departamentos = data.result;
+          if(this.departamentos.length ===0){
+            this.userData.showToast('No tiene inmuebles registrados');
+          }else{
+            this.userData.showToast(this.departamentos.length+' inmuebles encontrados');
+          }
+        } else this.userData.showToast('error al recuperar registros: '+ data.status);
+      },
+        (err) => { this.userData.showToast('error en el servicio al recuperar registros'); }
+      );
+  
   }
 
   getCameraOptions(): any {
@@ -192,6 +242,7 @@ export class AddPage implements OnInit {
     this.pagosComprobantesService.save(formData).subscribe((data) => {
         console.log(data);
         if (data.status === 200) {
+          this.createPagoComprobante.reset();
           this.userData.showToast('comprobante de pago registrado correctamente');          
           this.router.navigate(['/pagos-comprobantes', { item: true}]);
         } else {

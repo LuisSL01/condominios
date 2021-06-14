@@ -1,5 +1,7 @@
+<ion-header>
 <app-menu-header></app-menu-header>
 <app-header titulo="Nueva convocatoria"></app-header>
+</ion-header>
 <ion-content>
   <form [formGroup]="createConvocatoria" (ngSubmit)="save()">
     <ion-list>
@@ -53,7 +55,7 @@
 
       <ion-item-divider>
         <ion-label>
-          Adjntar archivos pdf
+          Adjuntar archivos pdf
         </ion-label>
 
       </ion-item-divider>
@@ -80,6 +82,6 @@
       </ion-item>
     </ion-list>
     <app-buttons valueLinkCancel="/convocatorias" valueDisabled="{{! createConvocatoria.valid}}"></app-buttons>
-    <app-footer></app-footer>
+    <!-- <app-footer></app-footer> -->
   </form>
 </ion-content>

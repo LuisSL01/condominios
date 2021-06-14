@@ -3,12 +3,13 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { UserData } from '../../providers/user-data';
-import { ToastController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { AgenteService } from '../../services/agente.service';
 import { DatePipe } from '@angular/common';
 import { CatalogoUsoCFDI } from 'src/app/models/catalogo-uso-cfdi.model';
 import { DepartamentoService } from '../../services/departamento.service';
 import { TorreService } from '../../services/torre.service';
+import { AgenteDepartamentoPage } from '../agente-departamento/agente-departamento.page';
 
 @Component({
   selector: 'app-perfil',
@@ -28,17 +29,10 @@ export class PerfilPage implements OnInit {
   nombreTorre:string;
   nombreDepartamento:string;
 
-  constructor(private fb: FormBuilder,
-    private router: Router,
-    private torreService: TorreService,
-    private storage: Storage,
-    private departamentoService: DepartamentoService,
-    private userData: UserData,
-    private agenteService: AgenteService,
-    private toastr: ToastController,
-    private datePipe: DatePipe) {
+  arr = [];
 
-  }
+  misDepartamentos:any[]=[];
+  agenteDeptoDelete:any;
 
   createAgente = this.fb.group({//Esto para construir los formularios dinamicamente
     nombreCompleto: ['', [Validators.required, Validators.minLength(4)]],
@@ -59,6 +53,20 @@ export class PerfilPage implements OnInit {
   });
 
   agenteChangesForm: FormGroup;
+  constructor(private fb: FormBuilder,
+    private router: Router,
+    private torreService: TorreService,  
+    private modalCtrl: ModalController,
+    private departamentoService: DepartamentoService,
+    private userData: UserData,
+    private agenteService: AgenteService,
+    private toastr: ToastController,
+    private  alertController: AlertController,
+    private datePipe: DatePipe) {
+
+  }
+
+ 
 
   ngOnInit() {
     this.idEmpresa = this.userData.getIdEmpresa();
@@ -100,7 +108,8 @@ export class PerfilPage implements OnInit {
 
   ionViewDidEnter() {    
     this.getUsuario();
-    this.getDataTorre();
+    this.buscaDepartamentosAgente();
+    /* this.getDataTorre(); */
   }
 
   traerAgente() {
@@ -169,21 +178,12 @@ export class PerfilPage implements OnInit {
     /* console.log('getUsuario');
     console.log("this.idAgente: " + this.userData.getIdAgente()); */
     await this.agenteService.getUserById(this.userData.getIdAgente()).subscribe(data => {
-      /* console.log('USERFULL-->',JSON.stringify(data)); */
+      
       if (data.status === 200) {
-
         if (!data.result.fechaDeNacimiento) {
           data.result.fechaDeNacimiento = new Date();
         }
-        /*     const fechaNac = new Date(data.result.fechaDeNacimiento);
-            console.log(fechaNac);
   
-            if (fechaNac.getFullYear() === null || fechaNac.getMonth() === null || fechaNac.getDate() === null){
-              data.result.fechaDeNacimiento = new Date();
-            } else {
-              data.result.fechaDeNacimiento = fechaNac;
-            }
-   */        
         const formattedDate = this.datePipe.transform(data.result.fechaDeNacimiento, 'yyyy-MM-dd ');
         let formData: any;
 
@@ -226,16 +226,6 @@ export class PerfilPage implements OnInit {
         if(data.result.dataDepartamento){
           this.nombreDepartamento = data.result.dataDepartamento.nombre;
         }
-        
-        
-
-
-
-      /* console.log(JSON.stringify(this.createAgente.value)); */
-
-
-
-
       } else {
         this.showToast('No se lograron recuperar tus datos en este momento');
         this.router.navigate(['/inicio']);
@@ -243,6 +233,45 @@ export class PerfilPage implements OnInit {
     });
   }
 
+  async buscaDepartamentosAgente(){
+    if(this.userData.getIdAgente() > 0){
+      this.agenteService.getDepartamentosPorAgente(this.userData.getIdAgente()).subscribe(data=>{
+        if(data.status === 200){
+          this.misDepartamentos = data.result;                    
+        }else{
+          this.showToast('Error al recuperar departamentos del usuario')
+        }
+      }, err => {                        
+        this.showToast('Error en el servicio al buscar departamentos de usuario')
+      });
+    }
+  }
+
+  agregarDepto(){
+    console.log('agregarDepto');
+    this.presentModalAgenteDepartamento();
+  }
+
+  async presentModalAgenteDepartamento() {
+    const modal = await this.modalCtrl.create({
+      component: AgenteDepartamentoPage,
+      componentProps: {
+      },
+      cssClass: "modal-medium",
+    });
+    await modal.present();
+    modal.onDidDismiss().then((result) => {
+      console.log('result de modal'+ JSON.stringify(result));      
+      if (result.data && result.data.event) {
+        console.log(result.data.event);
+        this.misDepartamentos.push(...result.data.event);//Se agregan los elementos que se agregaron desde el modal
+
+        console.log(JSON.stringify(this.misDepartamentos));
+
+        
+      } 
+    });
+  }
 
 
 
@@ -300,6 +329,60 @@ export class PerfilPage implements OnInit {
     } else {
       this.showToast("El número celular no es válido, debe tener 10 dígitos", "danger")
     }
+  }
+
+
+  deleteDepto(depto){
+    console.log('deleteDepto');    
+    console.log(depto);
+    this.agenteDeptoDelete = depto;
+
+    this.presentAlertDeleteAgenteDepto();
+  }
+
+  async presentAlertDeleteAgenteDepto() {
+    const alert = await this.alertController.create({
+      cssClass: 'alertHeader',
+      header: 'Confirmar!',
+      message: '¿Seguro que deseas quitar el inmueble?',    
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Quitar',
+          handler: (alertData) => {
+            console.log('Confirm Okay');
+            console.log('wa eliminar');            
+            console.log(this.agenteDeptoDelete);
+            if(this.agenteDeptoDelete){
+              this.agenteService.deleteAgenteDepto(this.agenteDeptoDelete.id).subscribe(
+                (data) => {
+                  if (data.status === 200) {
+                    this.showToast("Eliminado correctamente", 'success');                    
+                    if(this.misDepartamentos){//se remueve de la lista
+                      var index = this.misDepartamentos.indexOf(this.agenteDeptoDelete);
+                      if (index > -1)  this.misDepartamentos.splice(index, 1);                                              
+                    }
+                    this.agenteDeptoDelete = null;
+                  } else {
+                    this.showToast("Error al eliminar registro ", 'warning');                                   
+                  }
+                }, (err) => {
+                  console.log(err);                                        
+                  this.showToast("Error en el servicio, no se puede eliminar registro ", 'danger');
+                }, () => {}
+              );
+            }
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
   showToast(dataMessage: string, color_str?: string) {

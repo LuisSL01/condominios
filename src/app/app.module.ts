@@ -34,6 +34,15 @@ import { Base64 } from '@ionic-native/base64/ngx';
 import {NgxMaskIonicModule} from 'ngx-mask-ionic';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
+
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAnalyticsModule, ScreenTrackingService  } from '@angular/fire/analytics';
+import { environment } from 'src/environments/environment';
+
+
+/* import { FirebaseAnalytics } from '@ionic-native/firebase-analytics/ngx'; */
+
 
 
 /* import { NgxMaskModule, IConfig } from 'ngx-mask' */
@@ -47,7 +56,9 @@ import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
      ComponentsModule,
      HttpClientModule,
      IonicStorageModule.forRoot(),
-     NgxMaskIonicModule.forRoot()
+     NgxMaskIonicModule.forRoot(),     
+     AngularFireModule.initializeApp(environment.firebaseConfig),
+     AngularFireAnalyticsModule
     ],
 
   providers: [
@@ -72,6 +83,10 @@ import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
     Base64,
     SocialSharing,
     PreviewAnyFile,
+    PhotoViewer,
+    
+    /* FirebaseAnalytics, */
+    ScreenTrackingService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

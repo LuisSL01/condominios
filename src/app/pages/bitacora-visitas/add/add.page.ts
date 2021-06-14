@@ -149,24 +149,22 @@ export class AddPage implements OnInit {
 
   buscaInfoVisita(data_visita:string){
     console.log("buscaInfoVisita");
-
     this.visitaFound = null;
-    let x = atob(data_visita).split("|");
-
-    console.log(x[0]);
-    console.log(x[1]);
-
-    this.visitaService.getVisitaByIdAndUUID(x[0], x[1]).subscribe((data) => {
-
-      if (data.status === 200) { 
-        this.visitaFound = data.result;         
-      }else  this.userData.showToast('No se encontro el registro');
-    },
-    (err) => {
-        this.userData.showToast("Error en el servicio al recuperar registro");
-    },
-    () => {}
-  );
+    if(data_visita){
+      let x = atob(data_visita).split("|");
+      /* console.log(x[0]);
+      console.log(x[1]); */
+      this.visitaService.getVisitaByIdAndUUID(x[0], x[1]).subscribe((data) => {
+        if (data.status === 200) { 
+          this.visitaFound = data.result;         
+        }else  this.userData.showToast('No se encontro el registro');
+      },
+      (err) => {
+          this.userData.showToast("Error en el servicio al recuperar registro");
+      },
+      () => {}
+    );
+    }
 
 
   }

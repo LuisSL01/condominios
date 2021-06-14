@@ -132,8 +132,7 @@ export class AddPage implements OnInit {
     console.log('visitaChangesForm', JSON.stringify(this.visitaChangesForm.value));
 
     this.visitaService.update(this.visita.id, this.visitaChangesForm.value).subscribe(data => {
-      if (data.status === 200) {        
-        this.createVisita.markAsPristine();
+      if (data.status === 200) {                
         this.createVisita.reset();
         this.userData.showToast('editado correctamente');
         this.router.navigate(['/visitas', { item: true}]);

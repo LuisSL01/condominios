@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { ToastController } from '@ionic/angular';
 import { Anuncio } from '../models/anuncio.model';
@@ -23,11 +23,17 @@ export class AnuncioService {
   baseUrl: string = environment.coreServiceBaseUrl;
   publicacionContext: string = environment.coreApiBasePublicacionOperation;
 
+  anuncioListener = new EventEmitter<Publicacion>();
+
   constructor(private storage: Storage,
     private dataLocalService: DataLocalService,
     private userData:UserData,
     private http: HttpClient) {
     /* this.cargarAnunciosLocales(); */
+  }
+
+  removeElement(ann:Publicacion){
+    this.anuncioListener.emit(ann);
   }
 
   construyeNombreEtiqueta(){
@@ -42,11 +48,8 @@ export class AnuncioService {
   }
 
   getAnuncios(idEmpresa: number, page: number, size: number, filters: string){
-    console.log('filters', filters);
-    
-    console.log(this.baseUrl +environment.coreApiBasePublicacionOperation + environment.coreApiGetAnunciosListOperation + '/' + idEmpresa + '/ANUNCIO?page=' + page + '&size=' + size + (filters ? ('&filters=' + filters):''));
+    /* console.log(this.baseUrl +environment.coreApiBasePublicacionOperation + environment.coreApiGetAnunciosListOperation + '/' + idEmpresa + '/ANUNCIO?page=' + page + '&size=' + size + (filters ? ('&filters=' + filters):'')); */
     return this.http.get<ApiResponse>(this.baseUrl +environment.coreApiBasePublicacionOperation + environment.coreApiGetAnunciosListOperation + '/' + idEmpresa + '/ANUNCIO?page=' + page + '&size=' + size + (filters ? ('&filters=' + filters):'')).pipe(share());
-
   }
 
 

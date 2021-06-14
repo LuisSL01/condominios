@@ -42,7 +42,7 @@ eventSource = [];
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
   constructor(public areaComunService: AreaComunService,
-              private userData:UserData,
+              public userData:UserData,
               private datePipe: DatePipe,
               private alertCtrl: AlertController,
               @Inject(LOCALE_ID) private locale: string,
@@ -372,11 +372,18 @@ eventSource = [];
 
   //Termina metodos de calendarii
   async getReservasPorArea() {
+    this.userData.showToast('buscando registros');
     await this.areaComunService.getReservasByAreaComun(this.areaComunSelected).subscribe((data) => {          
           console.log(data);        
           if (data.status === 200) {
              this.reservasList = data.result;            
-             this.procesaResultados();
+            if(this.reservasList.length ===0){
+              this.userData.showToast('No se encontraron registros del área seleccionada');
+            }else{
+              this.userData.showToast('se encontraron: '+ this.reservasList.length+' registros');
+              this.procesaResultados();
+            }
+             
           } else {
             this.userData.showToast('error al recuperar registros del area seleccionada');  
           }

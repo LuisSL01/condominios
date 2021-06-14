@@ -79,6 +79,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/reglamento/reglamento.module').then( m => m.ReglamentoPageModule)
   },
   {
+    path: 'ayuda',
+    loadChildren: () => import('./pages/ayuda/ayuda.module').then( m => m.AyudaPageModule)
+  },
+  {
     path: 'mis-visitas',
     loadChildren: () => import('./pages/mis-visitas/mis-visitas.module').then( m => m.MisVisitasPageModule)
   },
@@ -183,7 +187,19 @@ const routes: Routes = [
   {
     path: 'departamento',
     loadChildren: () => import('./pages/departamento/departamento.module').then( m => m.DepartamentoPageModule)
+  },  {
+    path: 'agente-departamento',
+    loadChildren: () => import('./pages/agente-departamento/agente-departamento.module').then( m => m.AgenteDepartamentoPageModule)
+  },
+  {
+    path: 'publicidad',
+    loadChildren: () => import('./pages/publicidad/publicidad.module').then( m => m.PublicidadPageModule)
+  },
+  {
+    path: 'adeudo-plantilla',
+    loadChildren: () => import('./pages/adeudo-plantilla/adeudo-plantilla.module').then( m => m.AdeudoPlantillaPageModule)
   }
+
 
 
 

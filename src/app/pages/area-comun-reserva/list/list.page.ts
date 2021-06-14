@@ -15,7 +15,7 @@ export class ListPage implements OnInit {
   @Input() reserva: AreaComunReserva;
 
   constructor(private actionSheetCtrl: ActionSheetController,
-    private userData: UserData,
+    public userData: UserData,
     private areaComunService: AreaComunService) { }
 
   ngOnInit() {

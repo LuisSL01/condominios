@@ -20,7 +20,7 @@ export class ListPage implements OnInit {
   constructor(public bitacoraVisitaService : BitacoraVisitaService,
               public actionSheetCtrl : ActionSheetController,
               private router: Router,
-              private userData:UserData) {                
+              public userData:UserData) {                
                }
 
   ngOnInit() {
@@ -42,7 +42,10 @@ export class ListPage implements OnInit {
           
           if(this.bitacora.id){
             this.bitacoraVisitaService.delete(this.bitacora.id).subscribe((data) => {
-              if (data.status === 200) { console.log("eliminado correctamente"); this.userData.showToast('registro eliminado correctamente');}
+              if (data.status === 200) {                 
+                 this.userData.showToast('registro eliminado correctamente');
+                 this.bitacoraVisitaService.removeElement(this.bitacora);
+                }
               else  this.userData.showToast('Error al eliminar registro');                
             },(err) => {
                 this.userData.showToast("Error al eliminar registro");                  

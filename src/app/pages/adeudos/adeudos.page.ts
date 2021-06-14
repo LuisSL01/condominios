@@ -2,9 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdeudoPago } from '../../models/adeudo-pago.model';
 import { AdeudoService } from '../../services/adeudo.service';
 import { UserData } from '../../providers/user-data';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { IonInfiniteScroll, ModalController } from '@ionic/angular';
 import { Storage } from "@ionic/storage";
 import { ActivatedRoute } from '@angular/router';
+import { AdeudoPlantillaPage } from '../adeudo-plantilla/adeudo-plantilla.page';
+import { UiServiceService } from '../../services/ui-service.service';
 
 @Component({
   selector: 'app-adeudos',
@@ -18,6 +20,7 @@ export class AdeudosPage implements OnInit {
 
   idEmpresa: number;
   idAgente: number;
+  idDepartamento:number;
   filters: any;
   adeudoPage: number = 0;
 
@@ -25,16 +28,30 @@ export class AdeudosPage implements OnInit {
   public camposFiltros:string[]=new Array();
 
   constructor(public adeudoService: AdeudoService,
-              private userData:UserData,
+              public userData:UserData,
               public activatedRoute: ActivatedRoute,
+              private modalCtrl: ModalController,
+              private ui:UiServiceService,
               private storage: Storage,) { 
     
   }
 
   ngOnInit() {
     this.idEmpresa = this.userData.getIdEmpresa();
-    this.idAgente = this.userData.getIdAgente();    
+    this.idAgente = this.userData.getIdAgente(); 
+    this.idDepartamento = this.userData.departamento_id;
     this.cargaFiltrosTabla();
+
+    
+    this.adeudoService.adeudoListener.subscribe(noti => {
+      if(this.adeudos){
+        var index = this.adeudos.indexOf(noti);
+        if (index > -1) {
+          this.adeudos.splice(index, 1);
+          this.storage.set(this.idEmpresa + this.adeudoService.nombreEtiqueta, this.adeudos);
+        }
+      }
+    });
   }
 
   cargaFiltrosTabla(){
@@ -56,6 +73,24 @@ export class AdeudosPage implements OnInit {
     }
   }
 
+  async openModalPlantilla(){
+    console.log('openModalPlantilla');
+    const modal = await this.modalCtrl.create({
+      component: AdeudoPlantillaPage,      
+      cssClass: 'cal-modal',
+      backdropDismiss: false
+    });
+   
+    await modal.present();
+   
+    modal.onDidDismiss().then((result) => {
+      if (result.data && result.data.event) {
+        console.log('se han recibido data del mdal');
+      } 
+    });
+    
+  }
+
   
   async cargaData(){
     /* await this.cargarDataTemporalStorage(this.idEmpresa);
@@ -71,9 +106,11 @@ export class AdeudosPage implements OnInit {
 
   getAdeudos(page: number, size: number, eventInfinite?, eventRefresh?) {
     console.log('getAdeudos');
+    this.ui.presentLoading();
     if(this.userData.administrador){//Si es administrador puede ver todos los adeudos
       this.adeudoService.getAdeudos(this.idEmpresa, page, size, this.filters)
         .subscribe((data) => {
+          this.ui.dismissLoading();
           console.log(data);        
             if (data.status === 200) {
               if (eventInfinite) {
@@ -95,14 +132,16 @@ export class AdeudosPage implements OnInit {
             }
           },
           (err) => {
+            this.ui.dismissLoading();
             this.userData.showToast('error al recuperar registros');
             console.log(err);
             this.completeEvent(eventInfinite, eventRefresh);
           }
         );
     }else{
-      this.adeudoService.getAdeudosPorAgente(this.idEmpresa, this.idAgente, page, size, this.filters)
+      this.adeudoService.getAdeudosPorDepartamento(this.idEmpresa, this.idDepartamento, page, size, this.filters)
       .subscribe((data) => {
+        this.ui.dismissLoading();
         console.log(data);        
           if (data.status === 200) {
             if (eventInfinite) {
@@ -124,6 +163,7 @@ export class AdeudosPage implements OnInit {
           }
         },
         (err) => {
+          this.ui.dismissLoading();
           this.userData.showToast('error al recuperar registros');
           console.log(err);
           this.completeEvent(eventInfinite, eventRefresh);

@@ -15,6 +15,7 @@ export class VisitasPage implements OnInit {
   textoBuscar='';
   public visitasList:Visita[]=[];
   idEmpresa: number;
+  idAgente: number;
   filters: any;
   visitaPage: number = 0;
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
@@ -30,8 +31,18 @@ export class VisitasPage implements OnInit {
 
   ngOnInit() {      
     this.idEmpresa = this.userData.getIdEmpresa();
-    this.cargaData();
+    this.idAgente = this.userData.getIdAgente();    
     this.cargaFiltrosTabla();    
+
+    this.visitaService.visitaListener.subscribe(noti => {
+      if(this.visitasList){
+        var index = this.visitasList.indexOf(noti);
+        if (index > -1) {
+          this.visitasList.splice(index, 1);
+          this.storage.set(this.idEmpresa + this.visitaService.nombreEtiqueta, this.visitasList);
+        }
+      }
+    });
   }
 
   cargaFiltrosTabla(){
@@ -52,6 +63,8 @@ export class VisitasPage implements OnInit {
       this.visitaPage = 0;
       this.infiniteScroll.disabled = false;//Cada que se hace el refresh se habilita el componente infinite scroll
       this.getVisitas(this.visitaPage, 10, null, null);
+    }else{
+      this.cargaData();
     }
   }
 
@@ -67,37 +80,60 @@ export class VisitasPage implements OnInit {
     await this.visitaService.getVisitasFromStorage(idEmpresa);    
     this.visitasList = this.visitaService.visitas;    
   }
-
   getVisitas(page: number, size: number, eventInfinite?, eventRefresh?) {
-    this.visitaService.getVisitas(this.idEmpresa, page, size, this.filters)
-      .subscribe((data) => {          
-          if (data.status === 200) {            
-            if (eventInfinite) {
-              this.visitasList.push(...data.result.content);
-              if (data.result.content.length === 0) {
-                eventInfinite.target.disabled = true;
-                eventInfinite.target.complete();
-                return;
-              }              
-            }else{
-              console.log('else infinite');              
-              this.visitasList = data.result.content;
-            }           
-            /* console.log("this.anunciosList", this.anunciosList); */
-            this.storage.set(this.idEmpresa + this.visitaService.nombreEtiqueta, this.visitasList);            
-            this.completeEvent(eventInfinite, eventRefresh);       
-          } else {
-            this.userData.showToast('error al recuperar registros');
-            console.log(data.status);
-            this.completeEvent(eventInfinite, eventRefresh);            
-          }
-        },
-        (err) => {
+    if(this.userData.administrador){
+      console.log("recuperar registros de admon");
+      this.visitaService.getVisitas(this.idEmpresa, page, size, this.filters).subscribe((data) => {          
+        if (data.status === 200) {            
+         this.procesaData(data, eventInfinite, eventRefresh);
+        } else {
           this.userData.showToast('error al recuperar registros');
-          console.log(err);
-          this.completeEvent(eventInfinite, eventRefresh);
+          console.log(data.status);
+          this.completeEvent(eventInfinite, eventRefresh);            
         }
+      },
+      (err) => {
+        this.userData.showToast('error al recuperar registros');
+        console.log(err);
+        this.completeEvent(eventInfinite, eventRefresh);
+      }
+    );
+    }else{
+      console.log("recuperar registros de user");
+      this.visitaService.getVisitasPorAgente(this.idEmpresa, this.idAgente, page, size, this.filters).subscribe((data) => {
+        if (data.status === 200) {            
+         this.procesaData(data, eventInfinite, eventRefresh);
+        } else {
+          this.userData.showToast('error al recuperar registros');
+          console.log(data.status);
+          this.completeEvent(eventInfinite, eventRefresh);            
+        }
+      },
+      (err) => {
+        this.userData.showToast('error al recuperar registros');
+        console.log(err);
+        this.completeEvent(eventInfinite, eventRefresh);
+      }
       );
+    }
+    
+  }
+
+  procesaData(data:any, eventInfinite?, eventRefresh?){
+    if (eventInfinite) {
+      this.visitasList.push(...data.result.content);
+      if (data.result.content.length === 0) {
+        eventInfinite.target.disabled = true;
+        eventInfinite.target.complete();
+        return;
+      }              
+    }else{
+      console.log('else infinite');              
+      this.visitasList = data.result.content;
+    }           
+    /* console.log("this.anunciosList", this.anunciosList); */
+    this.storage.set(this.idEmpresa + this.visitaService.nombreEtiqueta, this.visitasList);            
+    this.completeEvent(eventInfinite, eventRefresh);       
   }
 
   completeEvent(eventInfinite?, eventRefresh?){

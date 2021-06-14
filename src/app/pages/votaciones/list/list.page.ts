@@ -18,21 +18,22 @@ export class ListPage implements OnInit {
   constructor(public votacionService: VotacionesService,
     private actionSheetCtrl: ActionSheetController,
     private modalCtrl:ModalController,
-    private userData:UserData,
+    public userData:UserData,
     private router:Router) { }
 
   ngOnInit() {
   }
-
   editRowSelected(){
-
-    console.log(this.encuesta);
-
     this.router.navigate(['/votaciones/add', { item: JSON.stringify(this.encuesta)}]);      
   }
 
-  responderEncuesta(){
-    this.presentModalRespoderEncuesta();
+  responderEncuesta(){              
+    if(new Date().getTime() < new Date(this.encuesta.fechaTermina).getTime()){
+      this.presentModalRespoderEncuesta();
+    }else{
+      this.userData.showToast("La fecha de encuesta ya termino, no se puede responder");
+    }
+    
   }
 
   async lanzarMenu() {
@@ -48,8 +49,8 @@ export class ListPage implements OnInit {
           if(this.encuesta.id > 0 ){
             this.votacionService.delete(this.encuesta.id).subscribe((data) => {
                 if (data.status === 200) {
-                  this.userData.showToast('Eliminado correctamente');                
-                  this.router.navigate(['/votaciones', { item: true, skipLocationChange: true}]);
+                  this.userData.showToast('Eliminado correctamente');
+                  this.votacionService.removeElement(this.encuesta); 
                 }
                 else  this.userData.showToast('Error al eliminar registro');                
               },
@@ -75,16 +76,8 @@ export class ListPage implements OnInit {
           this.presentModalRespoderEncuesta();
       }
       }, */
-      guardarBorrarBtn,
-      {
-        text: 'Cancelar',
-        icon: 'close',
-        role: 'cancel',
-        cssClass: 'action-dark',
-        handler: () => {
-          console.log('Cancel clicked');
-        }
-      }]
+      guardarBorrarBtn
+     ]
     });
     await actionSheet.present();
   }

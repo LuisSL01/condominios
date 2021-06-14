@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { environment } from 'src/environments/environment';
 import { PagosComprobantes } from '../models/pagos-comprobantes.model';
@@ -24,12 +24,15 @@ export class PagosComprobantesService {
   nombreEtiqueta = "_pagos-comprobantes";
   nombreEtiquetaValidar = "_pagos-comprobantes-validar";
 
-  constructor(private storage: Storage,
-              private dataLocalService: DataLocalService,
-              private userData:UserData,
-              private http:HttpClient) {
+  pagoListener = new EventEmitter<PagosComprobantes>();
 
-    
+  constructor(private storage: Storage,              
+              private http:HttpClient) { 
+  }
+
+
+  removeElement(elm:PagosComprobantes){
+    this.pagoListener.emit(elm);
   }
 
   /* construyeNombreEtiqueta(){
@@ -57,14 +60,25 @@ export class PagosComprobantesService {
     return this.http.get<ApiResponse>(this.baseUrl + this.pagoComprobanteContext+ environment.coreApiGetPagoComprobanteListOperation +"/"+idEmpresa+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):'')).pipe(share());
   }
 
-  getTodosPagosComprobantesPorAgente(idEmpresa: number, idAgente:number){
-    console.log(this.baseUrl + this.pagoComprobanteContext+ environment.coreApiGetPagoComprobanteAgenteListOperation +"/"+idEmpresa+"/"+idAgente);
-    return this.http.get<ApiResponse>(this.baseUrl + this.pagoComprobanteContext+ environment.coreApiGetPagoComprobanteAgenteListOperation +"/"+idEmpresa+"/"+idAgente).pipe(share());
+  //idEstatus->13-AUTORIZADO
+  getTodosPagosComprobantesPorAgente(idEmpresa: number, idAgente:number, idEstatus:number){
+    console.log(this.baseUrl + this.pagoComprobanteContext+ environment.coreApiGetPagoComprobanteAgenteListOperation +"/"+idEmpresa+"/"+idAgente+"/"+idEstatus);
+    return this.http.get<ApiResponse>(this.baseUrl + this.pagoComprobanteContext+ environment.coreApiGetPagoComprobanteAgenteListOperation +"/"+idEmpresa+"/"+idAgente+"/"+idEstatus).pipe(share());
+  }
+
+  getTodosPagosComprobantesPorDepartamento(idEmpresa: number, idDepartamento:number, idEstatus:number){
+    console.log(this.baseUrl + this.pagoComprobanteContext+ environment.coreApiGetPagoComprobanteDepartamentoListOperation +"/"+idEmpresa+"/"+idDepartamento+"/"+idEstatus);
+    return this.http.get<ApiResponse>(this.baseUrl + this.pagoComprobanteContext+ environment.coreApiGetPagoComprobanteDepartamentoListOperation +"/"+idEmpresa+"/"+idDepartamento+"/"+idEstatus).pipe(share());
   }
 
   getPagosComprobantesPorAgente(idEmpresa: number, idAgente:number, page: number, size: number, filters: string){
     console.log(this.baseUrl+this.pagoComprobanteContext+":listByAgente/"+idEmpresa+"/"+idAgente+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):''));
     return this.http.get<ApiResponse>(this.baseUrl+this.pagoComprobanteContext+":listByAgente/"+idEmpresa+"/"+idAgente+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):'')).pipe(share());
+  }
+
+  getPagosComprobantesPorDepartamento(idEmpresa: number, idDepartamento:number, page: number, size: number, filters: string){
+    console.log(this.baseUrl+this.pagoComprobanteContext+":listByDepartamento/"+idEmpresa+"/"+idDepartamento+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):''));
+    return this.http.get<ApiResponse>(this.baseUrl+this.pagoComprobanteContext+":listByDepartamento/"+idEmpresa+"/"+idDepartamento+"?page="+page+"&size="+size+(filters ? ('&filters=' + filters):'')).pipe(share());
   }
 
   updateStatus(data:FormData): Observable<ApiResponse> {

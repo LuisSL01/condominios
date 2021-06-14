@@ -19,7 +19,7 @@ export class ListPage implements OnInit {
 
   constructor(public directorioService:DirectorioService,
               private actionSheetCtrl: ActionSheetController,
-              private userData:UserData,
+              public userData:UserData,
               private router: Router) { 
     }
 
@@ -36,7 +36,10 @@ export class ListPage implements OnInit {
         handler: () => {
           if(this.directorio.id > 0 ){
             this.directorioService.delete(this.directorio.id).subscribe((data) => {
-                if (data.status === 200) { console.log("eliminado correctamente"); this.userData.showToast('registro eliminado correctamente');}
+                if (data.status === 200) { 
+                   this.userData.showToast('registro eliminado correctamente');
+                   this.directorioService.removeElement(this.directorio);
+                  }
                 else  this.userData.showToast('Error al eliminar registro');
               },
               (err) => {
@@ -50,16 +53,8 @@ export class ListPage implements OnInit {
 
     const actionSheet = await this.actionSheetCtrl.create({
       buttons: [   
-      btnEliminar,
-      {
-        text: 'Cancelar',
-        icon: 'close',
-        role: 'cancel',
-        cssClass: 'action-dark',
-        handler: () => {
-          console.log('Cancel clicked');
-        }
-      }]
+      btnEliminar
+    ]
     });
     await actionSheet.present();
   }

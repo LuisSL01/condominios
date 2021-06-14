@@ -23,7 +23,7 @@ export class ForgotPasswordPage implements OnInit {
   }
 
 
-  
+
   async buscarAgentePorEmail() {
     if (this.email) {
       await this.agenteService.getUserByEmail(this.email).subscribe(data => {
@@ -32,9 +32,16 @@ export class ForgotPasswordPage implements OnInit {
             /* let link = environment.coreServiceBaseUrl + "/reset-password;item=%7B%22i%22:%22"+btoa(data.result.id)+"%22,%22c%22:%22"+btoa(data.result.email)+"%22%7D";             */
             
             //ip del proyecto de angular
-            let link ="http://54.177.89.203/reset-password;item=%7B%22i%22:%22"+btoa(data.result.id)+"%22,%22c%22:%22"+btoa(data.result.email)+"%22%7D";
 
-            let men = "Por favor acceda a la siguiente liga para reestablecer su contraseña <a href='" + link + "'>Clic aquí!</a>";
+            /* let link ="http://54.177.89.203/reset-password;item=%7B%22i%22:%22"+btoa(data.result.id)+"%22,%22c%22:%22"+btoa(data.result.email)+"%22%7D"; */
+            
+            /* let link ="http://54.177.89.203/reset-password;item="+btoa(data.result.id+"||"+data.result.email)+""; */
+            let link ="http://54.177.89.203/reset-password;item="+data.result.id+"";
+            
+            /* let men = "Por favor acceda a la siguiente liga para reestablecer su contraseña <a href='" + link + "',target=\"popup\" onclick=\"window.open('"+link+"')\" >Clic aquí!</a>"; */
+            let men = "Por favor acceda a la siguiente liga para reestablecer su contraseña <a href='" + link + "' target=\"popup\" onclick=\"window.open('"+link+"')\" >Clic aquí!</a>";
+            
+            
             let objCorreo = {
               de: "notificaciones@erpvortex.com",
               para: [this.email],
@@ -42,13 +49,13 @@ export class ForgotPasswordPage implements OnInit {
               mensaje: men,
               cc: ["luis.silva@erpvortex.com"],
               bcc: []
-            }            
+            }
             const formularioData = new FormData();
             formularioData.append('data', JSON.stringify(objCorreo));
 
             this.correoService.enviarCorreo(formularioData).subscribe(data => {
               if (data.status === 200) {                
-                this.showToast("Se ha enviado un correo para reestablecer la contraseña", "success", 5000);
+                this.showToast("Se ha enviado un correo a la cuenta : "+this.email+" para reestablecer la contraseña", "success", 5000);
               } else {
                 this.showToast("Ocurrio un error al enviar correo", "warning");
               }
@@ -60,7 +67,7 @@ export class ForgotPasswordPage implements OnInit {
 
 
           } else {
-            this.showToast("No se encontro alguna cuenta con el correo proporcionado", "danger");
+            this.showToast("No se encontro alguna cuenta con el correo : "+this.email+"", "danger");
           }
         } else {
           this.showToast("Ocurrio un error al recuperar los datos", "warning");

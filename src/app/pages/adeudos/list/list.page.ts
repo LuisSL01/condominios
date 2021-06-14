@@ -17,7 +17,7 @@ export class ListPage implements OnInit {
   constructor(public adeudoService:AdeudoService,
               private actionSheetCtrl:ActionSheetController,
               private router: Router,
-              private userData:UserData) { }
+              public userData:UserData) { }
 
   ngOnInit() {
   }
@@ -37,8 +37,14 @@ export class ListPage implements OnInit {
           console.log('Borrar adeudo');
           if(this.adeudo.id > 0 ){
             this.adeudoService.delete(this.adeudo.id).subscribe((data) => {
-                if (data.status === 200) { console.log("eliminado correctamente"); this.userData.showToast('registro eliminado correctamente');}
-                else  this.userData.showToast('Error al eliminar registro');
+                if (data.status === 200) { 
+                  this.userData.showToast('registro eliminado correctamente');
+                  this.adeudoService.removeElement(this.adeudo);
+                }else if(data.status===500)  {
+                  this.userData.showToast('Error al eliminar registro, verifique no tenga un comprobante de pago asociado');
+                }
+                else
+                  this.userData.showToast("Error al eliminar registro");                  
               },
               (err) => {
                   this.userData.showToast("Error al eliminar registro");                  
@@ -54,16 +60,8 @@ export class ListPage implements OnInit {
 
     const actionSheet = await this.actionSheetCtrl.create({
       buttons: [
-      guardarBorrarBtn,
-      {
-        text: 'Cancelar',
-        icon: 'close',
-        role: 'cancel',
-        cssClass: 'action-dark',
-        handler: () => {
-          console.log('Cancel clicked');
-        }
-      }]
+      guardarBorrarBtn
+      ]
     });
     await actionSheet.present();
   }

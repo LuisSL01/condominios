@@ -6,7 +6,7 @@ export class EncuestaPregunta {
   public pregunta: string;
   public opciones: EncuestaPreguntaOpcion[];
   public respuestas:EncuestaPreguntaRespuesta[];
-
+  
 
 
   constructor() {

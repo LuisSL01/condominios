@@ -12,41 +12,22 @@ export class Encuesta{
     public horaTermina:Date;
     public abierto:boolean;
     public aplicaOpcionesSI_NO:boolean;
-
     public preguntas: EncuestaPregunta[];//Se crea en base de datos como jsonb
-
     pregunta = new EncuestaPregunta();
 
     public countRespuestas;
+    public opcionesSeleccionadas:any;
 
-
-    
-    
-    
-    constructor(){
-        console.log('Iam in the constrictor of votaciones');
+    constructor(){        
         this.fechaCreacion = new Date();
         this.aplicaOpcionesSI_NO = true;
         this.fechaTermina = new Date();
-        this.horaTermina = new Date(); 
-        
+        this.horaTermina = new Date();         
         this.preguntas = Array();
         this.pregunta.opciones = Array();
         this.pregunta.opciones.push(new EncuestaPreguntaOpcion());
         this.pregunta.opciones.push(new EncuestaPreguntaOpcion());
-
         this.preguntas.push(this.pregunta);
-
-        console.log('terminando el cosntructor');
-
-
-        
-
-
-        
-        
-        
-        
     } 
 }
 

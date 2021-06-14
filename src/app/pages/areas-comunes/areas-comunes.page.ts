@@ -30,7 +30,7 @@ export class AreasComunesPage implements OnInit {
   public fieldFilters:string[]=new Array();
 
   constructor(public areaComunService: AreaComunService,
-              private userData: UserData,
+              public userData: UserData,
               public activatedRoute: ActivatedRoute,
               private storage: Storage,) {
 

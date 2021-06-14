@@ -25,7 +25,7 @@ export class ListPage implements OnInit {
     private fileopen: FileOpener,
     private router: Router,
     private transfer: FileTransfer,
-    private userData: UserData) {
+    public userData: UserData) {
 
   }
 
@@ -67,12 +67,24 @@ export class ListPage implements OnInit {
       handler: () => {
         if (this.convocatoria.id > 0) {
           this.convocatoriaService.borrarConvocatoria(this.convocatoria.id).subscribe((data) => {
-            if (data.status === 200) this.userData.showToast('registro eliminado correctamente');
-            else this.userData.showToast("Error al eliminar registro");
+            if (data.status === 200) {
+              this.userData.showToast('registro eliminado correctamente');
+              this.convocatoriaService.removeElement(this.convocatoria); 
+            }
+            else{             
+                this.userData.showToast("Error al eliminar registro");
+            } 
           },
             (err) => {
               console.log(err);
-              this.userData.showToast("Error al eliminar registro");
+              if (err.status === 500) {
+                this.userData.showToast("Error al eliminar registro, verifique no este relacionado con alguna resolución");
+              }else{
+                this.userData.showToast("Error al eliminar registro");
+              }
+
+              
+
             }, () => { }
           );
         }
@@ -81,16 +93,8 @@ export class ListPage implements OnInit {
 
     const actionSheet = await this.actionSheetCtrl.create({
       buttons: [
-        guardarBorrarBtn,
-        {
-          text: 'Cancelar',
-          icon: 'close',
-          role: 'cancel',
-          cssClass: 'action-dark',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        }]
+        guardarBorrarBtn
+        ]
     });
 
     await actionSheet.present();

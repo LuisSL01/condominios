@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "800047039884",
+    "project_id": "armonia-residencial",
+    "storage_bucket": "armonia-residencial.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:800047039884:android:3ac650fd37107bbe1942a9",
+        "android_client_info": {
+          "package_name": "com.erpvortex.corbee1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "800047039884-fkkrc4rsj6smk542o1uimt5ah9tbhhej.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9VNMtr91Wu-9yypDS7a-8e9VqjrxkTHQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "800047039884-fkkrc4rsj6smk542o1uimt5ah9tbhhej.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

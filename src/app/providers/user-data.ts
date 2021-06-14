@@ -12,12 +12,15 @@ export class UserData {
   HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
   empresa_id:number = 0;
   agente_id:number = 0;
-
+  departamento_id:number=0;
+  nombreDepartamento:string="";
 
   nameImageEmpresa ="";
   base64ImageEmpresa ="";
   nombreCompleto:string ="";
   administrador:boolean =false;
+
+  aplicaAreasComunes:boolean = false;
 
   constructor(
     public storage: Storage,
@@ -114,8 +117,16 @@ export class UserData {
 
   
 
+  
+
   getAplicaTorres():boolean{
-    return JSON.parse(window.localStorage.getItem('empresaData')).aplicaTorres;
+    let data = JSON.parse(window.localStorage.getItem('empresaData'));
+    if(data){
+      return data.configuracionEmpresa?.aplicaTorres;
+    }else{
+      return false;
+    }
+    
   }
 
    getDataDireccionEmpresa():any{
@@ -147,6 +158,8 @@ export class UserData {
 
 
  async setConfigUser(){   
+  console.log('setConfigUser');
+   
   const data = await  this.storage.get('userFull');
     if (data) {
       /* console.log('data', JSON.stringify(data)); */      
@@ -156,9 +169,22 @@ export class UserData {
         }else{
           this.administrador = true;
         }        
-      }        
-    }  
+      }
+      this.nombreCompleto = data.nombreCompleto;
+      console.log("Administrador:->"+this.administrador+"<-");              
+    }
+  const dataDepto = await this.storage.get('departamentoData');  
+  if(dataDepto){
+    this.departamento_id = dataDepto.departamento;    
+    this.nombreDepartamento = dataDepto.departamentoData.nombre;
+  }
+  console.log('departamento_id->'+this.departamento_id);
+  console.log('nombreDepartamento->'+this.nombreDepartamento);
+  
+
  }
+
+ 
 
  recibeDepartamento(depto:string){
    console.log("recibeDepartamento", depto);
@@ -200,14 +226,18 @@ export class UserData {
     if(empresa){
       if(empresa.configuracionEmpresa){
         this.base64ImageEmpresa ='https://almacenamientonube.s3.us-west-1.amazonaws.com/'+empresa.configuracionEmpresa.logoFondoClaro.rutaS3;
+        this.aplicaAreasComunes = empresa.configuracionEmpresa.aplicaReservarAreas;
       }      
-    }    
+    } 
+    console.log('this.aplicaAreasComunes: '+ this.aplicaAreasComunes);
+       
   }
 
-  showToast(dataMessage: string) {
+  showToast(dataMessage: string, color_str?: string) {
     this.toastCtrl.create({
       message: dataMessage,
-      duration: 2000
+      duration: 2000,
+      color: color_str ? color_str : null
     }).then((toastData) => {
       toastData.present();
     });

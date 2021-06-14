@@ -4,6 +4,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content fullscreen>
+  <form [formGroup]="empresaDataForm" (ngSubmit)="guardar()">
   <ion-list>
     <ion-list-header color="primary">
       <ion-label> 
@@ -11,18 +12,18 @@
         </ion-label>
     </ion-list-header>
     <ion-item>
-      <ion-label>
+      <ion-label position="floating">
         <ion-icon name="mail-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
         &nbsp;&nbsp;Correo:
-      </ion-label> 
-      <ion-label class="ion-text-wrap">{{empData.email}}</ion-label>     
+      </ion-label>       
+      <ion-input class="ion-text-wrap"  formControlName="email"></ion-input>
     </ion-item>
   <ion-item>
     <ion-label>
       <ion-icon name="call-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
         &nbsp;&nbsp;Teléfono:
     </ion-label>
-    <ion-label>{{empData.telefono}}</ion-label>      
+    <ion-input  class="ion-text-wrap" formControlName="telefono"></ion-input>
   </ion-item>
   
   <ion-item>
@@ -38,27 +39,44 @@
     </ion-label>
   </ion-item>
 
+  <div formGroupName="configuracionEmpresa">
+    <ion-item *ngIf="admon">
+      <ion-label >
+        <ion-icon name="receipt-outline" style="font-size:23px; color: #50c8ec;
+            margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Aplica reservar áreas
+      </ion-label>
+      <ion-toggle formControlName="aplicaReservarAreas" slot="end" ></ion-toggle>
+    </ion-item>
+  </div>
+
   <ion-item-divider>
     <ion-label>
         Datos bancarios
     </ion-label>    
 </ion-item-divider>
 
-<div *ngIf="empData?.data">
+
 <ion-item>
   <ion-label>
     <ion-icon name="text-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
     &nbsp;&nbsp;RFC:
-  </ion-label> 
-  <ion-label class="ion-text-wrap">{{empData.rfc}}</ion-label>     
+  </ion-label>    
+  <ion-input  class="ion-text-wrap" formControlName="rfc"></ion-input>
 </ion-item>
+
+
+
+<div formGroupName="data">
+
+
+
 
 <ion-item>
   <ion-label>
     <ion-icon name="text-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
     &nbsp;&nbsp;Banco:
-  </ion-label> 
-  <ion-label class="ion-text-wrap">{{empData.data.banco}}</ion-label>     
+  </ion-label>   
+  <ion-input  class="ion-text-wrap" formControlName="banco"></ion-input> 
 </ion-item>
 
 <ion-item>
@@ -66,7 +84,7 @@
     <ion-icon name="text-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
     &nbsp;&nbsp;Sucursal:
   </ion-label> 
-  <ion-label class="ion-text-wrap">{{empData.data.sucursal}}</ion-label>     
+  <ion-input  class="ion-text-wrap" formControlName="sucursal"></ion-input>  
 </ion-item>
 
 <ion-item>
@@ -74,24 +92,26 @@
     <ion-icon name="text-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
     &nbsp;&nbsp;Cuenta:
   </ion-label> 
-  <ion-label class="ion-text-wrap">{{empData.data.cuenta}}</ion-label>     
+  <ion-input  class="ion-text-wrap" formControlName="cuenta"></ion-input> 
 </ion-item>
 
 <ion-item>
-  <ion-label>
+  <ion-label position="floating">
     <ion-icon name="text-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
     &nbsp;&nbsp;Clave interbancaria:
-  </ion-label> 
-  <ion-label class="ion-text-wrap">{{empData.data.clabeInterbancaria}}</ion-label>     
+  </ion-label>   
+  <ion-input  class="ion-text-wrap" formControlName="clabeInterbancaria"></ion-input> 
 </ion-item>
 
 </div>
 
-
+<ion-button  expand="block" shape="round" type="submit" *ngIf="admon">
+  Guardar
+</ion-button>
   
   
 
   </ion-list>
   
-
+</form>
 </ion-content>

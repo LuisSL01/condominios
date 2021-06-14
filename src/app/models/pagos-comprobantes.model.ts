@@ -29,6 +29,10 @@ export class PagosComprobantes{
 	public cantidadAdeudo:number;
 	public nombreEstatus:string;
     public data: any;
+    public infoAdeudo: any;
+    public infoDepartamento: any;
+    public nombreConceptoAdeudo:string;
+    
 
     constructor(){
         this.files = new ArchivoVortexApp();

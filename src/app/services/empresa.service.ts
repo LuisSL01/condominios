@@ -33,14 +33,19 @@ export class EmpresaService {
     return this.http.post<ApiResponse>(this.baseUrl + this.empresaContext + "/" + idEmpresa + "/reglamento", reglamentoData).pipe(share());
   }
 
-  saveFormatoConstruccionPDF(formatoData: any, idEmpresa: number): Observable<ApiResponse> {
-    console.log('saveFormatoConstruccionPDF: ' + this.baseUrl + this.empresaContext + "/" + idEmpresa + "/formatoConstruccion");
-    return this.http.post<ApiResponse>(this.baseUrl + this.empresaContext + "/" + idEmpresa + "/formatoConstruccion", formatoData).pipe(share());
+  saveFileConstruccion(formatoData: any, idEmpresa: number, tipo:string): Observable<ApiResponse> {
+    console.log('saveFormatoConstruccionPDF: ' + this.baseUrl + this.empresaContext + "/" + idEmpresa + "/"+tipo +"/formatoConstruccion");
+    return this.http.post<ApiResponse>(this.baseUrl + this.empresaContext + "/" + idEmpresa + "/"+tipo + "/formatoConstruccion", formatoData).pipe(share());
   }
 
   update(data:FormData): Observable<ApiResponse> {
     console.log('update empresa: ', this.baseUrl + this.empresaContext);    
     return this.http.patch<ApiResponse>(this.baseUrl + this.empresaContext ,data).pipe(share());    
+  }
+
+  updateEmpresa(id: number, empresaData: any): Observable<ApiResponse> {
+    console.log('updateEmpresa', this.baseUrl + this.empresaContext + '/edit' + id, empresaData);
+    return this.http.patch<ApiResponse>(this.baseUrl + this.empresaContext + '/edit' + id, empresaData).pipe(share());
   }
 
   countUsers(idEmpresa:number){

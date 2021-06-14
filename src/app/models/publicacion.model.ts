@@ -26,6 +26,7 @@ export class Publicacion{
     public nombreAgenteCreador:string;
     public correoAgenteCreador:string;
     public celularAgenteCreador:string;
+    public opcionesSeleccionadas:any;
 
 
     constructor(){

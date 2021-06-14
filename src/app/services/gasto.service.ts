@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Gasto } from '../models/gasto.model';
 import { Storage } from '@ionic/storage';
 import { DataLocalService } from './data-local.service';
@@ -21,11 +21,17 @@ export class GastoService {
   gastoContext: string = environment.coreApiBaseGastoOperation
   nombreEtiquetaJson = "";
 
+  gastoListener = new EventEmitter<Gasto>();
 
   constructor(private storage : Storage,
               private dataLocalService : DataLocalService,
               private http: HttpClient,
               private userData: UserData) {}
+
+              
+  removeElement(elm:Gasto){
+    this.gastoListener.emit(elm);
+  }
 
   construyeNombreEtiqueta(){
     return this.nombreEtiquetaJson =  this.userData.getIdEmpresa()  + "_gastos_local";

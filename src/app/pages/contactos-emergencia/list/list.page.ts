@@ -17,7 +17,7 @@ export class ListPage implements OnInit {
   
   constructor(public contactoService : ContactosEmergenciaService,
               private actionSheetCtrl: ActionSheetController,
-              private userData:UserData,
+              public userData:UserData,
               private router: Router,
               private callNumber: CallNumber) { }
 
@@ -51,7 +51,10 @@ export class ListPage implements OnInit {
           console.log(this.contacto);
           if(this.contacto.id > 0 ){
             this.contactoService.delete(this.contacto.id).subscribe((data) => {
-                if (data.status === 200) { console.log("eliminado correctamente"); this.userData.showToast('registro eliminado correctamente');}
+                if (data.status === 200) {                 
+                  this.userData.showToast('registro eliminado correctamente');
+                  this.contactoService.removeElement(this.contacto); 
+                }
                 else  this.userData.showToast('Error al eliminar registro');
               },
               (err) => {
@@ -68,16 +71,8 @@ export class ListPage implements OnInit {
 
     const actionSheet = await this.actionSheetCtrl.create({
       buttons: [
-      guardarBorrarBtn,
-      {
-        text: 'Cancelar',
-        icon: 'close',
-        role: 'cancel',
-        cssClass: 'action-dark',
-        handler: () => {
-          console.log('Cancel clicked');
-        }
-      }]
+      guardarBorrarBtn
+    ]
     });
     await actionSheet.present();
   }

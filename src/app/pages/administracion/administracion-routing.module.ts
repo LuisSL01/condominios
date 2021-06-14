@@ -5,6 +5,12 @@ import { AdministracionPage } from './administracion.page';
 import { ConfiguracionEmpPage } from '../configuracion-emp/configuracion-emp.page';
 
 const routes: Routes = [
+  
+  {
+    path: '',//Se agrega para que en un principio sea la primera que se carge
+    redirectTo: '/administracion/extra',
+    pathMatch: 'full'
+  },
   {
     path: '',
     component: AdministracionPage,    
@@ -36,13 +42,17 @@ const routes: Routes = [
           }
         ]
       }, 
+      {
+        path: 'publicidad',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../../pages/publicidad/publicidad.module').then(m => m.PublicidadPageModule)
+          }
+        ]
+      }, 
     ]
-  },
-  {
-    path: '',
-    redirectTo: '/administracion/datos-empresa',
-    pathMatch: 'full'
-  },
+  }
   
 
 ];

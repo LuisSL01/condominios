@@ -63,8 +63,7 @@ export class OpcionesPreguntaPage implements OnInit {
           if (data.status === 200) {
             this.userData.showToast('Respuesta editada correctamente');
             this.modalCtrl.dismiss();
-            this.router.navigate(['/votaciones', { item: true}]); 
-            console.log('ya deberia haberme redireccionado a la otra pagina');
+            this.votacionesService.invokeRespuestaListener();            
           } else this.userData.showToast('No se pudo editar la respuesta');            
         },
         (err) => {console.log(err);this.userData.showToast('No se pudo guardar la respuesta'); },
@@ -73,13 +72,11 @@ export class OpcionesPreguntaPage implements OnInit {
 
     } else {
       this.votacionesService.saveRespuesta(this.votacionId, respuesta).subscribe((data) => {
-          console.log(data);        
+           
           if (data.status === 200) {                    
-            this.userData.showToast('Respuesta agregada correctamente');
-            console.log('deberia estar redireccionando al inicio');
+            this.userData.showToast('Respuesta agregada correctamente');            
             this.modalCtrl.dismiss();
-            this.router.navigate(['/votaciones', { item: true}]); 
-            console.log('ya deberia haberme redireccionado a la otra pagina');
+            this.votacionesService.invokeRespuestaListener();
           } else this.userData.showToast('No se pudo guardar la respuesta, se guarda localmente');            
         },
         (err) => {

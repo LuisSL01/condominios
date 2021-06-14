@@ -140,7 +140,9 @@
                     -
                     {{event.endTime|date:'h:mm a'}}
                 </span>
-            <span *ngIf="event.allDay" class="monthview-eventdetail-timecolumn">{{allDayLabel}}</span>
+
+            <!-- <span *ngIf="event.allDay" class="monthview-eventdetail-timecolumn">{{allDayLabel}}</span> -->
+
             <span class="event-detail">Sol: {{event.nombreAgenteCreador}}</span>
             <ion-label color="success" *ngIf="event.autorizado"> -  Autorizado</ion-label>
             <ion-label color="danger"  *ngIf=" ! event.autorizado"> - No autorizado</ion-label>

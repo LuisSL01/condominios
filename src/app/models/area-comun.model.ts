@@ -4,36 +4,16 @@ export class AreaComun{
     public id:number;
     public empresa:number;
     public nombre:string;
-
     public data:any;
-
-    /* public descripcion:string;
-    public clasificacion:string;
-    public costo:number;
-    public codigoColor:string;
-    public disponibleTodosDias:Boolean;
-    public disponibleTodasHoras:Boolean;
-    public horaInicia:Date;
-    public horaTermina:Date; */
-
-
-    /* public imgs:string[]; */
     public files:ArchivoVortexApp;
-    
-
     public diasDisponibles:number[];//Sunday is 0, Monday is 1, and so on.
-    
+
+    public tiempoFijo:any[];
         
     constructor(){
-        console.log('im in constructor new area comun');
-  /*       this.disponibleTodosDias = true;
-        this.disponibleTodasHoras = true;
-        this.horaInicia = new Date();
-        this.horaTermina = new Date(); */
-        /* this.imgs = Array(); */
         this.diasDisponibles = new Array();
-
         this.files = new ArchivoVortexApp();
+        this.tiempoFijo = new Array();
     }
 }
 

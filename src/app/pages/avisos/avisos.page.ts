@@ -39,6 +39,17 @@ export class AvisosPage implements OnInit {
     /* this.cargarNotificacionesLocalesStorage(); */
     this.cargaNotificacionesStorage();
     this.cargaFiltrosTabla();
+
+    this.notificacionService.avisoListener.subscribe(noti => {
+      if(this.notificacionesList){
+        var index = this.notificacionesList.indexOf(noti);
+        if (index > -1) {
+          this.notificacionesList.splice(index, 1);
+          this.storage.set(this.idEmpresa + "_notificaciones", this.notificacionesList);
+        }
+      }
+    });
+
   }
   cargaFiltrosTabla(){
     this.camposFiltros.push("data_titulo");

@@ -36,6 +36,16 @@ export class BitacoraVisitasPage implements OnInit {
     this.idEmpresa = this.userData.getIdEmpresa();
     this.cargarData();    
     this.cargaFiltrosTabla();    
+
+    this.bitacoraVisitaService.bitacoraListener.subscribe(noti => {
+      if(this.bitacoraRegistrosList){
+        var index = this.bitacoraRegistrosList.indexOf(noti);
+        if (index > -1) {
+          this.bitacoraRegistrosList.splice(index, 1);
+          this.storage.set(this.idEmpresa + this.bitacoraVisitaService.nombreEtiqueta, this.bitacoraRegistrosList);
+        }
+      }
+    });
   }
 
   cargaFiltrosTabla(){
@@ -69,7 +79,7 @@ export class BitacoraVisitasPage implements OnInit {
   getRegistrosVisita(page: number, size: number, eventInfinite?, eventRefresh?) {
     this.bitacoraVisitaService.getBitacoraVisitas(this.idEmpresa, page, size, this.filters).subscribe((data) => {
           if (data.status === 200) {
-
+            
             if (eventInfinite) {
               this.bitacoraRegistrosList.push(...data.result.content);
               if (data.result.content.length === 0) {

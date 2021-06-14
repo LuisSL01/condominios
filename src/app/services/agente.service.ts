@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ApiResponse } from '../models/api-response.model';
@@ -15,9 +15,18 @@ export class AgenteService {
   baseUrl: string = environment.coreServiceBaseUrl;
   baseUrlAuth: string = environment.authServiceBaseUrl;
   agenteContext: string = environment.coreApiBaseAgenteOperation;  
+
+  agenteListener = new EventEmitter<any>();            
   
   constructor(private http:HttpClient,
-              private toastCtrl: ToastController) { }
+              private toastCtrl: ToastController) { 
+
+              }
+  removeElement(elm:any){
+    this.agenteListener.emit(elm);
+  }            
+
+  
 
   registerUsuario(userData: any): Observable<ApiResponse> {
     console.log('registerUsuario:'+this.baseUrlAuth + environment.authApiRegisterAgenteOperation);
@@ -45,9 +54,12 @@ export class AgenteService {
   }
 
 
+
+  
+
   getAgentes(idEmpresa: number, page: number, size: number, filters: string): Observable<any> {
-    console.log("getAgentes: ",this.baseUrl +this.agenteContext +environment.coreApiBaseAgenteOperationList+ '/' + idEmpresa + '?page=' + page + '&size=' + size + (filters ? ('&filters=' + filters) : ''));    
-    return this.http.get<any>(this.baseUrl +this.agenteContext +environment.coreApiBaseAgenteOperationList+ '/' + idEmpresa + '?page=' + page + '&size=' + size + (filters ? ('&filters=' + filters) : '')).pipe(share());
+    console.log("getAgentes: ",this.baseUrl +this.agenteContext +environment.coreApiBaseAgenteOperationList+ '/app/' + idEmpresa + '?page=' + page + '&size=' + size + (filters ? ('&filters=' + filters) : ''));    
+    return this.http.get<any>(this.baseUrl +this.agenteContext +environment.coreApiBaseAgenteOperationList+ '/app/' + idEmpresa + '?page=' + page + '&size=' + size + (filters ? ('&filters=' + filters) : '')).pipe(share());
   }
 
   getManzanas(idEmpresa:number){
@@ -64,6 +76,28 @@ export class AgenteService {
     console.log('updateUsuarioCore', this.baseUrl + this.agenteContext + '/' + id, userData);
     return this.http.patch<ApiResponse>(this.baseUrl + this.agenteContext + '/' + id, userData).pipe(share());
   }
+
+  getDepartamentosPorAgente(idAgente:number){
+    console.log('trae departamentos por id agente');
+    return this.http.get<ApiResponse>(this.baseUrl + environment.coreApiBaseAgenteDepartamentoOperation + environment.coreApiBaseAgenteDepartamentoListOperation+"/"+ idAgente).pipe(share());
+  }
+
+  addDepartamentoToAgente(formData: FormData): Observable<ApiResponse> {
+    console.log('agregarDepartamentoAgente:'+this.baseUrl + environment.coreApiBaseAgenteDepartamentoOperation);
+    return this.http.post<ApiResponse>(this.baseUrl + environment.coreApiBaseAgenteDepartamentoOperation , formData).pipe(share());
+  }
+
+  addAgenteToDepartamentos(formData: FormData): Observable<ApiResponse> {
+    console.log('addAgenteToDepartamentos:'+this.baseUrl + environment.coreApiBaseAgenteDepartamentoOperation+environment.coreApiBaseAgenteDepartamentoMultipleOperation);
+    return this.http.post<ApiResponse>(this.baseUrl + environment.coreApiBaseAgenteDepartamentoOperation+environment.coreApiBaseAgenteDepartamentoMultipleOperation , formData).pipe(share());
+  }
+
+  deleteAgenteDepto(idAgenteDepto: number) : Observable<ApiResponse> {
+    console.log('deleteAgenteDepto: ',this.baseUrl + environment.coreApiBaseAgenteDepartamentoOperation +environment.coreApiBaseDeleteOperation + "/" + idAgenteDepto );
+    return this.http.delete<ApiResponse>(this.baseUrl + environment.coreApiBaseAgenteDepartamentoOperation + environment.coreApiBaseDeleteOperation + "/" + idAgenteDepto).pipe(share());
+  }
+
+
 
   updateAgenteCore(id: number, datosForm: any) {
     this.updateUsuarioCore(id, datosForm).subscribe(data => {

@@ -1,6 +1,8 @@
-<app-menu-header></app-menu-header>
 
+<ion-header>
+<app-menu-header></app-menu-header>
 <app-header titulo="Reglamento"></app-header>
+</ion-header>
 <ion-content fullscreen>
     <section>
         <br>
@@ -21,21 +23,6 @@
         <ion-button 
         (click)="verReglamento()"
         color="primary" expand="block">Ver Reglamento
-        </ion-button>
-      </section>
-      <section *ngIf="true" >
-        <br>
-        <ion-button 
-        (click)="generarPdf()"
-        color="primary" expand="block">Prueba PDF
-        </ion-button>
-      </section>
-
-      <section *ngIf="true" >
-        <br>
-        <ion-button 
-        (click)="generarPdf2()"
-        color="primary" expand="block">Prueba 2 PDF
         </ion-button>
       </section>
     

@@ -7,6 +7,7 @@ import { UserData } from '../../providers/user-data';
 import { Router } from '@angular/router';
 
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 
 
 @Component({
@@ -36,6 +37,7 @@ export class AnuncioListComponent implements OnInit {
     private router: Router,
     private emailComposer: EmailComposer,
     private platform:Platform,
+    private photoViewer: PhotoViewer,
     private userData: UserData) { }
 
   ngOnInit() {
@@ -91,6 +93,7 @@ export class AnuncioListComponent implements OnInit {
           this.anuncioService.borrarAnuncio(this.anuncio.id).subscribe((data) => {
             if (data.status === 200) {
               this.showToast("anuncio eliminado correctamente");
+              this.anuncioService.removeElement(this.anuncio);
             } else {
               this.showToast("Error al eliminar registro");
             }
@@ -158,15 +161,6 @@ export class AnuncioListComponent implements OnInit {
           }
         );
           }
-        },
-        {
-          text: 'Cancelar',
-          icon: 'close',
-          role: 'cancel',
-          cssClass: 'action-dark',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
         }]
     }else{
       bttns = [        
@@ -204,6 +198,21 @@ export class AnuncioListComponent implements OnInit {
     await actionSheet.present();
   }
 
+  viewImage(path:string, titulo:string, descripcion:string){
+    /* console.log('vieew image.->', this.pathS3 + path+'<-');     */
+    if (this.platform.is('android')) {
+      try {
+      
+    
+        this.photoViewer.show(this.pathS3 + path , titulo + ", \n"+ descripcion , {share: true, headers: '{algo:foo,algo:bar}'});
+      
+    } catch (error) {
+     console.log(JSON.stringify(error));
+          
+      }
+    }
+   
+}
   showToast(dataMessage: string) {
     this.toastr
       .create({

@@ -13,6 +13,10 @@ import { ModalController } from "@ionic/angular";
 import { DatosInteresPage } from '../datos-interes/datos-interes.page';
 import { Router } from '@angular/router';
 
+import { AngularFireAnalytics } from '@angular/fire/analytics';
+/* import { FirebaseAnalytics } from '@ionic-native/firebase-analytics/ngx'; */
+
+
 @Component({
   selector: 'app-inicio',
   templateUrl: './inicio.page.html',
@@ -54,34 +58,57 @@ export class InicioPage implements OnInit {
               private router: Router,
               private userData:UserData,
               private datosInteresService:DatosInteresService,
-              private modalCtrl: ModalController,) {
-                this.componentes = this.dataService.getMenuOpts();
-
-                /* this.publicaciones = this.publicacionService.publicaciones;
-                  console.log('this.publicaciones:'+ this.publicaciones); */
-               
+              private modalCtrl: ModalController,
+              private analytics: AngularFireAnalytics
+              
+              /* private firebaseAnalytics: FirebaseAnalytics */
+              ) { 
+                try{
+                  this.componentes = this.dataService.getMenuOpts();                
+                  this.analytics.setCurrentScreen('Inicio');
+                  this.analytics.logEvent('Ventana inicio');                  
+                } catch (error) {
+                  console.log('error'+ error);
+                  this.userData.showToast('Error en recuperar componentes/analytics-> '+ error,'danger');
+                  this.router.navigate(['/home']);//se redireccione al home para que inicie sesion
+                } 
      }
 
  
   ngOnInit() {      
-    this.cargaFiltrosTabla();     
+    this.cargaFiltrosTabla();    
+    this.anuncioService.anuncioListener.subscribe(elm => {
+      if(this.anunciosList){
+        var index = this.anunciosList.indexOf(elm);
+        if (index > -1) {
+          this.anunciosList.splice(index, 1);
+          this.storage.set(this.idEmpresa + "_anuncios", this.anunciosList);
+        }
+      }
+    }); 
   }
 
   async verificaExisteDatosSesion(){  
-    const dt = await this.storage.get('userDetails');
-    if (dt) {
-      this.direccion = this.userData.getDataDireccionEmpresa();
-      this.nombreEmpresa = this.userData.getNombreEmpresa();    
-      this.idEmpresa = this.userData.getIdEmpresa();
-      this.cargarDatosInteres();
-      this.cargaAnunciosStorage();
-    }else{
+    try {
+      const dt = await this.storage.get('userDetails');
+      if (dt) {
+        this.direccion = this.userData.getDataDireccionEmpresa();
+        this.nombreEmpresa = this.userData.getNombreEmpresa();    
+        this.idEmpresa = this.userData.getIdEmpresa();
+        this.cargarDatosInteres();
+        this.cargaAnunciosStorage();
+      }else{
+        this.router.navigate(['/home']);//se redireccione al home para que inicie sesion
+      }
+    } catch (error) {
+      console.log('error'+ error);
+      this.userData.showToast('Error en verificaExisteDatosSesion-> '+ error,'danger');
       this.router.navigate(['/home']);//se redireccione al home para que inicie sesion
-    }
+    }   
    }
 
   ionViewWillEnter(){    
-    this.verificaExisteDatosSesion();     
+    this.verificaExisteDatosSesion();
   }
   async cargarDatosInteres(){ 
     if( ! this.climaData){//que solo recupere cuanto no hayan datos
@@ -107,8 +134,7 @@ export class InicioPage implements OnInit {
           }
         );
     }else{
-      console.log('No se pudo recuperar los datos de empresa');
-      
+      console.log('No se pudo recuperar los datos de empresa');      
     }    
   }
 
@@ -125,11 +151,16 @@ export class InicioPage implements OnInit {
     return await modal.present();
   }
 
-  async cargaAnunciosStorage(){      
+  async cargaAnunciosStorage(){ 
+    if(this.userData.administrador){
       await this.cargarAnunciosTemporalesStorage(this.idEmpresa);      
       if(this.anunciosList.length == 0){        
         await this.getAnuncios(this.anunciosPage, 10);
       }     
+    }else{
+      await this.getAnuncios(this.anunciosPage, 10);
+    }     
+      
   }
 
   getAnuncios(page: number, size: number, eventInfinite?, eventRefresh?) {
@@ -151,8 +182,6 @@ export class InicioPage implements OnInit {
               }
               
             }else{
-              console.log('else infinite');
-              
               this.anunciosList = data.result.content;
             }
            

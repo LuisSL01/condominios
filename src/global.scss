@@ -94,6 +94,12 @@
     padding: 25px;
 }
 
+.modal-medium {
+    --height: 60%;
+    --border-radius: 10px;
+    padding: 25px;
+}
+
 .item.sc-ion-label-md-h, .item .sc-ion-label-md-h{
     white-space: normal !important;
 }
@@ -110,6 +116,18 @@
     --width: 100% !important;
     --border-radius: 10px;
     padding: 25px;
+}
+
+.action-sheet-group {
+    overflow: auto !important;
+}
+
+.picker-col{//Para que se muestre completamente el mes en el date time picker
+    max-width: 90px !important;
+}
+
+.picker-opts{//Para que se muestre completamente el mes en el date time picker
+    max-width: 90px !important;
 }
 
 ion-button{ 

@@ -1,31 +1,38 @@
+// This file can be replaced during build by using the `fileReplacements` array.
+// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
+// The list of file replacements can be found in `angular.json`.
+
 export const environment = {
   production: true,
- //  url: 'http://192.168.73.100:3000',
+  
+  firebaseConfig : {
+    apiKey: "AIzaSyAGtdAUkNQ6FcH7_4QVeQ50QXEoLhWTR50",
+    authDomain: "armonia-residencial.firebaseapp.com",
+    projectId: "armonia-residencial",
+    storageBucket: "armonia-residencial.appspot.com",
+    messagingSenderId: "800047039884",
+    appId: "1:800047039884:web:9840ffa35672c8cb1942a9",
+    measurementId: "G-SZK0ESC999"
+  },
+  //  url: 'http://192.168.73.100:3000',
   // Endpoints para Gestión de Credenciales
 
-   
 
-
-  authServiceBaseUrl: 'http://54.177.89.203:8080',
-  coreServiceBaseUrl: 'http://54.177.89.203:8081',
-  formsServiceBaseUrl: 'http://54.177.89.203:8082',  
-
-  
  
   
-  
-/*
-  authServiceBaseUrl: 'http://192.168.80.107:8080',
-  coreServiceBaseUrl: 'http://192.168.80.107:8081',
-  formsServiceBaseUrl: 'http://192.168.80.107:8082',
-/*
-
-
-  /* authServiceBaseUrl: 'http://54.177.89.203:8080',
+  authServiceBaseUrl: 'http://54.177.89.203:8080',
   coreServiceBaseUrl: 'http://54.177.89.203:8081',
-  formsServiceBaseUrl: 'http://54.177.89.203:8082', */
+  formsServiceBaseUrl: 'http://54.177.89.203:8082',    
+ 
 
-  
+
+
+  /* authServiceBaseUrl: 'http://192.168.137.1:8080',
+  coreServiceBaseUrl: 'http://192.168.137.1:8081',
+  formsServiceBaseUrl: 'http://192.168.137.1:8082',  */
+ 
+
+
   authApiGetUsersOperation: '/users/',
   authApiBaseUserOperation: '/user/',
   authApiUpdatePasswordOperation: '/user/updatePassword/',
@@ -46,13 +53,18 @@ export const environment = {
   coreApiGetFormularioEmpresaOperation: '/formulario',
   coreApiGetEmpresasAgente: '/listEmpresas', 
 
+
   // -> Agentes
-  coreApiBaseAgenteOperation: '/agente',
-  coreApiBaseAddEmpresaOperation: '/addEmpresa',
+  coreApiBaseAgenteOperation: '/agente',  
   /* coreApiBaseEmpresaGerenteOperation: ':listEmpresaGerente',
   coreApiBaseAllGerenteOperation: ':listAllGerente', */
   coreApiRegisterBaseAgenteOperation: '/register',
   coreApiUpdateStatusAgenteOperation: 'updateStatus',
+
+  //AgenteEmpresa
+  coreApiBaseAddEmpresaOperation: '/addEmpresa',
+  coreApiBaseAgenteEmpresaOperation: '/agenteEmpresa',
+  coreApiBaseAgenteEmpresaCountOperation: '/countByEmpresa',
 
   /* coreApiSetEmpresaToAgenteOperation: '/setEmpresa',
   coreApiGetAgenteConfigOperation: '/_config',
@@ -123,9 +135,12 @@ export const environment = {
 
   coreApiBaseDeleteOperation: '/delete',
   coreApiBaseEditOperation: '/edit',
+
   //app- avisos
   coreApiBaseAvisosAdministracionOperation: '/aviso',
   coreApiBasePublicacionOperation: '/publicacion',
+  coreApiBasePublicacionPDFOperation: '/publicacion-pdf',
+  
   coreApiBasePublicacionRespuestaOperation: '/respuesta',  
   coreApiBasePublicacionReporteOperation: '/reporte',  
   coreApiBasePublicacionesOperation: '/publicaciones',
@@ -159,21 +174,19 @@ export const environment = {
   //Adeudo
   coreApiBaseAdeudoOperation: '/adeudo',    
   coreApiBaseAdeudoByEmpresaOperation: '/adeudoByEmpresa',
+  coreApiBaseAdeudoByTorreOperation: '/adeudoByTorre',
   coreApiBaseAdeudosOperation: '/adeudos',
   coreApiGetAdeudoListOperation: ':listByEmpresa',
   coreApiGetAdeudoAgenteListOperation: ':listByEmpresaAndAgente',
-
+  coreApiGetAdeudoDepartamentoListOperation: ':listByEmpresaAndDepartamento',
   //Pagos-comprobantes
   coreApiBasePagoComprobanteOperation: '/pago-comprobante',  
   coreApiGetPagoComprobanteListOperation: ':listByEmpresa',
   coreApiGetPagoComprobanteAgenteListOperation: ':listByEmpresaAndAgente',
-
-   //Gasto
-   coreApiBaseGastoOperation: '/gasto',    
-   coreApiBaseGastoByEmpresaOperation: '/gastoByEmpresa',
-   coreApiBaseGastosOperation: '/gastos',
-   coreApiGetGastoListOperation: ':listByEmpresa',
-   coreApiGetGastoAgenteListOperation: ':listByEmpresaAndAgente',
+  coreApiGetPagoComprobanteDepartamentoListOperation: ':listByEmpresaAndDepartamento',
+  //Gasto
+  coreApiBaseGastoOperation: '/gasto',
+  coreApiGetGastoListOperation: ':listByEmpresa',
  
   //Contactos
   coreApiBaseContactoOperation: '/contacto',  
@@ -188,6 +201,28 @@ export const environment = {
   coreApiGetNotificacionListOperation: ':listByEmpresa',
   coreApiGetNotificacionListAgenteOperation: ':listByAgente',
 
+  coreApiBaseEventoAppOperation: '/evento-app',  
+  coreApiGetEventoAppListOperation: ':listByEmpresa',
+
+  coreApiBaseTorreOperation: '/torre',  
+  coreApiGetTorreListOperation: ':listByEmpresa',
+
+  coreApiBaseDepartamentoOperation: '/departamento',  
+  coreApiGetDepartamentoListOperation: ':listByEmpresa',
+
+  coreApiBaseCorreoOperation: '/correo',  
+  coreApiBaseCorreoSimpleOperation: '/sendCorreoSimple',  
+  
+  coreApiBaseAgenteDepartamentoOperation: '/agenteDepartamento',  
+  coreApiBaseAgenteDepartamentoMultipleOperation: '/multiple',  
+  coreApiBaseAgenteDepartamentoListOperation: '/listDepartamentos',   
+  
+  coreApiBasePublicidadOperation: '/publicidad',  
+  coreApiBasePublicidadListOperation: '/listByEmpresa',  
+
+  coreApiBaseConceptoAdeudoOperation: '/concepto-adeudo',    
+  coreApiBaseConceptoAdeudoListOperation: ':listByEmpresa',    
+
 };
 
 /*
@@ -198,3 +233,5 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+
+

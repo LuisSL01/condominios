@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 
 import { DataLocalService } from './data-local.service';
 import { Storage } from '@ionic/storage';
@@ -23,12 +23,17 @@ export class ResolucionService {
   publicacionContext: string = environment.coreApiBasePublicacionOperation;
 
 
+  resolicionListener = new EventEmitter<Publicacion>();
+
   constructor(
     private http: HttpClient,
     private storage: Storage,
-    private dataLocalService: DataLocalService) {
-      console.log('en el constrictor de data local resolucion service');
+    private dataLocalService: DataLocalService) {   
       /* this.cargarRegistros(); */
+  }
+
+  removeElement(ann:Publicacion){
+    this.resolicionListener.emit(ann);
   }
 
   construyeNombreEtiqueta() {

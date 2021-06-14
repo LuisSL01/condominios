@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { GastoService } from '../../services/gasto.service';
 import { UserData } from '../../providers/user-data';
-import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { Archivo } from 'src/app/models/archivo-vortex.model';
 import { PagosComprobantesService } from '../../services/pagos-comprobantes.service';
 import { PagosComprobantes } from '../../models/pagos-comprobantes.model';
+import { PreviewAnyFile } from '@ionic-native/preview-any-file/ngx';
 
 
 
@@ -18,6 +18,7 @@ export class RecibosPage implements OnInit {
 
   idEmpresa: number;
   idAgente: number;
+  idDepartamento:number;
   pagoSelected:any;
 
   public pagoComprobanteList: PagosComprobantes[] = [];
@@ -26,23 +27,26 @@ export class RecibosPage implements OnInit {
     private userData: UserData,
     public pagosComprobantesService: PagosComprobantesService,
     private file: File,
-    private fileOpener: FileOpener,) { }
+    private previewAnyFile: PreviewAnyFile) { }
 
   ngOnInit() {
     this.idEmpresa = this.userData.getIdEmpresa();
     this.idAgente = this.userData.getIdAgente();
+    this.idDepartamento = this.userData.departamento_id;
     
   }
   ionViewDidEnter(){
     this.getPagosComprobantes();
   }
   getPagosComprobantes() {
+    this.userData.showToast('Buscando comprobantes autorizados');
     //Si es administrador puede ver todos los adeudos
-    this.pagosComprobantesService.getTodosPagosComprobantesPorAgente(this.idEmpresa, this.idAgente).subscribe((data) => {
-      console.log(data);
-      
+//    this.pagosComprobantesService.getTodosPagosComprobantesPorAgente(this.idEmpresa, this.idAgente, 13).subscribe((data) => {
+  this.pagosComprobantesService.getTodosPagosComprobantesPorDepartamento(this.idEmpresa, this.idDepartamento, 13).subscribe((data) => {
+      console.log(data);      
       if (data.status === 200) {
         this.pagoComprobanteList = data.result;
+        if(this.pagoComprobanteList.length ===0)this.userData.showToast("No se encontraron comprobantes con estatus autorizado");
       } else {
         this.userData.showToast('error al recuperar registros');
         console.log(data.status);
@@ -74,14 +78,9 @@ export class RecibosPage implements OnInit {
             .then(blob => {
               this.file.writeFile(this.file.cacheDirectory, 'Recibo.pdf', blob, { replace: true })
                 .then(res => {
-                  this.fileOpener.open(
-                    res.toInternalURL(),
-                    'application/pdf')
-                    .then((res) => { })
-                    .catch(err => {
-                      console.log('open error')
-                      this.userData.showToast('open error!');
-                    });
+                  this.previewAnyFile.preview(res.toURL())
+                    .then((res: any) => {})
+                    .catch((error: any) => alert('error3: ' + error));
                 })
                 .catch(err => {
                   console.log('save error')
@@ -99,10 +98,6 @@ export class RecibosPage implements OnInit {
     }else{
       this.userData.showToast("Debe seleccionar un pago para poder generar su recibo");
     }
-    
-    
-
   }
-
 
 }

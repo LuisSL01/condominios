@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { ContactosEmergencia } from '../models/contactos-emergencia.model';
-import { DataLocalService } from './data-local.service';
 import { Storage } from '@ionic/storage';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -18,9 +17,15 @@ export class ContactosEmergenciaService {
   contactoContext: string = environment.coreApiBaseContactoOperation;  
   nombreEtiqueta = "_contactos";
 
+  contactoListener = new EventEmitter<ContactosEmergencia>();
+
 
   constructor(private storage: Storage,
               private http: HttpClient) {
+  }
+
+  removeElement(eleme:ContactosEmergencia){
+    this.contactoListener.emit(eleme);
   }
 
   save(contactoData: any): Observable<ApiResponse> {

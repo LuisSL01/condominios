@@ -111,7 +111,12 @@ export class CreatePage implements OnInit {
       this.showToast("Por favor llene todos los campos", "danger");
       return;
     }else{
-      await this.registrarEmpresa();
+      if(this.logoFondo){
+        await this.registrarEmpresa();
+      }else{
+        this.showToast("Por favor cargue su logo", "danger");
+        return;
+      }      
     }    
   }
 

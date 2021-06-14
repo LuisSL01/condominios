@@ -1,7 +1,8 @@
+<ion-header>
 <app-menu-header></app-menu-header>
 
 <app-header titulo="Nueva área"></app-header>
-
+</ion-header>
 <ion-content>
   <form  [formGroup]="createArea"  (ngSubmit)="save()">
     <ion-list>
@@ -65,7 +66,7 @@
           margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Requiere reserva
         </ion-label>
         <ion-toggle slot="end"  formControlName="requiereReserva" ></ion-toggle>
-      </ion-item>
+      </ion-item>      
       <ion-item>
         <ion-label>
           <ion-icon name="chatbox-outline" style="font-size:23px; color: #50c8ec;
@@ -73,7 +74,8 @@
         </ion-label>
         <ion-textarea rows="2" cols="1" style="margin-top: -20px;" formControlName="comentarios"></ion-textarea>
       </ion-item>
-      <ion-item  >
+<!--
+      <ion-item >
         <ion-label>
           <ion-icon name="sunny-outline" style="font-size:23px; color: #50c8ec;
           margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;¿Cualquier día?
@@ -88,10 +90,7 @@
                         (click)="diaIsClicked(elem)"  
                         value ="elem.isChecked" ></ion-checkbox>
         </ion-item>
-
-
       </ion-list>
-
       <ion-item>
         <ion-label>
           <ion-icon name="time-outline" style="font-size:23px; color: #50c8ec;
@@ -99,7 +98,6 @@
         </ion-label>
         <ion-toggle slot="end" formControlName="disponibleTodasHoras"></ion-toggle>
       </ion-item>
-
       <ion-item *ngIf=" ! createArea.value.data.disponibleTodasHoras" >
         <ion-label>
           <ion-icon name="alarm-outline" style="font-size:23px; color: #50c8ec; 
@@ -128,7 +126,31 @@
           (ionChange)="cambioHoraTermina($event)">
         </ion-datetime>
       </ion-item>
+-->
     </div>
+
+    <ion-item-divider *ngIf="createArea.value.data.requiereReserva">
+      <ion-label>
+        Tiempos fijos
+      </ion-label>
+      <ion-button fill="clear" (click)="agregarTiempoFijo()">
+          <ion-icon   style="font-size:23px; color: #50c8ec; 
+          margin-bottom: -5px; "slot="icon-only" name="add-circle-outline"></ion-icon>
+        </ion-button>      
+  </ion-item-divider>
+
+    <ion-item  *ngFor="let temp of tiempoFijoList">
+      <ion-label>
+          <ion-icon name="hourglass-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
+          &nbsp;&nbsp;{{temp.descripcion}}, {{temp.horas}} hrs ,  {{temp.minutos}} min
+      </ion-label> 
+      <ion-button fill="clear" (click)="deleteTempFijo(temp)">
+          <ion-icon   style="font-size:23px; color: red; 
+          margin-bottom: -5px; "slot="icon-only" name="trash-bin-outline"></ion-icon>
+        </ion-button>        
+  </ion-item>
+
+  
 
       <ion-item>
         <ion-button fill="clear" size="small" (click)="camara()">
@@ -152,6 +174,6 @@
     
     <app-buttons valueLinkCancel="/areas-comunes" 
     valueDisabled="{{! createArea.valid}}" ></app-buttons>
-    <app-footer></app-footer>
+    <!-- <app-footer></app-footer> -->
   </form>
 </ion-content>

@@ -1,88 +1,147 @@
+<ion-header>
 <app-menu-header></app-menu-header>
 <app-header titulo="Nuevo adeudo"></app-header>
-<ion-content>  
-  <form  [formGroup]="createAdeudo"  (ngSubmit)="save()">
+</ion-header>
+<ion-content>
+  <form [formGroup]="createAdeudo" (ngSubmit)="save()">
     <ion-list>
 
-      
-      <ion-item *ngIf="! edit " >
+
+      <ion-item *ngIf="! edit ">
         <ion-label>
           <ion-icon name="create-outline" style="font-size:23px; color: #50c8ec; 
           margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Registrar adeudo
         </ion-label>
-        <ion-select interface="popover"  placeholder="Seleccionar"  formControlName="destinatario"
-          okText="Aceptar"             
+        <ion-select interface="popover" placeholder="Seleccionar" formControlName="destinatario" okText="Aceptar"
           cancelText="Cancelar">
           <ion-select-option value="todos">Todos</ion-select-option>
-          <ion-select-option value="solo-uno">Solo a uno</ion-select-option>          
+          <ion-select-option value="torre_privada">Torre/privada</ion-select-option>
+          <ion-select-option value="solo-uno">Solo a uno</ion-select-option>
         </ion-select>
+      </ion-item>
+    
+      <ion-item *ngIf="(createAdeudo.value.destinatario === 'solo-uno' || 
+                      createAdeudo.value.destinatario === 'torre_privada' ) && (!edit)">
+        <ion-label>
+          <ion-icon name="leaf-outline" style="font-size:23px; color: #50c8ec; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Torre/privada
+        </ion-label>
+        <ion-select interface="action-sheet" okText="Aceptar" cancelText="Cancelar" placeholder="seleccione"
+          (ionChange)="cambioTorre($event)">
+          <ion-select-option *ngFor="let tt of torres" [value]="tt"> {{ tt.data.nombre}} </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item *ngIf="(createAdeudo.value.destinatario === 'solo-uno') && (!edit)">
+        <ion-label >
+          <ion-icon name="leaf-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
+          &nbsp;&nbsp;Inmueble:
+        </ion-label>
+        <ion-select placeholder="seleccione" interface="action-sheet" okText="Aceptar"           
+          formControlName="departamento"
+          cancelText="Cancelar">
+          <ion-select-option *ngFor="let tt of departamentos" [value]="tt.id"> {{ tt.data.nombre}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item  >
+        <ion-label>
+          <ion-icon name="pencil-outline" style="font-size:23px; color: #50c8ec; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Concepto
+        </ion-label>
+
+        <ion-select placeholder="seleccione" interface="action-sheet" okText="Aceptar"           
+        formControlName="conceptoAdeudo"
+        cancelText="Cancelar">
+        <ion-select-option *ngFor="let tt of conceptoAdeudos" [value]="tt.id"> 
+          {{ tt.nombre}}
+          {{ tt.data.aplicaInteres?' con interés del : '
+          :''}}
+          {{ tt.data.porcentajeInteres > 0 ?
+            (tt.data.porcentajeInteres*100) + '%'
+          :''}}
+        </ion-select-option>
+      </ion-select>
+        
+      </ion-item>
+
+      <ion-row  >
+        <ion-col size="4">            
+        </ion-col>
+        <ion-col size="4">
+          <ion-button fill="clear" (click)="addConceptoAdeudo()">Agregar
+            <ion-icon   style="font-size:23px; color: #50c8ec; 
+            margin-bottom: -5px; "slot="icon-only" name="add-circle-outline"></ion-icon>
+        </ion-button>
+        </ion-col>
+        <ion-col size="4" >
+          <ion-button fill="clear" (click)="editConceptoAdeudo()">Editar
+            <ion-icon   style="font-size:23px; color: #50c8ec; 
+            margin-bottom: -5px; "slot="icon-only" name="create-outline"></ion-icon>
+        </ion-button> 
+        </ion-col>
+      </ion-row>
+      
+      <ion-item>
+        <ion-label>
+          <ion-icon name="calendar-outline" style="font-size:23px; color: #50c8ec; 
+          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Fecha a cubrir
+        </ion-label>
+
+        <ion-datetime style="margin-bottom: -8px;" placeholder="Fecha cubrir" displayFormat="DD MMM YYYY"
+          monthShortNames="ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic" cancelText="Descartar"
+          doneText="Aceptar" formControlName="fechaCubrir">
+        </ion-datetime>
 
       </ion-item>
-      <ion-item *ngIf="createAdeudo.value.destinatario === 'solo-uno' && (!edit)">
-        <ion-label   >
-          <ion-icon name="person-outline" style="font-size:23px; color: #50c8ec; 
-          margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Usuario
-        </ion-label>
-        <ion-select  interface="popover"  
-          formControlName="agenteAdeuda"          
-          okText="Aceptar" cancelText="Cancelar">
-          <ion-select-option *ngFor="let ag of agentes" [value]="ag.id">
-            {{ ag.nombreCompleto}}
-          </ion-select-option>          
-        </ion-select>
-      </ion-item>
       <div formGroupName="data">
-        <ion-item>
-          <ion-label>
-            <ion-icon name="pencil-outline" style="font-size:23px; color: #50c8ec; 
-            margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Concepto
-          </ion-label>
-          <ion-select interface="popover" 
-            formControlName="concepto"
-            okText="Aceptar"  cancelText="Cancelar">
-            <ion-select-option value="Mantenimiento">Mantenimiento</ion-select-option>
-            <ion-select-option value="Jardineria">Jardineria</ion-select-option>
-            <ion-select-option value="Fiestas">Fiestas</ion-select-option>
-            <ion-select-option value="Otro">Otro</ion-select-option>
-          </ion-select>
-        </ion-item>
-        <ion-item  *ngIf="createAdeudo.value.data.concepto === 'Otro'">
-          <ion-label position="floating">
-            <ion-icon name="create-outline" style="font-size:23px; color: #50c8ec; 
-            margin-bottom: -5px;"></ion-icon>&nbsp;Descripción</ion-label>        
-          <ion-textarea rows="2" cols="1" 
-          formControlName="descripcion"></ion-textarea>   
-        </ion-item>
-  
+
         <ion-item>
           <ion-label>
             <ion-icon name="calculator-outline" style="font-size:23px; color: #50c8ec; 
-                margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Cantidad
+                margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Importe
           </ion-label>
-          <ion-input  type="number" formControlName="cantidad">
+          <ion-input type="number" formControlName="importe">
           </ion-input>
         </ion-item>
-  
+
+        <ion-item *ngIf="userData.administrador">
+          <ion-label>
+            <ion-icon name="calculator-outline" style="font-size:23px; color: #50c8ec; 
+                margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Importe interés
+          </ion-label>
+          <ion-input type="number" formControlName="importeInteres">
+          </ion-input>
+        </ion-item>
+
+
         <ion-item>
           <ion-label>
-            <ion-icon name="calendar-outline" style="font-size:23px; color: #50c8ec; 
-            margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Fecha a cubrir
+            <ion-icon name="receipt-outline" style="font-size:23px; color: #50c8ec;
+                margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Recurrente
           </ion-label>
-  
-          <ion-datetime style="margin-bottom: -8px;" placeholder="Fecha cubrir"         
-            displayFormat="MMM YYYY"
-            monthShortNames="ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic"          
-            cancelText="Descartar" doneText="Aceptar"
-            formControlName="fechaCubrir"
-          >
-          </ion-datetime>
-          
+          <ion-toggle formControlName="recurrente" slot="end"></ion-toggle>
+        </ion-item>
+
+        <ion-item *ngIf="createAdeudo.value.data.recurrente">
+          <ion-label>
+            <ion-icon name="pencil-outline" style="font-size:23px; color: #50c8ec; 
+            margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Periodo
+          </ion-label>
+          <ion-select interface="popover" formControlName="periodo" okText="Aceptar" cancelText="Cancelar">
+            <ion-select-option value="Mensual">Mensual</ion-select-option>
+            <ion-select-option value="Bimestral">Bimestral</ion-select-option>
+            <ion-select-option value="Trimestral">Trimestral</ion-select-option>
+            <ion-select-option value="Semestral">Semestral</ion-select-option>
+            <ion-select-option value="Anual">Anual</ion-select-option>
+          </ion-select>
         </ion-item>
       </div>
 
     </ion-list>
 
     <app-buttons valueLinkCancel="/pagos/adeudos" valueDisabled="{{ ! createAdeudo.valid}}"></app-buttons>
-    <app-footer></app-footer>    
+    <!-- <app-footer></app-footer> -->
   </form>
 </ion-content>

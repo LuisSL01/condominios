@@ -32,17 +32,16 @@ export class ListPage implements OnInit {
 
     let guardarBorrarBtn;
       guardarBorrarBtn = {
-        text: 'Borrar Gasto',
+        text: 'Borrar',
         icon: 'trash',
         cssClass: 'action-dark',
         handler: () => {
           if(this.gasto.id > 0){            
             this.gastoService.delete(this.gasto.id).subscribe(
               (data) => {
-                if (data.status === 200) {
-                  console.log('"data.result"', data.result);
-                  console.log("Gasto eliminado  correctamente");
-                  this.showToast("Gasto eliminado correctamente");                  
+                if (data.status === 200) {                  
+                  this.showToast("Gasto eliminado correctamente");
+                  this.gastoService.removeElement(this.gasto);
                 } else {
                   console.log('Llego otro status al eliminar gasto');  
                   this.showToast("Error al eliminar registro de Gasto");                  
@@ -62,16 +61,7 @@ export class ListPage implements OnInit {
 
     const actionSheet = await this.actionSheetCtrl.create({
       buttons: [
-      guardarBorrarBtn,
-      {
-        text: 'Cancelar',
-        icon: 'close',
-        role: 'cancel',
-        cssClass: 'action-dark',
-        handler: () => {
-          console.log('Cancel clicked');
-        }
-      }]
+      guardarBorrarBtn]
     });
     await actionSheet.present();
   }

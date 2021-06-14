@@ -10,6 +10,7 @@ import { FormBuilder, Validators } from "@angular/forms";
 import { UserData } from '../../../providers/user-data';
 import { AgenteService } from '../../../services/agente.service';
 import { Archivo } from '../../../models/archivo-vortex.model';
+import { UiServiceService } from '../../../services/ui-service.service';
 
 
 declare var window: any;
@@ -61,6 +62,7 @@ export class AddAvisosPage implements OnInit {
     private fb: FormBuilder,
     private camera: Camera,
     private router: Router,
+    private ui:UiServiceService,
     private userData: UserData) {
   }
 
@@ -157,7 +159,8 @@ export class AddAvisosPage implements OnInit {
     if (this.edit) this.editar();
     else this.nuevo();
   }
-  nuevo(){    
+  nuevo(){
+    this.ui.presentLoading();
     const notificacionObj ={
       empresa:this.idEmpresa,
       agenteCreador:this.idAgente,
@@ -178,13 +181,16 @@ export class AddAvisosPage implements OnInit {
       (data) => {
         if (data.status === 200) {
           this.createNotificacion.reset();
+          this.ui.dismissLoading();
           this.router.navigate(['/avisos', { item: true }]);
         } else {
           this.userData.showToast('error1 al guardar');          
+          this.ui.dismissLoading();
         }
       },
       (err) => {      
         this.userData.showToast('error 2 al guardar');       
+        this.ui.dismissLoading();
       },
       () => {}
     );

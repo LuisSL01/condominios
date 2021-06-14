@@ -6,16 +6,34 @@
   <ion-list>
     <ion-list-header color="primary">
       <ion-label> 
-        <h2>Formato de Construcción</h2>
+        <h2>¿Vas a construir?</h2>
       </ion-label>
     </ion-list-header>
-    <br>  
-    <ion-button (click)="cargarFormato()" expand="block" shape="round" *ngIf="admon">
-      Cargar Nuevo Formato
+    <br>
+    <ion-item-divider>
+      <ion-label>
+        Guía de construccion
+      </ion-label>
+  </ion-item-divider>  
+    <ion-button (click)="cargarGuiaConstruccion()" expand="block" shape="round" *ngIf="admon">
+      Cargar nuevo
     </ion-button>
     <br>
-    <ion-button (click)="verFormato()" expand="block" shape="round">
-      Visualizar Formato
+    <ion-button (click)="verFormatoGuia()" expand="block" shape="round">
+      Visualizar
+    </ion-button>
+    <br> 
+    <ion-item-divider>
+      <ion-label>
+        Formato de construccion
+      </ion-label>
+  </ion-item-divider>   
+    <ion-button (click)="cargarFormatoConstruccion()" expand="block" shape="round" *ngIf="admon">
+      Cargar nuevo
+    </ion-button>
+    <br>
+    <ion-button (click)="verFormatoConstruccion()" expand="block" shape="round">
+      Visualizar 
     </ion-button>
   </ion-list>
 </ion-content>

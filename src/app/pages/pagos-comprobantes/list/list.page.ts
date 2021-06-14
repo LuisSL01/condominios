@@ -46,7 +46,7 @@ export class ListPage implements OnInit {
             this.pagosComprobantesService.delete(this.pagoComprobante.id).subscribe((data) => {
                 if (data.status === 200) { 
                   console.log("eliminado correctamente"); this.userData.showToast('registro eliminado correctamente');
-                  this.router.navigate(['/pagos-comprobantes', { item: true, skipLocationChange: true}]);
+                  this.pagosComprobantesService.removeElement(this.pagoComprobante);                  
                 }
                 else  this.userData.showToast('Error al eliminar registro');
               },
@@ -90,15 +90,6 @@ export class ListPage implements OnInit {
             handler: () => {
               this.presentAlertPagoRechazado();
             }
-          },
-          {
-            text: 'Cancelar',
-            icon: 'close',
-            role: 'cancel',
-            cssClass: 'action-dark',
-            handler: () => {
-              console.log('Cancel clicked');
-            }
           }
           ]
         });
@@ -108,16 +99,7 @@ export class ListPage implements OnInit {
      
         const actionSheet = await this.actionSheetCtrl.create({
           buttons: [
-          guardarBorrarBtn,
-          {
-            text: 'Cancelar',
-            icon: 'close',
-            role: 'cancel',
-            cssClass: 'action-dark',
-            handler: () => {
-              console.log('Cancel clicked');
-            }
-          }
+          guardarBorrarBtn          
           ]
         });
         await actionSheet.present();
@@ -161,19 +143,24 @@ export class ListPage implements OnInit {
   }
 
   updateStatus(nombreStatus:string, _comentarios?:string){
-    let dataMap={};
+    let dataMap= new Object();
+    
 
     const formData = new FormData();
     formData.append("id", JSON.stringify(this.pagoComprobante.id));
     formData.append("status", nombreStatus);
 
     //Hacer pruebas, el map no se puede enviar
-    /* if(_comentarios){
-      dataMap={
-        comentarios:_comentarios
-      };
-      formData.append("dataMap", JSON.stringify(dataMap));      
-    } */
+    if(_comentarios){       
+      const dataJson = {
+        'comentarios': _comentarios
+      };     
+
+      console.log('JSON.stringify({comentarios:_comentarios})'+ JSON.stringify(dataJson));
+      
+      formData.append("dataMap", JSON.stringify(dataJson));
+      
+    }
 
     this.pagosComprobantesService.updateStatus(formData).subscribe(
       (data) => {

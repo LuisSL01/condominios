@@ -30,7 +30,7 @@ export class ListAvisosPage implements OnInit {
 
   constructor(public avisoService: AvisoService,
     private actionSheetCtrl: ActionSheetController,
-    private userData: UserData,
+    public userData: UserData,
     private modalCtlr: ModalController,
     private toastCtrl: ToastController,
     private router: Router) { }
@@ -73,12 +73,10 @@ export class ListAvisosPage implements OnInit {
         if (this.aviso.id > 0) {
           this.avisoService.delete(this.aviso.id).subscribe(
             (data) => {
-              if (data.status === 200) {
-                /*      console.log('"data.result"', data.result);
-                     console.log("notificacion eliminada correctamente"); */
+              if (data.status === 200) {                
                 this.showToast("notificacion eliminada correctamente");
-              } else {
-                console.log('Llego otro status al eliminar anuncio');
+                this.avisoService.removeElement(this.aviso);
+              } else {                
                 this.showToast("Error al eliminar registro");
               }
             },
