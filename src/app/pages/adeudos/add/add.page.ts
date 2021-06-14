@@ -59,7 +59,7 @@ export class AddPage implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     public activatedRoute: ActivatedRoute,
-    private userData:UserData,
+    public userData:UserData,
     private torreService:TorreService,
     private departamentoService:DepartamentoService,
     public alertController: AlertController,
