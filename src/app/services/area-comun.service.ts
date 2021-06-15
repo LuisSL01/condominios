@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { AreaComun } from '../models/area-comun.model';
 import { DataLocalService } from './data-local.service';
 import { Storage } from '@ionic/storage';
@@ -22,6 +22,7 @@ export class AreaComunService {
   areaComunContext: string = environment.coreApiBaseAreaComunOperation;  
   nombreEtiqueta = "_areas-comunes";
 
+  areaComunListener = new EventEmitter<AreaComun>();
   constructor(private dataLocalService : DataLocalService,
               private storage:Storage, 
               private userData:UserData,
@@ -32,6 +33,10 @@ export class AreaComunService {
    getNombreEtiquetaLocal():string{
      return this.userData.getIdEmpresa() + this.nombreEtiqueta +"_local"
    }
+
+   removeElement(elm:AreaComun){
+    this.areaComunListener.emit(elm);
+  }              
    
   save(areaComunData: FormData): Observable<ApiResponse> {
     console.log('save area comun:'+this.baseUrl + this.areaComunContext);    

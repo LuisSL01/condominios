@@ -7,6 +7,7 @@ import { CalendarComponent  } from 'ionic2-calendar';
 import { CalendarPage } from '../calendar/calendar.page';
 import { formatDate, DatePipe } from '@angular/common';
 import { LoginPage } from '../login/login.page';
+import { UiServiceService } from '../../services/ui-service.service';
 
 @Component({
   selector: 'app-area-comun-reserva',
@@ -46,6 +47,7 @@ eventSource = [];
               private datePipe: DatePipe,
               private alertCtrl: AlertController,
               @Inject(LOCALE_ID) private locale: string,
+              private ui:UiServiceService,
               private modalCtrl: ModalController) { }
 
   ngOnInit() {
@@ -83,14 +85,18 @@ eventSource = [];
   }
 
   buscarAreasComunes() {
+    
     this.areaComunService.getAllAreasComunesByEmpresa(this.idEmpresa).subscribe((data) => {
+    
       console.log('data: ' + data);
       if (data.status === 200) {
         this.areasComunesList = data.result; this.userData.showToast('recuperados correctamente');
       } else {       
       }
     },
-      (err) => { console.log(err);         
+      (err) => { 
+        
+        console.log(err);         
         }
     );
   }
@@ -177,8 +183,10 @@ eventSource = [];
     const formData = new FormData();
     formData.append("id", JSON.stringify(id));
     formData.append("status", JSON.stringify(estatus));
+    this.ui.presentLoading();
     this.areaComunService.updateStatusReserva(formData).subscribe(
       (data) => {
+        this.ui.dismissLoading();
         if (data.status === 200){
           this.userData.showToast('Estatus actualizado correctamente');
           this.reservasList =[];
@@ -188,6 +196,7 @@ eventSource = [];
         else this.userData.showToast('Error al actualizar estatus');
       },
       (err) => {
+        this.ui.dismissLoading();
         console.log("Error al actualizar agente" + err);
         this.userData.showToast('Error al actualizar estatus');
       }
@@ -198,6 +207,7 @@ eventSource = [];
   async deleteRegistro(id){
     console.log('delete registro..');    
     if(id){
+      this.userData.showToast('Eliminando registro');
       this.areaComunService.deleteReserva(id).subscribe(
         (data) => {
           if (data.status === 200) {
@@ -206,7 +216,7 @@ eventSource = [];
             this.removeEvents();
             this.getReservasPorArea();
           }
-          else this.userData.showToast("Error al eliminar registro");
+          else this.userData.showToast('Error al eliminar registro','danger');
         },
         (err) => {
           console.log(err); this.userData.showToast("Error al eliminar registro");
@@ -330,7 +340,7 @@ eventSource = [];
           Date.UTC(
             start.getUTCFullYear(),
             start.getUTCMonth(),
-            start.getUTCDate()              
+            start.getUTCDate()                          
           )
         );
         event.endTime = new Date(
@@ -349,7 +359,8 @@ eventSource = [];
             start.getUTCFullYear(),
             start.getUTCMonth(),
             start.getUTCDate(),
-            start.getUTCHours()
+            start.getUTCHours(),
+            start.getUTCMinutes()
           )
         );
         event.endTime = new Date(
@@ -357,7 +368,8 @@ eventSource = [];
             end.getUTCFullYear(),
             end.getUTCMonth(),
             end.getUTCDate(),
-            end.getUTCHours()
+            end.getUTCHours(),
+            end.getUTCMinutes()
           )
         );
       }
@@ -372,27 +384,35 @@ eventSource = [];
 
   //Termina metodos de calendarii
   async getReservasPorArea() {
-    this.userData.showToast('buscando registros');
-    await this.areaComunService.getReservasByAreaComun(this.areaComunSelected).subscribe((data) => {          
-          console.log(data);        
-          if (data.status === 200) {
-             this.reservasList = data.result;            
-            if(this.reservasList.length ===0){
-              this.userData.showToast('No se encontraron registros del área seleccionada');
-            }else{
-              this.userData.showToast('se encontraron: '+ this.reservasList.length+' registros');
-              this.procesaResultados();
+    if(this.areaComunSelected){
+      this.userData.showToast('buscando registros');
+      this.ui.presentLoading();
+      await this.areaComunService.getReservasByAreaComun(this.areaComunSelected).subscribe((data) => {          
+            
+            
+            if (data.status === 200) {
+              
+               this.reservasList = data.result;            
+              if(this.reservasList.length ===0){
+                this.userData.showToast('No se encontraron registros del área seleccionada');
+              }else{
+                this.userData.showToast('se encontraron: '+ this.reservasList.length+' registros');
+                this.procesaResultados();
+              }
+              this.ui.dismissLoading();
+            } else {
+              this.userData.showToast('error al recuperar registros del area seleccionada');  
+              this.ui.dismissLoading();
             }
-             
-          } else {
-            this.userData.showToast('error al recuperar registros del area seleccionada');  
+          },
+          (err) => {          
+            this.userData.showToast('error al recuperar registros'+ err);
+            console.log(err);          
+            this.ui.dismissLoading();
           }
-        },
-        (err) => {
-          this.userData.showToast('error al recuperar registros'+ err);
-          console.log(err);          
-        }
-      );
+        );
+
+    }
   }
 
   

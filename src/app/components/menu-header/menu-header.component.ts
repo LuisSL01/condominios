@@ -12,11 +12,16 @@ export class MenuHeaderComponent implements OnInit {
 
   constructor(public userData: UserData) {
   }
-
   ngOnInit() {
-    this.userData.retrieveBase64ToImageEmpresa();    
+   if(this.isEmpty(this.userData.base64ImageEmpresa)) {
+      this.userData.procesaDatosEmpresa();
+   }
+    
   }
 
+  isEmpty(str) {
+    return (!str || 0 === str.length);
+  }
 
 
   ionViewWillEnter(){

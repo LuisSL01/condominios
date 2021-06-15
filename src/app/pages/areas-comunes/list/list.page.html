@@ -29,6 +29,12 @@
       </p>
 
     </ion-label>
+  <ion-label *ngIf="areaComun.tiempoFijo" >
+    <h3 > Tiempos fijos</h3>  
+    <h3 *ngFor="let item of areaComun.tiempoFijo" > Descripción: {{item.descripcion}}, {{item.horas}} hrs, {{item.minutos}} min</h3>  
+  </ion-label>
+  
+
     
   </ion-card-content>
 

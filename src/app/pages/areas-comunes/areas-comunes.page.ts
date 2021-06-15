@@ -5,6 +5,7 @@ import { UserData } from '../../providers/user-data';
 import { Storage } from "@ionic/storage";
 import { IonInfiniteScroll } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
+import { UiServiceService } from '../../services/ui-service.service';
 
 @Component({
   selector: 'app-areas-comunes',
@@ -17,7 +18,7 @@ export class AreasComunesPage implements OnInit {
 
 
   public areasList: AreaComun[] = [];
-  public areasListLocal: AreaComun[] = [];
+  
 
   idEmpresa: number;
   filters: any;
@@ -32,6 +33,7 @@ export class AreasComunesPage implements OnInit {
   constructor(public areaComunService: AreaComunService,
               public userData: UserData,
               public activatedRoute: ActivatedRoute,
+              private ui:UiServiceService,
               private storage: Storage,) {
 
   }
@@ -41,6 +43,16 @@ export class AreasComunesPage implements OnInit {
     this.cargaAreasComunesStorage();
     this.cargaFiltrosTabla();    
     /* this.cargarAnunciosLocalesStorage(this.idEmpresa); */
+
+    this.areaComunService.areaComunListener.subscribe(noti => {
+      if(this.areasList){
+        var index = this.areasList.indexOf(noti);
+        if (index > -1) {
+          this.areasList.splice(index, 1);
+          this.storage.set(this.idEmpresa + this.areaComunService.nombreEtiqueta, this.areasList);
+        }
+      }
+    });
 
   }
 
@@ -65,16 +77,19 @@ export class AreasComunesPage implements OnInit {
 
 
   async cargaAreasComunesStorage() {
+    console.log('cargaAreasComunesStorage: ', this.idEmpresa);    
     await this.cargarAnunciosTemporalesStorage(this.idEmpresa);
+    console.log('this.areasList.length: '+this.areasList.length);
+    
     if (this.areasList.length == 0) {
       this.getAreasComunes(this.areaComunPage, 10);
     }
   }
 
   getAreasComunes(page: number, size: number, eventInfinite?, eventRefresh?) {
-    this.areaComunService.getAreasComunes(this.idEmpresa, page, size, this.filters)
-      .subscribe(
-        (data) => {
+    this.ui.presentLoading();
+    this.areaComunService.getAreasComunes(this.idEmpresa, page, size, this.filters).subscribe((data) => {
+        this.ui.dismissLoading();
           if (data.status === 200) {
             this.totalPages = data.result.totalPages;
             if (eventInfinite) {   
@@ -98,6 +113,7 @@ export class AreasComunesPage implements OnInit {
           }
         },
         (err) => {
+          this.ui.dismissLoading();
           this.userData.showToast('error al recuperar registros');
           console.log(err);
           this.completeEvent(eventInfinite, eventRefresh);
@@ -123,13 +139,13 @@ export class AreasComunesPage implements OnInit {
   }
 
   async cargarAnunciosLocalesStorage(idEmpresa: number) {
-
+/* 
     await this.areaComunService.getAreasComunesLocalFromStorage(idEmpresa);
     console.log('terminando de cargar locales');
 
     this.areasListLocal = this.areaComunService.areasComunesLocal;
     console.log('this.areasListLocal: ' + this.areasListLocal);
-
+*/
   }
 
   loadData(event) {//Desde el infinite scroll

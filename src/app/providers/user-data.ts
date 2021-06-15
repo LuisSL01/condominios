@@ -105,14 +105,17 @@ export class UserData {
       this.recuperaIdAgente();
     }
     return this.agente_id = JSON.parse(window.localStorage.getItem('userDetails')).id;; */
-    return JSON.parse(window.localStorage.getItem('userDetails')).id;
+
+    /* return JSON.parse(window.localStorage.getItem('userDetails')).id; */
+    return this.agente_id;
   }
 
   getIdEmpresa(): number{
    /*  if(this.empresa_id === 0){
       this.recuperaIdEmpresa();
     } */
-    return JSON.parse(window.localStorage.getItem('empresaData')).id;
+    /* return JSON.parse(window.localStorage.getItem('empresaData')).id; */
+    return this.empresa_id;
   }
 
   
@@ -137,9 +140,6 @@ export class UserData {
   }
 
   getNombreEmpresa():string{
-
-
-    
     let empresa = JSON.parse(window.localStorage.getItem('empresaData'));
     if(empresa){
       return empresa.nombre;
@@ -162,6 +162,7 @@ export class UserData {
    
   const data = await  this.storage.get('userFull');
     if (data) {
+      this.agente_id = data.id;
       /* console.log('data', JSON.stringify(data)); */      
       if(data.departamento){       
         if(data.departamento === 'RESIDENTE'){
@@ -203,7 +204,7 @@ export class UserData {
 
   setConfigEmpresa(){
     console.log('setConfigEmpresa');
-    this.retrieveBase64ToImageEmpresa();
+    this.procesaDatosEmpresa();
 /* 
     let empresa = JSON.parse(window.localStorage.getItem('empresaData'));
     if(empresa){
@@ -221,9 +222,10 @@ export class UserData {
 
   }
 
-  async retrieveBase64ToImageEmpresa(){    
+  async procesaDatosEmpresa(){    
     let empresa = await JSON.parse(window.localStorage.getItem('empresaData'));
     if(empresa){
+      this.empresa_id= empresa.id;
       if(empresa.configuracionEmpresa){
         this.base64ImageEmpresa ='https://almacenamientonube.s3.us-west-1.amazonaws.com/'+empresa.configuracionEmpresa.logoFondoClaro.rutaS3;
         this.aplicaAreasComunes = empresa.configuracionEmpresa.aplicaReservarAreas;

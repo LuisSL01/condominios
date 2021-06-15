@@ -43,12 +43,16 @@ export class ListPage implements OnInit {
         icon: 'trash',
         cssClass: 'action-dark',
         handler: () => {
+
+
+          
           if(this.areaComun.id > 0){
             this.areaComunService.delete(this.areaComun.id).subscribe(
               (data) => {
                 if (data.status === 200) {
-                  this.userData.showToast('Área eliminada correctamente');
-                } else {   
+                  this.userData.showToast('Registro eliminado correctamente');
+                  this.areaComunService.removeElement(this.areaComun);
+                } else {
                   this.userData.showToast("Error al eliminar registro");
                 }
               },

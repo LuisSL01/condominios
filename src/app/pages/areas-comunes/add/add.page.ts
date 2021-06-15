@@ -108,9 +108,12 @@ export class AddPage implements OnInit {
         horaInicia: [this.areaComun.data.horaInicia],
         horaTermina: [this.areaComun.data.horaTermina],
       }),  
-      diasDisponibles: [this.areaComun.diasDisponibles]       
+      diasDisponibles: [this.areaComun.diasDisponibles]
+
     });
+
     this.files = this.areaComun.files.archivos;
+    this.tiempoFijoList = this.areaComun.tiempoFijo;
   }
 
   getCameraOptions(): any {
@@ -202,15 +205,21 @@ export class AddPage implements OnInit {
     
   getDirtyFields() {
     console.log('getDirtyFields');    
-    Object.keys(this.createArea['controls'].data['controls']).forEach(key => {
-      
+    
+    Object.keys(this.createArea['controls'].data['controls']).forEach(key => {      
       if (this.createArea.get('data').get(key).dirty) {
         this.areaComunChangesForm.addControl(key, this.createArea.get('data').get(key));
       }
-      /* if (this.createArea.get('nombre').get(key).dirty) {
-        this.areaComunChangesForm.addControl(key, this.createArea.get('nombre').get(key));
-      } */
+      //if (this.createArea.get('nombre').get(key).dirty) {
+      //  this.areaComunChangesForm.addControl(key, this.createArea.get('nombre').get(key));
+      //}
     });
+   
+    /* Object.keys(this.createArea['controls']).forEach(key => {
+      if (this.createArea.get(key).dirty) {
+        this.areaComunChangesForm.addControl(key, this.createArea.get(key));
+      }
+    }); */
   }
 
   nuevo(){
@@ -229,7 +238,8 @@ export class AddPage implements OnInit {
       /* nombre : this.createArea.value.nombre, */
       data : this.createArea.value.data,      
       files:{archivos:[]},
-      diasDisponibles: this.areaComun.diasDisponibles
+      diasDisponibles: this.areaComun.diasDisponibles,
+      tiempoFijo: this.tiempoFijoList
     };
 
     const formData = new FormData();

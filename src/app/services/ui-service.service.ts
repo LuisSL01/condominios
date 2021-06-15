@@ -16,6 +16,7 @@ export class UiServiceService {
 //      cssClass: 'my-custom-class',
       message: 'Procesando...',
       translucent:true,
+      
       //duration: 2000
     });
     this.loading.present();

@@ -102,12 +102,29 @@
           margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Area a reservar
     </ion-label>
 
-    <ion-select interface="popover" placeholder="Seleccionar" [(ngModel)]="idAreaSelected"
+    <ion-select interface="popover" placeholder="Seleccionar"
+        (ionChange)="cambioAreaComun($event)"
         okText="Aceptar" cancelText="Cancelar">
-        <ion-select-option *ngFor="let area of areasComunesList" [value]="area.id">
+        <ion-select-option *ngFor="let area of areasComunesList" [value]="area">
             {{ area.data.nombre}}
         </ion-select-option>
     </ion-select>
+
+  </ion-item>
+
+  
+  <ion-item *ngIf="mostrarOpcionesTiempo" >
+    <ion-label>
+        <ion-icon name="hourglass-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
+        &nbsp;&nbsp;Seleccione una opción
+    </ion-label> 
+    <ion-select interface="popover" placeholder="Seleccionar"
+      (ionChange)="cambioTiempoSelected($event)"
+      okText="Aceptar" cancelText="Cancelar">
+        <ion-select-option *ngFor="let temp of areaComunSelected.tiempoFijo" [value]="temp">        
+            {{temp.descripcion}}, {{temp.horas}} hrs ,  {{temp.minutos}} min
+        </ion-select-option>
+    </ion-select>      
   </ion-item>
 
 
@@ -146,8 +163,9 @@
         <ion-icon name="alarm-outline" style="font-size:23px; color: #50c8ec; 
       margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Hora de inicio
     </ion-label>
-    <ion-datetime interface="action-sheet" displayFormat="HH A" cancelText="Descartar" style="margin-bottom: -5px;"
+    <ion-datetime interface="action-sheet" displayFormat="HH mm A" cancelText="Descartar" style="margin-bottom: -5px;"
         doneText="Aceptar"
+        (ionChange)="cambioHoraInicia()"
         [(ngModel)]="eventHelp.horaInicia"
          >
 
@@ -158,7 +176,7 @@
         <ion-icon name="alarm-outline" style="font-size:23px; color: #50c8ec; 
       margin-bottom: -5px;"></ion-icon>&nbsp;&nbsp;Hora termina
     </ion-label>
-    <ion-datetime displayFormat="HH A" cancelText="Descartar" style="margin-bottom: -5px;" doneText="Aceptar"
+    <ion-datetime disabled = {{mostrarOpcionesTiempo}}  displayFormat="HH mm A" cancelText="Descartar" style="margin-bottom: -5px;" doneText="Aceptar"
     [(ngModel)]="eventHelp.horaTermina"
     >
     </ion-datetime>
