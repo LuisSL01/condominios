@@ -55,8 +55,8 @@ export class CalendarPage implements OnInit {
   cambioAreaComun(event){    
     this.areaComunSelected = event.detail.value;    
     this.idAreaSelected = this.areaComunSelected.id;
-    if(this.areaComunSelected.tiempoFijo){
-      this.mostrarOpcionesTiempo = (this.areaComunSelected.tiempoFijo.length > 0);    
+    if(this.areaComunSelected.tiemposFijos){
+      this.mostrarOpcionesTiempo = (this.areaComunSelected.tiemposFijos.length > 0);    
     }else
       this.mostrarOpcionesTiempo = false;
     

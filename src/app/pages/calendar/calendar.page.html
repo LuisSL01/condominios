@@ -121,7 +121,7 @@
     <ion-select interface="popover" placeholder="Seleccionar"
       (ionChange)="cambioTiempoSelected($event)"
       okText="Aceptar" cancelText="Cancelar">
-        <ion-select-option *ngFor="let temp of areaComunSelected.tiempoFijo" [value]="temp">        
+        <ion-select-option *ngFor="let temp of areaComunSelected.tiemposFijos" [value]="temp">        
             {{temp.descripcion}}, {{temp.horas}} hrs ,  {{temp.minutos}} min
         </ion-select-option>
     </ion-select>      

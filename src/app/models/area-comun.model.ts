@@ -8,12 +8,12 @@ export class AreaComun{
     public files:ArchivoVortexApp;
     public diasDisponibles:number[];//Sunday is 0, Monday is 1, and so on.
 
-    public tiempoFijo:any[];
+    public tiemposFijos:any[];
         
     constructor(){
         this.diasDisponibles = new Array();
         this.files = new ArchivoVortexApp();
-        this.tiempoFijo = new Array();
+        this.tiemposFijos = new Array();
     }
 }
 

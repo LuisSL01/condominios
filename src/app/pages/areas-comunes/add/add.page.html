@@ -139,7 +139,7 @@
         </ion-button>      
   </ion-item-divider>
 
-    <ion-item  *ngFor="let temp of tiempoFijoList">
+    <ion-item  *ngFor="let temp of createArea.value.tiemposFijos">
       <ion-label>
           <ion-icon name="hourglass-outline" style="font-size:23px; color: #50c8ec; margin-bottom: -5px;"></ion-icon>
           &nbsp;&nbsp;{{temp.descripcion}}, {{temp.horas}} hrs ,  {{temp.minutos}} min

@@ -21,7 +21,7 @@ export class AddPage implements OnInit {
 
   diasSelected:any[]=[];
 
-  tiempoFijoList:any[]=[];
+  //tiempoFijoList:any[]=[];
 
   dias: any[] = [
     { name: 'Domingo', isChecked: false, pos: 0 },
@@ -54,9 +54,9 @@ export class AddPage implements OnInit {
       horaTermina: ['22:00'],
     }),  
 
-
-
-    diasDisponibles: [[], null] 
+    diasDisponibles: [[], null],
+    tiemposFijos : [[], null],
+    
     
   });
   idEmpresa: number;
@@ -108,12 +108,12 @@ export class AddPage implements OnInit {
         horaInicia: [this.areaComun.data.horaInicia],
         horaTermina: [this.areaComun.data.horaTermina],
       }),  
-      diasDisponibles: [this.areaComun.diasDisponibles]
-
+      diasDisponibles: [this.areaComun.diasDisponibles],
+      tiemposFijos : [this.areaComun.tiemposFijos]
     });
 
     this.files = this.areaComun.files.archivos;
-    this.tiempoFijoList = this.areaComun.tiempoFijo;
+    
   }
 
   getCameraOptions(): any {
@@ -206,20 +206,24 @@ export class AddPage implements OnInit {
   getDirtyFields() {
     console.log('getDirtyFields');    
     
-    Object.keys(this.createArea['controls'].data['controls']).forEach(key => {      
+   /*  Object.keys(this.createArea['controls'].data['controls']).forEach(key => {      
       if (this.createArea.get('data').get(key).dirty) {
         this.areaComunChangesForm.addControl(key, this.createArea.get('data').get(key));
       }
       //if (this.createArea.get('nombre').get(key).dirty) {
       //  this.areaComunChangesForm.addControl(key, this.createArea.get('nombre').get(key));
       //}
-    });
-   
-    /* Object.keys(this.createArea['controls']).forEach(key => {
-      if (this.createArea.get(key).dirty) {
-        this.areaComunChangesForm.addControl(key, this.createArea.get(key));
-      }
     }); */
+   
+    Object.keys(this.createArea['controls']).forEach(key => {
+      console.log('la key es: '+ key);
+      if (this.createArea.get(key).dirty) {        
+          console.log('agregando ak changes form');          
+          this.areaComunChangesForm.addControl(key, this.createArea.get(key));
+        
+        
+      }
+    });
   }
 
   nuevo(){
@@ -239,7 +243,9 @@ export class AddPage implements OnInit {
       data : this.createArea.value.data,      
       files:{archivos:[]},
       diasDisponibles: this.areaComun.diasDisponibles,
-      tiempoFijo: this.tiempoFijoList
+      //tiemposFijos: this.tiempoFijoList
+      tiemposFijos: this.createArea.value.tiemposFijos,
+
     };
 
     const formData = new FormData();
@@ -364,7 +370,14 @@ export class AddPage implements OnInit {
               objTiempoFijo.descripcion = alertData.desc;
               objTiempoFijo.horas = horas;
               objTiempoFijo.minutos = minutos;
-              this.tiempoFijoList.push(objTiempoFijo);
+//              this.tiempoFijoList.push(objTiempoFijo);
+              this.createArea.value.tiemposFijos.push(objTiempoFijo);
+              /*
+              if(this.edit){
+                 console.log('marcando como sucio');
+                this.createArea.controls['tiemposFijos'].markAsDirty();                           
+              }
+              */
             }else{
               this.userData.showToast('Error, la descripción es necesaria', 'warning');
             }
@@ -376,10 +389,18 @@ export class AddPage implements OnInit {
   }
 
   deleteTempFijo(tiempoFijo){
-    if(this.tiempoFijoList){//se remueve de la lista
+    if(this.createArea.value && this.createArea.value.tiemposFijos){//se remueve de la lista
+      var index = this.createArea.value.tiemposFijos.indexOf(tiempoFijo);
+      if (index > -1)  this.createArea.value.tiemposFijos.splice(index, 1);   
+      console.log('se ha eliminado');                                                 
+    }
+
+    /* if(this.tiempoFijoList){//se remueve de la lista
       var index = this.tiempoFijoList.indexOf(tiempoFijo);
       if (index > -1)  this.tiempoFijoList.splice(index, 1);   
       console.log('se ha eliminado');                                                 
-    }    
+    } */
+    
+    
   }
 }
