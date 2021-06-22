@@ -110,8 +110,14 @@ export class AdeudoService {
   }
 
   uploadPlantilla(formData: any, idEmpresa: number, idAgente:number): Observable<ApiResponse> {
-    console.log('saveReglamentoPDF: ' + this.baseUrl + this.adeudoContext + "/plantilla/" + idEmpresa+"/agente/"+idAgente);
+    console.log('uploadPlantilla: ' + this.baseUrl + this.adeudoContext + "/plantilla/" + idEmpresa+"/agente/"+idAgente);
     return this.http.post<ApiResponse>(this.baseUrl + this.adeudoContext + "/plantilla/" + idEmpresa+"/agente/"+idAgente, formData).pipe(share());
+  }
+
+  
+  uploadPlantillaConciliacionP(formData: any, idEmpresa: number): Observable<ApiResponse> {
+    console.log('uploadPlantillaConciliacionP: ' + this.baseUrl + environment.coreApiBaseconciliacionPagoOperation + "/plantilla/" + idEmpresa);
+    return this.http.post<ApiResponse>(this.baseUrl + environment.coreApiBaseconciliacionPagoOperation + "/plantilla/" + idEmpresa, formData).pipe(share());
   }
 
   getPlantila(): Observable<Blob> {

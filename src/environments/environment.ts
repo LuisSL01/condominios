@@ -232,6 +232,12 @@ export const environment = {
   coreApiBaseConceptoAdeudoOperation: '/concepto-adeudo',    
   coreApiBaseConceptoAdeudoListOperation: ':listByEmpresa',    
 
+
+  //ConciliacionPago
+  coreApiBaseconciliacionPagoOperation: '/conciliacionPago',      
+  coreApiGetconciliacionPagoListOperation: ':listByEmpresa',
+  coreApiGetconciliacionPagoPlantillaListOperation: '/plantilla',
+  
   
 
 };

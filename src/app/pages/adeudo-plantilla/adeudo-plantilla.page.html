@@ -40,6 +40,15 @@
       </ion-button>
       
     </ion-item>
+
+    <ion-item>
+      <ion-button fill="clear" size="small" *ngIf="plantilla"
+      (click)="cargarPlantillaConciliacion()">Cargar archivo conciliacion
+        <ion-icon slot="start" name="cloud-upload-outline" 
+        style="font-size:23px; color: #50c8ec;"></ion-icon>
+      </ion-button>      
+    </ion-item>
+
     </ion-list>
 
 

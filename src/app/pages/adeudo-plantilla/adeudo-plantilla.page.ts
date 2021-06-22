@@ -143,6 +143,28 @@ export class AdeudoPlantillaPage implements OnInit {
     );
   }
 
+  cargarPlantillaConciliacion(){
+    this.ui.presentLoading();
+    console.log('cargarPlantillaConciliacion'+ this.plantilla);    
+    const formData = new FormData();
+    formData.append("file", JSON.stringify(this.plantilla));
+    this.adeudoService.uploadPlantillaConciliacionP(formData, this.idEmpresa).subscribe(
+      (data) => {
+        console.log(data);
+        this.ui.dismissLoading();
+        if (data.status === 200) {          
+          //this.router.navigate(['/reglamento']);    
+          alert('Plantilla enviada exitosamente \n'+ data.result)
+        } else {
+          alert('Problema al enviar plantilla al servidor')
+        }
+      }, (err) => {
+        this.ui.dismissLoading();
+        this.userData.showToast("Error C: " + err);
+      }, () => { }
+    );
+  }
+
   close(){    
     this.modalCtrl.dismiss();
   }
