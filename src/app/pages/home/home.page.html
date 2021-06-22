@@ -4,7 +4,7 @@
 
 
 
-<ion-label color="light" style="font-family: ParalucentW00-DemiBold; margin-top: -4px;"> ¡Bienvenidos!</ion-label>
+
 
 <!-- <ion-label color="light"> Inicia sesión con tu cuenta</ion-label> -->
 
@@ -12,6 +12,8 @@
   <ion-grid>
     <ion-row>
       <ion-col align-self-center>
+        <span class="already" style="font-size: 15px;">¡Bienvenidos!</span>
+        <br>
         <ion-button expand="block" color="secondary" 
         [routerLink]="['/registration']"
          >
@@ -29,16 +31,20 @@
         <!-- <ion-button [routerLink]="['/login']" expand="block" color="secondary" >Iniciar sesión</ion-button>-->
 
         <form #loginForm="ngForm">
-
-          <ion-input name="username" placeholder="Usuario" [(ngModel)]="login.username" type="text" required>
-
-            <ion-icon slot="start" name="person" style="font-size:15px; color: #01143f; margin-left:5px; "></ion-icon>
-          </ion-input>
+          
+            
+            <ion-input name="username" placeholder="Usuario" [(ngModel)]="login.username" type="text" required >  
+              <ion-icon slot="start" name="person" style="font-size:15px; color: #0c153e; margin-left:5px; "></ion-icon>            
+            </ion-input>
+          
           <br>
-          <ion-input name="password" type="password" [(ngModel)]="login.password" placeholder="Contraseña" required>
-            <ion-icon slot="start" name="lock-closed" style="font-size:15px; color: #01143f; margin-left:5px;">
-            </ion-icon>
-          </ion-input>
+          
+            
+            <ion-input name="password" type="password" [(ngModel)]="login.password" placeholder="Contraseña" required>
+              <ion-icon slot="start" name="lock-closed" style="font-size:15px; color: #0c153e; margin-left:5px;"></ion-icon>
+            </ion-input>
+            
+          
           <br>
           <ion-button type="submit" color="secondary" (click)="onLogin()" expand="block">Iniciar sesión</ion-button>
           <br>

@@ -105,12 +105,17 @@ ion-button{
     background: #0c153e;
 }
 ion-input{
-    background: white;
+    color: #0c153e;
+    background:#50c8ec;
     width: 250px;
     margin-left: auto;
     margin-right: auto;
     height: 25px;
     font-size: 13px;
+    
+}
+ion-item{
+    background:#0c153e;  
     
 }
 ion-grid{
