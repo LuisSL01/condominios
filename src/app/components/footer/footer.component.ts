@@ -51,12 +51,14 @@ export class FooterComponent implements OnInit {
 
   async insertaPub(){ 
     console.log('vamos por la publicidad');  
-    
+    this.userData.showToast('buscando registros pub');
     this.publicidadService.getPublicidadAllPorEmpresa(this.userData.getIdEmpresa()).subscribe(
       data=>{        
         if(data.status === 200){
+          
           var publicidades:Publicidad[] = data.result;    
           console.log('insertando componentes publicidad recuperados');  
+          this.userData.showToast('se han encontrado registros pub ->' +publicidades.length+'<-');
 
           for(var i = 0; i < publicidades.length; i++){
             this.imagesPublicidad.push(this.generaElementPub(("https://almacenamientonube.s3.us-west-1.amazonaws.com/").concat(publicidades[i].data.pathImage), publicidades[i].data.pathUrl));

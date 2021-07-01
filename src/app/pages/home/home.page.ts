@@ -126,6 +126,7 @@ export class HomePage implements OnInit {
             this.buscaDepartamentosAgente();
             
           } else if (this.empresas.length > 1) {
+            this.ui.dismissLoading();
             this.presentModalListEmpresas()//Debo presentar el modal para seleccionar una empresa
           } else {
             console.log("Error al recuperar empresas del agente: ", this.nombreCompleto);//Error al recuperar las empresas del user
